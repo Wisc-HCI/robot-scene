@@ -1,28 +1,30 @@
-# RobotScene
+# robot-scene
 
-## Testing
+> A robot scene simulation component built with @react-three/fiber
 
-In the project directory, you can run:
+[![NPM](https://img.shields.io/npm/v/robot-scene.svg)](https://www.npmjs.com/package/robot-scene) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-### `npm start`
+## Install
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+npm install --save robot-scene
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Usage
 
-### `npm test`
+```jsx
+import React, { Component } from 'react'
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+import MyComponent from 'robot-scene'
+import 'robot-scene/dist/index.css'
 
-## Publishing
+class Example extends Component {
+  render() {
+    return <MyComponent />
+  }
+}
+```
 
-[Reference](https://www.pluralsight.com/guides/export-reactjs-components-as-node-modules-to-npm)
+## License
 
-`npm login`
-
-`npm run publish:npm`
-
-`npm publish`
+MIT © [AndrewJSchoen](https://github.com/AndrewJSchoen)
