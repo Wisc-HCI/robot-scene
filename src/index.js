@@ -1,82 +1,17 @@
-import React, { Suspense } from 'react'
-import styles from './styles.module.css';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
-import { Canvas } from "@react-three/fiber";
-import { ResizeObserver } from "@juggle/resize-observer";
-import CameraControls from "./CameraControls";
-import SceneObject from "./SceneObject";
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
 
-import { STANDARD_MESHES } from "./Util/StandardMeshes";
-import FrameObject from "./FrameObject";
-import MeshObject from "./MeshObject";
-// import NaoHead from "./New_naohead"; // importing the new naoHead Hunter's
-
-function RobotScene(props) {
-  // For the objects in props.content, render the objects.
-  // Those should be in the suspense element.
-
-  const { content, tfTree, displayTfs, displayGrid, isPolar } = props;
-
-  let { backgroundColor } = props;
-  backgroundColor = backgroundColor === undefined ? "#303030" : backgroundColor;
-
-  // TODO: apply the transforms to the objects
-  // based on props.tftree
-  // (feel free to structure tftree in any easy/obvious way)
-  return (
-    <Canvas
-      style={{ background: backgroundColor }}
-      resize={{ polyfill: ResizeObserver }}
-    >
-      <CameraControls />
-      <ambientLight />
-      <pointLight position={[10, 10, 10]} />
-      <Suspense fallback={null}>
-        
-        {content.map((objData, i) => {
-          if (STANDARD_MESHES.indexOf(objData.type) > -1) {
-            return (
-              <SceneObject
-                key={i}
-                type={objData.type}
-                scale={objData.scale}
-                position={objData.position}
-                rotation={objData.rotation}
-                color={objData.color}
-                transform={tfTree[objData.frame]}
-              />
-            );
-          } else {
-            return (
-              <MeshObject
-                key={i}
-                path={objData.path}
-                scale={objData.scale}
-                position={objData.position}
-                rotation={objData.rotation}
-                color={objData.color}
-                transform={tfTree[objData.frame]}
-              />
-            );
-          }
-        })}
-
-        {displayTfs
-          ? Object.keys(tfTree).map((frame, i) => (
-              <FrameObject key={i} tmp={frame} transform={tfTree[frame]} />
-            ))
-          : null}
-      </Suspense>
-
-      {displayGrid ? (
-        isPolar ? (
-          <polarGridHelper args={[10, 16, 8, 64, "white", "gray"]} />
-        ) : (
-          <gridHelper args={[20, 20, `white`, `gray`]} />
-        )
-      ) : null}
-    </Canvas>
-  );
-}
-
-export default RobotScene;
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
