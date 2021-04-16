@@ -9,7 +9,7 @@ module.exports = {
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
-    "@storybook/preset-create-react-app"
+    // "@storybook/preset-create-react-app"
   ],
   webpackFinal: async (config, { configType }) => {
     // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
@@ -18,9 +18,9 @@ module.exports = {
 
     // Make whatever fine-grained changes you need
     config.module.rules.push({
-      test: /\.(glb|gltf)$/,
-      use: ['file-loader'],
-      include: path.resolve(__dirname, '../'),
+      test: /\.(glb)$/,
+      use: 'file-loader',
+      include: path.resolve(__dirname, '../')
     });
 
     // Return the altered config
