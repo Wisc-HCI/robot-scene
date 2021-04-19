@@ -5,12 +5,7 @@ import { Canvas } from "@react-three/fiber";
 import { ResizeObserver } from "@juggle/resize-observer";
 import CameraControls from "./CameraControls";
 import SceneObject from "./SceneObject";
-
-import { STANDARD_MESHES } from "./Util/StandardMeshes";
 import FrameObject from "./FrameObject";
-import MeshObject from "./MeshObject";
-import NaoHead from "./MeshObject/NaoHead";
-// import NaoHeadMesh from "./MeshObject/meshes/NewNaoHead.glb";
 
 function RobotScene(props) {
   // For the objects in props.content, render the objects.
@@ -23,9 +18,6 @@ function RobotScene(props) {
   content = content === undefined ? [] : content;
   tfTree = tfTree === undefined ? {world: {translation: { x: 0, y: 0, z: 0 }, rotation: { w: 1, x: 0, y: 0, z: 0 }}} : tfTree;
 
-  // TODO: apply the transforms to the objects
-  // based on props.tftree
-  // (feel free to structure tftree in any easy/obvious way)
   return (
     <Canvas
       style={{ background: backgroundColor }}
@@ -34,41 +26,26 @@ function RobotScene(props) {
       <CameraControls />
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
-      <Suspense fallback={null}>
-        <NaoHead/>
-        {content.map((objData, i) => {
-          if (STANDARD_MESHES.indexOf(objData.type) > -1) {
-            return (
-              <SceneObject
-                key={i}
-                type={objData.type}
-                scale={objData.scale}
-                position={objData.position}
-                rotation={objData.rotation}
-                color={objData.color}
-                transform={tfTree[objData.frame]}
-              />
-            );
-          } else {
-            return (
-              <MeshObject
-                key={i}
-                path={objData.path}
-                scale={objData.scale}
-                position={objData.position}
-                rotation={objData.rotation}
-                color={objData.color}
-                transform={tfTree[objData.frame]}
-              />
-            );
-          }
-        })}
 
-        {displayTfs
-          ? Object.keys(tfTree).map((frame, i) => (
+      <Suspense fallback={null}>
+        {content.map((objData, i) => (
+          <SceneObject
+            key={i}
+            type={objData.type}
+            path={objData.path}
+            scale={objData.scale}
+            position={objData.position}
+            rotation={objData.rotation}
+            color={objData.color}
+            transform={tfTree[objData.frame]}
+          />
+        ))}
+
+        {displayTfs &&
+          Object.keys(tfTree).map((frame, i) => (
               <FrameObject key={i} tmp={frame} transform={tfTree[frame]} />
-            ))
-          : null}
+          ))
+        }
       </Suspense>
 
       {displayGrid ? (
@@ -154,16 +131,16 @@ const objects = [
       scale: { x: 3, y: 1, z: 3 },
       highlighted: false
     },
-    // {
-    //   type: "mesh",
-    //   path: "/HeadPitch.dae",
-    //   name: "Nao Head",
-    //   frame: "world",
-    //   position: { x: 0, y: -1, z: 0 },
-    //   rotation: { w: 1, x: 0, y: 0, z: 0 },
-    //   scale: { x: 0.01, y: 0.01, z: 0.01 },
-    //   highlighted: true
-    // },
+    {
+      type: "mesh",
+      path: "package://nao_meshes/meshes/V40/HeadPitch.dae",
+      name: "Nao Head",
+      frame: "world",
+      position: { x: 0, y: -1, z: 0 },
+      rotation: { w: 1, x: 0, y: 0, z: 0 },
+      scale: { x: 0.01, y: 0.01, z: 0.01 },
+      highlighted: true
+    },
     // {
     //   type: "mesh",
     //   path: "/test.stl",

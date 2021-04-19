@@ -1,47 +1,49 @@
-import React, { useRef, useState } from "react";
-
-import { useFrame } from "@react-three/fiber";
-
-import { StandardMeshesLookup } from "./Util/StandardMeshes";
-import { rgbToHex } from "./Util/ColorConversion";
+import React, { useRef } from 'react'
+import { useFrame, group } from "@react-three/fiber";
 import { frameUpdate } from "./Util/Transforms";
+import { rgbToHex } from './Util/ColorConversion';
+import { StandardMeshesLookup, STANDARD_MESHES } from "./Util/StandardMeshes";
+import MeshLookup from './MeshLookup';
 
-function SceneObject(props) {
-  const mesh = useRef();
+export default function SceneObject(props) {
+  const group = useRef();
+  const { type, path, color, scale, selected } = props;
 
-  const { type, color, scale } = props;
+  let content = [];
 
-  const geometry = StandardMeshesLookup(type);
+  if (STANDARD_MESHES.indexOf(type) > -1) {
+    content = [{geometry:StandardMeshesLookup(type),material:null,scale:[1,1,1]}]
+  } else {
+    content = MeshLookup(path);
+  }
 
-  // Set up state for the hovered and active state
-  const [hovered, setHover] = useState(false);
-  const [active, setActive] = useState(false);
+  console.log(content)
 
-  // Rotate mesh every frame, this is outside of React without overhead
   useFrame(() => {
     const { position, rotation, transform } = props;
-    frameUpdate(mesh, position, rotation, transform);
+    frameUpdate(group, position, rotation, transform);
   });
 
-  // For highlighted objects, something like this might be nice:
-  // https://threejs.org/examples/?q=out#webgl_postprocessing_outline
-
   return (
-    <mesh
-      {...props}
-      ref={mesh}
-      scale={[scale.x, scale.y, scale.z]}
-      onPointerOver={(event) => setHover(true)}
-      onPointerOut={(event) => setHover(false)}
-      geometry={geometry}
-    >
-      <meshStandardMaterial
-        transparent
-        opacity={color.a}
-        color={rgbToHex(color)}
-      />
-    </mesh>
-  );
+    <group ref={group} dispose={null}>
+      {content.map((data)=>{
+        const usedScale = scale ? [scale.x, scale.y, scale.z] : data.scale;
+        if (props.color === undefined) {
+          return (
+            <mesh geometry={data.geometry} material={data.material} scale={usedScale} />
+          )
+        } else {
+          return (
+            <mesh geometry={data.geometry} scale={usedScale}>
+              <meshStandardMaterial
+                transparent
+                opacity={color.a}
+                color={rgbToHex(color)}
+              />
+            </mesh>
+          )
+        }
+      })}
+    </group>
+  )
 }
-
-export default SceneObject;
