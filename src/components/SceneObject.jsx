@@ -17,24 +17,28 @@ export default function SceneObject(props) {
     content = MeshLookup(path);
   }
 
-  console.log(content)
-
   useFrame(() => {
     const { position, rotation, transform } = props;
     frameUpdate(group, position, rotation, transform);
   });
 
+  // TODO: add TransformControls:
+  // https://github.com/mrdoob/three.js/blob/master/examples/misc_controls_transform.html
+
+  // TODO: add highlighing:
+  // https://github.com/mrdoob/three.js/blob/master/examples/webgl_postprocessing_outline.html
+
   return (
     <group ref={group} dispose={null}>
-      {content.map((data)=>{
+      {content.map((data,i)=>{
         const usedScale = scale ? [scale.x, scale.y, scale.z] : data.scale;
         if (props.color === undefined) {
           return (
-            <mesh geometry={data.geometry} material={data.material} scale={usedScale} />
+            <mesh key={`${type ? type : path}_${i}`} geometry={data.geometry} material={data.material} scale={usedScale} />
           )
         } else {
           return (
-            <mesh geometry={data.geometry} scale={usedScale}>
+            <mesh  key={`${type ? type : path}_${i}`} geometry={data.geometry} scale={usedScale}>
               <meshStandardMaterial
                 transparent
                 opacity={color.a}
