@@ -4508,4 +4508,4 @@ export default function Model(props) {
   ]
 }
 
-useGLTF.preload('/MK2Printer.glb')
+useGLTF.preload(MK2PrinterFile)
