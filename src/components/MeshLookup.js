@@ -30,7 +30,7 @@ import RHipRoll from  './MeshLoaders/Nao/RHipRoll';
 import RHipYawPitch from  './MeshLoaders/Nao/RHipYawPitch';
 import RKneePitch from  './MeshLoaders/Nao/RKneePitch';
 import RShoulderRoll from  './MeshLoaders/Nao/RShoulderRoll';
-import RShoulderPitch from  './MeshLoaders/Nao/RShoudlerPitch';
+import RShoulderPitch from  './MeshLoaders/Nao/RShoulderPitch';
 import RThumb1 from  './MeshLoaders/Nao/RThumb1';
 import RThumb2 from  './MeshLoaders/Nao/RThumb2';
 import RWristYaw from  './MeshLoaders/Nao/RWristYaw';
