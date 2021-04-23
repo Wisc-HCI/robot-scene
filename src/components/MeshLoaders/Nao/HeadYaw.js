@@ -6,7 +6,7 @@ import HeadYawMesh from '../../Meshes/Nao/HeadYaw.glb';
 
 export default function HeadYaw(props) {
   const { nodes, materials } = useGLTF(HeadYawMesh);
-  return [{geometry:nodes.HeadYaw.geometry,material:materials.HeadYawuv,scale:[0.01, 0.01, 0.01]}]
+  return [{type:'raw',geometry:nodes.HeadYaw.geometry,material:materials.HeadYawuv,scale:[0.01, 0.01, 0.01]}]
 }
 
 useGLTF.preload(HeadYawMesh)

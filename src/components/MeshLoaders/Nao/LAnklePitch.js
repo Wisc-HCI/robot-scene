@@ -6,7 +6,7 @@ import LAnklePitchMesh from '../../Meshes/Nao/LAnklePitch.glb';
 
 export default function Model(props) {
   const { nodes, materials } = useGLTF(LAnklePitchMesh);
-  return [{geometry:nodes.LAnklePitch.geometry,material:materials.RanklePitchUV,scale:[0.01, 0.01, 0.01]}]
+  return [{type:'raw',geometry:nodes.LAnklePitch.geometry,material:materials.RanklePitchUV,scale:[0.01, 0.01, 0.01]}]
 }
 
 useGLTF.preload(LAnklePitchMesh)
