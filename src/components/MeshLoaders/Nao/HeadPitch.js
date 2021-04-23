@@ -7,7 +7,7 @@ import HeadPitchMesh from '../../Meshes/Nao/HeadPitch.glb';
 
 export default function Model(props) {
   const { nodes, materials } = useGLTF(HeadPitchMesh);
-  return [{geometry:nodes.HeadPitch.geometry,material:materials['HeadPitchUV.001'],scale:[0.01, 0.01, 0.01]}]
+  return [{type:'raw',geometry:nodes.HeadPitch.geometry,material:materials['HeadPitchUV.001'],scale:[0.01, 0.01, 0.01]}]
 }
 
 useGLTF.preload(HeadPitchMesh)
