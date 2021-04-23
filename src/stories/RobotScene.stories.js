@@ -86,7 +86,7 @@ export const MeshDemo = () => {
         frame: "world",
         position: { x: 0, y: 2, z: -1 },
         rotation: { w: 1, x: 0, y: 0, z: 0 },
-        scale: { x: 0.01, y: 0.01, z: 0.01 },
+        scale: { x: 1, y: 1, z: 1 },
         highlighted: true
       },
       {
@@ -96,9 +96,28 @@ export const MeshDemo = () => {
         frame: "world",
         position: { x: 1, y: 0.5, z: 1 },
         rotation: { w: 1, x: 0, y: 0, z: 0 },
-        scale: { x: 0.01, y: 0.01, z: 0.01 },
+        scale: { x: 1, y: 1, z: 1 },
         highlighted: true
       },
+      // {
+      //   type: "mesh",
+      //   path: "package://app/meshes/MK2Printer.obj",
+      //   name: "3d Printer",
+      //   frame: "world",
+      //   position: { x: 1, y: 0.5, z: 1 },
+      //   rotation: { w: 1, x: 0, y: 0, z: 0 },
+      //   scale: { x: 0.1, y: 0.1, z: 0.1 },
+      //   highlighted: true
+      // },
+      {
+        type: "line",
+        name: "Line",
+        frame: "world",
+        vertices: [{position:{x:1,y:2,z:0},color:{r:255,g:0,b:0}},
+                   {position:{x:2,y:1,z:1},color:{r:0,g:255,b:0}},
+                   {position:{x:2,y:2,z:1},color:{r:0,g:0,b:255}}],
+        highlighted: false
+      }
   ]
 
   return (
