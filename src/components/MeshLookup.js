@@ -79,4 +79,6 @@ const MeshLookupTable = {
   'package://app/meshes/MK2Printer.obj':MK2Printer
 }
 
-export default function MeshLookup(path) {return MeshLookupTable[path]()}
+const MeshLookup = (path) => MeshLookupTable[path]();
+
+export { MeshLookupTable, MeshLookup };
