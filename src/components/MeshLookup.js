@@ -2,7 +2,7 @@ import HeadPitch from './MeshLoaders/Nao/HeadPitch';
 import HeadYaw from './MeshLoaders/Nao/HeadYaw';
 import LAnklePitch from './MeshLoaders/Nao/LAnklePitch';
 import LAnkleRoll from './MeshLoaders/Nao/LAnkleRoll';
-import LELbowRoll from './MeshLoaders/Nao/LELbowRoll';
+import LElbowRoll from './MeshLoaders/Nao/LElbowRoll';
 import LFinger11 from './MeshLoaders/Nao/LFinger11';
 import LFinger12 from './MeshLoaders/Nao/LFinger12';
 import LFinger13 from './MeshLoaders/Nao/LFinger13';
@@ -42,7 +42,7 @@ const MeshLookupTable = {
   'package://nao_meshes/meshes/V40/HeadYaw.dae': HeadYaw,
   'package://nao_meshes/meshes/V40/LAnklePitch.dae': LAnklePitch,
   'package://nao_meshes/meshes/V40/LAnkleRoll.dae': LAnkleRoll,
-  'package://nao_meshes/meshes/V40/LELbowRoll.dae': LELbowRoll,
+  'package://nao_meshes/meshes/V40/LElbowRoll.dae': LElbowRoll,
   'package://nao_meshes/meshes/V40/LFinger11.dae': LFinger11,
   'package://nao_meshes/meshes/V40/LFinger12.dae': LFinger12,
   'package://nao_meshes/meshes/V40/LFinger13.dae':LFinger13,
