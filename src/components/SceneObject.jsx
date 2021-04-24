@@ -8,7 +8,7 @@ import { StandardMeshesLookup, STANDARD_MESHES } from "./Util/StandardMeshes";
 import { MeshLookup, MeshLookupTable } from './MeshLookup';
 
 const MeshConverter = (node,idx,materialOverride,opacity) => {
-  console.log(node);
+  // console.log(node);
   if (node.type === 'group') {
     return (
       <group key={idx} position={node.position} rotation={node.rotation} scale={node.scale}>
@@ -30,26 +30,27 @@ const MeshConverter = (node,idx,materialOverride,opacity) => {
 }
 
 export const SceneObject = React.forwardRef((props, ref) => {
-  const { type, path, color, scale, vertices, highlighted } = props;
-  console.log(`${type} ${path ? path : ''}`)
+  const { shape, color, scale, vertices, highlighted } = props;
+
   let content = [];
   const materialOverride = color ? MaterialMaker(color.r, color.g, color.b, color.a) : undefined;
   const opacity = color ? color.a : 1.0
 
-  if (STANDARD_MESHES.indexOf(type) > -1) {
-    content = [{type:'raw',geometry:StandardMeshesLookup(type),material:materialOverride,scale:[1,1,1]}]
-  } else if (type === 'line') {
+  if (shape in MeshLookupTable) {
+    content = MeshLookup(shape);
+  } else if (shape === 'line') {
     content = []
-  } else if (path in MeshLookupTable >= 0) {
-    content = MeshLookup(path);
   }
 
   useFrame(() => {
-    const { type, position, rotation, transform } = props;
-    if (type === 'line') {
+    const { shape, position, rotation, transform, scale } = props;
+    if (shape === 'line') {
       frameUpdate(ref, {x:0,y:0,z:0}, {w:1,x:0,y:0,z:0}, transform);
     } else {
       frameUpdate(ref, position, rotation, transform);
+    }
+    if (scale) {
+      ref.current.scale.copy(scale);
     }
   });
 
@@ -57,9 +58,9 @@ export const SceneObject = React.forwardRef((props, ref) => {
   // https://drei.pmnd.rs/?path=/story/controls-transformcontrols--transform-controls-lock-st
 
   return (
-    <group ref={ref} dispose={null} scale={scale ? [scale.x,scale.y,scale.z] : undefined}>
+    <group ref={ref} dispose={null}>
       {content.map((node,i)=>MeshConverter(node,i,materialOverride,opacity))}
-      {(type === 'line') && (
+      {(shape === 'line') && (
         <Line
           points={vertices.map(vertex=>([vertex.position.x,vertex.position.y,vertex.position.z]))}
           color='white'

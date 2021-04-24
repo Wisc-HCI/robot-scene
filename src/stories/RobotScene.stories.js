@@ -29,7 +29,7 @@ export const MeshDemo = () => {
   }
   const content = [
     {
-        type: "cube",
+        shape: "cube",
         name: "My Cube",
         frame: "world",
         position: { x: 0, y: 0, z: 0 },
@@ -39,7 +39,7 @@ export const MeshDemo = () => {
         highlighted: false
       },
       {
-        type: "sphere",
+        shape: "sphere",
         name: "My Sphere",
         frame: "world",
         position: { x: 0, y: 2, z: 0 },
@@ -50,7 +50,7 @@ export const MeshDemo = () => {
       },
       // See here about rotating the cylinder to match  the representation from ROS:
       {
-        type: "cylinder",
+        shape: "cylinder",
         name: "My Cylinder",
         frame: "other2",
         position: { x: 0, y: 0, z: 0 },
@@ -60,28 +60,37 @@ export const MeshDemo = () => {
         highlighted: false
       },
       {
-        type: "arrow",
+        shape: "flatarrow",
         name: "My Arrow 1",
+        frame: "world",
+        position: { x: 0, y: 0, z: 0 },
+        rotation: { w: 1, x: 0, y: 0, z: 0 },
+        color: { r: 70, g: 70, b: 250, a: 0.5 },
+        scale: { x: 1, y: 1, z: 1 },
+        highlighted: false
+      },
+      {
+        shape: "arrow",
+        name: "My Arrow 2",
         frame: "other1",
         position: { x: 1, y: 0, z: 0 },
         rotation: { w: -0.604, x: -0.002, y: -0.756, z: 0.252 },
         color: { r: 255, g: 70, b: 250, a: 0.5 },
-        scale: { x: 3, y: 1, z: 3 },
+        scale: { x: 1, y: 1, z: 1 },
         highlighted: false
       },
       {
-        type: "arrow",
-        name: "My Arrow 2",
+        shape: "arrow",
+        name: "My Arrow 3",
         frame: "other3",
-        position: { x: 1, y: 1, z: 0 },
+        position: { x: 1, y: 0, z: 0 },
         rotation: { w: 1, x: 0, y: 0, z: 0 },
         color: { r: 255, g: 70, b: 250, a: 0.5 },
-        scale: { x: 3, y: 1, z: 3 },
+        scale: { x: 1, y: 2, z: 1 },
         highlighted: false
       },
       {
-        type: "mesh",
-        path: "package://nao_meshes/meshes/V40/HeadPitch.dae",
+        shape: "package://nao_meshes/meshes/V40/HeadPitch.dae",
         name: "Nao Head",
         frame: "world",
         position: { x: 0, y: 2, z: -1 },
@@ -90,8 +99,7 @@ export const MeshDemo = () => {
         highlighted: true
       },
       {
-        type: "mesh",
-        path: "package://nao_meshes/meshes/V40/LAnkleRoll.dae",
+        shape: "package://nao_meshes/meshes/V40/LAnkleRoll.dae",
         name: "Nao Ankle",
         frame: "world",
         position: { x: 1, y: 0.5, z: 1 },
@@ -99,18 +107,17 @@ export const MeshDemo = () => {
         scale: { x: 1, y: 1, z: 1 },
         highlighted: true
       },
-      // {
-      //   type: "mesh",
-      //   path: "package://app/meshes/MK2Printer.obj",
-      //   name: "3d Printer",
-      //   frame: "world",
-      //   position: { x: 1, y: 0.5, z: 1 },
-      //   rotation: { w: 1, x: 0, y: 0, z: 0 },
-      //   scale: { x: 0.1, y: 0.1, z: 0.1 },
-      //   highlighted: true
-      // },
       {
-        type: "line",
+        shape: "package://app/meshes/MK2Printer.obj",
+        name: "3d Printer",
+        frame: "world",
+        position: { x: -3, y: 0.32, z: -3 },
+        rotation: { w: 1, x: 0, y: 0, z: 0 },
+        scale: { x: 1, y: 1, z: 1 },
+        highlighted: true
+      },
+      {
+        shape: "line",
         name: "Line",
         frame: "world",
         vertices: [{position:{x:1,y:2,z:0},color:{r:255,g:0,b:0}},

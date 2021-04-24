@@ -2,16 +2,9 @@ import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-// import {
-//   EffectComposer,
-//   Outline,
-//   SelectiveBloom
-// } from "@react-three/postprocessing";
-// import { BlendFunction, Resizer, KernelSize } from "postprocessing";
 import { ResizeObserver } from "@juggle/resize-observer";
 import { SceneObject } from "./SceneObject";
 import FrameObject from "./FrameObject";
-import { Lightmap } from "./Util/Lightmap";
 import { AmbientLight, DirectionalLight } from './Util/Light';
 
 function RobotScene(props) {
@@ -60,19 +53,18 @@ function RobotScene(props) {
 
 
       <Suspense fallback={null}>
-        <Lightmap position={[50, 150, 50]} {...lightInfo}>
-          <mesh scale={1000} position={[0, -0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+
+         <mesh receiveShadow scale={1000} position={[0, -0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
            <planeGeometry />
            <meshPhongMaterial color={planeColor}/>
          </mesh>
-          {content.map((objData, i) => (
-            <SceneObject
-              key={i}
-              transform={tfTree[objData.frame]}
-              {...objData}
-            />
-          ))}
-        </Lightmap>
+        {content.map((objData, i) => (
+          <SceneObject
+            key={i}
+            transform={tfTree[objData.frame]}
+            {...objData}
+          />
+         ))}
 
 
 
@@ -97,89 +89,6 @@ function RobotScene(props) {
   );
 }
 
-const defaultTree = {
-  world: {
-      translation: { x: 0, y: 0, z: 0 },
-      rotation: { w: 1, x: 0, y: 0, z: 0 }
-  },
-  other1: {
-    translation: { x: 1, y: 0, z: 0 },
-    rotation: { w: 1, x: 0, y: 0, z: 0 }
-  },
-  other2: {
-    translation: { x: -2, y: 0, z: 2 },
-    rotation: { w: 0.525322, x: 0.8509035, y: 0, z: 0 }
-  },
-  other3: {
-    translation: { x: 2, y: 0, z: 0 },
-    rotation: { w: -0.604, x: -0.002, y: -0.756, z: 0.252 }
-  }
-}
-
-const defaultContent = [
-  {
-      type: "cube",
-      name: "My Cube",
-      frame: "world",
-      position: { x: 0, y: 0, z: 0 },
-      rotation: { w: 1, x: 0, y: 0, z: 0 },
-      color: { r: 255, g: 50, b: 10, a: 0.75 },
-      scale: { x: 0.5, y: 0.5, z: 0.5 },
-      highlighted: false
-    },
-    {
-      type: "sphere",
-      name: "My Sphere",
-      frame: "world",
-      position: { x: 0, y: 2, z: 0 },
-      rotation: { w: 1, x: 0, y: 0, z: 0 },
-      color: { r: 255, g: 255, b: 70, a: 0.25 },
-      scale: { x: 1, y: 2, z: 1 },
-      highlighted: false
-    },
-    // See here about rotating the cylinder to match  the representation from ROS:
-    {
-      type: "cylinder",
-      name: "My Cylinder",
-      frame: "other2",
-      position: { x: 0, y: 0, z: 0 },
-      rotation: { w: 1, x: 0, y: 0, z: 0 },
-      color: { r: 10, g: 200, b: 235, a: 0.5 },
-      scale: { x: 1, y: 1, z: 1 },
-      highlighted: false
-    },
-    {
-      type: "arrow",
-      name: "My Arrow 1",
-      frame: "other1",
-      position: { x: 1, y: 0, z: 0 },
-      rotation: { w: -0.604, x: -0.002, y: -0.756, z: 0.252 },
-      color: { r: 255, g: 70, b: 250, a: 0.5 },
-      scale: { x: 3, y: 1, z: 3 },
-      highlighted: false
-    },
-    {
-      type: "arrow",
-      name: "My Arrow 2",
-      frame: "other3",
-      position: { x: 1, y: 1, z: 0 },
-      rotation: { w: 1, x: 0, y: 0, z: 0 },
-      color: { r: 255, g: 70, b: 250, a: 0.5 },
-      scale: { x: 3, y: 1, z: 3 },
-      highlighted: false
-    },
-    {
-      type: "mesh",
-      path: "package://nao_meshes/meshes/V40/HeadPitch.dae",
-      name: "Nao Head",
-      frame: "world",
-      position: { x: 0, y: 2, z: -1 },
-      rotation: { w: 1, x: 0, y: 0, z: 0 },
-      scale: { x: 0.01, y: 0.01, z: 0.01 },
-      highlighted: true
-    },
-]
-
 RobotScene.propTypes = {
   content: PropTypes.array,
   tfTree: PropTypes.object,
@@ -191,8 +100,8 @@ RobotScene.propTypes = {
 };
 
 RobotScene.defaultProps = {
-  content: defaultContent,
-  tfTree: defaultTree,
+  content: [],
+  tfTree: {},
   displayTfs: true,
   displayGrid: true,
   isPolar: false,

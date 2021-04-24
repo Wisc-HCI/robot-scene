@@ -128,3 +128,8 @@ export const StandardMeshesLookup = (meshName, params) => {
 
   return geometry;
 };
+
+export const Cube = () => ([{type:'raw',geometry:BOX_GEOM({}),scale:[1,1,1]}])
+export const Sphere = () => ([{type:'raw',geometry:SPHERE_GEOM({}),scale:[1,1,1]}])
+export const Cylinder = () => ([{type:'raw',geometry:CYLINDER_GEOM({}),scale:[1,1,1]}])
+export const Arrow = () => ([{type:'raw',geometry:ARROW_GEOM({}),scale:[1,1,1]}])

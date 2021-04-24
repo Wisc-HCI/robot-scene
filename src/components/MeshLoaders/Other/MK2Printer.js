@@ -18,7 +18,7 @@ export default function Model(props) {
             0
           ],
           scale: [
-            0, 0, 0
+            0.01, 0.01, 0.01
           ],
           children: [
             {
