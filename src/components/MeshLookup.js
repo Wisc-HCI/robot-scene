@@ -37,8 +37,17 @@ import RWristYaw from  './MeshLoaders/Nao/RWristYaw';
 import Torso from  './MeshLoaders/Nao/Torso';
 
 import MK2Printer from './MeshLoaders/Other/MK2Printer';
+import FlatArrow from './MeshLoaders/Other/Arrow';
+
+
+import { Sphere, Cube, Cylinder, Arrow } from './Util/StandardMeshes';
 
 const MeshLookupTable = {
+  'sphere':Sphere,
+  'cube':Cube,
+  'cylinder':Cylinder,
+  'arrow':Arrow,
+  'flatarrow':FlatArrow,
   'package://nao_meshes/meshes/V40/HeadPitch.dae': HeadPitch,
   'package://nao_meshes/meshes/V40/HeadYaw.dae': HeadYaw,
   'package://nao_meshes/meshes/V40/LAnklePitch.dae': LAnklePitch,
