@@ -36,6 +36,7 @@ import RThumb2 from  './MeshLoaders/Nao/RThumb2';
 import RWristYaw from  './MeshLoaders/Nao/RWristYaw';
 import Torso from  './MeshLoaders/Nao/Torso';
 
+import MK2Printer from './MeshLoaders/Other/MK2Printer';
 
 const MeshLookupTable = {
   'package://nao_meshes/meshes/V40/HeadPitch.dae': HeadPitch,
@@ -74,7 +75,10 @@ const MeshLookupTable = {
   'package://nao_meshes/meshes/V40/RThumb1.dae': RThumb1,
   'package://nao_meshes/meshes/V40/RThumb2.dae': RThumb2,
   'package://nao_meshes/meshes/V40/RWristYaw.dae': RWristYaw,
-  'package://nao_meshes/meshes/V40/Torso.dae': Torso
+  'package://nao_meshes/meshes/V40/Torso.dae': Torso,
+  'package://app/meshes/MK2Printer.obj':MK2Printer
 }
 
-export default function MeshLookup(path) {return MeshLookupTable[path]()}
+const MeshLookup = (path) => MeshLookupTable[path]();
+
+export { MeshLookupTable, MeshLookup };

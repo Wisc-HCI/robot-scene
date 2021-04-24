@@ -7,21 +7,41 @@ import { MaterialMaker } from './Util/MaterialMaker';
 import { StandardMeshesLookup, STANDARD_MESHES } from "./Util/StandardMeshes";
 import { MeshLookup, MeshLookupTable } from './MeshLookup';
 
+const MeshConverter = (node,idx,materialOverride,opacity) => {
+  console.log(node);
+  if (node.type === 'group') {
+    return (
+      <group key={idx} position={node.position} rotation={node.rotation} scale={node.scale}>
+        {node.children.map((child,i)=>MeshConverter(child,i,materialOverride,opacity))}
+      </group>
+    )
+  } else {
+    return (
+      <mesh
+        key={idx}
+        geometry={node.geometry}
+        material={materialOverride ? materialOverride : node.material}
+        scale={node.scale}
+        castShadow={opacity === 1.0}
+        receiveShadow={opacity === 1.0 }
+      />
+    )
+  }
+}
 
 export const SceneObject = React.forwardRef((props, ref) => {
   const { type, path, color, scale, vertices, highlighted } = props;
-
+  console.log(`${type} ${path ? path : ''}`)
   let content = [];
+  const materialOverride = color ? MaterialMaker(color.r, color.g, color.b, color.a) : undefined;
+  const opacity = color ? color.a : 1.0
 
   if (STANDARD_MESHES.indexOf(type) > -1) {
-    content = [{type:'raw',geometry:StandardMeshesLookup(type),material:MaterialMaker(color.r, color.g, color.b, color.a),scale:[1,1,1]}]
-  } else if (path in MeshLookupTable >= 0) {
-    content = MeshLookupTable[path]();
-    if (color && content.type === 'raw') {
-      content = content.map((mesh)=>({...mesh, material: MaterialMaker(color.r, color.g, color.b, color.a)}))
-    }
-  } else {
+    content = [{type:'raw',geometry:StandardMeshesLookup(type),material:materialOverride,scale:[1,1,1]}]
+  } else if (type === 'line') {
     content = []
+  } else if (path in MeshLookupTable >= 0) {
+    content = MeshLookup(path);
   }
 
   useFrame(() => {
@@ -37,27 +57,9 @@ export const SceneObject = React.forwardRef((props, ref) => {
   // https://drei.pmnd.rs/?path=/story/controls-transformcontrols--transform-controls-lock-st
 
   return (
-    <group ref={ref} dispose={null}>
-      {content.map((data,i)=>{
-        if (data.type === 'raw') {
-            return (
-              <mesh
-                key={`${type ? type : path}_${i}`}
-                geometry={data.geometry}
-                material={data.material}
-                scale={scale ? [scale.x, scale.y, scale.z] : data.scale}
-                castShadow={color ? color.a === 1.0 : true}
-                receiveShadow={color ? color.a === 1.0 : true}
-              />
-            )
-        } else {
-          return (
-            <React.Fragment key={`${type ? type : path}_${i}`}>
-              {data.group}
-            </React.Fragment>
-          )
-        }})}
-      {(type === 'xline') && (
+    <group ref={ref} dispose={null} scale={scale ? [scale.x,scale.y,scale.z] : undefined}>
+      {content.map((node,i)=>MeshConverter(node,i,materialOverride,opacity))}
+      {(type === 'line') && (
         <Line
           points={vertices.map(vertex=>([vertex.position.x,vertex.position.y,vertex.position.z]))}
           color='white'
