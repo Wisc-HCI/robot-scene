@@ -1,3 +1,5 @@
-import { RobotScene } from './RobotScene';
+import RobotScene from './RobotScene';
+import useRobotSceneStore from './RobotSceneStore';
+import useIncStore from './IncStore';
 
-export { RobotScene }
+export { RobotScene, useRobotSceneStore, useIncStore }

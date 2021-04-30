@@ -1,45 +1,61 @@
-import React, { Suspense } from 'react';
-import PropTypes from 'prop-types';
-import { Canvas } from "@react-three/fiber";
+import React, { Suspense, useRef } from 'react';
+// import PropTypes from 'prop-types';
+import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
+import {
+  EffectComposer,
+  Outline,
+  SelectiveBloom
+} from "@react-three/postprocessing";
 import { ResizeObserver } from "@juggle/resize-observer";
-import { SceneObject } from "./SceneObject";
-import FrameObject from "./FrameObject";
+import SceneLine from "./SceneLine";
+import SceneItem from "./SceneItem";
+import useRobotSceneStore from './RobotSceneStore';
 import { AmbientLight, DirectionalLight } from './Util/Light';
 
-function RobotScene(props) {
+export default function RobotScene(props) {
   // For the objects in props.content, render the objects.
   // Those should be in the suspense element.
 
-  const lightInfo = {
-    intensity: { value: 1, min: 0, max: 1, step: 0.1 },
-    ambient: { value: 0.5, min: 0, max: 1, step: 0.1 },
-    radius: { value: 25, min: 0, max: 100, step: 1 },
-    blend: { value: 50, min: 1, max: 200, step: 1 }
-  };
+  const { displayTfs, displayGrid, isPolar, backgroundColor, planeColor } = props;
 
-  const { displayTfs, displayGrid, isPolar, children } = props;
-  let { backgroundColor, planeColor, content, tfTree } = props;
+  const {items, lines, tfs} = useRobotSceneStore(state => ({items:state.items, lines:state.lines, tfs:state.tfs}),
+    // Custom diff-calculation to avoid unnecessary re-renders
+    // (oldState, newState)=>(
+    //   (Object.keys(oldState.items) === Object.keys(newState.items)) &&
+    //   (Object.keys(oldState.lines) === Object.keys(newState.lines)) && 
+    //   (Object.keys(oldState.tfs) === Object.keys(newState.tfs)) &&
+    //   (Object.keys(oldState.items).map((key)=>(oldState.items[key].highlighted)) === 
+    //    Object.keys(newState.items).map((key)=>(newState.items[key].highlighted)))
+    // )
+  );
 
-  backgroundColor = backgroundColor === undefined ? "#d0d0d0" : backgroundColor;
-  planeColor = planeColor === undefined ? "#c0c0c0" : planeColor;
-  content = content === undefined ? [] : content.map(data=>({...data, ref:React.createRef()}));
+  console.log(items)
 
-  const highlightedRefs = content.filter((data)=>(data.highlighted)).map((data)=>(data.ref));
-
-  tfTree = tfTree === undefined ? {world: {translation: { x: 0, y: 0, z: 0 }, rotation: { w: 1, x: 0, y: 0, z: 0 }}} : tfTree;
+  const highlightedRefs = Object.items(items).filter((data)=>(data.highlighted)).map((data)=>(data.ref));
 
   const ambientLightRef = React.createRef();
   const directionalLightRef = React.createRef();
+  const orbitControls = React.createRef();
+
+  useFrame(() => {
+    // Outside of react rendering, adjust the positions of all tfs.
+    Object.items(tfs).forEach(tf=>{
+      tf.ref.current.position.set(tf.translation.x,tf.translation.y,tf.translation.z);
+      tf.ref.current.quaternion.set(tf.rotation.x,tf.rotation.y,tf.rotation.z,tf.rotation.w);
+    })
+  });
+
+  console.log('re-rendering');
 
   return (
     <Canvas
       colorManagement
       shadows
-      style={{ background: backgroundColor }}
+      style={{ background: backgroundColor ? backgroundColor : "#d0d0d0" }}
       resize={{ polyfill: ResizeObserver }}
     >
-      <OrbitControls />
+      <OrbitControls ref={orbitControls}/>
       <AmbientLight ref={ambientLightRef} />
       <DirectionalLight
         ref={directionalLightRef}
@@ -48,65 +64,74 @@ function RobotScene(props) {
         intensity={0.5}
         color="white"
       />
-      <color attach="background" args={[backgroundColor]} />
-      <fog attach="fog" args={[backgroundColor, 60, 400]} />
+      <color attach="background" args={[backgroundColor ? backgroundColor : "#d0d0d0"]} />
+      <fog attach="fog" args={[backgroundColor ? backgroundColor : "#d0d0d0", 60, 400]} />
 
 
       <Suspense fallback={null}>
 
          <mesh receiveShadow scale={1000} position={[0, -0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
            <planeGeometry />
-           <meshPhongMaterial color={planeColor}/>
+           <meshPhongMaterial color={planeColor ? planeColor : "#c0c0c0"}/>
          </mesh>
-        {content.map((objData, i) => (
-          <SceneObject
-            key={i}
-            transform={tfTree[objData.frame]}
-            {...objData}
-          />
+         {Object.keys(tfs).map((key) => (
+           <group key={key} ref={tfs[key].ref} dispose={null}>
+             {displayTfs && (
+               <React.Fragment>
+                 <arrowHelper args={[{ x: 1, y: 0, z: 0 }, origin, 0.5, "#ff0000"]} />
+                 <arrowHelper args={[{ x: 0, y: 1, z: 0 }, origin, 0.5, "#00ff00"]} />
+                 <arrowHelper args={[{ x: 0, y: 0, z: 1 }, origin, 0.5, "#0000ff"]} />
+               </React.Fragment>
+             )}
+             {false && Object.keys(items).filter((key) => (items[key].frame === tf.name)).map((key) => (
+               <SceneItem
+                 key={key}
+                 itemKey={key}
+                 orbitControls={orbitControls}
+               />
+             ))}
+             {false && Object.keys(lines).filter((key) => (lines[key].frame === tf.name)).map((key) => (
+               <SceneLine
+                 key={key}
+                 itemKey={key}
+               />
+             ))}
+           </group>
          ))}
 
-
-
-        {displayTfs &&
-          Object.keys(tfTree).map((frame, i) => (
-              <FrameObject key={i} tmp={frame} transform={tfTree[frame]} />
-          ))
-        }
-
+        <EffectComposer>
+          <Outline selection={highlightedRefs} visibleEdgeColor="#ff70ff" edgeStrength={10} pulseSpeed={0.1} blur={true} />
+          <SelectiveBloom selection={highlightedRefs} lights={[ambientLightRef, directionalLightRef]}/>
+        </EffectComposer>
 
       </Suspense>
 
-      {displayGrid ? (
+
+
+      {displayGrid && (
         isPolar ? (
           <polarGridHelper args={[10, 16, 8, 64, "white", "gray"]} />
         ) : (
           <gridHelper args={[20, 20, `white`, `gray`]} />
         )
-      ) : null}
+      )}
 
     </Canvas>
   );
 }
 
-RobotScene.propTypes = {
-  content: PropTypes.array,
-  tfTree: PropTypes.object,
-  displayTfs: PropTypes.bool,
-  displayGrid: PropTypes.bool,
-  isPolar: PropTypes.bool,
-  backgroundColor: PropTypes.string,
-  planeColor: PropTypes.string
-};
+// RobotScene.propTypes = {
+//   displayTfs: PropTypes.bool,
+//   displayGrid: PropTypes.bool,
+//   isPolar: PropTypes.bool,
+//   backgroundColor: PropTypes.string,
+//   planeColor: PropTypes.string
+// };
 
-RobotScene.defaultProps = {
-  content: [],
-  tfTree: {},
-  displayTfs: true,
-  displayGrid: true,
-  isPolar: false,
-  backgroundColor: '#d0d0d0',
-  planeColor: '#c0c0c0'
-};
-
-export { RobotScene };
+// RobotScene.defaultProps = {
+//   displayTfs: true,
+//   displayGrid: true,
+//   isPolar: false,
+//   backgroundColor: '#d0d0d0',
+//   planeColor: '#c0c0c0'
+// };

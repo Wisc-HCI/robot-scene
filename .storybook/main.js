@@ -8,8 +8,7 @@ module.exports = {
   ],
   "addons": [
     "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-knobs"
+    "@storybook/addon-essentials"
     // "@storybook/preset-create-react-app"
   ],
   webpackFinal: async (config, { configType }) => {
@@ -23,13 +22,6 @@ module.exports = {
       use: 'file-loader',
       include: path.resolve(__dirname, '../')
     });
-
-    // config.resolve.mainFields = [
-    //   'es2016',
-    //   'browser',
-    //   'module',
-    //   'main',
-    // ]
 
     // Return the altered config
     return config;

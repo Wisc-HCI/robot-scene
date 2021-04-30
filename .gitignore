@@ -17,8 +17,13 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.vscode
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 **.swp
+log/COLCON_IGNORE
+log/latest
+log/latest_list
+log/list_2021-04-29_10-21-15/logger_all.log
