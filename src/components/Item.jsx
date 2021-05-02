@@ -1,10 +1,9 @@
-import React, { useState, createRef, useEffect } from 'react';
-import { Vector3, Quaternion } from 'three';
+import React, { useState, useRef, useEffect, forwardRef } from 'react';
 import { useFrame } from "@react-three/fiber";
-import { Line, TransformControls } from '@react-three/drei';
+import { TransformControls } from '@react-three/drei';
 import { MaterialMaker, GlowMaterial } from './Util/MaterialMaker';
 import { MeshLookup, MeshLookupTable } from './MeshLookup';
-import useRobotSceneStore from './RobotSceneStore';
+import useSceneStore from './SceneStore';
 
 const MeshConverter = (node,idx,materialOverride,opacity) => {
   // console.log(node);
@@ -28,12 +27,15 @@ const MeshConverter = (node,idx,materialOverride,opacity) => {
   }
 }
 
-export default function SceneObject(props) {
+export default forwardRef(function SceneItem(props,ref) {
   const { orbitControls, itemKey } = props;
 
-  const { canTranslate, canRotate, canScale } = useRobotSceneStore(state=>({canTranslate:state.items[itemKey].canTranslate,
-                                                                            canRotate:state.items[itemKey].canRotate,
-                                                                            canScale:state.items[itemKey].canScale}))
+  const { canTranslate, canRotate, canScale, color, shape } = 
+    useSceneStore(state=>({canTranslate:state.items[itemKey].canTranslate,
+                           canRotate:state.items[itemKey].canRotate,
+                           canScale:state.items[itemKey].canScale,
+                           shape:state.items[itemKey].shape,
+                           color:state.items[itemKey].color}))
 
   let editModes = ['inactive'];
   if (canTranslate) {
@@ -47,8 +49,9 @@ export default function SceneObject(props) {
   }
 
   const [editMode, setEditMode] = useState('inactive');
-  const [storedTransform, setStoredTransform] = useState({position:position,rotation:rotation,scale:scale});
-  const transformControls = createRef();
+  // const [storedTransform, setStoredTransform] = useState({position:position,rotation:rotation,scale:scale});
+  const transformControls = useRef();
+  const highlightRef = useRef()
 
   const cycleEditMode = () => {
     const current = editModes.indexOf(editMode);
@@ -81,10 +84,20 @@ export default function SceneObject(props) {
   })
 
   useFrame(() => {
-    const { position, rotation, scale } = props;
-    ref.current.scale.set(scale.x,scale.y,scale.z);
-    ref.current.position.set(position.x,position.y,position.z);
-    ref.current.quaternion.set(rotation.x,rotation.y,rotation.z,rotation.w);
+    // Outside of react rendering, adjust the positions of all tfs.
+    const item = useSceneStore.getState().items[itemKey];
+
+    ref.current.position.set(item.position.x, item.position.y, item.position.z);
+    ref.current.quaternion.set(
+      item.rotation.x,
+      item.rotation.y,
+      item.rotation.z,
+      item.rotation.w
+    );
+    ref.current.scale.set(item.scale.x, item.scale.y, item.scale.z);
+    if (highlightRef.current) {
+      highlightRef.current.position.set(item.position.x, item.position.y, item.position.z);
+    }
   });
 
   const getContent = (ghost) => {
@@ -106,4 +119,4 @@ export default function SceneObject(props) {
       )}
     </React.Fragment>
   )
-}
+})

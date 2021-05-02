@@ -1,19 +1,11 @@
-import create from 'zustand';
+import create from "zustand";
+import produce from "immer";
 import { createRef } from 'react';
-import produce from 'immer';
 
-const immer = config => (set, get, api) => 
-  config(fn => set(produce(fn)), get, api);
+const immer = (config) => (set, get, api) =>
+  config((fn) => set(produce(fn)), get, api);
 
-function objectMap(object, mapFn) {
-  return Object.keys(object).reduce(function(result, key) {
-    result[key] = mapFn(object[key])
-    return result
-  }, {})
-}
-
-const store = create(set => ({
-  // Initial States
+const store = (set) => ({
   items: {},
   lines: {},
   tfs: {},
@@ -22,17 +14,17 @@ const store = create(set => ({
   clearLines: () => set((state) => ({lines: {}})),
   clearTfs: () => set((state) => ({tfs: {}})),
   // Bulk Setting (This causes an entire re-render of the scene)
-  setItems: (items) => set((state) => ({items:objectMap(items,(item)=>({...item, ref:createRef()}))})),
-  setLines: (lines) => set((state) => ({lines:objectMap(lines,(line)=>({...line, ref:createRef()}))})),
-  setTfs: (tfs) => set((state) => ({tfs:objectMap(tfs,(tf)=>({...tf, ref:createRef()}))})),
+  setItems: (items) => set((state) => ({items:items})),
+  setLines: (lines) => set((state) => ({lines:lines})),
+  setTfs: (tfs) => set((state) => ({tfs:tfs})),
   // Removal by key
   removeItem: (key) => set((state) => {delete state.items[key]}),
   removeLine: (key) => set((state) => {delete state.lines[key]}),
   removeTf: (key) => set((state) => {delete state.tfs[key]}),
   // Adding items
-  addItem: (key, item) => set((state) => {state.items[key] = {...item, ref:createRef()}}),
-  addLine: (key, line) => set((state) => {state.lines[key] = {...line, ref:createRef()}}),
-  addTf: (key, tf) => set((state) => {state.tfs[key] = {...tf, ref:createRef()}}),
+  addItem: (key, item) => set((state) => {state.items[key] = item}),
+  addLine: (key, line) => set((state) => {state.lines[key] = line}),
+  addTf: (key, tf) => set((state) => {state.tfs[key] = tf}),
   // Item mutation
   setItemName: (key, name) => set((state) => {state.items[key].name = name}),
   setItemPosition: (key, x, y, z) => set((state) => {state.items[key].position = {x:x,y:y,z:z}}),
@@ -52,6 +44,8 @@ const store = create(set => ({
   // TF mutation
   setTfTranslation: (key, x, y, z) => set((state) => {state.tfs[key].translation = {x:x,y:y,z:z}}),
   setTfRotation: (key, w, x, y, z) => set((state) => {state.tfs[key].rotation = {w:w,x:x,y:y,z:z}})
-}))
+});
 
-export default useRobotSceneStore = create(immer(store));
+const useSceneStore = create(immer(store));
+
+export default useSceneStore;

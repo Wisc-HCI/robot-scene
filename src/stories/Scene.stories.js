@@ -1,10 +1,11 @@
 import React from 'react';
 
-import RobotScene from '../components/RobotScene';
-// import useRobotSceneStore from '../components/RobotSceneStore';
+import Scene from '../components/Scene';
+import useSceneStore from '../components/SceneStore';
 
 export default {
-  title: 'Mesh Demo'
+  title: 'Mesh Demo',
+  component: Viewer
 };
 
 const defaultTfs = {
@@ -149,7 +150,7 @@ const defaultItems = {
 
 const defaultLines = {
   line1: {
-    name: "Line",
+    name: "Line1",
     frame: "world",
     vertices: [{position:{x:1,y:2,z:0},color:{r:255,g:0,b:0}},
                {position:{x:2,y:1,z:1},color:{r:0,g:255,b:0}},
@@ -158,33 +159,28 @@ const defaultLines = {
   }
 }
 
+useSceneStore.setState({ tfs: defaultTfs, items: defaultItems, lines: defaultLines });
+
 function Viewer(props) {
-  // console.log(useRobotSceneStore);
-  
-  // const setItems = useRobotSceneStore(state => state.setItems);
-  // const setLines = useRobotSceneStore(state => state.setLines)
-  // const setTfs = useRobotSceneStore(state => state.setTfs)
-  
-  // setTfs(defaultTfs)
-  // setItems(defaultItems)
-  // setLines(defaultLines)
 
   return (
     <div style={{ height: "100vh", width: "100vw", padding: 0 }}>
-      <RobotScene {...props}/>
+      <Scene {...props}/>
     </div>
   )
-} 
+}
 
 const Story = (props) => (<Viewer {...props}/>)
 
-Story.args = {
+
+
+export const MeshDemo = Story.bind({});
+
+MeshDemo.args = {
   displayTfs:true,
   displayGrid:true,
   isPolar:false,
   backgroundColor:'#d0d0d0',
-  planeColor:'#c0c0c0'
+  planeColor:'#a8a8a8'
 }
-
-export const MeshDemo = Story.bind({});
 
