@@ -6,6 +6,8 @@ import {
   Vector3
 } from "three";
 
+import { RoundedBoxGeometry } from 'three-stdlib';
+
 import { BufferGeometryUtils } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 
 /*
@@ -14,6 +16,16 @@ import { BufferGeometryUtils } from "three/examples/jsm/utils/BufferGeometryUtil
 
 export const boxGeomDefaultDim = 1;
 
+// export const BOX_GEOM = (params) => {
+//   let { x, y, z } = params === undefined ? {} : params;
+
+//   x = x === undefined ? boxGeomDefaultDim : x;
+//   y = y === undefined ? boxGeomDefaultDim : y;
+//   z = z === undefined ? boxGeomDefaultDim : z;
+
+//   return new BoxBufferGeometry(x, y, z);
+// };
+
 export const BOX_GEOM = (params) => {
   let { x, y, z } = params === undefined ? {} : params;
 
@@ -21,9 +33,9 @@ export const BOX_GEOM = (params) => {
   y = y === undefined ? boxGeomDefaultDim : y;
   z = z === undefined ? boxGeomDefaultDim : z;
 
-  return new BoxBufferGeometry(x, y, z);
-};
+  return new RoundedBoxGeometry(x, y, z, 2, 0.05)
 
+}
 /*
  * Sphere Mesh
  */

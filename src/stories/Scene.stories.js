@@ -40,10 +40,12 @@ const defaultItems = {
     rotation: { w: 1, x: 0, y: 0, z: 0 },
     color: { r: 255, g: 50, b: 10, a: 0.75 },
     scale: { x: 0.5, y: 0.5, z: 0.5 },
-    canTranslate: false,
-    canRotate: false,
-    canScale: false,
-    highlighted: false
+    editMode: 'inactive',
+    highlighted: true,
+    onClick: () => {console.log('cube')},
+    onPointerOver: () => {console.log('hover')},
+    onPointerOut: () => {console.log('hover out')},
+    ontransform: (transform) => {console.log(transform)}
   },
   2: {
     shape: "sphere",
@@ -51,12 +53,12 @@ const defaultItems = {
     frame: "world",
     position: { x: 0, y: 2, z: 0 },
     rotation: { w: 1, x: 0, y: 0, z: 0 },
-    color: { r: 255, g: 255, b: 70, a: 0.25 },
+    color: { r: 255, g: 255, b: 30, a: 0.35 },
     scale: { x: 1, y: 2, z: 1 },
-    canTranslate: false,
-    canRotate: false,
-    canScale: false,
-    highlighted: false
+    editMode: 'inactive',
+    highlighted: true,
+    onClick: () => {console.log('sphere')},
+    onTransform: (transform) => {console.log(transform)}
   },
   3: {
     shape: "cylinder",
@@ -66,23 +68,23 @@ const defaultItems = {
     rotation: { w: 1, x: 0, y: 0, z: 0 },
     color: { r: 10, g: 200, b: 235, a: 0.5 },
     scale: { x: 1, y: 1, z: 1 },
-    canTranslate: false,
-    canRotate: false,
-    canScale: false,
-    highlighted: false
+    editMode: 'inactive',
+    highlighted: false,
+    onClick: () => {console.log('cylinder')},
+    onTransform: (transform) => {console.log(transform)}
   },
   4: {
     shape: "flatarrow",
     name: "My Arrow 1",
     frame: "world",
-    position: { x: -1, y: 0, z: -1 },
+    position: { x: 1, y: 0, z: -1 },
     rotation: { w: 1, x: 0, y: 0, z: 0 },
     color: { r: 70, g: 70, b: 250, a: 0.5 },
     scale: { x: 1, y: 1, z: 1 },
-    canTranslate: false,
-    canRotate: false,
-    canScale: false,
-    highlighted: false
+    editMode: 'inactive',
+    highlighted: true,
+    onClick: () => {console.log('flatarrow')},
+    onTransform: (transform) => {console.log(transform)}
   },
   5: {
     shape: "arrow",
@@ -92,10 +94,10 @@ const defaultItems = {
     rotation: { w: -0.604, x: -0.002, y: -0.756, z: 0.252 },
     color: { r: 255, g: 70, b: 250, a: 0.5 },
     scale: { x: 1, y: 1, z: 1 },
-    canTranslate: false,
-    canRotate: false,
-    canScale: false,
-    highlighted: false
+    editMode: 'translate',
+    highlighted: true,
+    onClick: () => {console.log('arrow2')},
+    onTransform: (transform) => {console.log(transform)}
   },
   6: {
     shape: "arrow",
@@ -105,10 +107,10 @@ const defaultItems = {
     rotation: { w: 1, x: 0, y: 0, z: 0 },
     color: { r: 255, g: 70, b: 250, a: 0.5 },
     scale: { x: 1, y: 2, z: 1 },
-    canTranslate: false,
-    canRotate: false,
-    canScale: false,
-    highlighted: false
+    editMode: 'inactive',
+    highlighted: false,
+    onClick: () => {console.log('arrow3')},
+    onTransform: (transform) => {console.log(transform)}
   },
   7: {
     shape: "package://nao_meshes/meshes/V40/HeadPitch.dae",
@@ -117,10 +119,10 @@ const defaultItems = {
     position: { x: 0, y: 2, z: -1 },
     rotation: { w: 1, x: 0, y: 0, z: 0 },
     scale: { x: 1, y: 1, z: 1 },
-    canTranslate: false,
-    canRotate: false,
-    canScale: false,
-    highlighted: false
+    editMode: 'inactive',
+    highlighted: true,
+    onClick: () => {console.log('head')},
+    onTransform: (transform) => {console.log(transform)}
   },
   8: {
     shape: "package://nao_meshes/meshes/V40/LAnkleRoll.dae",
@@ -129,10 +131,10 @@ const defaultItems = {
     position: { x: 1, y: 0.5, z: 1 },
     rotation: { w: 1, x: 0, y: 0, z: 0 },
     scale: { x: 1, y: 1, z: 1 },
-    canTranslate: false,
-    canRotate: false,
-    canScale: false,
-    highlighted: true
+    editMode: 'inactive',
+    highlighted: false,
+    onClick: () => {console.log('ankle')},
+    onTransform: (transform) => {console.log(transform)}
   },
   9: {
     shape: "package://app/meshes/MK2Printer.obj",
@@ -141,10 +143,10 @@ const defaultItems = {
     position: { x: -3, y: 0.32, z: -3 },
     rotation: { w: 1, x: 0, y: 0, z: 0 },
     scale: { x: 1, y: 1, z: 1 },
-    canTranslate: false,
-    canRotate: false,
-    canScale: false,
-    highlighted: true
+    editMode: 'inactive',
+    highlighted: false,
+    onClick: () => {console.log('printer')},
+    onTransform: (transform) => {console.log(transform)}
   }
 }
 
@@ -181,6 +183,7 @@ MeshDemo.args = {
   displayGrid:true,
   isPolar:false,
   backgroundColor:'#d0d0d0',
-  planeColor:'#a8a8a8'
+  planeColor:'#a8a8a8',
+  highlightColor:'#f535aa'
 }
 
