@@ -36,8 +36,7 @@ import RThumb2 from  './MeshLoaders/Nao/RThumb2';
 import RWristYaw from  './MeshLoaders/Nao/RWristYaw';
 import Torso from  './MeshLoaders/Nao/Torso';
 
-import MK2Printer from './MeshLoaders/Other/MK2Printer';
-import FlatArrow from './MeshLoaders/Other/Arrow';
+
 //---------------------------------------------- Panda
 import Finger from './MeshLoaders/Panda/finger';
 import Hand from './MeshLoaders/Panda/hand';
@@ -128,6 +127,22 @@ import Ur10Upperarm from './MeshLoaders/Ur10/upperarm';
 import Ur10Wrist1 from './MeshLoaders/Ur10/wrist1';
 import Ur10Wrist2 from './MeshLoaders/Ur10/wrist2';
 import Ur10Wrist3 from './MeshLoaders/Ur10/wrist3';
+//---------------------------------------------------Other
+import 3DBenchy from './MeshLoaders/Other/3DBenchy';
+import FlatArrow from './MeshLoaders/Other/Arrow';
+import Box from './MeshLoaders/Other/Box';
+import Collision-Box from './MeshLoaders/Other/Collision-Box';
+import Collision-Mk2-Printer from './MeshLoaders/Other/Collision-Mk2-Printer';
+import Collision-Pedestal from './MeshLoaders/Other/Collision-Pedestal';
+import Collision-Table from './MeshLoaders/Other/Collision-Table';
+import InfoPhycon from './MeshLoaders/Other/InfoPhycon';
+import LocationMarker from './MeshLoaders/Other/LocationMarker';
+import MK2Printer from './MeshLoaders/Other/MK2Printer';
+import OpenWaypointMarker from './MeshLoaders/Other/OpenWaypointMarker';
+import Pedestal from './MeshLoaders/Other/Pedestal';
+import Table from './MeshLoaders/Other/Table';
+import WarningPhycon from './MeshLoaders/Other/WarningPhycon';
+
 
 
 
@@ -241,7 +256,22 @@ const MeshLookupTable = {
    'package://universal_robot/ur_description/meshes/ur10/visual/upperarm.dae' : Ur10Upperarm,
    'package://universal_robot/ur_description/meshes/ur10/visual/wrist1.dae' : Ur10Wrist1,
    'package://universal_robot/ur_description/meshes/ur10/visual/wrist2.dae' : Ur10Wrist2,
-   'package://universal_robot/ur_description/meshes/ur10/visual/wrist3.dae' : Ur10Wrist3
+   'package://universal_robot/ur_description/meshes/ur10/visual/wrist3.dae' : Ur10Wrist3,
+   //-------------------------------------------------------------------Other
+   'package://app/meshes/3DBenchy.stl': 3DBenchy,
+   'package://app/meshes/description/app/models/Box/Box.fbx': Box,
+   'package://app/meshes/description/app/collision/Collision-Box.stl': Collision-Box,
+   'package://app/meshes/description/app/collision/Collision-MK2-Printer.stl': Collision-Mk2-Printer,
+   'package://app/meshes/description/app/collision/Collision-Pedestal.stl': Collision-Pedestal,
+   'package://app/meshes/description/app/collision/Collision-Table.stl': Collision-Table ,
+   'package://app/meshes/InfoPhycon.stl': InfoPhycon,
+   'package://app/meshes/LocationMarker.stl': LocationMarker,
+   'package://app/meshes/OpenWaypointMarker': OpenWaypointMarker,
+   'package://app/meshes/WarningPhycon.stl': WarningPhycon,
+   'package://app/meshes/description/app/models/Table/Table.fbx':Table,
+   'package://app/meshes/description/app/models/ur3e-Pedestal/Pedestal.fbx':Pedestal;
+
+
 
 
 
