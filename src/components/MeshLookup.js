@@ -100,6 +100,8 @@ import W0 from
 './MeshLoaders/Baxter/upper_forearm/W0';
 import S0 from
 './MeshLoaders/Baxter/upper_shoulder/S0';
+import S1 from
+'./MeshLoaders/Baxter/lower_shoulder/S1';
 import W2 from
 './MeshLoaders/Baxter/wrist/W2';
 //--------------------------------------------------Ur3
