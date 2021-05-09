@@ -80,7 +80,7 @@ import RobotiqVisualGripper from
 //-------------------------------------------------Baxter
 import Pedestal_Link_Collision from
 './MeshLoaders/Baxter/base/pedestal_link_collision';
-import Pedestal from
+import PEDESTAL from
 './MeshLoaders/Baxter/base/PEDESTAL';
 import H0 from
 './MeshLoaders/Baxter/head/H0';
