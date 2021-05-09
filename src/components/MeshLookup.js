@@ -79,7 +79,7 @@ import RobotiqVisualGripper from
 './MeshLoaders/Robotiq2f85/visual/robotiq_gripper_coupling';
 //-------------------------------------------------Baxter
 import Pedestal_Link_Collision from
-'./MeshLoaders/Baxter/base/pedestal_link_collision';
+'./MeshLoaders/Baxter/base/Pedestal_link_collision';
 import PEDESTAL from
 './MeshLoaders/Baxter/base/PEDESTAL';
 import H0 from
@@ -91,9 +91,9 @@ import E1 from
 import W1 from
 './MeshLoaders/Baxter/lower_forearm/W1';
 import Base_Link_Collision from
-'./MeshLoaders/Baxter/torso/base_link_collision';
+'./MeshLoaders/Baxter/torso/Base_link_collision';
 import Base_Link from
-'./MeshLoaders/Baxter/torso/base_link';
+'./MeshLoaders/Baxter/torso/Base_link';
 import E0 from
 './MeshLoaders/Baxter/upper_elbow/E0';
 import W0 from
