@@ -204,7 +204,7 @@ const MeshLookupTable = {
   'package://robotiq/robotiq_2f_85_gripper_visualization/meshes/visual/robotiq_gripper_coupling.stl': RobotiqVisualGripper,
   //------------------------------------------------------------------Baxter
   'package://baxter_common/baxter_description/meshes/base/PEDESTAL.DAE':PEDESTAL,
-  'package://baxter_common/baxter_description/meshes/base/pedestal_link_collision.DAE':pedestal_link_collision,
+  'package://baxter_common/baxter_description/meshes/base/pedestal_link_collision.DAE':Pedestal_Link_Collision,
   'package://baxter_common/baxter_description/meshes/head/H0.DAE' : H0,
   'package://baxter_common/baxter_description/meshes/head/H1.DAE' : H1,
   'package://baxter_common/baxter_description/meshes/lower_elbow/E1.DAE' : E1,
