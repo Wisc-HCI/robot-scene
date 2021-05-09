@@ -131,10 +131,10 @@ import Ur10Wrist3 from './MeshLoaders/Ur10/wrist3';
 import 3DBenchy from './MeshLoaders/Other/3DBenchy';
 import FlatArrow from './MeshLoaders/Other/Arrow';
 import Box from './MeshLoaders/Other/Box';
-import Collision-Box from './MeshLoaders/Other/Collision-Box';
-import Collision-Mk2-Printer from './MeshLoaders/Other/Collision-Mk2-Printer';
-import Collision-Pedestal from './MeshLoaders/Other/Collision-Pedestal';
-import Collision-Table from './MeshLoaders/Other/Collision-Table';
+import Collision_Box from './MeshLoaders/Other/Collision-Box';
+import Collision_Mk2_Printer from './MeshLoaders/Other/Collision-Mk2-Printer';
+import Collision_Pedestal from './MeshLoaders/Other/Collision-Pedestal';
+import Collision_Table from './MeshLoaders/Other/Collision-Table';
 import InfoPhycon from './MeshLoaders/Other/InfoPhycon';
 import LocationMarker from './MeshLoaders/Other/LocationMarker';
 import MK2Printer from './MeshLoaders/Other/MK2Printer';
@@ -260,30 +260,16 @@ const MeshLookupTable = {
    //-------------------------------------------------------------------Other
    'package://app/meshes/3DBenchy.stl': 3DBenchy,
    'package://app/meshes/description/app/models/Box/Box.fbx': Box,
-   'package://app/meshes/description/app/collision/Collision-Box.stl': Collision-Box,
-   'package://app/meshes/description/app/collision/Collision-MK2-Printer.stl': Collision-Mk2-Printer,
-   'package://app/meshes/description/app/collision/Collision-Pedestal.stl': Collision-Pedestal,
-   'package://app/meshes/description/app/collision/Collision-Table.stl': Collision-Table ,
+   'package://app/meshes/description/app/collision/Collision-Box.stl': Collision_Box,
+   'package://app/meshes/Collision-MK2-Printer.stl': Collision_Mk2_Printer,
+   'package://app/meshes/Collision-Pedestal.stl': Collision_Pedestal,
+   'package://app/meshes/Collision-Table.stl': Collision_Table ,
    'package://app/meshes/InfoPhycon.stl': InfoPhycon,
    'package://app/meshes/LocationMarker.stl': LocationMarker,
    'package://app/meshes/OpenWaypointMarker': OpenWaypointMarker,
    'package://app/meshes/WarningPhycon.stl': WarningPhycon,
    'package://app/meshes/description/app/models/Table/Table.fbx':Table,
    'package://app/meshes/description/app/models/ur3e-Pedestal/Pedestal.fbx':Pedestal;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 
