@@ -15,5 +15,5 @@ export default function Model(props) {
 
 
 ]
-
+}
 useGLTF.preload(Ur10Upperarm)

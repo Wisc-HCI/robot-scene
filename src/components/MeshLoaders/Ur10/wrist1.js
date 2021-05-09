@@ -9,8 +9,8 @@ export default function Model(props) {
 
   const { nodes, materials } = useGLTF('/wrist1.glb')
   return [
-{type:'raw', geometry:nodes['node-shape0-name'].geometry, material:materials['SWMaterial-0_001']}
-{type:'raw', geometry:nodes['node-shape1-name'].geometry, material:materials['SWMaterial-1_001']}
+{type:'raw', geometry:nodes['node-shape0-name'].geometry, material:materials['SWMaterial-0_001']},
+{type:'raw', geometry:nodes['node-shape1-name'].geometry, material:materials['SWMaterial-1_001']},
 {type:'raw', geometry:nodes['node-shape2-name'].geometry, material:materials['SWMaterial-2_001']}
     ]
 }

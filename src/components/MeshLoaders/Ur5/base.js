@@ -10,8 +10,8 @@ export default function Model(props) {
   const { nodes, materials } = useGLTF( Ur5Base)
   return [
 
-type:'raw', geometry:nodes['ActorShape0_0-Mesh002'].geometry, material:materials['Rohr.005']},
-type:'raw',geometry:nodes['ActorShape0_0-Mesh002_1'].geometry, material:materials['Scheibe.002']}
+{type:'raw', geometry:nodes['ActorShape0_0-Mesh002'].geometry, material:materials['Rohr.005']},
+{type:'raw',geometry:nodes['ActorShape0_0-Mesh002_1'].geometry, material:materials['Scheibe.002']}
 
   ]
 }

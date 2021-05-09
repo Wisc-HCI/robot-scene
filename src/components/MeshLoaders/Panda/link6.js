@@ -15,7 +15,7 @@ export default function Model(props) {
 
       {type:'raw',geometry:nodes.node1.geometry,
         material:materials.Part__Feature001_009_001_002_001,
-        position=:[0, -0.01, 0]},
+        position:[0, -0.01, 0]},
 
       {type:'raw',geometry:nodes.node2.geometry,
         material:materials.Part__Feature002_006_001_002_001,

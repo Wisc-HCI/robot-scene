@@ -11,5 +11,6 @@ export default function Model(props) {
   return [
 
 {type:'raw',geometry:nodes.Base.geometry, material:nodes.Base.material}]
+}
 
 useGLTF.preload(Ur10Base)

@@ -8,7 +8,7 @@ import Link7 from '../../Meshes/Panda/link7.glb'
 export default function Model(props) {
 
   const { nodes, materials } = useGLTF(Link7);
-  return ([
+  return [
 
         {type: 'raw', geometry:nodes.node0.geometry,
         material:materials.Part__Mirroring_004_001,
