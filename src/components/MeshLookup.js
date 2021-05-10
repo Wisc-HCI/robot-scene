@@ -269,7 +269,7 @@ const MeshLookupTable = {
    'package://app/meshes/OpenWaypointMarker': OpenWaypointMarker,
    'package://app/meshes/WarningPhycon.stl': WarningPhycon,
    'package://app/meshes/description/app/models/Table/Table.fbx':Table,
-   'package://app/meshes/description/app/models/ur3e-Pedestal/Pedestal.fbx':Pedestal;
+   'package://app/meshes/description/app/models/ur3e-Pedestal/Pedestal.fbx':Pedestal
 
 }
 
