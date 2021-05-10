@@ -128,7 +128,7 @@ import Ur10Wrist1 from './MeshLoaders/Ur10/wrist1';
 import Ur10Wrist2 from './MeshLoaders/Ur10/wrist2';
 import Ur10Wrist3 from './MeshLoaders/Ur10/wrist3';
 //---------------------------------------------------Other
-import 3DBenchy from './MeshLoaders/Other/3DBenchy';
+import Benchy from './MeshLoaders/Other/3DBenchy';
 import FlatArrow from './MeshLoaders/Other/Arrow';
 import Box from './MeshLoaders/Other/Box';
 import Collision_Box from './MeshLoaders/Other/Collision-Box';
@@ -258,7 +258,7 @@ const MeshLookupTable = {
    'package://universal_robot/ur_description/meshes/ur10/visual/wrist2.dae' : Ur10Wrist2,
    'package://universal_robot/ur_description/meshes/ur10/visual/wrist3.dae' : Ur10Wrist3,
    //-------------------------------------------------------------------Other
-   'package://app/meshes/3DBenchy.stl': 3DBenchy,
+   'package://app/meshes/3DBenchy.stl': Benchy,
    'package://app/meshes/description/app/models/Box/Box.fbx': Box,
    'package://app/meshes/description/app/collision/Collision-Box.stl': Collision_Box,
    'package://app/meshes/Collision-MK2-Printer.stl': Collision_Mk2_Printer,
