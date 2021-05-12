@@ -127,8 +127,8 @@ export default function Content(props) {
             blur={true}
             edgeStrength={15}
             pulseSpeed={0.3}
-            visibleEdgeColor={highlightColor ? highlightColor : '#f535aa'}
-            hiddenEdgeColor={highlightColor ? highlightColor : '#f535aa'}/>
+            visibleEdgeColor={highlightColor ? highlightColor : '#ffffff'}
+            hiddenEdgeColor={highlightColor ? highlightColor : '#ffffff'}/>
             {/* <SMAA/> */}
         </EffectComposer>
 

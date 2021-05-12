@@ -57,6 +57,7 @@ const defaultItems = {
     scale: { x: 1, y: 2, z: 1 },
     editMode: 'inactive',
     highlighted: true,
+    showName: true,
     onClick: () => {console.log('sphere')},
     onTransform: (transform) => {console.log(transform)}
   },
@@ -120,6 +121,7 @@ const defaultItems = {
     rotation: { w: 1, x: 0, y: 0, z: 0 },
     scale: { x: 1, y: 1, z: 1 },
     editMode: 'inactive',
+    showName: true,
     highlighted: true,
     onClick: () => {console.log('head')},
     onTransform: (transform) => {console.log(transform)}
@@ -184,6 +186,6 @@ MeshDemo.args = {
   isPolar:false,
   backgroundColor:'#d0d0d0',
   planeColor:'#a8a8a8',
-  highlightColor:'#f535aa'
+  highlightColor:'#ffffff'
 }
 

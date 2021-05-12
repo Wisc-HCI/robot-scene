@@ -1,6 +1,5 @@
 import {
   CylinderBufferGeometry,
-  BoxBufferGeometry,
   SphereBufferGeometry,
   Matrix4,
   Vector3

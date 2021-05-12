@@ -1,7 +1,15 @@
 import React, { Suspense } from 'react';
+import "antd/dist/antd.css";
 import { Canvas } from "@react-three/fiber";
+import { useProgress } from "@react-three/drei";
+import { Progress } from 'antd';
 import { ResizeObserver } from "@juggle/resize-observer";
 import Content from './Content';
+
+function Loading() {
+  const { progress } = useProgress();
+  return <Progress type="circle" percent={progress} />
+}
 
 export default function Scene(props) {
   // For the objects in props.content, render the objects.
@@ -16,7 +24,7 @@ export default function Scene(props) {
       style={{ background: backgroundColor ? backgroundColor : "#d0d0d0" }}
       resize={{ polyfill: ResizeObserver }}
     >
-      <Suspense fallback={null}>
+      <Suspense fallback={<Loading/>}>
         <Content {...props}/>
       </Suspense>
       
