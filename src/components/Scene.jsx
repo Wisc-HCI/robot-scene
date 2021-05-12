@@ -1,14 +1,14 @@
 import React, { Suspense } from 'react';
 import "antd/dist/antd.css";
 import { Canvas } from "@react-three/fiber";
-import { useProgress } from "@react-three/drei";
+import { useProgress, Html } from "@react-three/drei";
 import { Progress } from 'antd';
 import { ResizeObserver } from "@juggle/resize-observer";
 import Content from './Content';
 
 function Loading() {
   const { progress } = useProgress();
-  return <Progress type="circle" percent={progress} />
+  return <Html><Progress type="circle" percent={progress.toPrecision(2)} /></Html>
 }
 
 export default function Scene(props) {
