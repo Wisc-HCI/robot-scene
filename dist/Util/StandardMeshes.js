@@ -3,16 +3,25 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.StandardMeshesLookup = exports.STANDARD_MESHES = exports.ARROW_GEOM = exports.coneGeomShaftLength = exports.coneGeomHeadDiameter = exports.coneGeomShaftDiameter = exports.coneGeomHeadLength = exports.CYLINDER_GEOM = exports.cylinderGeomDefaultHeight = exports.cylinderGeomDefaultRadius = exports.SPHERE_GEOM = exports.sphereGeomDefaultRadius = exports.BOX_GEOM = exports.boxGeomDefaultDim = void 0;
+exports.Arrow = exports.Cylinder = exports.Sphere = exports.Cube = exports.StandardMeshesLookup = exports.STANDARD_MESHES = exports.ARROW_GEOM = exports.coneGeomShaftLength = exports.coneGeomHeadDiameter = exports.coneGeomShaftDiameter = exports.coneGeomHeadLength = exports.CYLINDER_GEOM = exports.cylinderGeomDefaultHeight = exports.cylinderGeomDefaultRadius = exports.SPHERE_GEOM = exports.sphereGeomDefaultRadius = exports.BOX_GEOM = exports.boxGeomDefaultDim = void 0;
 
 var _three = require("three");
+
+var _threeStdlib = require("three-stdlib");
 
 var _BufferGeometryUtils = require("three/examples/jsm/utils/BufferGeometryUtils.js");
 
 /*
  * Box Mesh
  */
-var boxGeomDefaultDim = 1;
+var boxGeomDefaultDim = 1; // export const BOX_GEOM = (params) => {
+//   let { x, y, z } = params === undefined ? {} : params;
+//   x = x === undefined ? boxGeomDefaultDim : x;
+//   y = y === undefined ? boxGeomDefaultDim : y;
+//   z = z === undefined ? boxGeomDefaultDim : z;
+//   return new BoxBufferGeometry(x, y, z);
+// };
+
 exports.boxGeomDefaultDim = boxGeomDefaultDim;
 
 var BOX_GEOM = function BOX_GEOM(params) {
@@ -24,7 +33,7 @@ var BOX_GEOM = function BOX_GEOM(params) {
   x = x === undefined ? boxGeomDefaultDim : x;
   y = y === undefined ? boxGeomDefaultDim : y;
   z = z === undefined ? boxGeomDefaultDim : z;
-  return new _three.BoxBufferGeometry(x, y, z);
+  return new _threeStdlib.RoundedBoxGeometry(x, y, z, 2, 0.05);
 };
 /*
  * Sphere Mesh
@@ -126,3 +135,43 @@ var StandardMeshesLookup = function StandardMeshesLookup(meshName, params) {
 };
 
 exports.StandardMeshesLookup = StandardMeshesLookup;
+
+var Cube = function Cube() {
+  return [{
+    type: 'raw',
+    geometry: BOX_GEOM({}),
+    scale: [1, 1, 1]
+  }];
+};
+
+exports.Cube = Cube;
+
+var Sphere = function Sphere() {
+  return [{
+    type: 'raw',
+    geometry: SPHERE_GEOM({}),
+    scale: [1, 1, 1]
+  }];
+};
+
+exports.Sphere = Sphere;
+
+var Cylinder = function Cylinder() {
+  return [{
+    type: 'raw',
+    geometry: CYLINDER_GEOM({}),
+    scale: [1, 1, 1]
+  }];
+};
+
+exports.Cylinder = Cylinder;
+
+var Arrow = function Arrow() {
+  return [{
+    type: 'raw',
+    geometry: ARROW_GEOM({}),
+    scale: [1, 1, 1]
+  }];
+};
+
+exports.Arrow = Arrow;
