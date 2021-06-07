@@ -1,4 +1,4 @@
-import {createRef} from 'react';
+import React, {createRef} from 'react';
 
 export const MeshConverter = (node,idx,materialOverride,opacity) => {
     // console.log(node);
