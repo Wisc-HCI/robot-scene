@@ -47,7 +47,8 @@ function Content(props) {
       isPolar = props.isPolar,
       backgroundColor = props.backgroundColor,
       planeColor = props.planeColor,
-      highlightColor = props.highlightColor;
+      highlightColor = props.highlightColor,
+      plane = props.plane;
 
   var _useSceneStore = (0, _SceneStore.default)(function (state) {
     return {
@@ -127,7 +128,7 @@ function Content(props) {
   }), /*#__PURE__*/_react.default.createElement(_drei.Circle, {
     receiveShadow: true,
     scale: 1000,
-    position: [0, -0.01, 0],
+    position: [0, plane ? plane - 0.01 : -0.01, 0],
     rotation: [-Math.PI / 2, 0, 0],
     material: _MaterialMaker.MaterialMaker.apply(void 0, planeRGBA)
   }), Object.keys(tfs).map(function (tfKey) {
@@ -153,11 +154,13 @@ function Content(props) {
         lineKey: lineKey
       });
     }));
-  }), displayGrid && (isPolar ? /*#__PURE__*/_react.default.createElement("polarGridHelper", {
+  }), /*#__PURE__*/_react.default.createElement("group", {
+    position: [0, plane ? plane : 0, 0]
+  }, displayGrid && (isPolar ? /*#__PURE__*/_react.default.createElement("polarGridHelper", {
     args: [10, 16, 8, 64, "white", "gray"]
   }) : /*#__PURE__*/_react.default.createElement("gridHelper", {
     args: [20, 20, "white", "gray"]
-  })), /*#__PURE__*/_react.default.createElement(_postprocessing.EffectComposer, {
+  }))), /*#__PURE__*/_react.default.createElement(_postprocessing.EffectComposer, {
     autoClear: false
   }, /*#__PURE__*/_react.default.createElement(_postprocessing.Outline, {
     selection: highlightedRefs,

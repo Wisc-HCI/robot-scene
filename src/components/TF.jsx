@@ -24,7 +24,6 @@ export default forwardRef(function TF(props, ref) {
     );
   });
 
-  const origin = { x: 0, y: 0, z: 0 };
   const arrow = ARROW_GEOM();
 
   return (

@@ -186,6 +186,7 @@ MeshDemo.args = {
   isPolar:false,
   backgroundColor:'#d0d0d0',
   planeColor:'#a8a8a8',
-  highlightColor:'#ffffff'
+  highlightColor:'#ffffff',
+  plane:0
 }
 

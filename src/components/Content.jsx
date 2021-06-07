@@ -16,7 +16,9 @@ export default function Content(props) {
   // For the objects in props.content, render the objects.
   // Those should be in the suspense element.
 
-  const { displayTfs, displayGrid, isPolar, backgroundColor, planeColor, highlightColor } = props;
+  const { displayTfs, displayGrid, isPolar, 
+          backgroundColor, planeColor, 
+          highlightColor, plane } = props;
 
   const {items, lines, tfs} = useSceneStore(state => ({items:state.items, lines:state.lines, tfs:state.tfs}),
     // Custom diff-calculation to avoid unnecessary re-renders
@@ -81,7 +83,7 @@ export default function Content(props) {
       <color attach="background" args={[backgroundColor ? backgroundColor : "#d0d0d0"]} />
       <fogExp2 attach="fog" args={[backgroundColor ? backgroundColor : "#d0d0d0", 0.01]} />
 
-      <Circle receiveShadow scale={1000} position={[0, -0.01, 0]} rotation={[-Math.PI / 2, 0, 0]} material={MaterialMaker(...planeRGBA)}/>
+      <Circle receiveShadow scale={1000} position={[0, plane ? plane-0.01 : -0.01, 0]} rotation={[-Math.PI / 2, 0, 0]} material={MaterialMaker(...planeRGBA)}/>
          
       {Object.keys(tfs).map((tfKey) => (
         <TF
@@ -111,14 +113,15 @@ export default function Content(props) {
           }
         </TF>
       ))}
-
-        {displayGrid && (
-          isPolar ? (
-            <polarGridHelper args={[10, 16, 8, 64, "white", "gray"]} />
-          ) : (
-            <gridHelper args={[20, 20, `white`, `gray`]} />
-          )
-        )}
+        <group position={[0, plane ? plane : 0, 0]}>
+          {displayGrid && (
+            isPolar ? (
+              <polarGridHelper args={[10, 16, 8, 64, "white", "gray"]} />
+            ) : (
+              <gridHelper args={[20, 20, `white`, `gray`]} />
+            )
+          )}
+        </group>
 
         <EffectComposer autoClear={false}>
           <Outline 

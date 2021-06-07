@@ -34,11 +34,6 @@ var _default = /*#__PURE__*/(0, _react.forwardRef)(function TF(props, ref) {
     ref.current.position.set(tf.translation.x, tf.translation.y, tf.translation.z);
     ref.current.quaternion.set(tf.rotation.x, tf.rotation.y, tf.rotation.z, tf.rotation.w);
   });
-  var origin = {
-    x: 0,
-    y: 0,
-    z: 0
-  };
   var arrow = (0, _StandardMeshes.ARROW_GEOM)();
   return /*#__PURE__*/_react.default.createElement("group", {
     ref: ref,
