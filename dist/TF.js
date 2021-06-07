@@ -42,19 +42,19 @@ var _default = /*#__PURE__*/(0, _react.forwardRef)(function TF(props, ref) {
     key: "".concat(tfKey, "ArrowX"),
     geometry: arrow,
     material: (0, _MaterialMaker.MaterialMaker)(255, 0, 0, 1),
-    scale: [0.15, 0.5, 0.15],
+    scale: [0.2, 0.5, 0.2],
     rotation: [0, 0, -Math.PI / 2]
   }), /*#__PURE__*/_react.default.createElement("mesh", {
     key: "".concat(tfKey, "ArrowY"),
     geometry: arrow,
     material: (0, _MaterialMaker.MaterialMaker)(0, 255, 0, 1),
-    scale: [0.15, 0.5, 0.15],
+    scale: [0.2, 0.5, 0.2],
     rotation: [0, -Math.PI / 2, 0]
   }), /*#__PURE__*/_react.default.createElement("mesh", {
     key: "".concat(tfKey, "ArrowZ"),
     geometry: arrow,
     material: (0, _MaterialMaker.MaterialMaker)(0, 0, 255, 1),
-    scale: [0.15, 0.5, 0.15],
+    scale: [0.2, 0.5, 0.2],
     rotation: [Math.PI / 2, 0, 0]
   })), children);
 });

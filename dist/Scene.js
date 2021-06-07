@@ -42,7 +42,6 @@ function Scene(props) {
   // Those should be in the suspense element.
   var backgroundColor = props.backgroundColor;
   return /*#__PURE__*/_react.default.createElement(_fiber.Canvas, {
-    colorManagement: true,
     shadows: true,
     style: {
       background: backgroundColor ? backgroundColor : "#d0d0d0"

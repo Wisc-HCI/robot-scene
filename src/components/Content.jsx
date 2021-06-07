@@ -1,6 +1,6 @@
 import React, { createRef, useRef } from 'react';
 import { OrbitControls, Circle } from "@react-three/drei";
-import { EffectComposer, Outline } from "@react-three/postprocessing";
+import { EffectComposer, Outline, SMAA } from "@react-three/postprocessing";
 import Line from "./Line";
 import Item from "./Item";
 import TF from "./TF";
@@ -123,7 +123,7 @@ export default function Content(props) {
           )}
         </group>
 
-        <EffectComposer autoClear={false}>
+        <EffectComposer autoClear={false} multisampling={0}>
           <Outline 
             selection={highlightedRefs} 
             xRay
@@ -132,7 +132,7 @@ export default function Content(props) {
             pulseSpeed={0.3}
             visibleEdgeColor={highlightColor ? highlightColor : '#ffffff'}
             hiddenEdgeColor={highlightColor ? highlightColor : '#ffffff'}/>
-            {/* <SMAA/> */}
+            <SMAA/>
         </EffectComposer>
 
     </React.Fragment>

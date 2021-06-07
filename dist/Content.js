@@ -161,7 +161,8 @@ function Content(props) {
   }) : /*#__PURE__*/_react.default.createElement("gridHelper", {
     args: [20, 20, "white", "gray"]
   }))), /*#__PURE__*/_react.default.createElement(_postprocessing.EffectComposer, {
-    autoClear: false
+    autoClear: false,
+    multisampling: 0
   }, /*#__PURE__*/_react.default.createElement(_postprocessing.Outline, {
     selection: highlightedRefs,
     xRay: true,
@@ -170,5 +171,5 @@ function Content(props) {
     pulseSpeed: 0.3,
     visibleEdgeColor: highlightColor ? highlightColor : '#ffffff',
     hiddenEdgeColor: highlightColor ? highlightColor : '#ffffff'
-  })));
+  }), /*#__PURE__*/_react.default.createElement(_postprocessing.SMAA, null)));
 }

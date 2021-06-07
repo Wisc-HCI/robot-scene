@@ -19,7 +19,6 @@ export default function Scene(props) {
 
   return (
     <Canvas
-      colorManagement
       shadows
       style={{ background: backgroundColor ? backgroundColor : "#d0d0d0" }}
       resize={{ polyfill: ResizeObserver }}
