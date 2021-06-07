@@ -192,7 +192,6 @@ const MeshLookupTable = {
   'package://nao_meshes/meshes/V40/RThumb2.dae': RThumb2,
   'package://nao_meshes/meshes/V40/RWristYaw.dae': RWristYaw,
   'package://nao_meshes/meshes/V40/Torso.dae': Torso,
-  'package://app/meshes/MK2Printer.obj':MK2Printer,
   //------------------------------------------------------Panda
   'package://franka_ros/franka_description/meshes/visual/finger.dae': Finger,
   'package://franka_ros/franka_description/meshes/visual/hand.dae': Hand,
@@ -259,17 +258,18 @@ const MeshLookupTable = {
    'package://universal_robot/ur_description/meshes/ur10/visual/wrist3.dae' : Ur10Wrist3,
    //-------------------------------------------------------------------Other
    'package://app/meshes/3DBenchy.stl': Benchy,
-   'package://app/meshes/description/app/models/Box/Box.fbx': Box,
-   'package://app/meshes/description/app/collision/Collision-Box.stl': Collision_Box,
-   'package://app/meshes/Collision-MK2-Printer.stl': Collision_Mk2_Printer,
-   'package://app/meshes/Collision-Pedestal.stl': Collision_Pedestal,
-   'package://app/meshes/Collision-Table.stl': Collision_Table ,
+   'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/MK2-Printer/MK2-Printer.stl':MK2Printer,
+   'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/MK2-Printer.stl': Collision_Mk2_Printer,
+   'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/Box/Box.stl': Box,
+   'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/Box.stl': Collision_Box,
+   'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/ur3e-Pedestal/Pedestal.stl':Pedestal,
+   'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/Pedestal.stl': Collision_Pedestal,
+   'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/Table/Table.stl':Table,
+   'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/Table.stl': Collision_Table ,
    'package://app/meshes/InfoPhycon.stl': InfoPhycon,
    'package://app/meshes/LocationMarker.stl': LocationMarker,
-   'package://app/meshes/OpenWaypointMarker': OpenWaypointMarker,
-   'package://app/meshes/WarningPhycon.stl': WarningPhycon,
-   'package://app/meshes/description/app/models/Table/Table.fbx':Table,
-   'package://app/meshes/description/app/models/ur3e-Pedestal/Pedestal.fbx':Pedestal
+   'package://app/meshes/OpenWaypointMarker.stl': OpenWaypointMarker,
+   'package://app/meshes/WarningPhycon.stl': WarningPhycon
 
 }
 
