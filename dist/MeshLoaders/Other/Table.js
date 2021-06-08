@@ -20,14 +20,9 @@ function Model(props) {
       materials = _useGLTF.materials;
 
   return [{
-    type: 'group',
-    children: [{
-      type: 'raw',
-      geometry: nodes.Body1.geometry,
-      material: materials['Steel - Satin.001'],
-      scale: [0.01, 0.01, 0.01]
-    }],
-    rotation: [Math.PI / 2, 0, 0]
+    type: 'raw',
+    geometry: nodes.Table.geometry,
+    material: nodes.Table.material
   }];
 }
 
