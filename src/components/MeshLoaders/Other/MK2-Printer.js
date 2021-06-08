@@ -7,12 +7,12 @@ import { useGLTF } from '@react-three/drei'
 
 export default function Model(props) {
   const group = useRef()
-  const { nodes, materials } = useGLTF('/Pedestal.glb')
+  const { nodes, materials } = useGLTF('/MK2-Printer.glb')
   return (
     <group ref={group} {...props} dispose={null}>
-      <mesh geometry={nodes.Pedestal.geometry} material={nodes.Pedestal.material} />
+      <mesh geometry={nodes['MK2-Printer'].geometry} material={nodes['MK2-Printer'].material} />
     </group>
   )
 }
 
-useGLTF.preload('/Pedestal.glb')
+useGLTF.preload('/MK2-Printer.glb')
