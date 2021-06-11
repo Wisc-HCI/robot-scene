@@ -10,15 +10,15 @@ export default function Model(_) {
       children: [
         {
           type: 'group',
-          scale: [
-            0.001, 0.001, 0.001
-          ],
+          position: [0.01, -0.27, -0.06],
           rotation: [
             Math.PI / 2,
             0,
             0
           ],
-          position: [0.118, -2.68, -0.65],
+          scale: [
+            0.001, 0.001, 0.001
+          ],
           children: [
             {
               type: 'group',

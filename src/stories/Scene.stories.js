@@ -27,7 +27,7 @@ export default {
           },
           other3: {
             name:'other3',
-            translation: { x: 2, y: 0, z: 0 },
+            translation: { x: 2, y: 0, z: 1 },
             rotation: { w: -0.604, x: -0.002, y: -0.756, z: 0.252 }
           }
         }
@@ -52,7 +52,7 @@ export default {
             shape: "sphere",
             name: "My Sphere",
             frame: "world",
-            position: { x: 0, y: 2, z: 0 },
+            position: { x: 0, y: 2, z: 2 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             color: { r: 255, g: 255, b: 30, a: 0.35 },
             scale: { x: 1, y: 2, z: 1 },
@@ -79,7 +79,7 @@ export default {
             shape: "flatarrow",
             name: "My Arrow 1",
             frame: "world",
-            position: { x: 1, y: 0, z: -1 },
+            position: { x: 1, y: 0, z: 1 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             color: { r: 70, g: 70, b: 250, a: 0.5 },
             scale: { x: 1, y: 1, z: 1 },
@@ -118,7 +118,7 @@ export default {
             shape: "package://nao_meshes/meshes/V40/HeadPitch.dae",
             name: "Nao Head",
             frame: "world",
-            position: { x: 0, y: 2, z: -1 },
+            position: { x: 0, y: 2, z: 1 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             editMode: 'inactive',
@@ -143,7 +143,7 @@ export default {
             shape: "package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/MK2-Printer/MK2-Printer.stl",
             name: "3d Printer",
             frame: "world",
-            position: { x: -3, y: 3, z: -1 },
+            position: { x: -1, y: 1, z: .3 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             editMode: 'inactive',

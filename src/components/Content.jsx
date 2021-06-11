@@ -84,56 +84,59 @@ export default function Content(props) {
       <fogExp2 attach="fog" args={[backgroundColor ? backgroundColor : "#d0d0d0", 0.01]} />
 
       <Circle receiveShadow scale={1000} position={[0, plane ? plane-0.01 : -0.01, 0]} rotation={[-Math.PI / 2, 0, 0]} material={MaterialMaker(...planeRGBA)}/>
-         
-      {Object.keys(tfs).map((tfKey) => (
-        <TF
-          key={tfKey}
-          tfKey={tfKey}
-          ref={tfRefs[tfKey]}
-          displayTfs={displayTfs}
-        >
-          {Object.keys(items)
-            .filter((itemKey) => items[itemKey].frame === tfs[tfKey].name)
-            .map((itemKey) => (
-              <Item 
-                key={`${itemKey}Item`} 
-                itemKey={itemKey} 
-                node={meshesAndRefs[itemKey][0]} 
-                orbitControls={orbitControls}/>
-            ))
-          }
-          {Object.keys(lines)
-            .filter((lineKey) => (lines[lineKey].frame === tfs[tfKey].name))
-            .map((lineKey) => (
-              <Line
-                key={`${lineKey}Line`}
-                lineKey={lineKey}
-              />
-            ))
-          }
-        </TF>
-      ))}
-        <group position={[0, plane ? plane : 0, 0]}>
-          {displayGrid && (
-            isPolar ? (
-              <polarGridHelper args={[10, 16, 8, 64, "white", "gray"]} />
-            ) : (
-              <gridHelper args={[20, 20, `white`, `gray`]} />
-            )
-          )}
-        </group>
+      
+      <group rotation={[-Math.PI/2,0,0]}>
+        {Object.keys(tfs).map((tfKey) => (
+          <TF
+            key={tfKey}
+            tfKey={tfKey}
+            ref={tfRefs[tfKey]}
+            displayTfs={displayTfs}
+          >
+            {Object.keys(items)
+              .filter((itemKey) => items[itemKey].frame === tfs[tfKey].name)
+              .map((itemKey) => (
+                <Item 
+                  key={`${itemKey}Item`} 
+                  itemKey={itemKey} 
+                  node={meshesAndRefs[itemKey][0]} 
+                  orbitControls={orbitControls}/>
+              ))
+            }
+            {Object.keys(lines)
+              .filter((lineKey) => (lines[lineKey].frame === tfs[tfKey].name))
+              .map((lineKey) => (
+                <Line
+                  key={`${lineKey}Line`}
+                  lineKey={lineKey}
+                />
+              ))
+            }
+          </TF>
+        ))}
+      </group>
+      
+      <group position={[0, plane ? plane : 0, 0]}>
+        {displayGrid && (
+          isPolar ? (
+            <polarGridHelper args={[10, 16, 8, 64, "white", "gray"]} />
+          ) : (
+            <gridHelper args={[20, 20, `white`, `gray`]} />
+          )
+        )}
+      </group>
 
-        <EffectComposer autoClear={false} multisampling={0}>
-          <Outline 
-            selection={highlightedRefs} 
-            xRay
-            blur={true}
-            edgeStrength={15}
-            pulseSpeed={0.3}
-            visibleEdgeColor={highlightColor ? highlightColor : '#ffffff'}
-            hiddenEdgeColor={highlightColor ? highlightColor : '#ffffff'}/>
-            <SMAA/>
-        </EffectComposer>
+      <EffectComposer autoClear={false} multisampling={0}>
+        <Outline 
+          selection={highlightedRefs} 
+          xRay
+          blur={true}
+          edgeStrength={15}
+          pulseSpeed={0.3}
+          visibleEdgeColor={highlightColor ? highlightColor : '#ffffff'}
+          hiddenEdgeColor={highlightColor ? highlightColor : '#ffffff'}/>
+          <SMAA/>
+      </EffectComposer>
 
     </React.Fragment>
   );

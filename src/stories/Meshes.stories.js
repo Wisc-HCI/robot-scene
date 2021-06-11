@@ -11,7 +11,7 @@ export default {
             let defaultTfs = {};
             let meshItems = {};
 
-            var z = -10;
+            var y = -10;
             var x = -12;
 
             Object.keys(MeshLookupTable).forEach((key,i)=>{
@@ -19,7 +19,7 @@ export default {
                 x += 2;
               }else if (x>0){
                 if(x % 10 ===0){
-                  z += 2;
+                  y += 2;
                   x = -10;
                 }else{
                   x += 2;
@@ -29,7 +29,7 @@ export default {
               }
                 defaultTfs[`${i}`] = {
                     name: `${i}`,
-                    translation: {x: x, y:0, z: z},
+                    translation: {x: x, y:y, z: 0},
                     rotation: { w: 1, x: 0, y: 0, z: 0 }
                 };
                 // This should work, but doesn't because at least one of the meshes is broken

@@ -86,22 +86,26 @@ export default function Item(props) {
 
   return (
     <>
-      <group ref={transformRef} onPointerDown={onClick} onPointerOver={onPointerOver} onPointerOut={onPointerOut}>
-        <group ref={scaleRef}>
-          <group ref={rotateRef}>
-            {node}
+      
+        <group ref={transformRef} onPointerDown={onClick} onPointerOver={onPointerOver} onPointerOut={onPointerOut}>
+          <group ref={scaleRef}>
+            <group ref={rotateRef}>
+              <group rotation={[Math.PI/2,0,0]}>
+                {node}
+              </group>
+            </group>
           </group>
-        </group>
-        {showName && (
-          <Html distanceFactor={7} position={[0, 1, 0]}>
-            <Tag style={{ opacity: 0.75 }}
-                className="disable-text-selection"
-                
-            >
-              {name}
-            </Tag>
-          </Html>
-        )}
+          {showName && (
+            <Html distanceFactor={7} position={[0, 1, 0]}>
+              <Tag style={{ opacity: 0.75 }}
+                  className="disable-text-selection"
+                  
+              >
+                {name}
+              </Tag>
+            </Html>
+          )}
+      
       </group>
       {false && editMode !== 'inactive' && <TransformControls scene='local' ref={transformControls} mode={editMode}/>}
     </>
