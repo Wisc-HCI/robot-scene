@@ -193,10 +193,10 @@ const MeshLookupTable = {
   'package://nao_meshes/meshes/V40/RWristYaw.dae': RWristYaw,
   'package://nao_meshes/meshes/V40/Torso.dae': Torso,
   //------------------------------------------------------Panda
-  'package://franka_ros/franka_description/meshes/visual/finger.dae': Finger, // not showing
+  'package://franka_ros/franka_description/meshes/visual/finger.dae': Finger,
   'package://franka_ros/franka_description/meshes/visual/hand.dae': Hand,
   'package://franka_ros/franka_description/meshes/visual/link0.dae': Link0,
-  'package://franka_ros/franka_description/meshes/visual/link1.dae': Link1,
+  'package://franka_ros/franka_description/meshes/visual/link1.dae': Link1, // missing
   'package://franka_ros/franka_description/meshes/visual/link2.dae': Link2,
   'package://franka_ros/franka_description/meshes/visual/link3.dae': Link3,
   'package://franka_ros/franka_description/meshes/visual/link4.dae': Link4,
@@ -236,7 +236,7 @@ const MeshLookupTable = {
     'package://universal_robot/ur_description/meshes/ur3/visual/forearm.dae': Ur3Forearm,
     'package://universal_robot/ur_description/meshes/ur3/visual/shoulder.dae' : Ur3Shoulder,
     'package://universal_robot/ur_description/meshes/ur3/visual/upperarm.dae' : Ur3Upperarm,
-    'package://universal_robot/ur_description/meshes/ur3/visual/wrist1.dae' : Ur3Wrist1,
+    'package://universal_robot/ur_description/meshes/ur3/visual/wrist1.dae' : Ur3Wrist1, //missing
     'package://universal_robot/ur_description/meshes/ur3/visual/wrist2.dae' : Ur3Wrist2,
     'package://universal_robot/ur_description/meshes/ur3/visual/wrist3.dae' : Ur3Wrist3,
     //--------------------------------------------------------------------Ur5
@@ -265,10 +265,10 @@ const MeshLookupTable = {
      'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/Pedestal.stl': Collision_Pedestal,
      'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/Table/Table.stl':Table,
      'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/Table.stl': Collision_Table ,
-     'package://app/meshes/InfoPhycon.stl': InfoPhycon, // not showing
+     //'package://app/meshes/InfoPhycon.stl': InfoPhycon, // not showing
      'package://app/meshes/LocationMarker.stl': LocationMarker,
      'package://app/meshes/OpenWaypointMarker.stl': OpenWaypointMarker, //
-     'package://app/meshes/WarningPhycon.stl': WarningPhycon // not showing
+     //'package://app/meshes/WarningPhycon.stl': WarningPhycon // not showing
 
 
 

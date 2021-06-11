@@ -42,7 +42,7 @@ export default {
                     scale: { x: 1, y: 1, z: 1 },
                     editMode: 'inactive',
                     showName: true,
-                    highlighted: false,
+                    highlighted: true,
                     color:{r:50,g:29,b:200,a:1},
                     onClick: () => { console.log('something') },
                     onTransform: (transform) => { console.log(transform) }
