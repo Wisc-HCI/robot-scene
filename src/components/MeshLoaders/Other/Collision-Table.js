@@ -8,8 +8,7 @@ import Collision_Table from '../../Meshes/Other/Collision-Table.glb';
 
 export default function Model(props) {
   const { nodes, materials } = useGLTF(Collision_Table)
-  return
-[{type:'raw', geometry:nodes['Collision-Table'].geometry, material:nodes['Collision-Table'].material} ]
+  return [{type:'raw', geometry:nodes['Collision-Table'].geometry, material:nodes['Collision-Table'].material} ]
 
 }
 

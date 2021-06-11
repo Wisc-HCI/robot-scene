@@ -8,8 +8,7 @@ import { useGLTF } from '@react-three/drei';
 export default function Model(props) {
 
   const { nodes, materials } = useGLTF(Ur5Upperarm);
-  return
-[
+  return [
 {type:'raw',geometry:nodes['ActorShape0_0-Mesh024'].geometry, material:nodes['ActorShape0_0-Mesh024'].material} ,
 {type:'raw',geometry:nodes['ActorShape0_0-Mesh024_1'].geometry, material:nodes['ActorShape0_0-Mesh024_1'].material} ,
 {type:'raw',geometry:nodes.Actor1.geometry, material:nodes.Actor1.material} ,

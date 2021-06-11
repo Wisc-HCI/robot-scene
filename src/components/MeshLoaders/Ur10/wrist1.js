@@ -7,7 +7,7 @@ import { useGLTF } from '@react-three/drei';
 
 export default function Model(props) {
 
-  const { nodes, materials } = useGLTF('/wrist1.glb')
+  const { nodes, materials } = useGLTF(Ur10Wrist1)
   return [
 {type:'raw', geometry:nodes['node-shape0-name'].geometry, material:materials['SWMaterial-0_001']},
 {type:'raw', geometry:nodes['node-shape1-name'].geometry, material:materials['SWMaterial-1_001']},
@@ -15,4 +15,4 @@ export default function Model(props) {
     ]
 }
 
-useGLTF.preload('/wrist1.glb')
+useGLTF.preload(Ur10Wrist1)

@@ -7,8 +7,7 @@ import LElbowRollMesh from '../../Meshes/Nao/LElbowRoll.glb';
 
 export default function Model(props) {
   const { nodes, materials } = useGLTF(LElbowRollMesh);
-  return
-    [{type:'raw',geometry:nodes.LElbowRoll.geometry, material:materials.LElbowRollUV, scale:[0.01, 0.01, 0.01]}]
+  return [{type:'raw',geometry:nodes.LElbowRoll.geometry, material:materials.LElbowRollUV, scale:[0.01, 0.01, 0.01]}]
 
 
 }

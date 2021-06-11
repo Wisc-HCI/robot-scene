@@ -8,7 +8,7 @@ import RFinger12Mesh from '../../Meshes/Nao/RFinger12.glb';
 
 export default function Model(props) {
 
-  const { nodes, materials } = useGLTF(RFinger11Mesh)
+  const { nodes, materials } = useGLTF(RFinger12Mesh)
   return [{type:'raw', geometry:nodes.RFinger12.geometry, material:materials.RFinger12UV,scale:[0.01, 0.01, 0.01]}]
 }
 

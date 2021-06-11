@@ -7,7 +7,6 @@ import { useGLTF } from '@react-three/drei';
 import Ur3Wrist2 from '../../Meshes/Ur3/wrist2.glb';
 
 export default function Model(props) {
-  const group = useRef()
   const { nodes, materials } = useGLTF(Ur3Wrist2);
   return [
 

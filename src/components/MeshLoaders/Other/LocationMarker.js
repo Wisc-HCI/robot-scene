@@ -9,9 +9,7 @@ import LocationMarker from '../../Meshes/Other/LocationMarker.glb'
 export default function Model(props) {
 
   const { nodes, materials } = useGLTF(LocationMarker)
-  return
-
-[{type:'raw',geometry:nodes.LocationMarker.geometry, material:nodes.LocationMarker.material}
+  return [{type:'raw',geometry:nodes.LocationMarker.geometry, material:nodes.LocationMarker.material}
 
 ]
 }

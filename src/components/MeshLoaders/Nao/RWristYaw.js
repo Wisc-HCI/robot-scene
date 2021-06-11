@@ -6,7 +6,7 @@ import { useGLTF } from '@react-three/drei';
 import RWristYawMesh from '../../Meshes/Nao/RWristYaw.glb';
 
 export default function Model(props) {
-  const { nodes, materials } = useGLTF('/RWristYaw.glb')
+  const { nodes, materials } = useGLTF(RWristYawMesh)
   return [{type:'raw',geometry:nodes.RWristYaw.geometry, material:materials.RWristYawUV, scale:[0.01, 0.01, 0.01]}]
 }
 

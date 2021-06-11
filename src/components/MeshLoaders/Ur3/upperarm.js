@@ -7,7 +7,7 @@ import { useGLTF } from '@react-three/drei';
 import Ur3Upperarm from '../../Meshes/Ur3/upperarm.glb';
 
 export default function Model(props) {
-  const group = useRef()
+  
   const { nodes, materials } = useGLTF(Ur3Upperarm)
   return [
 {type:'raw',geometry:nodes.node0.geometry, material:nodes.node0.material} ,
@@ -20,7 +20,7 @@ export default function Model(props) {
 {type:'raw',geometry:nodes.node7.geometry, material:nodes.node7.material},
 {type:'raw',geometry:nodes.node8.geometry, material:nodes.node8.material},
 {type:'raw',geometry:nodes.node9.geometry, material:nodes.node9.material},
-{type:'raw',geometry:nodes.node10.geometry, material:nodes.node10.material}, 
+{type:'raw',geometry:nodes.node10.geometry, material:nodes.node10.material},
 {type:'raw',geometry:nodes.node11.geometry, material:nodes.node11.material}
 
   ]
