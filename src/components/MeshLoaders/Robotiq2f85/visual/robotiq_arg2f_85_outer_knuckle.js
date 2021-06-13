@@ -8,8 +8,10 @@ import RobotiqVisual85OuterKnuckle from '../../../Meshes/Robotiq2f85/visual/robo
 
 export default function Model(props) {
   const { nodes, materials } = useGLTF(RobotiqVisual85OuterKnuckle)
-  return [{type:'raw', geometry:nodes.node.geometry,
-              material:nodes.node.material,rotation:[Math.PI / 2, 0, 0]}]
+  return [{type:'group', scale:[0.001,0.001,0.001],children:[{type:'raw', geometry:nodes.node.geometry,
+                material:nodes.node.material,rotation:[Math.PI / 2, 0, 0]}]}]
+
+
 
 
 

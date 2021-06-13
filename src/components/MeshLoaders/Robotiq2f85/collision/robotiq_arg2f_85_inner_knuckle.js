@@ -8,8 +8,8 @@ import RobotiqCollision85InnerKnuckle from '../../../Meshes/Robotiq2f85/collisio
 
 export default function Model(props) {
   const { nodes, materials } = useGLTF(RobotiqCollision85InnerKnuckle)
-  return [{type:'raw', geometry:nodes.node.geometry,
-         material:nodes.node.material,rotation:[Math.PI / 2, 0, 0]}]
+  return [{type:'group', scale:[0.001,0.001,0.001],children:[{type:'raw', geometry:nodes.node.geometry,
+         material:nodes.node.material,rotation:[Math.PI / 2, 0, 0]}]}] 
 }
 
 useGLTF.preload(RobotiqCollision85InnerKnuckle)

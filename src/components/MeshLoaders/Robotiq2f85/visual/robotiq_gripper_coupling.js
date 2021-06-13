@@ -7,8 +7,8 @@ import { useGLTF } from '@react-three/drei';
 import RobotiqVisualGripper from '../../../Meshes/Robotiq2f85/visual/robotiq_gripper_coupling.glb';
 export default function Model(props) {
   const { nodes, materials } = useGLTF(RobotiqVisualGripper);
-  return [{type:'raw',geometry:nodes.Robotiq_Gripper_Coupling.geometry,material:nodes.Robotiq_Gripper_Coupling.material}]
-
+  return [{type:'group', scale:[0.001,0.001,0.001],children:[{type:'raw',geometry:nodes.Robotiq_Gripper_Coupling.geometry,material:nodes.Robotiq_Gripper_Coupling.material}]
+}]
 
 
 }
