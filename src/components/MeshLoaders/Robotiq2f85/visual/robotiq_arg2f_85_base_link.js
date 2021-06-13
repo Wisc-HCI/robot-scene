@@ -7,7 +7,6 @@ import { useGLTF } from '@react-three/drei';
 import RobotiqVisual85BaseLink from '../../../Meshes/Robotiq2f85/visual/robotiq_arg2f_85_base_link.glb';
 
 export default function Model(props) {
-
   const { nodes, materials } = useGLTF(RobotiqVisual85BaseLink)
   return [{type:'group', scale:[0.001,0.001,0.001],children:[
       {type:'raw',geometry:nodes.node0.geometry, material:nodes.node0.material},

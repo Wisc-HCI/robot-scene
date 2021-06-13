@@ -7,7 +7,6 @@ import { useGLTF } from '@react-three/drei';
 import RobotiqVisual85InnerKnuckle from '../../../Meshes/Robotiq2f85/visual/robotiq_arg2f_85_inner_knuckle.glb'
 
 export default function Model(props) {
-
   const { nodes, materials } = useGLTF(RobotiqVisual85InnerKnuckle)
   return [{type:'group', scale:[0.001,0.001,0.001],children:[{type:'raw', geometry:nodes.node0.geometry, material:materials['mymaterial.002']}]
 }]
