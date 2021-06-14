@@ -48,15 +48,19 @@ export default function Content(props) {
       <>
           {nodes.map(node=>node[0])}
       </>
-    const refs = [].concat.apply([], nodes.map(node=>node[1]));
-    return [group, refs];
+    const ghost = 
+      <>
+          {nodes.map(node=>node[1])}
+      </>
+    const refs = [].concat.apply([], nodes.map(node=>node[2]));
+    return [group, ghost, refs];
   })
 
   // Gather up all the internal refs to meshes that should be highlighted.
   let highlightedRefs = [];
   Object.keys(items).forEach((key)=>{
     if (items[key].highlighted) {
-      meshesAndRefs[key][1].forEach(ref=>{
+      meshesAndRefs[key][2].forEach(ref=>{
         highlightedRefs.push(ref)
       })
     }
@@ -100,6 +104,7 @@ export default function Content(props) {
                   key={`${itemKey}Item`} 
                   itemKey={itemKey} 
                   node={meshesAndRefs[itemKey][0]} 
+                  ghost={meshesAndRefs[itemKey][1]}
                   orbitControls={orbitControls}/>
               ))
             }

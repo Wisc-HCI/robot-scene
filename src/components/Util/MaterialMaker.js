@@ -25,9 +25,19 @@ export const MaterialMaker = (r, g, b, a) => {
   }
 };
 
-export const GhostMaterial = (r, g, b) => {
-  var color = new Color();
-  color.setRGB(r/255, g/255, b/255);
+export const WireframeMaterial = (r, g, b) => {
+	var color = new Color();
+  	color.setRGB(r/255, g/255, b/255);
+	
+	return new MeshStandardMaterial({
+		color: color.getHex(),
+		wireframe: true,
+		transparent: true
+	})
+}
+
+export const GhostMaterial = (hex) => {
+  var color = new Color(hex);
   var vertexShader	= [
 		'varying vec3	vVertexWorldPosition;',
 		'varying vec3	vVertexNormal;',

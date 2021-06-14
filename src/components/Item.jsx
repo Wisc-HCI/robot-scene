@@ -2,15 +2,11 @@ import React, { useRef, useEffect, useCallback } from 'react';
 import { useFrame } from "@react-three/fiber";
 import { TransformControls, Html } from '@react-three/drei';
 import useSceneStore from './SceneStore';
-import { Quaternion, Euler } from 'three';
+import { Quaternion, Euler, Vector3 } from 'three';
 import { Tag } from 'antd';
 
 export default function Item(props) {
-  const { orbitControls, itemKey, node } = props;
-  const transformRef = useRef();
-  const scaleRef = useRef();
-  const rotateRef = useRef();
-
+  const { orbitControls, itemKey, node, ghost } = props;
 
   const { editMode, name, showName, onClick, onPointerOver, onPointerOut, onTransform } = 
     useSceneStore(useCallback(state=>({editMode:state.items[itemKey].editMode,
@@ -23,37 +19,41 @@ export default function Item(props) {
                                       }), [itemKey]))
 
   const transformControls = useRef();
+
+  const transformRef = useRef();
+
   const localQuaternion = new Quaternion();
   const localEuler = new Euler();
+  const localScale = new Vector3();
 
   useEffect(() => {
     if (transformControls.current) {
-      const { current: controls } = transformControls;
+      const { current: transformer} = transformControls;
       // controls.children[0].rotation.set(-Math.PI/2,0,0)
       const dragChangeCallback = (event) => {orbitControls.current.enabled = !event.value}
       const dragCallback = (event) => {
         if (editMode === 'translate') {
-          onTransform({translation:{x:controls.offset.x,
-                                    y:controls.offset.y,
-                                    z:controls.offset.z}})
+          onTransform({translation:{x:transformer.offset.x,
+                                    y:transformer.offset.z,
+                                    z:transformer.offset.y}})
         } else if (editMode === 'rotate') {
-          localEuler.setFromVector3(controls.offset);
+          localEuler.setFromVector3(transformer.offset);
           localQuaternion.setFromEuler(localEuler);
           onTransform({rotation:{w:localQuaternion.w,
                                  x:localQuaternion.x,
                                  y:localQuaternion.y,
                                  z:localQuaternion.z}})
         } else if (editMode === 'scale') {
-          onTransform({scale:{x:controls.offset.x,
-                              y:controls.offset.y,
-                              z:controls.offset.z}})
+          onTransform({scale:{x:transformer.offset.x,
+                              y:transformer.offset.z,
+                              z:transformer.offset.y}})
         }
       }
-      controls.addEventListener('dragging-changed', dragChangeCallback);
-      controls.addEventListener('objectChange',dragCallback);
+      transformer.addEventListener('dragging-changed', dragChangeCallback);
+      transformer.addEventListener('objectChange',dragCallback);
       return () => {
-        controls.removeEventListener('dragging-changed', dragChangeCallback);
-        controls.removeEventListener('objectChange', dragCallback);
+        transformer.removeEventListener('dragging-changed', dragChangeCallback);
+        transformer.removeEventListener('objectChange', dragCallback);
       }
     }
   })
@@ -63,13 +63,13 @@ export default function Item(props) {
     const item = useSceneStore.getState().items[itemKey];
 
     transformRef.current.position.set(item.position.x, item.position.y, item.position.z);
-    rotateRef.current.quaternion.set(
+    transformRef.current.quaternion.set(
       item.rotation.x,
       item.rotation.y,
       item.rotation.z,
       item.rotation.w
     );
-    scaleRef.current.scale.set(item.scale.x, item.scale.y, item.scale.z);
+    transformRef.current.scale.set(item.scale.x, item.scale.y, item.scale.z);
     // if (transformControls.current) {
     //   const { current: controls } = transformControls;
     //   controls.gizmo.position.set(item.position.x, item.position.y, item.position.z);
@@ -87,13 +87,9 @@ export default function Item(props) {
   return (
     <>
       
-        <group ref={transformRef} onPointerDown={onClick} onPointerOver={onPointerOver} onPointerOut={onPointerOut}>
-          <group ref={scaleRef}>
-            <group ref={rotateRef}>
-              <group rotation={[Math.PI/2,0,0]}>
-                {node}
-              </group>
-            </group>
+        <group ref={transformRef}>
+          <group rotation={[Math.PI/2,0,0]} onPointerDown={onClick} onPointerOver={onPointerOver} onPointerOut={onPointerOut}>
+            {node}
           </group>
           {showName && (
             <Html distanceFactor={7} position={[0, 1, 0]}>
@@ -105,9 +101,15 @@ export default function Item(props) {
               </Tag>
             </Html>
           )}
-      
-      </group>
-      {false && editMode !== 'inactive' && <TransformControls scene='local' ref={transformControls} mode={editMode}/>}
+          {editMode !== 'inactive' && (
+          <TransformControls ref={transformControls} mode={editMode}>
+            <group rotation={[Math.PI/2,0,0]} opacity={0.4}>
+              {ghost}
+            </group>
+          </TransformControls>
+          )}
+        </group>
+        
     </>
   )
 }
