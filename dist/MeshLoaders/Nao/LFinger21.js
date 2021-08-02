@@ -7,7 +7,7 @@ exports.default = Model;
 
 var _drei = require("@react-three/drei");
 
-var _LFinger = _interopRequireDefault(require("../../Meshes/Nao/LFinger13.glb"));
+var _LFinger = _interopRequireDefault(require("../../Meshes/Nao/LFinger21.glb"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

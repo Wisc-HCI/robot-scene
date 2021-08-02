@@ -5,23 +5,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = TF;
+exports.default = GhostItem;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _fiber = require("@react-three/fiber");
-
 var _SceneStore = _interopRequireDefault(require("./SceneStore"));
 
-var _StandardMeshes = require("./Util/StandardMeshes");
-
-var _MaterialMaker = require("./Util/MaterialMaker");
-
-var _Item = _interopRequireDefault(require("./Item"));
-
-var _Line = _interopRequireDefault(require("./Line"));
-
-var _Control = _interopRequireDefault(require("./Control"));
+var _MeshConvert = require("./Util/MeshConvert");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41,78 +31,30 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function TF(props) {
-  var tfKey = props.tfKey,
-      displayTfs = props.displayTfs;
+function GhostItem(_ref) {
+  var itemKey = _ref.itemKey;
 
   var _useSceneStore = (0, _SceneStore.default)((0, _react.useCallback)(function (state) {
-    return [Object.entries(state.items).filter(function (pair) {
-      return pair[1].frame === state.tfs[tfKey].name;
-    }).map(function (pair) {
-      return pair[0];
-    }), Object.entries(state.lines).filter(function (pair) {
-      return pair[1].frame === state.tfs[tfKey].name;
-    }).map(function (pair) {
-      return pair[0];
-    }), Object.entries(state.controls).filter(function (pair) {
-      return pair[1].frame === state.tfs[tfKey].name;
-    }).map(function (pair) {
-      return pair[0];
-    }), state.items];
-  }, [tfKey])),
-      _useSceneStore2 = _slicedToArray(_useSceneStore, 3),
-      childrenItemIds = _useSceneStore2[0],
-      childrenLineIds = _useSceneStore2[1],
-      childrenControlIds = _useSceneStore2[2];
+    return [state.items[itemKey].ghostRef, state.items[itemKey].position, state.items[itemKey].rotation, state.items[itemKey].scale, state.items[itemKey].shape];
+  }, [itemKey])),
+      _useSceneStore2 = _slicedToArray(_useSceneStore, 5),
+      ghostRef = _useSceneStore2[0],
+      position = _useSceneStore2[1],
+      rotation = _useSceneStore2[2],
+      scale = _useSceneStore2[3],
+      shape = _useSceneStore2[4];
 
-  var ref = (0, _react.useRef)();
-  (0, _fiber.useFrame)((0, _react.useCallback)(function () {
-    // Outside of react rendering, adjust the positions of all tfs.
-    var tf = _SceneStore.default.getState().tfs[tfKey];
+  (0, _react.useLayoutEffect)(function () {
+    var _ghostRef$current, _ghostRef$current2, _ghostRef$current3;
 
-    if (ref.current) {
-      ref.current.position.set(tf.translation.x, tf.translation.y, tf.translation.z);
-      ref.current.quaternion.set(tf.rotation.x, tf.rotation.y, tf.rotation.z, tf.rotation.w);
-    }
-  }, [tfKey, ref]));
-  var arrow = (0, _StandardMeshes.ARROW_GEOM)();
+    (_ghostRef$current = ghostRef.current) === null || _ghostRef$current === void 0 ? void 0 : _ghostRef$current.position.set(position.x, position.y, position.z);
+    (_ghostRef$current2 = ghostRef.current) === null || _ghostRef$current2 === void 0 ? void 0 : _ghostRef$current2.quaternion.set(rotation.x, rotation.y, rotation.z, rotation.w);
+    (_ghostRef$current3 = ghostRef.current) === null || _ghostRef$current3 === void 0 ? void 0 : _ghostRef$current3.scale.set(scale.x, scale.y, scale.z);
+  }, [ghostRef, position, rotation, scale]);
+  var ghostGroup = (0, _MeshConvert.itemToGhost)({
+    shape: shape
+  });
   return /*#__PURE__*/_react.default.createElement("group", {
-    ref: ref,
-    dispose: null
-  }, displayTfs && /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("mesh", {
-    key: "".concat(tfKey, "ArrowX"),
-    geometry: arrow,
-    material: (0, _MaterialMaker.MaterialMaker)(255, 0, 0, 1),
-    scale: [0.2, 0.5, 0.2],
-    rotation: [0, 0, -Math.PI / 2]
-  }), /*#__PURE__*/_react.default.createElement("mesh", {
-    key: "".concat(tfKey, "ArrowY"),
-    geometry: arrow,
-    material: (0, _MaterialMaker.MaterialMaker)(0, 255, 0, 1),
-    scale: [0.2, 0.5, 0.2],
-    rotation: [0, Math.PI / 2, 0]
-  }), /*#__PURE__*/_react.default.createElement("mesh", {
-    key: "".concat(tfKey, "ArrowZ"),
-    geometry: arrow,
-    material: (0, _MaterialMaker.MaterialMaker)(0, 0, 255, 1),
-    scale: [0.2, 0.5, 0.2],
-    rotation: [Math.PI / 2, 0, 0]
-  })), childrenItemIds.map(function (id) {
-    return /*#__PURE__*/_react.default.createElement(_Item.default, {
-      key: id,
-      itemKey: id
-    });
-  }), childrenLineIds.map(function (id) {
-    return /*#__PURE__*/_react.default.createElement(_Line.default, {
-      key: id,
-      lineKey: id
-    });
-  }), childrenControlIds.map(function (id) {
-    return /*#__PURE__*/_react.default.createElement(_Control.default, {
-      key: id,
-      controlKey: id
-    });
-  }));
+    ref: ghostRef
+  }, ghostGroup);
 }
-
-;

@@ -21,7 +21,7 @@ function Model(props) {
 
   return [{
     type: 'raw',
-    gemometry: nodes.node0.geometry,
+    geometry: nodes.node0.geometry,
     material: materials.Part__Feature_001,
     position: [0, -0.19, 0]
   }];

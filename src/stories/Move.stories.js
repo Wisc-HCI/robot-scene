@@ -10,99 +10,90 @@ export default {
     (storyFn) => {
         
       const defaultTfs = {
-          world: {
-            name: 'world',
-            translation: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 }
-          },
           static: {
-            name:'static',
+            frame:'world',
             translation: { x: -1, y: 1, z: 0 },
             rotation: { w: 1, x: 0, y: 0, z: 0 }
-          },
-          translate: {
-            name:'translate',
-            translation: { x: -1, y: -1, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 }
-          },
-          rotate: {
-            name:'rotate',
-            translation: { x: 1, y: 1, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 }
-          },
-          scale: {
-            name:'scale',
-            translation: { x: 1, y: -1, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 }
-          },
+          }
         }
         
         const defaultItems = {
-          staticCube: {
+          immovable: {
             shape: "cube",
-            name: "Static Cube",
+            name: "Immovable Cube",
             frame: "static",
-            position: { x: 0, y: 0, z: 1 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 10, g: 10, b: 10, a: 1 },
-            scale: { x: 0.5, y: 0.5, z: 0.5 },
-            editMode: 'inactive',
-            highlighted: true,
-            onClick: () => {console.log('cube')},
-            onPointerOver: () => {console.log('hover')},
-            onPointerOut: () => {console.log('hover out')},
-            onTransform: (transform) => {console.log(transform)}
-          },
-          translateCube: {
-            shape: "cube",
-            name: "Translate Cube",
-            frame: "translate",
             position: { x: 0, y: 0, z: 1 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             color: { r: 255, g: 10, b: 10, a: 1 },
             scale: { x: 0.5, y: 0.5, z: 0.5 },
-            editMode: 'translate',
             highlighted: true,
             onClick: () => {console.log('cube')},
             onPointerOver: () => {console.log('hover')},
+            onPointerOut: () => {console.log('hover out')}
+          }, 
+          translateCube: {
+            shape: "cube",
+            name: "Translate Cube (Async)",
+            frame: "world",
+            position: { x: 0, y: 0, z: 1 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: { r: 10, g: 10, b: 10, a: 1 },
+            scale: { x: 0.5, y: 0.5, z: 0.5 },
+            highlighted: false,
+            onClick: () => {console.log('cube')},
+            onPointerOver: () => {console.log('hover')},
             onPointerOut: () => {console.log('hover out')},
-            onTransform: (transform) => {console.log(transform)}
+            transformMode: 'translate',
+            onMove: (transform)=>console.log(transform)
           },
           rotateCube: {
             shape: "cube",
             name: "Rotate Cube",
-            frame: "rotate",
-            position: { x: 0, y: 0, z: 1 },
+            frame: "static",
+            position: { x: 1, y: 0, z: 1 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             color: { r: 10, g: 255, b: 10, a: 1 },
             scale: { x: 0.5, y: 0.5, z: 0.5 },
-            editMode: 'rotate',
-            highlighted: true,
+            highlighted: false,
             onClick: () => {console.log('cube')},
             onPointerOver: () => {console.log('hover')},
             onPointerOut: () => {console.log('hover out')},
-            onTransform: (transform) => {console.log(transform)}
+            transformMode: 'rotate',
+            onMove: (transform) => {
+              useSceneStore.getState().setItemRotation('rotateCube',{
+                x:transform.local.quaternion.x,
+                y:transform.local.quaternion.y,
+                z:transform.local.quaternion.z,
+                w:transform.local.quaternion.w
+              });
+            }
           },
           scaleCube: {
             shape: "cube",
             name: "Scale Cube",
-            frame: "scale",
-            position: { x: 0, y: 0, z: 1 },
+            frame: "static",
+            position: { x: 0, y: 1, z: 1 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             color: { r: 10, g: 10, b: 255, a: 1 },
             scale: { x: 0.5, y: 0.5, z: 0.5 },
-            editMode: 'scale',
-            highlighted: true,
+            highlighted: false,
             onClick: () => {console.log('cube')},
             onPointerOver: () => {console.log('hover')},
             onPointerOut: () => {console.log('hover out')},
-            onTransform: (transform) => {console.log(transform)}
-          },
+            transformMode: 'scale',
+            onMove: (transform) => {
+              useSceneStore.getState().setItemScale('scaleCube',{
+                x:transform.local.scale.x,
+                y:transform.local.scale.y,
+                z:transform.local.scale.z,
+              });
+            }
+          }
         }
-        
-        const defaultLines = {}
-        
-        useSceneStore.setState({ tfs: defaultTfs, items: defaultItems, lines: defaultLines });
+
+        useSceneStore.getState().setItems(defaultItems);
+        useSceneStore.getState().setTfs(defaultTfs);
+        useSceneStore.getState().clearLines();
 
         return storyFn()
         

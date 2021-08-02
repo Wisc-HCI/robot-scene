@@ -21,7 +21,7 @@ function Model(props) {
 
   return [{
     type: 'raw',
-    gemometry: nodes.node0.geometry,
+    geometry: nodes.node0.geometry,
     material: nodes.node0.material
   }, {
     type: 'raw',

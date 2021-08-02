@@ -19,8 +19,7 @@ function Model(props) {
       nodes = _useGLTF.nodes,
       materials = _useGLTF.materials;
 
-  return;
-  [{
+  return [{
     type: 'raw',
     geometry: nodes['Collision-Table'].geometry,
     material: nodes['Collision-Table'].material

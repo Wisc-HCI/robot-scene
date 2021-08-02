@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.GhostMaterial = exports.MaterialMaker = void 0;
+exports.GhostMaterial = exports.WireframeMaterial = exports.MaterialMaker = void 0;
 
 var _three = require("three");
 
@@ -33,9 +33,22 @@ var MaterialMaker = function MaterialMaker(r, g, b, a) {
 
 exports.MaterialMaker = MaterialMaker;
 
-var GhostMaterial = function GhostMaterial(r, g, b) {
+var WireframeMaterial = function WireframeMaterial(r, g, b) {
   var color = new _three.Color();
   color.setRGB(r / 255, g / 255, b / 255);
+  return new _three.MeshStandardMaterial({
+    color: color.getHex(),
+    wireframe: true,
+    depthTest: false,
+    depthWrite: false,
+    transparent: true
+  });
+};
+
+exports.WireframeMaterial = WireframeMaterial;
+
+var GhostMaterial = function GhostMaterial(hex) {
+  var color = new _three.Color(hex);
   var vertexShader = ['varying vec3	vVertexWorldPosition;', 'varying vec3	vVertexNormal;', 'varying vec4	vFragColor;', 'void main(){', '	vVertexNormal	= normalize(normalMatrix * normal);', '	vVertexWorldPosition	= (modelMatrix * vec4(position, 1.0)).xyz;', '	// set gl_Position', '	gl_Position	= projectionMatrix * modelViewMatrix * vec4(position, 1.0);', '}'].join('\n');
   var fragmentShader = ['uniform vec3	glowColor;', 'uniform float	coeficient;', 'uniform float	power;', 'varying vec3	vVertexNormal;', 'varying vec3	vVertexWorldPosition;', 'varying vec4	vFragColor;', 'void main(){', '	vec3 worldCameraToVertex= vVertexWorldPosition - cameraPosition;', '	vec3 viewCameraToVertex	= (viewMatrix * vec4(worldCameraToVertex, 0.0)).xyz;', '	viewCameraToVertex	= normalize(viewCameraToVertex);', '	float intensity		= pow(coeficient + dot(vVertexNormal, viewCameraToVertex), power);', '	gl_FragColor		= vec4(glowColor, intensity);', '}'].join('\n'); // create custom material from the shader code above
   //   that is within specially labeled script tags

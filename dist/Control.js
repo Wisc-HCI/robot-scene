@@ -5,23 +5,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = TF;
+exports.default = Control;
 
 var _react = _interopRequireWildcard(require("react"));
 
 var _fiber = require("@react-three/fiber");
 
+var _drei = require("@react-three/drei");
+
 var _SceneStore = _interopRequireDefault(require("./SceneStore"));
-
-var _StandardMeshes = require("./Util/StandardMeshes");
-
-var _MaterialMaker = require("./Util/MaterialMaker");
-
-var _Item = _interopRequireDefault(require("./Item"));
-
-var _Line = _interopRequireDefault(require("./Line"));
-
-var _Control = _interopRequireDefault(require("./Control"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41,78 +33,66 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function TF(props) {
-  var tfKey = props.tfKey,
-      displayTfs = props.displayTfs;
+function Control(_ref) {
+  var controlKey = _ref.controlKey,
+      orbitControls = _ref.orbitControls,
+      children = _ref.children;
 
   var _useSceneStore = (0, _SceneStore.default)((0, _react.useCallback)(function (state) {
-    return [Object.entries(state.items).filter(function (pair) {
-      return pair[1].frame === state.tfs[tfKey].name;
-    }).map(function (pair) {
-      return pair[0];
-    }), Object.entries(state.lines).filter(function (pair) {
-      return pair[1].frame === state.tfs[tfKey].name;
-    }).map(function (pair) {
-      return pair[0];
-    }), Object.entries(state.controls).filter(function (pair) {
-      return pair[1].frame === state.tfs[tfKey].name;
-    }).map(function (pair) {
-      return pair[0];
-    }), state.items];
-  }, [tfKey])),
-      _useSceneStore2 = _slicedToArray(_useSceneStore, 3),
-      childrenItemIds = _useSceneStore2[0],
-      childrenLineIds = _useSceneStore2[1],
-      childrenControlIds = _useSceneStore2[2];
+    return [state.controls[controlKey].mode, state.controls[controlKey].onTransform];
+  }, [controlKey])),
+      _useSceneStore2 = _slicedToArray(_useSceneStore, 2),
+      mode = _useSceneStore2[0],
+      onTransform = _useSceneStore2[1];
 
-  var ref = (0, _react.useRef)();
-  (0, _fiber.useFrame)((0, _react.useCallback)(function () {
-    // Outside of react rendering, adjust the positions of all tfs.
-    var tf = _SceneStore.default.getState().tfs[tfKey];
+  var controls = (0, _react.useRef)(); //   useFrame(useCallback(() => {
+  //     // Outside of react rendering, adjust the positions of all tfs.
+  //     const controlState = useSceneStore.getState().controls[controlKey];
+  //     if (controls.current) {
+  //         console.log(controls.current);
+  //         // controls.current.gizmo.rotation.set({x:Math.PI/2,y:0,z:0});
+  //         controls.current.positionStart.set(
+  //             controlState.translation.x, 
+  //             controlState.translation.y, 
+  //             controlState.translation.z
+  //         );
+  //         controls.current.quaternionStart.set(
+  //             controlState.rotation.x,
+  //             controlState.rotation.y,
+  //             controlState.rotation.z,
+  //             controlState.rotation.w
+  //         );
+  //         controls.current.scaleStart.set(
+  //             controlState.scale.x, 
+  //             controlState.scale.y, 
+  //             controlState.scale.z
+  //         );
+  //     }
+  //   },[controlKey]));
 
-    if (ref.current) {
-      ref.current.position.set(tf.translation.x, tf.translation.y, tf.translation.z);
-      ref.current.quaternion.set(tf.rotation.x, tf.rotation.y, tf.rotation.z, tf.rotation.w);
+  (0, _react.useEffect)(function () {
+    if (controls.current) {
+      var callback = function callback(event) {
+        console.log(event);
+
+        _SceneStore.default.setState({
+          transforming: event.value
+        });
+      };
+
+      controls.current.addEventListener('dragging-changed', callback);
+      return function () {
+        return controls.current && controls.current.removeEventListener('dragging-changed', callback);
+      };
     }
-  }, [tfKey, ref]));
-  var arrow = (0, _StandardMeshes.ARROW_GEOM)();
-  return /*#__PURE__*/_react.default.createElement("group", {
-    ref: ref,
-    dispose: null
-  }, displayTfs && /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("mesh", {
-    key: "".concat(tfKey, "ArrowX"),
-    geometry: arrow,
-    material: (0, _MaterialMaker.MaterialMaker)(255, 0, 0, 1),
-    scale: [0.2, 0.5, 0.2],
-    rotation: [0, 0, -Math.PI / 2]
-  }), /*#__PURE__*/_react.default.createElement("mesh", {
-    key: "".concat(tfKey, "ArrowY"),
-    geometry: arrow,
-    material: (0, _MaterialMaker.MaterialMaker)(0, 255, 0, 1),
-    scale: [0.2, 0.5, 0.2],
-    rotation: [0, Math.PI / 2, 0]
-  }), /*#__PURE__*/_react.default.createElement("mesh", {
-    key: "".concat(tfKey, "ArrowZ"),
-    geometry: arrow,
-    material: (0, _MaterialMaker.MaterialMaker)(0, 0, 255, 1),
-    scale: [0.2, 0.5, 0.2],
-    rotation: [Math.PI / 2, 0, 0]
-  })), childrenItemIds.map(function (id) {
-    return /*#__PURE__*/_react.default.createElement(_Item.default, {
-      key: id,
-      itemKey: id
-    });
-  }), childrenLineIds.map(function (id) {
-    return /*#__PURE__*/_react.default.createElement(_Line.default, {
-      key: id,
-      lineKey: id
-    });
-  }), childrenControlIds.map(function (id) {
-    return /*#__PURE__*/_react.default.createElement(_Control.default, {
-      key: id,
-      controlKey: id
-    });
-  }));
+  });
+  return /*#__PURE__*/_react.default.createElement(_drei.TransformControls, {
+    ref: controls,
+    mode: mode
+  }, /*#__PURE__*/_react.default.createElement(_drei.Box, {
+    args: [10]
+  }, /*#__PURE__*/_react.default.createElement("meshBasicMaterial", {
+    attach: "material",
+    wireframe: true
+  })), children);
 }
-
-;

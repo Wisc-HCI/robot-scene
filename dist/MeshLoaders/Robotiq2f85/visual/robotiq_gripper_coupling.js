@@ -20,9 +20,13 @@ function Model(props) {
       materials = _useGLTF.materials;
 
   return [{
-    type: 'raw',
-    geometry: nodes.Robotiq_Gripper_Coupling.geometry,
-    material: nodes.Robotiq_Gripper_Coupling.material
+    type: 'group',
+    scale: [0.001, 0.001, 0.001],
+    children: [{
+      type: 'raw',
+      geometry: nodes.Robotiq_Gripper_Coupling.geometry,
+      material: nodes.Robotiq_Gripper_Coupling.material
+    }]
   }];
 }
 

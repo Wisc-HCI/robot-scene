@@ -32,7 +32,6 @@ export default {
                     translation: {x: x, y:y, z: 0},
                     rotation: { w: 1, x: 0, y: 0, z: 0 }
                 };
-                // This should work, but doesn't because at least one of the meshes is broken
                 meshItems[key] = {
                     shape: key,
                     name: key,
@@ -42,15 +41,15 @@ export default {
                     scale: { x: 1, y: 1, z: 1 },
                     editMode: 'inactive',
                     showName: true,
-                    highlighted: true,
-                    color:{r:50,g:29,b:200,a:1},
-                    onClick: () => { console.log('something') },
-                    onTransform: (transform) => { console.log(transform) }
+                    highlighted: false,
+                    onClick: () => { console.log(key) }
                 }
 
             })
 
-            useSceneStore.setState({ tfs: defaultTfs, items: meshItems, lines: {} });
+            useSceneStore.getState().setItems(meshItems);
+            useSceneStore.getState().setTfs(defaultTfs);
+            useSceneStore.getState().clearLines();
 
             return storyFn()
 

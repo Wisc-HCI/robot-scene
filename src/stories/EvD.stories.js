@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 
 import Scene from '../components/Scene';
 import useSceneStore from '../components/SceneStore';
@@ -9,13 +9,7 @@ export default {
   decorators:[
     (storyFn) => {
         
-      const defaultTfs = {
-          world: {
-            name: 'world',
-            translation: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 }
-          }
-        }
+      const defaultTfs = {}
         
         const defaultItems = {
           table: {
@@ -28,7 +22,6 @@ export default {
               color: {r: 10, g: 10, b: 10, a: 1},
               showCollision: false,
               highlighted: false,
-              editMode: 'inactive',
               showName: false
           },
           pedestal: {
@@ -41,7 +34,6 @@ export default {
               color: {r: 7, g: 7, b: 7, a: 1},
               showCollison: false,
               highlighted: false,
-              editMode: 'inactive',
               showName: false
           },
           box: {
@@ -53,7 +45,6 @@ export default {
               scale: {x:1,y:1,z:1},
               showCollison: false,
               highlighted: false,
-              editMode: 'inactive',
               showName: false
           },
           printer: {
@@ -65,7 +56,6 @@ export default {
               scale: {x:1,y:1,z:1},
               showCollison: false,
               highlighted: true,
-              editMode: 'inactive',
               showName: false
           }
         }
@@ -96,8 +86,10 @@ export default {
             highlighted: false
           }
         }
+        useSceneStore.getState().setItems(defaultItems);
+        useSceneStore.getState().setTfs(defaultTfs);
+        useSceneStore.getState().setLines(defaultLines);
         
-        useSceneStore.setState({ tfs: defaultTfs, items: defaultItems, lines: defaultLines });
 
         return storyFn({plane:-0.36})
         
@@ -109,9 +101,11 @@ export default {
 function EvDViewer(props) {
 
   return (
+    <Suspense fallback={<div>Loading... </div>}>
     <div style={{ height: "100vh", width: "100vw", padding: 0 }}>
       <Scene {...props}/>
     </div>
+    </Suspense>
   )
 }
 
@@ -119,9 +113,9 @@ const Story = (props) => (<EvDViewer {...props}/>)
 
 
 
-export const EvDDemo = Story.bind({});
+export const StoryScene = Story.bind({});
 
-EvDDemo.args = {
+StoryScene.args = {
   displayTfs:true,
   displayGrid:true,
   isPolar:false,

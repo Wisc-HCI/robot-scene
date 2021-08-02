@@ -1,16 +1,14 @@
-import React, { createRef, useRef } from 'react';
-import { OrbitControls, Circle } from "@react-three/drei";
+import React, { useEffect, useRef, useCallback } from 'react';
+import { useThree, useFrame } from '@react-three/fiber';
+import { Circle } from "@react-three/drei";
 import { EffectComposer, Outline, SMAA } from "@react-three/postprocessing";
-import Line from "./Line";
-import Item from "./Item";
-import TF from "./TF";
+import TF, {WorldTF} from "./TF";
 import useSceneStore from './SceneStore';
 import { AmbientLight, DirectionalLight } from './Util/Light';
-import { objectMap } from './Util/Helpers';
 import { MaterialMaker } from './Util/MaterialMaker';
 import { hexToRgb } from './Util/ColorConversion';
-import { MeshConverter } from './Util/MeshConvert';
-import { MeshLookup, MeshLookupTable } from './MeshLookup';
+import { OrbitControls } from '@react-three/drei';
+import { TransformControls } from './Util/TransformControls';
 
 export default function Content(props) {
   // For the objects in props.content, render the objects.
@@ -20,55 +18,20 @@ export default function Content(props) {
           backgroundColor, planeColor, 
           highlightColor, plane } = props;
 
-  const {items, lines, tfs} = useSceneStore(state => ({items:state.items, lines:state.lines, tfs:state.tfs}),
-    // Custom diff-calculation to avoid unnecessary re-renders
-    (oldState, newState) => (
-      (Object.keys(oldState.items) === Object.keys(newState.items)) &&
-      (Object.keys(oldState.lines) === Object.keys(newState.lines)) && 
-      (Object.keys(oldState.tfs) === Object.keys(newState.tfs)) &&
-      (Object.keys(oldState.items).map((key)=>(oldState.items[key].highlighted)) === 
-       Object.keys(newState.items).map((key)=>(newState.items[key].highlighted)))
-    )
-  );
-  
-  const tfRefs = objectMap(tfs,(_)=>createRef());
+  const camera = useThree((state) => state.camera);
 
-  const meshesAndRefs = objectMap(items,(item)=>{
-    const {color, shape} = item;
-    const materialOverride = color ? MaterialMaker(color.r, color.g, color.b, color.a) : undefined;
-    const opacity = color ? color.a : 1.0;
-    let content = [];
+  camera.up.set(0,0,1);
 
-    if (shape in MeshLookupTable) {
-      content = MeshLookup(shape);
-    }
-
-    const nodes = content.map((node,i)=>MeshConverter(node,i,materialOverride,opacity));
-    const group = 
-      <>
-          {nodes.map(node=>node[0])}
-      </>
-    const ghost = 
-      <>
-          {nodes.map(node=>node[1])}
-      </>
-    const refs = [].concat.apply([], nodes.map(node=>node[2]));
-    return [group, ghost, refs];
-  })
-
-  // Gather up all the internal refs to meshes that should be highlighted.
-  let highlightedRefs = [];
-  Object.keys(items).forEach((key)=>{
-    if (items[key].highlighted) {
-      meshesAndRefs[key][2].forEach(ref=>{
-        highlightedRefs.push(ref)
-      })
-    }
-  });
+  const [highlightedRefs, orbitControls, movableItems] = useSceneStore(state => ([
+    [].concat.apply([],Object.values(state.items).filter(item=>item.highlighted).map(item=>item.childrenRefs)),
+    state.orbitControls,
+    Object.values(state.items)
+      .filter(item=>['translate','rotate','scale'].indexOf(item.transformMode)>-1)
+      .map(item=>({ghostRef:item.ghostRef,transformMode:item.transformMode,onMove:item.onMove}))
+  ]));
 
   const ambientLightRef = useRef();
   const directionalLightRef = useRef();
-  const orbitControls = useRef();
 
   const planeRGB = hexToRgb(planeColor ? planeColor : "a8a8a8");
   const planeRGBA = [planeRGB.r,planeRGB.g,planeRGB.b,0.5];
@@ -87,41 +50,14 @@ export default function Content(props) {
       <color attach="background" args={[backgroundColor ? backgroundColor : "#d0d0d0"]} />
       <fogExp2 attach="fog" args={[backgroundColor ? backgroundColor : "#d0d0d0", 0.01]} />
 
-      <Circle receiveShadow scale={1000} position={[0, plane ? plane-0.01 : -0.01, 0]} rotation={[-Math.PI / 2, 0, 0]} material={MaterialMaker(...planeRGBA)}/>
+      <Circle receiveShadow scale={1000} position={[0, 0, plane ? plane-0.01 : -0.01]} material={MaterialMaker(...planeRGBA)}/>
       
-      <group rotation={[-Math.PI/2,0,0]}>
-        {Object.keys(tfs).map((tfKey) => (
-          <TF
-            key={tfKey}
-            tfKey={tfKey}
-            ref={tfRefs[tfKey]}
-            displayTfs={displayTfs}
-          >
-            {Object.keys(items)
-              .filter((itemKey) => items[itemKey].frame === tfs[tfKey].name)
-              .map((itemKey) => (
-                <Item 
-                  key={`${itemKey}Item`} 
-                  itemKey={itemKey} 
-                  node={meshesAndRefs[itemKey][0]} 
-                  ghost={meshesAndRefs[itemKey][1]}
-                  orbitControls={orbitControls}/>
-              ))
-            }
-            {Object.keys(lines)
-              .filter((lineKey) => (lines[lineKey].frame === tfs[tfKey].name))
-              .map((lineKey) => (
-                <Line
-                  key={`${lineKey}Line`}
-                  lineKey={lineKey}
-                />
-              ))
-            }
-          </TF>
-        ))}
-      </group>
+      <WorldTF
+        displayTfs={displayTfs}
+        highlightColor={highlightColor}
+      />
       
-      <group position={[0, plane ? plane : 0, 0]}>
+      <group position={[0, 0, plane ? plane : 0]} rotation={[Math.PI/2,0,0]}>
         {displayGrid && (
           isPolar ? (
             <polarGridHelper args={[10, 16, 8, 64, "white", "gray"]} />
@@ -130,6 +66,19 @@ export default function Content(props) {
           )
         )}
       </group>
+
+      {
+        movableItems.map((movableItem,idx)=>(
+          <TransformControls
+            key={`movableItemTransform-${idx}`}
+            target={movableItem.ghostRef}
+            mode={movableItem.transformMode}
+            onDragEnd={() => {if (orbitControls.current) {orbitControls.current.enabled = true}}}
+            onDragStart={() => {if (orbitControls.current) {orbitControls.current.enabled = false}}}
+            onMove={movableItem.onMove}
+          />
+        ))
+      }
 
       <EffectComposer autoClear={false} multisampling={0}>
         <Outline 

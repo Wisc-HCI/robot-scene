@@ -4,8 +4,7 @@ import useSceneStore from './SceneStore';
 
 export default function SceneLine(props) {
   const { lineKey } = props;
-  const {name, vertices, width} = useSceneStore(useCallback(state => ({
-    name: state.lines[lineKey].name, 
+  const {vertices, width} = useSceneStore(useCallback(state => ({
     vertices: state.lines[lineKey].vertices,
     width: state.lines[lineKey].width
   }),[lineKey]));

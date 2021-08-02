@@ -20,9 +20,13 @@ function Model(props) {
       materials = _useGLTF.materials;
 
   return [{
-    type: 'raw',
-    geometry: nodes.node0.geometry,
-    material: materials['mymaterial.003']
+    type: 'group',
+    scale: [0.001, 0.001, 0.001],
+    children: [{
+      type: 'raw',
+      geometry: nodes.node0.geometry,
+      material: materials['mymaterial.003']
+    }]
   }];
 }
 

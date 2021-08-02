@@ -19,8 +19,7 @@ function Model(props) {
       nodes = _useGLTF.nodes,
       materials = _useGLTF.materials;
 
-  return;
-  [{
+  return [{
     type: 'raw',
     geometry: nodes['ActorShape0_0-Mesh024'].geometry,
     material: nodes['ActorShape0_0-Mesh024'].material

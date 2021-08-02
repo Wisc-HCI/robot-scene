@@ -31,7 +31,9 @@ export const WireframeMaterial = (r, g, b) => {
 	
 	return new MeshStandardMaterial({
 		color: color.getHex(),
-		wireframe: true,
+		wireframe: false,
+		depthTest: false,
+		depthWrite: false,
 		transparent: true
 	})
 }
@@ -95,6 +97,7 @@ export const GhostMaterial = (hex) => {
 		//blending	: THREE.AdditiveBlending,
 		transparent	: true,
 		depthWrite	: false,
+		depthTest   : false
 	});
 	return material
 }

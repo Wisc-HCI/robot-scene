@@ -19,8 +19,7 @@ function Model(props) {
       nodes = _useGLTF.nodes,
       materials = _useGLTF.materials;
 
-  return;
-  [{
+  return [{
     type: 'group',
     children: [{
       type: 'raw',
