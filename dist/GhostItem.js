@@ -5,7 +5,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = GhostItem;
+exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -31,30 +31,34 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function GhostItem(_ref) {
-  var itemKey = _ref.itemKey;
+var GhostItem = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
+  var itemKey = _ref.itemKey,
+      highlightColor = _ref.highlightColor;
 
   var _useSceneStore = (0, _SceneStore.default)((0, _react.useCallback)(function (state) {
-    return [state.items[itemKey].ghostRef, state.items[itemKey].position, state.items[itemKey].rotation, state.items[itemKey].scale, state.items[itemKey].shape];
+    var _state$items$itemKey, _state$items$itemKey2, _state$items$itemKey3, _state$items$itemKey4;
+
+    return [(_state$items$itemKey = state.items[itemKey]) === null || _state$items$itemKey === void 0 ? void 0 : _state$items$itemKey.position, (_state$items$itemKey2 = state.items[itemKey]) === null || _state$items$itemKey2 === void 0 ? void 0 : _state$items$itemKey2.rotation, (_state$items$itemKey3 = state.items[itemKey]) === null || _state$items$itemKey3 === void 0 ? void 0 : _state$items$itemKey3.scale, (_state$items$itemKey4 = state.items[itemKey]) === null || _state$items$itemKey4 === void 0 ? void 0 : _state$items$itemKey4.shape];
   }, [itemKey])),
-      _useSceneStore2 = _slicedToArray(_useSceneStore, 5),
-      ghostRef = _useSceneStore2[0],
-      position = _useSceneStore2[1],
-      rotation = _useSceneStore2[2],
-      scale = _useSceneStore2[3],
-      shape = _useSceneStore2[4];
+      _useSceneStore2 = _slicedToArray(_useSceneStore, 4),
+      position = _useSceneStore2[0],
+      rotation = _useSceneStore2[1],
+      scale = _useSceneStore2[2],
+      shape = _useSceneStore2[3];
 
   (0, _react.useLayoutEffect)(function () {
-    var _ghostRef$current, _ghostRef$current2, _ghostRef$current3;
+    var _ref$current, _ref$current2, _ref$current3;
 
-    (_ghostRef$current = ghostRef.current) === null || _ghostRef$current === void 0 ? void 0 : _ghostRef$current.position.set(position.x, position.y, position.z);
-    (_ghostRef$current2 = ghostRef.current) === null || _ghostRef$current2 === void 0 ? void 0 : _ghostRef$current2.quaternion.set(rotation.x, rotation.y, rotation.z, rotation.w);
-    (_ghostRef$current3 = ghostRef.current) === null || _ghostRef$current3 === void 0 ? void 0 : _ghostRef$current3.scale.set(scale.x, scale.y, scale.z);
-  }, [ghostRef, position, rotation, scale]);
+    ref === null || ref === void 0 ? void 0 : (_ref$current = ref.current) === null || _ref$current === void 0 ? void 0 : _ref$current.position.set(position.x, position.y, position.z);
+    ref === null || ref === void 0 ? void 0 : (_ref$current2 = ref.current) === null || _ref$current2 === void 0 ? void 0 : _ref$current2.quaternion.set(rotation.x, rotation.y, rotation.z, rotation.w);
+    ref === null || ref === void 0 ? void 0 : (_ref$current3 = ref.current) === null || _ref$current3 === void 0 ? void 0 : _ref$current3.scale.set(scale.x, scale.y, scale.z);
+  }, [ref, position, rotation, scale]);
   var ghostGroup = (0, _MeshConvert.itemToGhost)({
     shape: shape
-  });
+  }, highlightColor);
   return /*#__PURE__*/_react.default.createElement("group", {
-    ref: ghostRef
+    ref: ref
   }, ghostGroup);
-}
+});
+var _default = GhostItem;
+exports.default = _default;

@@ -2,13 +2,36 @@ import React, { useRef } from 'react';
 import { useThree } from '@react-three/fiber';
 import { Circle } from "@react-three/drei";
 import { EffectComposer, Outline, SMAA } from "@react-three/postprocessing";
-import {WorldTF} from "./TF";
+import TF, {WorldTF} from "./TF";
+import Item from "./Item";
+import Line from "./Line";
 import useSceneStore from './SceneStore';
 import { AmbientLight, DirectionalLight } from './Util/Light';
 import { MaterialMaker } from './Util/MaterialMaker';
 import { hexToRgb } from './Util/ColorConversion';
 import { OrbitControls } from '@react-three/drei';
 import { TransformControls } from './Util/TransformControls';
+import { itemToGroupAndChildRefs } from './Util/MeshConvert';
+
+const renderTree = (activeTf,displayTfs,allTfs,allItems,allLines) => {
+  
+  const TFComponent = activeTf==='world' ? WorldTF : TF;
+
+  return (
+    <TFComponent tfKey={activeTf} displayTfs={displayTfs}>
+      {allTfs.filter(v=>v.frame===activeTf||(activeTf==='world'&&!v.frame)).map(tf=>(
+        renderTree(tf.tfKey,displayTfs,allTfs,allItems,allLines)
+      ))}
+      {allItems.filter(v=>v.frame===activeTf||(activeTf==='world'&&!v.frame)).map(item=>(
+        <Item key={item.itemKey} itemKey={item.itemKey} node={item.node}/>
+      ))}
+      {allLines.filter(v=>v.frame===activeTf||(activeTf==='world'&&!v.frame)).map(line=>(
+        <Line key={line.lineKey} lineKey={line.lineKey} />
+      ))}
+    </TFComponent>
+  )
+  
+}
 
 export default function Content(props) {
   // For the objects in props.content, render the objects.
@@ -22,12 +45,40 @@ export default function Content(props) {
 
   camera.up.set(0,0,1);
 
-  const [highlightedRefs, movableItems] = useSceneStore(state => ([
-    [].concat.apply([],Object.values(state.items).filter(item=>item.highlighted).map(item=>item.childrenRefs)),
-    Object.entries(state.items)
-      .filter(pair=>['translate','rotate','scale'].indexOf(pair[1].transformMode)>-1)
-      .map(pair=>({itemKey:pair[0],transformMode:pair[1].transformMode,onMove:pair[1].onMove}))
-  ]));
+  const [tfs, items, lines] = useSceneStore(state => {
+
+    const reducedTfs = Object.entries(state.tfs).map(pair=>{
+      const [tfKey, tf] = pair;
+      return {tfKey,frame:tf.frame}
+    })
+
+    const reducedItems = Object.entries(state.items).map(pair=>{
+      const [itemKey, item] = pair;
+      const [node,childrenRefs] = itemToGroupAndChildRefs(item);
+      return {
+        itemKey,node,childrenRefs,
+        frame:item.frame,
+        highlighted:item.highlighted,
+        transformMode:item.transformMode,
+        onMove:item.onMove
+      }
+    })
+
+    const reducedLines = Object.entries(state.lines).map(pair=>{
+      const [lineKey, line] = pair;
+      return {lineKey, frame:line.frame}
+    })
+    
+
+    return [
+      reducedTfs,
+      reducedItems,
+      reducedLines
+    ]
+  });
+
+  const highlightedRefs = [].concat.apply([],items.filter(item=>item.highlighted).map(item=>item.childrenRefs));
+  const movableItems = items.filter(item=>['translate','rotate','scale'].indexOf(item.transformMode)>-1);
 
   const ambientLightRef = useRef();
   const directionalLightRef = useRef();
@@ -52,10 +103,7 @@ export default function Content(props) {
 
       <Circle receiveShadow scale={1000} position={[0, 0, plane ? plane-0.01 : -0.01]} material={MaterialMaker(...planeRGBA)}/>
       
-      <WorldTF
-        displayTfs={displayTfs}
-        highlightColor={highlightColor}
-      />
+      {renderTree('world',displayTfs,tfs,items,lines)}
       
       <group position={[0, 0, plane ? plane : 0]} rotation={[Math.PI/2,0,0]}>
         {displayGrid && (

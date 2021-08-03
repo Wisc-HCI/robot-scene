@@ -38,7 +38,7 @@ var WireframeMaterial = function WireframeMaterial(r, g, b) {
   color.setRGB(r / 255, g / 255, b / 255);
   return new _three.MeshStandardMaterial({
     color: color.getHex(),
-    wireframe: true,
+    wireframe: false,
     depthTest: false,
     depthWrite: false,
     transparent: true
@@ -72,7 +72,8 @@ var GhostMaterial = function GhostMaterial(hex) {
     fragmentShader: fragmentShader,
     //blending	: THREE.AdditiveBlending,
     transparent: true,
-    depthWrite: false
+    depthWrite: false,
+    depthTest: false
   });
   return material;
 };

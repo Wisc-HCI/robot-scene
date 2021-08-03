@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = TF;
+exports.WorldTF = WorldTF;
+exports.GhostTF = GhostTF;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -17,54 +19,16 @@ var _StandardMeshes = require("./Util/StandardMeshes");
 
 var _MaterialMaker = require("./Util/MaterialMaker");
 
-var _Item = _interopRequireDefault(require("./Item"));
-
-var _Line = _interopRequireDefault(require("./Line"));
-
-var _Control = _interopRequireDefault(require("./Control"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function TF(props) {
-  var tfKey = props.tfKey,
-      displayTfs = props.displayTfs;
-
-  var _useSceneStore = (0, _SceneStore.default)((0, _react.useCallback)(function (state) {
-    return [Object.entries(state.items).filter(function (pair) {
-      return pair[1].frame === state.tfs[tfKey].name;
-    }).map(function (pair) {
-      return pair[0];
-    }), Object.entries(state.lines).filter(function (pair) {
-      return pair[1].frame === state.tfs[tfKey].name;
-    }).map(function (pair) {
-      return pair[0];
-    }), Object.entries(state.controls).filter(function (pair) {
-      return pair[1].frame === state.tfs[tfKey].name;
-    }).map(function (pair) {
-      return pair[0];
-    }), state.items];
-  }, [tfKey])),
-      _useSceneStore2 = _slicedToArray(_useSceneStore, 3),
-      childrenItemIds = _useSceneStore2[0],
-      childrenLineIds = _useSceneStore2[1],
-      childrenControlIds = _useSceneStore2[2];
-
+function TF(_ref) {
+  var tfKey = _ref.tfKey,
+      displayTfs = _ref.displayTfs,
+      children = _ref.children;
   var ref = (0, _react.useRef)();
   (0, _fiber.useFrame)((0, _react.useCallback)(function () {
     // Outside of react rendering, adjust the positions of all tfs.
@@ -97,22 +61,58 @@ function TF(props) {
     material: (0, _MaterialMaker.MaterialMaker)(0, 0, 255, 1),
     scale: [0.2, 0.5, 0.2],
     rotation: [Math.PI / 2, 0, 0]
-  })), childrenItemIds.map(function (id) {
-    return /*#__PURE__*/_react.default.createElement(_Item.default, {
-      key: id,
-      itemKey: id
-    });
-  }), childrenLineIds.map(function (id) {
-    return /*#__PURE__*/_react.default.createElement(_Line.default, {
-      key: id,
-      lineKey: id
-    });
-  }), childrenControlIds.map(function (id) {
-    return /*#__PURE__*/_react.default.createElement(_Control.default, {
-      key: id,
-      controlKey: id
-    });
-  }));
+  })), children);
+}
+
+;
+
+function WorldTF(_ref2) {
+  var displayTfs = _ref2.displayTfs,
+      children = _ref2.children;
+  var arrow = (0, _StandardMeshes.ARROW_GEOM)();
+  return /*#__PURE__*/_react.default.createElement("group", {
+    dispose: null
+  }, displayTfs && /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("mesh", {
+    key: "$WorldArrowX",
+    geometry: arrow,
+    material: (0, _MaterialMaker.MaterialMaker)(255, 0, 0, 1),
+    scale: [0.2, 0.5, 0.2],
+    rotation: [0, 0, -Math.PI / 2]
+  }), /*#__PURE__*/_react.default.createElement("mesh", {
+    key: "$WorldArrowY",
+    geometry: arrow,
+    material: (0, _MaterialMaker.MaterialMaker)(0, 255, 0, 1),
+    scale: [0.2, 0.5, 0.2],
+    rotation: [0, Math.PI / 2, 0]
+  }), /*#__PURE__*/_react.default.createElement("mesh", {
+    key: "$WorldArrowZ",
+    geometry: arrow,
+    material: (0, _MaterialMaker.MaterialMaker)(0, 0, 255, 1),
+    scale: [0.2, 0.5, 0.2],
+    rotation: [Math.PI / 2, 0, 0]
+  })), children);
+}
+
+;
+
+function GhostTF(_ref3) {
+  var transforms = _ref3.transforms,
+      children = _ref3.children;
+
+  if (transforms.length > 0) {
+    var pos = [transforms[0].position.x, transforms[0].position.y, transforms[0].position.z];
+    var rot = [transforms[0].rotation.x, transforms[0].rotation.y, transforms[0].rotation.z, transforms[0].rotation.w];
+    return /*#__PURE__*/_react.default.createElement("group", {
+      position: pos,
+      quaternion: rot
+    }, /*#__PURE__*/_react.default.createElement(GhostTF, {
+      transforms: transforms.filter(function (_, i) {
+        return i !== 0;
+      })
+    }, children));
+  } else {
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, children);
+  }
 }
 
 ;

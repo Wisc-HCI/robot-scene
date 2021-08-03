@@ -1,6 +1,6 @@
 import React, {createRef} from 'react';
 import { MeshLookup, MeshLookupTable } from '../MeshLookup';
-import { MaterialMaker, GhostMaterial, WireframeMaterial } from './MaterialMaker';
+import { MaterialMaker, GhostMaterial } from './MaterialMaker';
 
 export const MeshConverter = (node,idx,materialOverride,opacity) => {
     // console.log(node);

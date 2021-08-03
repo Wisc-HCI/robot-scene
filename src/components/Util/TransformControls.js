@@ -27,12 +27,10 @@ export const TransformControls = ({ children, ...props }) => {
     let transforms = [];
     let tfKey = state.items[itemKey].frame;
     while (tfKey && tfKey !== 'world') {
-      console.log(tfKey)
       const tf = state.tfs[tfKey];
-      console.log(tf);
       transforms.push({
-        position:state.tfs[tfKey].translation,
-        rotation:state.tfs[tfKey].rotation
+        position:tf.translation,
+        rotation:tf.rotation
       });
       tfKey = state.tfs[tfKey.frame]
     }

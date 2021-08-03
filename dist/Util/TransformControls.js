@@ -11,7 +11,13 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _fiber = require("@react-three/fiber");
 
+var _TF = require("../TF");
+
+var _GhostItem = _interopRequireDefault(require("../GhostItem"));
+
 var _TransformControls = require("three/examples/jsm/controls/TransformControls");
+
+var _SceneStore = _interopRequireDefault(require("../SceneStore"));
 
 var _lodash = _interopRequireDefault(require("lodash.pick"));
 
@@ -44,12 +50,29 @@ var TransformControls = function TransformControls(_ref) {
       props = _objectWithoutProperties(_ref, ["children"]);
 
   var transformOnlyPropNames = ['enabled', 'axis', 'mode', 'translationSnap', 'rotationSnap', 'scaleSnap', 'space', 'size', 'showX', 'showY', 'showZ'];
-  var ref = (0, _react.useRef)();
 
   var camera = props.camera,
-      target = props.target,
-      rest = _objectWithoutProperties(props, ["camera", "target"]);
+      itemKey = props.itemKey,
+      highlightColor = props.highlightColor,
+      rest = _objectWithoutProperties(props, ["camera", "itemKey", "highlightColor"]);
 
+  var transforms = (0, _SceneStore.default)((0, _react.useCallback)(function (state) {
+    var transforms = [];
+    var tfKey = state.items[itemKey].frame;
+
+    while (tfKey && tfKey !== 'world') {
+      var tf = state.tfs[tfKey];
+      transforms.push({
+        position: tf.translation,
+        rotation: tf.rotation
+      });
+      tfKey = state.tfs[tfKey.frame];
+    }
+
+    return transforms;
+  }, [itemKey]));
+  var ref = (0, _react.useRef)();
+  var target = (0, _react.useRef)();
   var transformProps = (0, _lodash.default)(rest, transformOnlyPropNames);
   var gl = (0, _fiber.useThree)(function (_ref2) {
     var gl = _ref2.gl;
@@ -130,7 +153,13 @@ var TransformControls = function TransformControls(_ref) {
     ref: ref,
     dispose: undefined,
     object: controls
-  }, transformProps))) : null;
+  }, transformProps)), /*#__PURE__*/_react.default.createElement(_TF.GhostTF, {
+    transforms: transforms
+  }, /*#__PURE__*/_react.default.createElement(_GhostItem.default, {
+    ref: target,
+    highlightColor: highlightColor,
+    itemKey: itemKey
+  }))) : null;
 };
 
 exports.TransformControls = TransformControls;

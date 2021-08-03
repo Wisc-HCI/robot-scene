@@ -3,16 +3,8 @@ import { useFrame } from "@react-three/fiber";
 import useSceneStore from "./SceneStore";
 import { ARROW_GEOM } from "./Util/StandardMeshes";
 import { MaterialMaker } from './Util/MaterialMaker';
-import Item from "./Item";
-import Line from "./Line";
 
-export default function TF({ tfKey, displayTfs }) {
-
-  const [childrenItemIds, childrenLineIds, childrenTFIds] = useSceneStore(useCallback(state=>([
-    Object.entries(state.items).filter(pair=>pair[1].frame===tfKey).map(pair=>pair[0]),
-    Object.entries(state.lines).filter(pair=>pair[1].frame===tfKey).map(pair=>pair[0]),
-    Object.keys(state.tfs).filter(childKey=>state.tfs[childKey].frame===tfKey)
-  ]),[tfKey]))
+export default function TF({ tfKey, displayTfs, children }) {
 
   const ref = useRef();
 
@@ -46,33 +38,12 @@ export default function TF({ tfKey, displayTfs }) {
           <mesh key={`${tfKey}ArrowZ`} geometry={arrow} material={MaterialMaker(0,0,255,1)} scale={[0.2,0.5,0.2]} rotation={[Math.PI/2,0,0]}/>
         </>
       )}
-      {childrenItemIds.map(id=>(
-        <Item key={id} itemKey={id}/>
-
-      ))}
-      {childrenLineIds.map(id=>(
-        <Line key={id} lineKey={id}/>
-      ))}
-      {childrenTFIds.map((childTfKey) => (
-        <TF
-          key={childTfKey}
-          tfKey={childTfKey}
-          displayTfs={displayTfs}
-          highlightColor={highlightColor}
-        />
-      ))}
+      {children}
     </group>
   );
 };
 
-export function WorldTF({ displayTfs }) {
-
-  const [childrenItemIds, childrenLineIds, childrenControlIds, childrenTFIds] = useSceneStore(useCallback(state=>([
-    Object.entries(state.items).filter(pair=>!pair[1].frame||pair[1].frame==='world').map(pair=>pair[0]),
-    Object.entries(state.lines).filter(pair=>!pair[1].frame||pair[1].frame==='world').map(pair=>pair[0]),
-    Object.entries(state.controls).filter(pair=>!pair[1].frame||pair[1].frame==='world').map(pair=>pair[0]),
-    Object.keys(state.tfs).filter(childKey=>!state.tfs[childKey].frame||state.tfs[childKey].frame==='world')
-  ]),[]))
+export function WorldTF({ displayTfs, children }) {
 
   const arrow = ARROW_GEOM();
 
@@ -80,27 +51,12 @@ export function WorldTF({ displayTfs }) {
     <group dispose={null}>
       {displayTfs && (
         <>
-          <mesh key={`WorlArrowX`} geometry={arrow} material={MaterialMaker(255,0,0,1)} scale={[0.2,0.5,0.2]} rotation={[0,0,-Math.PI/2]}/>
-          <mesh key={`WorlArrowY`} geometry={arrow} material={MaterialMaker(0,255,0,1)} scale={[0.2,0.5,0.2]} rotation={[0,Math.PI/2,0]}/>
-          <mesh key={`WorlArrowZ`} geometry={arrow} material={MaterialMaker(0,0,255,1)} scale={[0.2,0.5,0.2]} rotation={[Math.PI/2,0,0]}/>
+          <mesh key={`$WorldArrowX`} geometry={arrow} material={MaterialMaker(255,0,0,1)} scale={[0.2,0.5,0.2]} rotation={[0,0,-Math.PI/2]}/>
+          <mesh key={`$WorldArrowY`} geometry={arrow} material={MaterialMaker(0,255,0,1)} scale={[0.2,0.5,0.2]} rotation={[0,Math.PI/2,0]}/>
+          <mesh key={`$WorldArrowZ`} geometry={arrow} material={MaterialMaker(0,0,255,1)} scale={[0.2,0.5,0.2]} rotation={[Math.PI/2,0,0]}/>
         </>
       )}
-      {childrenItemIds.map(id=>(
-        <Item key={id} itemKey={id}/>
-      ))}
-      {childrenLineIds.map(id=>(
-        <Line key={id} lineKey={id}/>
-      ))}
-      {childrenControlIds.map(id=>(
-        <Control key={id} controlKey={id}/>
-      ))}
-      {childrenTFIds.map((childTfKey) => (
-        <TF
-          key={childTfKey}
-          tfKey={childTfKey}
-          displayTfs={displayTfs}
-        />
-      ))}
+      {children}
     </group>
   );
 };

@@ -4,12 +4,11 @@ import { Html } from '@react-three/drei';
 import useSceneStore from './SceneStore';
 import { Tag } from 'antd';
 
-export default function Item({itemKey}) {
+export default function Item({itemKey, node}) {
   
-  const [ name, node, showName, onClick, onPointerOver, onPointerOut ] =
+  const [ name, showName, onClick, onPointerOver, onPointerOut ] =
     useSceneStore(useCallback(state=>([
       state.items[itemKey]?.name,
-      state.items[itemKey]?.group,
       state.items[itemKey]?.showName,
       state.items[itemKey]?.onClick,
       state.items[itemKey]?.onPointerOver,

@@ -57,10 +57,10 @@ var MeshConverter = function MeshConverter(node, idx, materialOverride, opacity)
 
 exports.MeshConverter = MeshConverter;
 
-var GhostConverter = function GhostConverter(node, id) {
+var GhostConverter = function GhostConverter(node, idx, highlightColor) {
   if (node.type === 'group') {
     var nodes = node.children.map(function (child, i) {
-      return GhostConverter(child, i);
+      return GhostConverter(child, i, highlightColor);
     });
 
     var group = /*#__PURE__*/_react.default.createElement("group", {
@@ -72,7 +72,7 @@ var GhostConverter = function GhostConverter(node, id) {
 
     return group;
   } else {
-    var material = (0, _MaterialMaker.GhostMaterial)('#ffffff'); // const material = WireframeMaterial(255,255,255)
+    var material = (0, _MaterialMaker.GhostMaterial)(highlightColor); // const material = WireframeMaterial(255,255,255);
 
     return /*#__PURE__*/_react.default.createElement("mesh", {
       key: idx,
@@ -90,7 +90,7 @@ exports.GhostConverter = GhostConverter;
 var itemToGroupAndChildRefs = function itemToGroupAndChildRefs(item) {
   var color = item.color,
       shape = item.shape;
-  var materialOverride = color ? MaterialMaker(color.r, color.g, color.b, color.a) : undefined;
+  var materialOverride = color ? (0, _MaterialMaker.MaterialMaker)(color.r, color.g, color.b, color.a) : undefined;
   var opacity = color ? color.a : 1.0;
   var content = [];
 
@@ -114,7 +114,7 @@ var itemToGroupAndChildRefs = function itemToGroupAndChildRefs(item) {
 
 exports.itemToGroupAndChildRefs = itemToGroupAndChildRefs;
 
-var itemToGhost = function itemToGhost(item) {
+var itemToGhost = function itemToGhost(item, highlightColor) {
   var shape = item.shape;
   var content = [];
 
@@ -123,7 +123,7 @@ var itemToGhost = function itemToGhost(item) {
   }
 
   var nodes = content.map(function (node, i) {
-    return GhostConverter(node, i);
+    return GhostConverter(node, i, highlightColor);
   });
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, nodes);
 };

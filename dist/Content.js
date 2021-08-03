@@ -15,7 +15,11 @@ var _drei = require("@react-three/drei");
 
 var _postprocessing = require("@react-three/postprocessing");
 
-var _TF = _interopRequireDefault(require("./TF"));
+var _TF = _interopRequireWildcard(require("./TF"));
+
+var _Item = _interopRequireDefault(require("./Item"));
+
+var _Line = _interopRequireDefault(require("./Line"));
 
 var _SceneStore = _interopRequireDefault(require("./SceneStore"));
 
@@ -26,6 +30,8 @@ var _MaterialMaker = require("./Util/MaterialMaker");
 var _ColorConversion = require("./Util/ColorConversion");
 
 var _TransformControls = require("./Util/TransformControls");
+
+var _MeshConvert = require("./Util/MeshConvert");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -45,6 +51,33 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, allLines) {
+  var TFComponent = activeTf === 'world' ? _TF.WorldTF : _TF.default;
+  return /*#__PURE__*/_react.default.createElement(TFComponent, {
+    tfKey: activeTf,
+    displayTfs: displayTfs
+  }, allTfs.filter(function (v) {
+    return v.frame === activeTf || activeTf === 'world' && !v.frame;
+  }).map(function (tf) {
+    return renderTree(tf.tfKey, displayTfs, allTfs, allItems, allLines);
+  }), allItems.filter(function (v) {
+    return v.frame === activeTf || activeTf === 'world' && !v.frame;
+  }).map(function (item) {
+    return /*#__PURE__*/_react.default.createElement(_Item.default, {
+      key: item.itemKey,
+      itemKey: item.itemKey,
+      node: item.node
+    });
+  }), allLines.filter(function (v) {
+    return v.frame === activeTf || activeTf === 'world' && !v.frame;
+  }).map(function (line) {
+    return /*#__PURE__*/_react.default.createElement(_Line.default, {
+      key: line.lineKey,
+      lineKey: line.lineKey
+    });
+  }));
+};
+
 function Content(props) {
   // For the objects in props.content, render the objects.
   // Those should be in the suspense element.
@@ -61,28 +94,64 @@ function Content(props) {
   camera.up.set(0, 0, 1);
 
   var _useSceneStore = (0, _SceneStore.default)(function (state) {
-    return [Object.keys(state.tfs), [].concat.apply([], Object.values(state.items).filter(function (item) {
-      return item.highlighted;
-    }).map(function (item) {
-      return item.childrenRefs;
-    })), state.orbitControls, Object.values(state.items).filter(function (item) {
-      return ['translate', 'rotate', 'scale'].indexOf(item.transformMode) > -1;
-    }).map(function (item) {
+    var reducedTfs = Object.entries(state.tfs).map(function (pair) {
+      var _pair = _slicedToArray(pair, 2),
+          tfKey = _pair[0],
+          tf = _pair[1];
+
       return {
-        ghostRef: item.ghostRef,
+        tfKey: tfKey,
+        frame: tf.frame
+      };
+    });
+    var reducedItems = Object.entries(state.items).map(function (pair) {
+      var _pair2 = _slicedToArray(pair, 2),
+          itemKey = _pair2[0],
+          item = _pair2[1];
+
+      var _itemToGroupAndChildR = (0, _MeshConvert.itemToGroupAndChildRefs)(item),
+          _itemToGroupAndChildR2 = _slicedToArray(_itemToGroupAndChildR, 2),
+          node = _itemToGroupAndChildR2[0],
+          childrenRefs = _itemToGroupAndChildR2[1];
+
+      return {
+        itemKey: itemKey,
+        node: node,
+        childrenRefs: childrenRefs,
+        frame: item.frame,
+        highlighted: item.highlighted,
         transformMode: item.transformMode,
         onMove: item.onMove
       };
-    })];
-  }),
-      _useSceneStore2 = _slicedToArray(_useSceneStore, 4),
-      tfKeys = _useSceneStore2[0],
-      highlightedRefs = _useSceneStore2[1],
-      orbitControls = _useSceneStore2[2],
-      movableItems = _useSceneStore2[3];
+    });
+    var reducedLines = Object.entries(state.lines).map(function (pair) {
+      var _pair3 = _slicedToArray(pair, 2),
+          lineKey = _pair3[0],
+          line = _pair3[1];
 
+      return {
+        lineKey: lineKey,
+        frame: line.frame
+      };
+    });
+    return [reducedTfs, reducedItems, reducedLines];
+  }),
+      _useSceneStore2 = _slicedToArray(_useSceneStore, 3),
+      tfs = _useSceneStore2[0],
+      items = _useSceneStore2[1],
+      lines = _useSceneStore2[2];
+
+  var highlightedRefs = [].concat.apply([], items.filter(function (item) {
+    return item.highlighted;
+  }).map(function (item) {
+    return item.childrenRefs;
+  }));
+  var movableItems = items.filter(function (item) {
+    return ['translate', 'rotate', 'scale'].indexOf(item.transformMode) > -1;
+  });
   var ambientLightRef = (0, _react.useRef)();
   var directionalLightRef = (0, _react.useRef)();
+  var orbitControls = (0, _react.useRef)();
   var planeRGB = (0, _ColorConversion.hexToRgb)(planeColor ? planeColor : "a8a8a8");
   var planeRGBA = [planeRGB.r, planeRGB.g, planeRGB.b, 0.5];
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_drei.OrbitControls, {
@@ -106,13 +175,7 @@ function Content(props) {
     scale: 1000,
     position: [0, 0, plane ? plane - 0.01 : -0.01],
     material: _MaterialMaker.MaterialMaker.apply(void 0, planeRGBA)
-  }), tfKeys.map(function (tfKey) {
-    return /*#__PURE__*/_react.default.createElement(_TF.default, {
-      key: tfKey,
-      tfKey: tfKey,
-      displayTfs: displayTfs
-    });
-  }), /*#__PURE__*/_react.default.createElement("group", {
+  }), renderTree('world', displayTfs, tfs, items, lines), /*#__PURE__*/_react.default.createElement("group", {
     position: [0, 0, plane ? plane : 0],
     rotation: [Math.PI / 2, 0, 0]
   }, displayGrid && (isPolar ? /*#__PURE__*/_react.default.createElement("polarGridHelper", {
@@ -122,7 +185,7 @@ function Content(props) {
   }))), movableItems.map(function (movableItem, idx) {
     return /*#__PURE__*/_react.default.createElement(_TransformControls.TransformControls, {
       key: "movableItemTransform-".concat(idx),
-      target: movableItem.ghostRef,
+      itemKey: movableItem.itemKey,
       mode: movableItem.transformMode,
       onDragEnd: function onDragEnd() {
         if (orbitControls.current) {
