@@ -1,7 +1,10 @@
-import React, { useRef, useEffect, useLayoutEffect, useState } from 'react'
-import { useThree, } from '@react-three/fiber'
-import { TransformControls as TransformControlsImpl } from 'three/examples/jsm/controls/TransformControls'
-import pick from 'lodash.pick'
+import React, { useRef, useEffect, useLayoutEffect, useState, useCallback } from 'react';
+import { useThree, } from '@react-three/fiber';
+import { GhostTF } from '../TF';
+import GhostItem from '../GhostItem';
+import { TransformControls as TransformControlsImpl } from 'three/examples/jsm/controls/TransformControls';
+import useSceneStore from '../SceneStore';
+import pick from 'lodash.pick';
 
 export const TransformControls = ({ children, ...props }) => {
   const transformOnlyPropNames = [
@@ -18,9 +21,27 @@ export const TransformControls = ({ children, ...props }) => {
     'showZ'
   ]
 
-  const ref = useRef();
+  const { camera, itemKey, highlightColor, ...rest } = props;
 
-  const { camera, target, ...rest } = props;
+  const transforms = useSceneStore(useCallback(state=>{
+    let transforms = [];
+    let tfKey = state.items[itemKey].frame;
+    while (tfKey && tfKey !== 'world') {
+      console.log(tfKey)
+      const tf = state.tfs[tfKey];
+      console.log(tf);
+      transforms.push({
+        position:state.tfs[tfKey].translation,
+        rotation:state.tfs[tfKey].rotation
+      });
+      tfKey = state.tfs[tfKey.frame]
+    }
+    return transforms;
+  },[itemKey]))
+
+  const ref = useRef();
+  const target = useRef();
+
   const transformProps = pick(rest, transformOnlyPropNames)
 
   const gl = useThree(({ gl }) => gl)
@@ -76,6 +97,9 @@ export const TransformControls = ({ children, ...props }) => {
   return controls ? (
     <>
       <primitive ref={ref} dispose={undefined} object={controls} {...transformProps} />
+      <GhostTF transforms={transforms}>
+        <GhostItem ref={target} highlightColor={highlightColor} itemKey={itemKey}/>
+      </GhostTF>
     </>
   ) : null
 }

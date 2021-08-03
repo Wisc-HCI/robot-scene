@@ -34,8 +34,8 @@ export default {
           translateCube: {
             shape: "cube",
             name: "Translate Cube (Async)",
-            frame: "world",
-            position: { x: 0, y: 0, z: 1 },
+            frame: "static",
+            position: { x: 1, y: 1, z: 1 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             color: { r: 10, g: 10, b: 10, a: 1 },
             scale: { x: 0.5, y: 0.5, z: 0.5 },

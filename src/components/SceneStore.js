@@ -63,7 +63,11 @@ const store = (set,get) => ({
   setTfTranslation: (key, translation) => set(produce(state => {state.tfs[key].translation = translation})),
   setTfRotation: (key, rotation) => set(produce(state => {state.tfs[key].rotation = rotation})),
   // Necessary Utility Constructions (Do not use):
-  orbitControls: createRef(),
+  // orbitControls: createRef(),
+  // setOrbitControlsEnabled: (enabled) => set(state => {
+  //   if (state.orbitControls.current) {
+  //     state.orbitControls.current.enabled = enabled
+  //   }})
   //setItemGhostRef: (key, ref) => set(produce(state => {state.items[key].ghostRef = ref})),
 });
 

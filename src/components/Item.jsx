@@ -3,19 +3,17 @@ import { useFrame } from "@react-three/fiber";
 import { Html } from '@react-three/drei';
 import useSceneStore from './SceneStore';
 import { Tag } from 'antd';
-import GhostItem from './GhostItem';
 
-export default function Item({itemKey, highlightColor}) {
+export default function Item({itemKey}) {
   
-  const [ name, node, showName, onClick, onPointerOver, onPointerOut, transformMode ] =
+  const [ name, node, showName, onClick, onPointerOver, onPointerOut ] =
     useSceneStore(useCallback(state=>([
       state.items[itemKey]?.name,
       state.items[itemKey]?.group,
       state.items[itemKey]?.showName,
       state.items[itemKey]?.onClick,
       state.items[itemKey]?.onPointerOver,
-      state.items[itemKey]?.onPointerOut,
-      state.items[itemKey]?.transformMode
+      state.items[itemKey]?.onPointerOut
     ]), [itemKey]))
 
     const ref = useRef()
@@ -44,26 +42,21 @@ export default function Item({itemKey, highlightColor}) {
       }
   },[itemKey,ref]));
   return (
-    <>
-      <group ref={ref}>
-        <group 
-          rotation={[Math.PI/2,0,0]}
-          onPointerDown={onClick} 
-          onPointerOver={onPointerOver} 
-          onPointerOut={onPointerOut}>
-          {node}
-        </group>
-        {showName && (
-          <Html distanceFactor={7} position={[0, 1, 0]}>
-            <Tag style={{ opacity: 0.75 }} className="disable-text-selection">
-              {name}
-            </Tag>
-          </Html>
-        )}
+    <group ref={ref}>
+      <group 
+        rotation={[Math.PI/2,0,0]}
+        onPointerDown={onClick} 
+        onPointerOver={onPointerOver} 
+        onPointerOut={onPointerOut}>
+        {node}
       </group>
-      {['translate','rotate','scale'].indexOf(transformMode)>-1 && (
-        <GhostItem itemKey={itemKey} highlightColor={highlightColor}/>
+      {showName && (
+        <Html distanceFactor={7} position={[0, 1, 0]}>
+          <Tag style={{ opacity: 0.75 }} className="disable-text-selection">
+            {name}
+          </Tag>
+        </Html>
       )}
-    </>
+    </group>
   )
 }

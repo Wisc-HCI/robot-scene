@@ -5,15 +5,12 @@ import { ARROW_GEOM } from "./Util/StandardMeshes";
 import { MaterialMaker } from './Util/MaterialMaker';
 import Item from "./Item";
 import Line from "./Line";
-import Control from "./Control";
 
-export default function TF(props) {
-  const { tfKey, displayTfs, highlightColor } = props;
+export default function TF({ tfKey, displayTfs }) {
 
-  const [childrenItemIds, childrenLineIds, childrenControlIds, childrenTFIds] = useSceneStore(useCallback(state=>([
+  const [childrenItemIds, childrenLineIds, childrenTFIds] = useSceneStore(useCallback(state=>([
     Object.entries(state.items).filter(pair=>pair[1].frame===tfKey).map(pair=>pair[0]),
     Object.entries(state.lines).filter(pair=>pair[1].frame===tfKey).map(pair=>pair[0]),
-    Object.entries(state.controls).filter(pair=>pair[1].frame===tfKey).map(pair=>pair[0]),
     Object.keys(state.tfs).filter(childKey=>state.tfs[childKey].frame===tfKey)
   ]),[tfKey]))
 
@@ -50,14 +47,11 @@ export default function TF(props) {
         </>
       )}
       {childrenItemIds.map(id=>(
-        <Item key={id} itemKey={id} highlightColor={highlightColor}/>
+        <Item key={id} itemKey={id}/>
 
       ))}
       {childrenLineIds.map(id=>(
         <Line key={id} lineKey={id}/>
-      ))}
-      {childrenControlIds.map(id=>(
-        <Control key={id} controlKey={id}/>
       ))}
       {childrenTFIds.map((childTfKey) => (
         <TF
@@ -71,8 +65,7 @@ export default function TF(props) {
   );
 };
 
-export function WorldTF(props) {
-  const { displayTfs, highlightColor } = props;
+export function WorldTF({ displayTfs }) {
 
   const [childrenItemIds, childrenLineIds, childrenControlIds, childrenTFIds] = useSceneStore(useCallback(state=>([
     Object.entries(state.items).filter(pair=>!pair[1].frame||pair[1].frame==='world').map(pair=>pair[0]),
@@ -93,7 +86,7 @@ export function WorldTF(props) {
         </>
       )}
       {childrenItemIds.map(id=>(
-        <Item key={id} itemKey={id} highlightColor={highlightColor}/>
+        <Item key={id} itemKey={id}/>
       ))}
       {childrenLineIds.map(id=>(
         <Line key={id} lineKey={id}/>
@@ -106,10 +99,30 @@ export function WorldTF(props) {
           key={childTfKey}
           tfKey={childTfKey}
           displayTfs={displayTfs}
-          highlightColor={highlightColor}
         />
       ))}
     </group>
   );
+};
+
+export function GhostTF({ transforms, children }) {
+
+  if (transforms.length > 0) {
+    const pos = [transforms[0].position.x,transforms[0].position.y,transforms[0].position.z];
+    const rot = [transforms[0].rotation.x,transforms[0].rotation.y,transforms[0].rotation.z,transforms[0].rotation.w]
+    return (
+      <group position={pos} quaternion={rot}>
+        <GhostTF transforms={transforms.filter((_,i)=>i!==0)}>
+          {children}
+        </GhostTF>
+      </group>
+    )
+  } else {
+    return (
+      <>
+        {children}
+      </>
+    )
+  }
 };
 

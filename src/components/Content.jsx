@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useCallback } from 'react';
-import { useThree, useFrame } from '@react-three/fiber';
+import React, { useRef } from 'react';
+import { useThree } from '@react-three/fiber';
 import { Circle } from "@react-three/drei";
 import { EffectComposer, Outline, SMAA } from "@react-three/postprocessing";
-import TF, {WorldTF} from "./TF";
+import {WorldTF} from "./TF";
 import useSceneStore from './SceneStore';
 import { AmbientLight, DirectionalLight } from './Util/Light';
 import { MaterialMaker } from './Util/MaterialMaker';
@@ -22,16 +22,16 @@ export default function Content(props) {
 
   camera.up.set(0,0,1);
 
-  const [highlightedRefs, orbitControls, movableItems] = useSceneStore(state => ([
+  const [highlightedRefs, movableItems] = useSceneStore(state => ([
     [].concat.apply([],Object.values(state.items).filter(item=>item.highlighted).map(item=>item.childrenRefs)),
-    state.orbitControls,
-    Object.values(state.items)
-      .filter(item=>['translate','rotate','scale'].indexOf(item.transformMode)>-1)
-      .map(item=>({ghostRef:item.ghostRef,transformMode:item.transformMode,onMove:item.onMove}))
+    Object.entries(state.items)
+      .filter(pair=>['translate','rotate','scale'].indexOf(pair[1].transformMode)>-1)
+      .map(pair=>({itemKey:pair[0],transformMode:pair[1].transformMode,onMove:pair[1].onMove}))
   ]));
 
   const ambientLightRef = useRef();
   const directionalLightRef = useRef();
+  const orbitControls = useRef();
 
   const planeRGB = hexToRgb(planeColor ? planeColor : "a8a8a8");
   const planeRGBA = [planeRGB.r,planeRGB.g,planeRGB.b,0.5];
@@ -71,7 +71,7 @@ export default function Content(props) {
         movableItems.map((movableItem,idx)=>(
           <TransformControls
             key={`movableItemTransform-${idx}`}
-            target={movableItem.ghostRef}
+            itemKey={movableItem.itemKey}
             mode={movableItem.transformMode}
             onDragEnd={() => {if (orbitControls.current) {orbitControls.current.enabled = true}}}
             onDragStart={() => {if (orbitControls.current) {orbitControls.current.enabled = false}}}

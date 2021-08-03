@@ -1,12 +1,11 @@
-import React, { useCallback, useLayoutEffect } from 'react';
+import React, { useCallback, useLayoutEffect, forwardRef } from 'react';
 import useSceneStore from './SceneStore';
 import {itemToGhost} from './Util/MeshConvert';
 
-export default function GhostItem({itemKey,highlightColor}) {
+const GhostItem = forwardRef(({itemKey,highlightColor},ref) => {
   
-    const [ ghostRef, position, rotation, scale, shape ] =
+    const [ position, rotation, scale, shape ] =
         useSceneStore(useCallback(state=>([
-        state.items[itemKey]?.ghostRef,
         state.items[itemKey]?.position,
         state.items[itemKey]?.rotation,
         state.items[itemKey]?.scale,
@@ -15,17 +14,19 @@ export default function GhostItem({itemKey,highlightColor}) {
 
     useLayoutEffect(
     ()=>{
-        ghostRef?.current?.position.set(position.x,position.y,position.z);
-        ghostRef?.current?.quaternion.set(rotation.x,rotation.y,rotation.z,rotation.w);
-        ghostRef?.current?.scale.set(scale.x,scale.y,scale.z);
-    },[ghostRef,position,rotation,scale])
+        ref?.current?.position.set(position.x,position.y,position.z);
+        ref?.current?.quaternion.set(rotation.x,rotation.y,rotation.z,rotation.w);
+        ref?.current?.scale.set(scale.x,scale.y,scale.z);
+    },[ref,position,rotation,scale])
 
     const ghostGroup = itemToGhost({shape},highlightColor);
 
     
     return (
-      <group ref={ghostRef}>
+      <group ref={ref}>
         {ghostGroup}
       </group>
     )
-}
+})
+
+export default GhostItem
