@@ -1,5 +1,7 @@
 # RobotScene
 
+[TRY IT OUT HERE](https://wisc-hci.github.io/robot-scene/)
+
 ## Contribute
 
 1. Clone this repository
