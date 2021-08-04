@@ -50,6 +50,7 @@ export default {
             useSceneStore.getState().setItems(meshItems);
             useSceneStore.getState().setTfs(defaultTfs);
             useSceneStore.getState().clearLines();
+            useSceneStore.getState().clearHulls();
 
             return storyFn()
 

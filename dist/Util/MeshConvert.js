@@ -5,13 +5,19 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.itemToGhost = exports.itemToGroupAndChildRefs = exports.GhostConverter = exports.MeshConverter = void 0;
+exports.hullToGroupAndRef = exports.itemToGhost = exports.itemToGroupAndChildRefs = exports.GhostConverter = exports.MeshConverter = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
+
+var _three = require("three");
+
+var _threeStdlib = require("three-stdlib");
 
 var _MeshLookup = require("../MeshLookup");
 
 var _MaterialMaker = require("./MaterialMaker");
+
+var _ColorConversion = require("./ColorConversion");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -39,19 +45,68 @@ var MeshConverter = function MeshConverter(node, idx, materialOverride, opacity)
     return [group, refs];
   } else {
     var ref = /*#__PURE__*/(0, _react.createRef)();
-    var material = materialOverride ? materialOverride : node.material;
 
-    var mesh = /*#__PURE__*/_react.default.createElement("mesh", {
-      ref: ref,
-      key: idx,
-      geometry: node.geometry,
-      material: material,
-      scale: node.scale,
-      castShadow: opacity === 1.0,
-      receiveShadow: opacity === 1.0
-    });
+    if (materialOverride) {
+      if (opacity < 1.0) {
+        var mesh = /*#__PURE__*/_react.default.createElement("group", {
+          key: idx,
+          ref: ref
+        }, /*#__PURE__*/_react.default.createElement("mesh", {
+          key: "".concat(idx, "B"),
+          geometry: node.geometry,
+          scale: node.scale,
+          castShadow: false,
+          receiveShadow: false
+        }, /*#__PURE__*/_react.default.createElement("meshLambertMaterial", {
+          transparent: true,
+          attach: "material",
+          opacity: opacity,
+          color: (0, _ColorConversion.rgbToHex)(materialOverride),
+          side: _three.BackSide
+        })), /*#__PURE__*/_react.default.createElement("mesh", {
+          key: "".concat(idx, "F"),
+          geometry: node.geometry,
+          scale: node.scale,
+          castShadow: false,
+          receiveShadow: false
+        }, /*#__PURE__*/_react.default.createElement("meshLambertMaterial", {
+          transparent: true,
+          attach: "material",
+          opacity: opacity,
+          color: (0, _ColorConversion.rgbToHex)(materialOverride),
+          side: _three.FrontSide
+        })));
 
-    return [mesh, [ref]];
+        return [mesh, [ref]];
+      } else {
+        var _mesh = /*#__PURE__*/_react.default.createElement("mesh", {
+          ref: ref,
+          key: idx,
+          geometry: node.geometry,
+          scale: node.scale,
+          castShadow: true,
+          receiveShadow: true
+        }, /*#__PURE__*/_react.default.createElement("meshLambertMaterial", {
+          attach: "material",
+          opacity: opacity,
+          color: (0, _ColorConversion.rgbToHex)(materialOverride)
+        }));
+
+        return [_mesh, [ref]];
+      }
+    } else {
+      var _mesh2 = /*#__PURE__*/_react.default.createElement("mesh", {
+        ref: ref,
+        key: idx,
+        geometry: node.geometry,
+        material: node.material,
+        scale: node.scale,
+        castShadow: true,
+        receiveShadow: true
+      });
+
+      return [_mesh2, [ref]];
+    }
   }
 };
 
@@ -90,7 +145,7 @@ exports.GhostConverter = GhostConverter;
 var itemToGroupAndChildRefs = function itemToGroupAndChildRefs(item) {
   var color = item.color,
       shape = item.shape;
-  var materialOverride = color ? (0, _MaterialMaker.MaterialMaker)(color.r, color.g, color.b, color.a) : undefined;
+  var materialOverride = color ? color : undefined;
   var opacity = color ? color.a : 1.0;
   var content = [];
 
@@ -129,3 +184,60 @@ var itemToGhost = function itemToGhost(item, highlightColor) {
 };
 
 exports.itemToGhost = itemToGhost;
+
+var hullToGroupAndRef = function hullToGroupAndRef(hull) {
+  var color = hull.color,
+      vertices = hull.vertices,
+      hullKey = hull.hullKey;
+  var ref = /*#__PURE__*/(0, _react.createRef)();
+  var geometry = new _threeStdlib.ConvexGeometry(vertices.map(function (v) {
+    return new _three.Vector3(v.x, v.y, v.z);
+  }));
+  var group = null;
+
+  if (color.a < 1.0) {
+    group = /*#__PURE__*/_react.default.createElement("group", {
+      key: hullKey,
+      ref: ref
+    }, /*#__PURE__*/_react.default.createElement("mesh", {
+      key: "".concat(hullKey, "B"),
+      geometry: geometry,
+      castShadow: false,
+      receiveShadow: false
+    }, /*#__PURE__*/_react.default.createElement("meshLambertMaterial", {
+      transparent: true,
+      attach: "material",
+      opacity: color.a,
+      color: (0, _ColorConversion.rgbToHex)(color),
+      side: _three.BackSide
+    })), /*#__PURE__*/_react.default.createElement("mesh", {
+      key: "".concat(hullKey, "F"),
+      geometry: geometry,
+      castShadow: false,
+      receiveShadow: false
+    }, /*#__PURE__*/_react.default.createElement("meshLambertMaterial", {
+      transparent: true,
+      attach: "material",
+      opacity: color.a,
+      color: (0, _ColorConversion.rgbToHex)(color),
+      side: _three.FrontSide
+    })));
+  } else {
+    group = /*#__PURE__*/_react.default.createElement("mesh", {
+      ref: ref,
+      key: "".concat(hullKey),
+      geometry: geometry,
+      castShadow: true,
+      receiveShadow: true
+    }, /*#__PURE__*/_react.default.createElement("meshLambertMaterial", {
+      transparent: true,
+      attach: "material",
+      opacity: color.a,
+      color: (0, _ColorConversion.rgbToHex)(color)
+    }));
+  }
+
+  return [group, ref];
+};
+
+exports.hullToGroupAndRef = hullToGroupAndRef;

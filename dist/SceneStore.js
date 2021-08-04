@@ -32,8 +32,7 @@ var store = function store(set, get) {
     items: {},
     lines: {},
     tfs: {},
-    controls: {},
-    transforming: false,
+    hulls: {},
     // Clearing Contents
     clearItems: function clearItems() {
       return set(function (_) {
@@ -53,6 +52,13 @@ var store = function store(set, get) {
       return set(function (_) {
         return {
           tfs: {}
+        };
+      });
+    },
+    clearHulls: function clearHulls() {
+      return set(function (_) {
+        return {
+          hulls: {}
         };
       });
     },
@@ -78,6 +84,13 @@ var store = function store(set, get) {
         };
       });
     },
+    setHulls: function setHulls(hulls) {
+      return set(function (_) {
+        return {
+          hulls: hulls
+        };
+      });
+    },
     // Removal by key
     removeItem: function removeItem(key) {
       return set(function (state) {
@@ -92,6 +105,11 @@ var store = function store(set, get) {
     removeTf: function removeTf(key) {
       return set(function (state) {
         delete state.tfs[key];
+      });
+    },
+    removeHull: function removeHull(key) {
+      return set(function (state) {
+        delete state.hulls[key];
       });
     },
     // Adding items
@@ -116,10 +134,22 @@ var store = function store(set, get) {
         };
       });
     },
+    setHull: function setHull(key, hull) {
+      return set(function (state) {
+        return {
+          hulls: _objectSpread(_objectSpread({}, state.hulls), {}, _defineProperty({}, key, hull))
+        };
+      });
+    },
     // Item mutation
     setItemName: function setItemName(key, name) {
       return set(function (state) {
         state.items[key].name = name;
+      });
+    },
+    setItemShowName: function setItemShowName(key, showName) {
+      return set(function (state) {
+        state.items[key].showName = showName;
       });
     },
     setItemPosition: function setItemPosition(key, position) {
@@ -178,6 +208,11 @@ var store = function store(set, get) {
         state.lines[key].name = name;
       });
     },
+    setLineVertices: function setLineVertices(key, vertices) {
+      return set(function (state) {
+        state.items.vertices = vertices;
+      });
+    },
     addLineVertex: function addLineVertex(key, vertex) {
       return set(function (state) {
         state.lines[key].vertices.push(vertex);
@@ -204,6 +239,50 @@ var store = function store(set, get) {
   }), _defineProperty(_ref, "setTfRotation", function setTfRotation(key, rotation) {
     return set(function (state) {
       state.tfs[key].rotation = rotation;
+    });
+  }), _defineProperty(_ref, "setHullName", function setHullName(key, name) {
+    return set(function (state) {
+      state.hulls[key].name = name;
+    });
+  }), _defineProperty(_ref, "setHullVertices", function setHullVertices(key, vertices) {
+    return set(function (state) {
+      state.hulls[key].vertices = vertices;
+    });
+  }), _defineProperty(_ref, "addHullVertex", function addHullVertex(key, vertex) {
+    return set(function (state) {
+      state.hulls[key].vertices.push(vertex);
+    });
+  }), _defineProperty(_ref, "removeHullVertex", function removeHullVertex(key) {
+    return set(function (state) {
+      state.hulls[key].vertices.pop();
+    });
+  }), _defineProperty(_ref, "setHullVertex", function setHullVertex(key, index, vertex) {
+    return set(function (state) {
+      state.hulls[key].vertices[index] = vertex;
+    });
+  }), _defineProperty(_ref, "removeHullVertex", function removeHullVertex(key, index) {
+    return set(function (state) {
+      state.hulls[key].vertices.splice(index, 1);
+    });
+  }), _defineProperty(_ref, "setHullColor", function setHullColor(key, color) {
+    return set(function (state) {
+      state.hulls[key].scale = color;
+    });
+  }), _defineProperty(_ref, "setHullHighlighted", function setHullHighlighted(key, value) {
+    return set(function (state) {
+      state.hulls[key].highlighted = value;
+    });
+  }), _defineProperty(_ref, "setHullOnClick", function setHullOnClick(key, fn) {
+    return set(function (state) {
+      state.hulls[key].onClick = fn;
+    });
+  }), _defineProperty(_ref, "setHullOnPointerOver", function setHullOnPointerOver(key, fn) {
+    return set(function (state) {
+      state.hulls[key].onPointerOver = fn;
+    });
+  }), _defineProperty(_ref, "setHullOnPointerOut", function setHullOnPointerOut(key, fn) {
+    return set(function (state) {
+      state.hulls[key].onPointerOut = fn;
     });
   }), _ref;
 };

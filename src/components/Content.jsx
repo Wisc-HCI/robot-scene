@@ -4,6 +4,7 @@ import { Circle } from "@react-three/drei";
 import { EffectComposer, Outline, SMAA } from "@react-three/postprocessing";
 import TF, {WorldTF} from "./TF";
 import Item from "./Item";
+import Hull from "./Hull";
 import Line from "./Line";
 import useSceneStore from './SceneStore';
 import { AmbientLight, DirectionalLight } from './Util/Light';
@@ -11,22 +12,25 @@ import { MaterialMaker } from './Util/MaterialMaker';
 import { hexToRgb } from './Util/ColorConversion';
 import { OrbitControls } from '@react-three/drei';
 import { TransformControls } from './Util/TransformControls';
-import { itemToGroupAndChildRefs } from './Util/MeshConvert';
+import { itemToGroupAndChildRefs, hullToGroupAndRef } from './Util/MeshConvert';
 
-const renderTree = (activeTf,displayTfs,allTfs,allItems,allLines) => {
+const renderTree = (activeTf,displayTfs,allTfs,allItems,allLines,allHulls) => {
   
   const TFComponent = activeTf==='world' ? WorldTF : TF;
 
   return (
     <TFComponent tfKey={activeTf} displayTfs={displayTfs}>
       {allTfs.filter(v=>v.frame===activeTf||(activeTf==='world'&&!v.frame)).map(tf=>(
-        renderTree(tf.tfKey,displayTfs,allTfs,allItems,allLines)
+        renderTree(tf.tfKey,displayTfs,allTfs,allItems,allLines,allHulls)
       ))}
       {allItems.filter(v=>v.frame===activeTf||(activeTf==='world'&&!v.frame)).map(item=>(
         <Item key={item.itemKey} itemKey={item.itemKey} node={item.node}/>
       ))}
       {allLines.filter(v=>v.frame===activeTf||(activeTf==='world'&&!v.frame)).map(line=>(
         <Line key={line.lineKey} lineKey={line.lineKey} />
+      ))}
+      {allHulls.filter(v=>v.frame===activeTf||(activeTf==='world'&&!v.frame)).map(hull=>(
+        <Hull key={hull.hullKey} hullKey={hull.hullKey} node={hull.node}/>
       ))}
     </TFComponent>
   )
@@ -45,7 +49,7 @@ export default function Content(props) {
 
   camera.up.set(0,0,1);
 
-  const [tfs, items, lines] = useSceneStore(state => {
+  const [tfs, items, lines, hulls] = useSceneStore(state => {
 
     const reducedTfs = Object.entries(state.tfs).map(pair=>{
       const [tfKey, tf] = pair;
@@ -69,15 +73,27 @@ export default function Content(props) {
       return {lineKey, frame:line.frame}
     })
     
+    const reducedHulls = Object.entries(state.hulls).map(pair=>{
+      const [hullKey, hull] = pair;
+      const [node, ref] = hullToGroupAndRef(hull);
+      return {
+        hullKey,node,ref,
+        frame:hull.frame,
+        highlighted:hull.highlighted
+      }
+    })
 
     return [
       reducedTfs,
       reducedItems,
-      reducedLines
+      reducedLines,
+      reducedHulls
     ]
   });
 
-  const highlightedRefs = [].concat.apply([],items.filter(item=>item.highlighted).map(item=>item.childrenRefs));
+  const highlightedItemRefs = [].concat.apply([],items.filter(item=>item.highlighted).map(item=>item.childrenRefs));
+  const highlightedHullRefs = hulls.filter(hull=>hull.highlighted).map(hull=>hull.ref);
+  const highlightedRefs = [...highlightedItemRefs, ...highlightedHullRefs];
   const movableItems = items.filter(item=>['translate','rotate','scale'].indexOf(item.transformMode)>-1);
 
   const ambientLightRef = useRef();
@@ -103,7 +119,7 @@ export default function Content(props) {
 
       <Circle receiveShadow scale={1000} position={[0, 0, plane ? plane-0.01 : -0.01]} material={MaterialMaker(...planeRGBA)}/>
       
-      {renderTree('world',displayTfs,tfs,items,lines)}
+      {renderTree('world',displayTfs,tfs,items,lines,hulls)}
       
       <group position={[0, 0, plane ? plane : 0]} rotation={[Math.PI/2,0,0]}>
         {displayGrid && (

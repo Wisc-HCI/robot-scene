@@ -10,14 +10,12 @@ export default function SceneLine(props) {
   }),[lineKey]));
 
   return (
-    <group rotation={[Math.PI/2,0,0]}>
-      <Line
-        points={vertices.map(vertex=>([vertex.position.x,vertex.position.z,-vertex.position.y]))}
+    <Line
+        points={vertices.map(vertex=>([vertex.position.x,vertex.position.y,vertex.position.z]))}
         color='white'
         vertexColors={vertices.map(vertex=>([vertex.color.r/255,vertex.color.g/255,vertex.color.b/255]))}
         lineWidth={width}
-      />
-    </group>
+    />
     
   )
 }

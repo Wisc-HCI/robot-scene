@@ -19,6 +19,8 @@ var _TF = _interopRequireWildcard(require("./TF"));
 
 var _Item = _interopRequireDefault(require("./Item"));
 
+var _Hull = _interopRequireDefault(require("./Hull"));
+
 var _Line = _interopRequireDefault(require("./Line"));
 
 var _SceneStore = _interopRequireDefault(require("./SceneStore"));
@@ -39,6 +41,14 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -51,7 +61,7 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, allLines) {
+var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, allLines, allHulls) {
   var TFComponent = activeTf === 'world' ? _TF.WorldTF : _TF.default;
   return /*#__PURE__*/_react.default.createElement(TFComponent, {
     tfKey: activeTf,
@@ -59,7 +69,7 @@ var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, all
   }, allTfs.filter(function (v) {
     return v.frame === activeTf || activeTf === 'world' && !v.frame;
   }).map(function (tf) {
-    return renderTree(tf.tfKey, displayTfs, allTfs, allItems, allLines);
+    return renderTree(tf.tfKey, displayTfs, allTfs, allItems, allLines, allHulls);
   }), allItems.filter(function (v) {
     return v.frame === activeTf || activeTf === 'world' && !v.frame;
   }).map(function (item) {
@@ -74,6 +84,14 @@ var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, all
     return /*#__PURE__*/_react.default.createElement(_Line.default, {
       key: line.lineKey,
       lineKey: line.lineKey
+    });
+  }), allHulls.filter(function (v) {
+    return v.frame === activeTf || activeTf === 'world' && !v.frame;
+  }).map(function (hull) {
+    return /*#__PURE__*/_react.default.createElement(_Hull.default, {
+      key: hull.hullKey,
+      hullKey: hull.hullKey,
+      node: hull.node
     });
   }));
 };
@@ -134,18 +152,43 @@ function Content(props) {
         frame: line.frame
       };
     });
-    return [reducedTfs, reducedItems, reducedLines];
+    var reducedHulls = Object.entries(state.hulls).map(function (pair) {
+      var _pair4 = _slicedToArray(pair, 2),
+          hullKey = _pair4[0],
+          hull = _pair4[1];
+
+      var _hullToGroupAndRef = (0, _MeshConvert.hullToGroupAndRef)(hull),
+          _hullToGroupAndRef2 = _slicedToArray(_hullToGroupAndRef, 2),
+          node = _hullToGroupAndRef2[0],
+          ref = _hullToGroupAndRef2[1];
+
+      return {
+        hullKey: hullKey,
+        node: node,
+        ref: ref,
+        frame: hull.frame,
+        highlighted: hull.highlighted
+      };
+    });
+    return [reducedTfs, reducedItems, reducedLines, reducedHulls];
   }),
-      _useSceneStore2 = _slicedToArray(_useSceneStore, 3),
+      _useSceneStore2 = _slicedToArray(_useSceneStore, 4),
       tfs = _useSceneStore2[0],
       items = _useSceneStore2[1],
-      lines = _useSceneStore2[2];
+      lines = _useSceneStore2[2],
+      hulls = _useSceneStore2[3];
 
-  var highlightedRefs = [].concat.apply([], items.filter(function (item) {
+  var highlightedItemRefs = [].concat.apply([], items.filter(function (item) {
     return item.highlighted;
   }).map(function (item) {
     return item.childrenRefs;
   }));
+  var highlightedHullRefs = hulls.filter(function (hull) {
+    return hull.highlighted;
+  }).map(function (hull) {
+    return hull.ref;
+  });
+  var highlightedRefs = [].concat(_toConsumableArray(highlightedItemRefs), _toConsumableArray(highlightedHullRefs));
   var movableItems = items.filter(function (item) {
     return ['translate', 'rotate', 'scale'].indexOf(item.transformMode) > -1;
   });
@@ -175,7 +218,7 @@ function Content(props) {
     scale: 1000,
     position: [0, 0, plane ? plane - 0.01 : -0.01],
     material: _MaterialMaker.MaterialMaker.apply(void 0, planeRGBA)
-  }), renderTree('world', displayTfs, tfs, items, lines), /*#__PURE__*/_react.default.createElement("group", {
+  }), renderTree('world', displayTfs, tfs, items, lines, hulls), /*#__PURE__*/_react.default.createElement("group", {
     position: [0, 0, plane ? plane : 0],
     rotation: [Math.PI / 2, 0, 0]
   }, displayGrid && (isPolar ? /*#__PURE__*/_react.default.createElement("polarGridHelper", {

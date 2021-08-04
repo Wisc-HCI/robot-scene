@@ -31,16 +31,14 @@ function SceneLine(props) {
       vertices = _useSceneStore.vertices,
       width = _useSceneStore.width;
 
-  return /*#__PURE__*/_react.default.createElement("group", {
-    rotation: [Math.PI / 2, 0, 0]
-  }, /*#__PURE__*/_react.default.createElement(_drei.Line, {
+  return /*#__PURE__*/_react.default.createElement(_drei.Line, {
     points: vertices.map(function (vertex) {
-      return [vertex.position.x, vertex.position.z, -vertex.position.y];
+      return [vertex.position.x, vertex.position.y, vertex.position.z];
     }),
     color: "white",
     vertexColors: vertices.map(function (vertex) {
       return [vertex.color.r / 255, vertex.color.g / 255, vertex.color.b / 255];
     }),
     lineWidth: width
-  }));
+  });
 }

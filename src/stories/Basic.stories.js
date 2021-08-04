@@ -155,6 +155,7 @@ export default {
         useSceneStore.getState().setItems(defaultItems);
         useSceneStore.getState().setTfs(defaultTfs);
         useSceneStore.getState().setLines(defaultLines);
+        useSceneStore.getState().clearHulls();
 
         return storyFn()
         
