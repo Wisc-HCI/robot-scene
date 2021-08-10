@@ -25,10 +25,10 @@ const store = (set,get) => ({
   removeTf: (key) => set(state => {delete state.tfs[key]}),
   removeHull: (key) => set(state => {delete state.hulls[key]}),
   // Adding items
-  setItem: (key, item) => set(state=>({items:{...state.items, [key]:item}})),
-  setLine: (key, line) => set(state=>({lines:{...state.lines, [key]:line}})),
-  setTf: (key, tf) => set(state=>({tfs:{...state.tfs, [key]:tf}})),
-  setHull: (key, hull) => set(state=>({hulls:{...state.hulls, [key]:hull}})),
+  setItem: (key, item) => set(state=>{state.items[key]=item}),
+  setLine: (key, line) => set(state=>{state.lines[key]=line}),
+  setTf: (key, tf) => set(state=>{state.tfs[key]=tf}),
+  setHull: (key, hull) => set(state=>{state.hulls[key]=hull}),
   // Item mutation
   setItemName: (key, name) => set(state => {state.items[key].name = name}),
   setItemShowName: (key, showName) => set(state => {state.items[key].showName = showName}),

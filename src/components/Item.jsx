@@ -41,8 +41,10 @@ export default function Item({itemKey, node}) {
       }
   },[itemKey,ref]));
   return (
-    <group ref={ref}>
-      <group 
+    <group ref={ref} up={[0,0,1]}>
+      <group
+        up={[0,0,1]} 
+        scale={[1,1,1]}
         rotation={[Math.PI/2,0,0]}
         onPointerDown={onClick} 
         onPointerOver={onPointerOver} 

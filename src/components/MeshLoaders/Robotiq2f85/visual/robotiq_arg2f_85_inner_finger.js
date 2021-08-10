@@ -8,11 +8,9 @@ import RobotiqVisual85InnerFinger from '../../../Meshes/Robotiq2f85/visual/robot
 
 export default function Model(props) {
   const { nodes, materials } = useGLTF(RobotiqVisual85InnerFinger)
-  return [{type:'group', scale:[0.001,0.001,0.001],children:[{type:'raw', geometry:nodes.node0.geometry,
-          material:materials['mymaterial.003']}]}]
-
-
-
+  return [
+    {type:'raw', geometry:nodes.node0.geometry,material:materials['mymaterial.003']}
+  ]
 }
 
 useGLTF.preload(RobotiqVisual85InnerFinger)

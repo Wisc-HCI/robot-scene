@@ -64,6 +64,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, allLines, allHulls) {
   var TFComponent = activeTf === 'world' ? _TF.WorldTF : _TF.default;
   return /*#__PURE__*/_react.default.createElement(TFComponent, {
+    key: activeTf,
     tfKey: activeTf,
     displayTfs: displayTfs
   }, allTfs.filter(function (v) {
@@ -199,14 +200,26 @@ function Content(props) {
   var planeRGBA = [planeRGB.r, planeRGB.g, planeRGB.b, 0.5];
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_drei.OrbitControls, {
     ref: orbitControls
+  }), /*#__PURE__*/_react.default.createElement("pointLight", {
+    intensity: 0.5,
+    position: [-1, -3, 3],
+    color: "#FFFAEE"
   }), /*#__PURE__*/_react.default.createElement(_Light.AmbientLight, {
-    ref: ambientLightRef
+    ref: ambientLightRef,
+    intensity: 0.7,
+    color: "white"
   }), /*#__PURE__*/_react.default.createElement(_Light.DirectionalLight, {
     ref: directionalLightRef,
     castShadow: true,
-    position: [5, 10, 10],
-    intensity: 0.8,
-    color: "white"
+    position: [5, 15, 15],
+    intensity: 0.6,
+    color: "#FFFAEE"
+  }), /*#__PURE__*/_react.default.createElement("spotLight", {
+    penumbra: 1,
+    position: [-1, -1, 4],
+    intensity: 0.3,
+    castShadow: true,
+    color: "#FFFAEE"
   }), /*#__PURE__*/_react.default.createElement("color", {
     attach: "background",
     args: [backgroundColor ? backgroundColor : "#d0d0d0"]
@@ -220,7 +233,8 @@ function Content(props) {
     material: _MaterialMaker.MaterialMaker.apply(void 0, planeRGBA)
   }), renderTree('world', displayTfs, tfs, items, lines, hulls), /*#__PURE__*/_react.default.createElement("group", {
     position: [0, 0, plane ? plane : 0],
-    rotation: [Math.PI / 2, 0, 0]
+    rotation: [Math.PI / 2, 0, 0],
+    up: [0, 0, 1]
   }, displayGrid && (isPolar ? /*#__PURE__*/_react.default.createElement("polarGridHelper", {
     args: [10, 16, 8, 64, "white", "gray"]
   }) : /*#__PURE__*/_react.default.createElement("gridHelper", {

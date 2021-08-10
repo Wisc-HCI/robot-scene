@@ -125,6 +125,26 @@ var _robotiq_arg2f_85_pad = _interopRequireDefault(require("./MeshLoaders/Roboti
 
 var _robotiq_gripper_coupling = _interopRequireDefault(require("./MeshLoaders/Robotiq2f85/visual/robotiq_gripper_coupling"));
 
+var _robotiq_85_base_link = _interopRequireDefault(require("./MeshLoaders/RobotiqWisc/visual/robotiq_85_base_link"));
+
+var _robotiq_85_knuckle_link = _interopRequireDefault(require("./MeshLoaders/RobotiqWisc/visual/robotiq_85_knuckle_link"));
+
+var _robotiq_85_finger_link = _interopRequireDefault(require("./MeshLoaders/RobotiqWisc/visual/robotiq_85_finger_link"));
+
+var _robotiq_85_finger_tip_link = _interopRequireDefault(require("./MeshLoaders/RobotiqWisc/visual/robotiq_85_finger_tip_link"));
+
+var _robotiq_85_inner_knuckle_link = _interopRequireDefault(require("./MeshLoaders/RobotiqWisc/visual/robotiq_85_inner_knuckle_link"));
+
+var _robotiq_85_base_link2 = _interopRequireDefault(require("./MeshLoaders/RobotiqWisc/collision/robotiq_85_base_link"));
+
+var _robotiq_85_knuckle_link2 = _interopRequireDefault(require("./MeshLoaders/RobotiqWisc/collision/robotiq_85_knuckle_link"));
+
+var _robotiq_85_finger_link2 = _interopRequireDefault(require("./MeshLoaders/RobotiqWisc/collision/robotiq_85_finger_link"));
+
+var _robotiq_85_finger_tip_link2 = _interopRequireDefault(require("./MeshLoaders/RobotiqWisc/collision/robotiq_85_finger_tip_link"));
+
+var _robotiq_85_inner_knuckle_link2 = _interopRequireDefault(require("./MeshLoaders/RobotiqWisc/collision/robotiq_85_inner_knuckle_link"));
+
 var _Pedestal_link_collision = _interopRequireDefault(require("./MeshLoaders/Baxter/base/Pedestal_link_collision"));
 
 var _PEDESTAL = _interopRequireDefault(require("./MeshLoaders/Baxter/base/PEDESTAL"));
@@ -309,6 +329,17 @@ var MeshLookupTable = (_MeshLookupTable = {
   // huge
   'package://robotiq/robotiq_2f_85_gripper_visualization/meshes/visual/robotiq_gripper_coupling.stl': _robotiq_gripper_coupling.default,
   //huge
+  //---------------------------------------------------------RobotiqWisc
+  'package://robotiq_85_description/meshes/visual/robotiq_85_base_link.dae': _robotiq_85_base_link.default,
+  'package://robotiq_85_description/meshes/visual/robotiq_85_knuckle_link.dae': _robotiq_85_knuckle_link.default,
+  'package://robotiq_85_description/meshes/visual/robotiq_85_finger_link.dae': _robotiq_85_finger_link.default,
+  'package://robotiq_85_description/meshes/visual/robotiq_85_inner_knuckle_link.dae': _robotiq_85_inner_knuckle_link.default,
+  'package://robotiq_85_description/meshes/visual/robotiq_85_finger_tip_link.dae': _robotiq_85_finger_tip_link.default,
+  'package://robotiq_85_description/meshes/collision/robotiq_85_base_link.stl': _robotiq_85_base_link2.default,
+  'package://robotiq_85_description/meshes/collision/robotiq_85_knuckle_link.stl': _robotiq_85_knuckle_link2.default,
+  'package://robotiq_85_description/meshes/collision/robotiq_85_finger_link.stl': _robotiq_85_finger_link2.default,
+  'package://robotiq_85_description/meshes/collision/robotiq_85_inner_knuckle_link.stl': _robotiq_85_inner_knuckle_link2.default,
+  'package://robotiq_85_description/meshes/collision/robotiq_85_finger_tip_link.stl': _robotiq_85_finger_tip_link2.default,
   //------------------------------------------------------------------Baxter
   'package://baxter_common/baxter_description/meshes/base/PEDESTAL.DAE': _PEDESTAL.default,
   'package://baxter_common/baxter_description/meshes/base/pedestal_link_collision.DAE': _Pedestal_link_collision.default,
@@ -324,21 +355,21 @@ var MeshLookupTable = (_MeshLookupTable = {
   'package://baxter_common/baxter_description/meshes/upper_shoulder/S0.DAE': _S.default,
   'package://baxter_common/baxter_description/meshes/wrist/W2.DAE': _W3.default,
   //---------------------------------------------------------------------Ur3
-  'package://universal_robot/ur_description/meshes/ur3/visual/base.dae': _base.default,
-  'package://universal_robot/ur_description/meshes/ur3/visual/forearm.dae': _forearm.default,
-  'package://universal_robot/ur_description/meshes/ur3/visual/shoulder.dae': _shoulder.default,
-  'package://universal_robot/ur_description/meshes/ur3/visual/upperarm.dae': _upperarm.default,
-  'package://universal_robot/ur_description/meshes/ur3/visual/wrist1.dae': _wrist.default,
+  'package://ur_description/meshes/ur3/visual/base.dae': _base.default,
+  'package://ur_description/meshes/ur3/visual/forearm.dae': _forearm.default,
+  'package://ur_description/meshes/ur3/visual/shoulder.dae': _shoulder.default,
+  'package://ur_description/meshes/ur3/visual/upperarm.dae': _upperarm.default,
+  'package://ur_description/meshes/ur3/visual/wrist1.dae': _wrist.default,
   //missing
-  'package://universal_robot/ur_description/meshes/ur3/visual/wrist2.dae': _wrist2.default,
-  'package://universal_robot/ur_description/meshes/ur3/visual/wrist3.dae': _wrist3.default,
+  'package://ur_description/meshes/ur3/visual/wrist2.dae': _wrist2.default,
+  'package://ur_description/meshes/ur3/visual/wrist3.dae': _wrist3.default,
   //--------------------------------------------------------------------Ur5
-  'package://universal_robot/ur_description/meshes/ur5/visual/base.dae': _base2.default,
-  'package://universal_robot/ur_description/meshes/ur5/visual/forearm.dae': _forearm2.default,
-  'package://universal_robot/ur_description/meshes/ur5/visual/shoulder.dae': _shoulder2.default,
-  'package://universal_robot/ur_description/meshes/ur5/visual/upperarm.dae': _upperarm2.default,
-  'package://universal_robot/ur_description/meshes/ur5/visual/wrist1.dae': _wrist4.default
-}, _defineProperty(_MeshLookupTable, "package://universal_robot/ur_description/meshes/ur3/visual/wrist2.dae", _wrist5.default), _defineProperty(_MeshLookupTable, "package://universal_robot/ur_description/meshes/ur3/visual/wrist3.dae", _wrist6.default), _defineProperty(_MeshLookupTable, 'package://universal_robot/ur_description/meshes/ur10/visual/base.dae', _base3.default), _defineProperty(_MeshLookupTable, 'package://universal_robot/ur_description/meshes/ur10/visual/forearm.dae', _forearm3.default), _defineProperty(_MeshLookupTable, 'package://universal_robot/ur_description/meshes/ur10/visual/shoulder.dae', _shoulder3.default), _defineProperty(_MeshLookupTable, 'package://universal_robot/ur_description/meshes/ur10/visual/upperarm.dae', _upperarm3.default), _defineProperty(_MeshLookupTable, 'package://universal_robot/ur_description/meshes/ur10/visual/wrist1.dae', _wrist7.default), _defineProperty(_MeshLookupTable, 'package://universal_robot/ur_description/meshes/ur10/visual/wrist2.dae', _wrist8.default), _defineProperty(_MeshLookupTable, 'package://universal_robot/ur_description/meshes/ur10/visual/wrist3.dae', _wrist9.default), _defineProperty(_MeshLookupTable, 'package://app/meshes/3DBenchy.stl', _DBenchy.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/MK2-Printer/MK2-Printer.stl', _MK2Printer.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/MK2-Printer.stl', _CollisionMk2Printer.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/Box/Box.stl', _Box.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/Box.stl', _CollisionBox.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/ur3e-Pedestal/Pedestal.stl', _Pedestal.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/Pedestal.stl', _CollisionPedestal.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/Table/Table.stl', _Table.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/Table.stl', _CollisionTable.default), _defineProperty(_MeshLookupTable, 'package://app/meshes/LocationMarker.stl', _LocationMarker.default), _defineProperty(_MeshLookupTable, 'package://app/meshes/OpenWaypointMarker.stl', _OpenWaypointMarker.default), _MeshLookupTable);
+  'package://ur_description/meshes/ur5/visual/base.dae': _base2.default,
+  'package://ur_description/meshes/ur5/visual/forearm.dae': _forearm2.default,
+  'package://ur_description/meshes/ur5/visual/shoulder.dae': _shoulder2.default,
+  'package://ur_description/meshes/ur5/visual/upperarm.dae': _upperarm2.default,
+  'package://ur_description/meshes/ur5/visual/wrist1.dae': _wrist4.default
+}, _defineProperty(_MeshLookupTable, "package://ur_description/meshes/ur3/visual/wrist2.dae", _wrist5.default), _defineProperty(_MeshLookupTable, "package://ur_description/meshes/ur3/visual/wrist3.dae", _wrist6.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/base.dae', _base3.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/forearm.dae', _forearm3.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/shoulder.dae', _shoulder3.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/upperarm.dae', _upperarm3.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/wrist1.dae', _wrist7.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/wrist2.dae', _wrist8.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/wrist3.dae', _wrist9.default), _defineProperty(_MeshLookupTable, 'package://app/meshes/3DBenchy.stl', _DBenchy.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/MK2-Printer/MK2-Printer.stl', _MK2Printer.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/MK2-Printer.stl', _CollisionMk2Printer.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/Box/Box.stl', _Box.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/Box.stl', _CollisionBox.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/ur3e-Pedestal/Pedestal.stl', _Pedestal.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/Pedestal.stl', _CollisionPedestal.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/Table/Table.stl', _Table.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/Table.stl', _CollisionTable.default), _defineProperty(_MeshLookupTable, 'package://app/meshes/LocationMarker.stl', _LocationMarker.default), _defineProperty(_MeshLookupTable, 'package://app/meshes/OpenWaypointMarker.stl', _OpenWaypointMarker.default), _MeshLookupTable);
 exports.MeshLookupTable = MeshLookupTable;
 
 var MeshLookup = function MeshLookup(path) {

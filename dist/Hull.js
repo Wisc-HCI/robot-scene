@@ -51,8 +51,10 @@ function Hull(_ref) {
 
   var ref = (0, _react.useRef)();
   return /*#__PURE__*/_react.default.createElement("group", {
-    ref: ref
+    ref: ref,
+    up: [0, 0, 1]
   }, /*#__PURE__*/_react.default.createElement("group", {
+    up: [0, 0, 1],
     onPointerDown: onClick,
     onPointerOver: onPointerOver,
     onPointerOut: onPointerOut

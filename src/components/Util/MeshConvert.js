@@ -10,7 +10,7 @@ export const MeshConverter = (node, idx, materialOverride, opacity) => {
   if (node.type === 'group') {
     const nodes = node.children.map((child, i) => MeshConverter(child, i, materialOverride, opacity));
     const group =
-      <group key={idx} position={node.position} rotation={node.rotation} scale={node.scale}>
+      <group key={idx} up={[0,0,1]} position={node.position} rotation={node.rotation} scale={node.scale}>
         {nodes.map(node => node[0])}
       </group>
     const refs = [].concat.apply([], nodes.map(node => node[1]));
@@ -21,7 +21,7 @@ export const MeshConverter = (node, idx, materialOverride, opacity) => {
     if (materialOverride) {
       if (opacity < 1.0) {
         const mesh =
-          <group key={idx} ref={ref}>
+          <group key={idx} ref={ref} up={[0,0,1]} >
             <mesh
               key={`${idx}B`}
               geometry={node.geometry}
@@ -92,7 +92,7 @@ export const GhostConverter = (node, idx, highlightColor) => {
   if (node.type === 'group') {
     const nodes = node.children.map((child, i) => GhostConverter(child, i, highlightColor));
     const group =
-      <group key={idx} position={node.position} rotation={node.rotation} scale={node.scale}>
+      <group key={idx} position={node.position} rotation={node.rotation} scale={node.scale} up={[0,0,1]} >
         {nodes}
       </group>
     return group;
@@ -158,7 +158,7 @@ export const hullToGroupAndRef = hull => {
 
   if (color.a < 1.0) {
     group = 
-      <group key={hullKey} ref={ref}>
+      <group key={hullKey} ref={ref} up={[0,0,1]} >
         <mesh
           key={`${hullKey}B`}
           geometry={geometry}

@@ -38,7 +38,7 @@ export default {
                     frame: `${i}`,
                     position: { x: 0, y: 0, z: 0 },
                     rotation: { w: 1, x: 0, y: 0, z: 0 },
-                    scale: { x: 1, y: 1, z: 1 },
+                    scale: key.includes('robotiq_2f_85_gripper_visualization') ? { x: 0.001, y: 0.001, z: 0.001 } : { x: 1, y: 1, z: 1 },
                     editMode: 'inactive',
                     showName: true,
                     highlighted: false,

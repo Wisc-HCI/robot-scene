@@ -19,12 +19,15 @@ var _StandardMeshes = require("./Util/StandardMeshes");
 
 var _MaterialMaker = require("./Util/MaterialMaker");
 
+var _three = require("three");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+// const STANDARD_ROTATION = new Quaternion(0,0,1,0)
 function TF(_ref) {
   var tfKey = _ref.tfKey,
       displayTfs = _ref.displayTfs,
@@ -35,6 +38,7 @@ function TF(_ref) {
     var tf = _SceneStore.default.getState().tfs[tfKey];
 
     if (ref.current) {
+      // console.log(ref.current)
       ref.current.position.set(tf.translation.x, tf.translation.y, tf.translation.z);
       ref.current.quaternion.set(tf.rotation.x, tf.rotation.y, tf.rotation.z, tf.rotation.w);
     }
@@ -42,8 +46,11 @@ function TF(_ref) {
   var arrow = (0, _StandardMeshes.ARROW_GEOM)();
   return /*#__PURE__*/_react.default.createElement("group", {
     ref: ref,
-    dispose: null
-  }, displayTfs && /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("mesh", {
+    dispose: null,
+    up: [0, 0, 1]
+  }, displayTfs && /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("axesHelper", {
+    size: 1
+  }), /*#__PURE__*/_react.default.createElement("mesh", {
     key: "".concat(tfKey, "ArrowX"),
     geometry: arrow,
     material: (0, _MaterialMaker.MaterialMaker)(255, 0, 0, 1),
@@ -71,8 +78,11 @@ function WorldTF(_ref2) {
       children = _ref2.children;
   var arrow = (0, _StandardMeshes.ARROW_GEOM)();
   return /*#__PURE__*/_react.default.createElement("group", {
-    dispose: null
-  }, displayTfs && /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("mesh", {
+    dispose: null,
+    up: [0, 0, 1]
+  }, displayTfs && /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("axesHelper", {
+    size: 1
+  }), /*#__PURE__*/_react.default.createElement("mesh", {
     key: "$WorldArrowX",
     geometry: arrow,
     material: (0, _MaterialMaker.MaterialMaker)(255, 0, 0, 1),
@@ -104,7 +114,8 @@ function GhostTF(_ref3) {
     var rot = [transforms[0].rotation.x, transforms[0].rotation.y, transforms[0].rotation.z, transforms[0].rotation.w];
     return /*#__PURE__*/_react.default.createElement("group", {
       position: pos,
-      quaternion: rot
+      quaternion: rot,
+      up: [0, 0, 1]
     }, /*#__PURE__*/_react.default.createElement(GhostTF, {
       transforms: transforms.filter(function (_, i) {
         return i !== 0;

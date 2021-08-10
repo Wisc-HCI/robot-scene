@@ -7,17 +7,14 @@ import { useGLTF } from '@react-three/drei';
 import Ur3Shoulder from '../../Meshes/Ur3/shoulder.glb';
 
 export default function Model(props) {
-  const { nodes, materials } = useGLTF(Ur3Shoulder)
+  const { nodes } = useGLTF(Ur3Shoulder)
   return [
 
-{type:'raw',geometry:nodes.node0.geometry, material:nodes.node0.material} ,
-{type:'raw',geometry:nodes.node1.geometry, material:materials.blau_001} ,
-{type:'raw',geometry:nodes.node2.geometry, material:nodes.node2.material} ,
-{type:'raw',geometry:nodes.node3.geometry, material:nodes.node3.material},
-{type:'raw',geometry:nodes.node4.geometry, material:nodes.node4.material} ,
-{type:'raw',geometry:nodes.node5.geometry, material:nodes.node5.material}
+    { type: 'raw', geometry: nodes.eSeries_UR3e_029.geometry, material: nodes.eSeries_UR3e_029.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0] },
+    { type: 'raw', geometry: nodes.eSeries_UR3e_012.geometry, material: nodes.eSeries_UR3e_012.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0] },
+    { type: 'raw', geometry: nodes.eSeries_UR3e_013.geometry, material: nodes.eSeries_UR3e_013.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0] }
 
-]
+  ]
 }
 
 useGLTF.preload(Ur3Shoulder)

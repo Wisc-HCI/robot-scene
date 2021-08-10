@@ -19,7 +19,7 @@ const renderTree = (activeTf,displayTfs,allTfs,allItems,allLines,allHulls) => {
   const TFComponent = activeTf==='world' ? WorldTF : TF;
 
   return (
-    <TFComponent tfKey={activeTf} displayTfs={displayTfs}>
+    <TFComponent key={activeTf} tfKey={activeTf} displayTfs={displayTfs}>
       {allTfs.filter(v=>v.frame===activeTf||(activeTf==='world'&&!v.frame)).map(tf=>(
         renderTree(tf.tfKey,displayTfs,allTfs,allItems,allLines,allHulls)
       ))}
@@ -106,13 +106,20 @@ export default function Content(props) {
   return (
     <React.Fragment>
       <OrbitControls ref={orbitControls}/>
-      <AmbientLight ref={ambientLightRef} />
+      <pointLight intensity={0.5} position={[-1,-3,3]} color='#FFFAEE'/>
+      <AmbientLight ref={ambientLightRef} intensity={0.7} color='white'/>
       <DirectionalLight
         ref={directionalLightRef}
+        castShadow position={[5, 15, 15]} 
+        intensity={0.6} 
+        color="#FFFAEE"
+      />
+      <spotLight
+        penumbra={1}
+        position={[-1, -1, 4]}
+        intensity={0.3}
         castShadow
-        position={[5, 10, 10]}
-        intensity={0.8}
-        color="white"
+        color='#FFFAEE'
       />
       <color attach="background" args={[backgroundColor ? backgroundColor : "#d0d0d0"]} />
       <fogExp2 attach="fog" args={[backgroundColor ? backgroundColor : "#d0d0d0", 0.01]} />
@@ -121,7 +128,7 @@ export default function Content(props) {
       
       {renderTree('world',displayTfs,tfs,items,lines,hulls)}
       
-      <group position={[0, 0, plane ? plane : 0]} rotation={[Math.PI/2,0,0]}>
+      <group position={[0, 0, plane ? plane : 0]} rotation={[Math.PI/2,0,0]} up={[0,0,1]}>
         {displayGrid && (
           isPolar ? (
             <polarGridHelper args={[10, 16, 8, 64, "white", "gray"]} />

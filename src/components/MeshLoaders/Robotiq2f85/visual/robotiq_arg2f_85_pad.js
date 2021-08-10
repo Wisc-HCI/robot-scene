@@ -9,9 +9,7 @@ import RobotiqVisual85Pad from '../../../Meshes/Robotiq2f85/visual/robotiq_arg2f
 export default function Model(props) {
 
   const { nodes, materials } = useGLTF(RobotiqVisual85Pad)
-  return [{type:'group', scale:[0.001,0.001,0.001],children:[{type:'raw', geometry:nodes.node0.geometry,
-          material:materials.mymaterial}]}]
-
+  return [{type:'raw', geometry:nodes.node0.geometry,material:materials.mymaterial}]
 }
 
 useGLTF.preload(RobotiqVisual85Pad)

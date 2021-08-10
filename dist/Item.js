@@ -63,8 +63,11 @@ function Item(_ref) {
     }
   }, [itemKey, ref]));
   return /*#__PURE__*/_react.default.createElement("group", {
-    ref: ref
+    ref: ref,
+    up: [0, 0, 1]
   }, /*#__PURE__*/_react.default.createElement("group", {
+    up: [0, 0, 1],
+    scale: [1, 1, 1],
     rotation: [Math.PI / 2, 0, 0],
     onPointerDown: onClick,
     onPointerOver: onPointerOver,

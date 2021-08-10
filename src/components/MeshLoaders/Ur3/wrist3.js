@@ -7,12 +7,9 @@ import { useGLTF } from '@react-three/drei';
 
 export default function Model(props) {
 
-  const { nodes, materials } = useGLTF(Ur3Wrist3)
+  const { nodes } = useGLTF(Ur3Wrist3)
   return [
-
-{type:'raw',geometry:nodes.node0.geometry,material:materials['Rohr.002']} ,
-{type:'raw',geometry:nodes.node1.geometry,material:materials['verbindung.004']}
-
+    { type: 'raw', geometry: nodes.eSeries_UR3e_002.geometry, material: nodes.eSeries_UR3e_002.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0] }
   ]
 }
 

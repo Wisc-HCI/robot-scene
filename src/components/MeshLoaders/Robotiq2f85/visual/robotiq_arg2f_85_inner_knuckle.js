@@ -8,11 +8,7 @@ import RobotiqVisual85InnerKnuckle from '../../../Meshes/Robotiq2f85/visual/robo
 
 export default function Model(props) {
   const { nodes, materials } = useGLTF(RobotiqVisual85InnerKnuckle)
-  return [{type:'group', scale:[0.001,0.001,0.001],children:[{type:'raw', geometry:nodes.node0.geometry, material:materials['mymaterial.002']}]
-}]
-
-
-
+  return [{type:'raw', geometry:nodes.node0.geometry, material:materials['mymaterial.002']}]
 }
 
 useGLTF.preload(RobotiqVisual85InnerKnuckle)

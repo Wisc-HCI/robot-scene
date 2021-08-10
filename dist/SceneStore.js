@@ -11,10 +11,6 @@ var _immer = _interopRequireDefault(require("immer"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var immer = function immer(config) {
@@ -115,30 +111,22 @@ var store = function store(set, get) {
     // Adding items
     setItem: function setItem(key, item) {
       return set(function (state) {
-        return {
-          items: _objectSpread(_objectSpread({}, state.items), {}, _defineProperty({}, key, item))
-        };
+        state.items[key] = item;
       });
     },
     setLine: function setLine(key, line) {
       return set(function (state) {
-        return {
-          lines: _objectSpread(_objectSpread({}, state.lines), {}, _defineProperty({}, key, line))
-        };
+        state.lines[key] = line;
       });
     },
     setTf: function setTf(key, tf) {
       return set(function (state) {
-        return {
-          tfs: _objectSpread(_objectSpread({}, state.tfs), {}, _defineProperty({}, key, tf))
-        };
+        state.tfs[key] = tf;
       });
     },
     setHull: function setHull(key, hull) {
       return set(function (state) {
-        return {
-          hulls: _objectSpread(_objectSpread({}, state.hulls), {}, _defineProperty({}, key, hull))
-        };
+        state.hulls[key] = hull;
       });
     },
     // Item mutation

@@ -8,16 +8,16 @@ import Ur3Forearm from '../../Meshes/Ur3/forearm.glb';
 
 export default function Model(props) {
 
-  const { nodes, materials } = useGLTF(Ur3Forearm)
+  const { nodes } = useGLTF(Ur3Forearm)
   return [
-
-{type:'raw',geometry:nodes.node0.geometry, material:nodes.node0.material},
-{type:'raw',geometry:nodes.node1.geometry, material:materials.Rohr} ,
-{type:'raw',geometry:nodes.node2.geometry, material:nodes.node2.material} ,
-{type:'raw',geometry:nodes.node3.geometry, material:nodes.node3.material},
-{type:'raw',geometry:nodes.node4.geometry, material:nodes.node4.material} ,
-{type:'raw',geometry:nodes.node5.geometry, material:materials.blau}
-]
+    { type: 'raw', geometry: nodes.eSeries_UR3e_033.geometry, material: nodes.eSeries_UR3e_033.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0]},
+    { type: 'raw', geometry: nodes.eSeries_UR3e_022.geometry, material: nodes.eSeries_UR3e_022.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0]},
+    { type: 'raw', geometry: nodes.eSeries_UR3e_023.geometry, material: nodes.eSeries_UR3e_023.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0]},
+    { type: 'raw', geometry: nodes.eSeries_UR3e_024.geometry, material: nodes.eSeries_UR3e_024.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0]},
+    { type: 'raw', geometry: nodes.eSeries_UR3e_025.geometry, material: nodes.eSeries_UR3e_025.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0]},
+    { type: 'raw', geometry: nodes.eSeries_UR3e_026.geometry, material: nodes.eSeries_UR3e_026.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0]},
+    { type: 'raw', geometry: nodes.eSeries_UR3e_028.geometry, material: nodes.eSeries_UR3e_028.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0]}
+  ]
 }
 
 useGLTF.preload(Ur3Forearm)

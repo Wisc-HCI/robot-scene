@@ -17,8 +17,9 @@ export default function Hull({hullKey, node}) {
   const ref = useRef()
 
   return (
-    <group ref={ref}>
+    <group ref={ref} up={[0,0,1]}>
       <group 
+        up={[0,0,1]}
         onPointerDown={onClick} 
         onPointerOver={onPointerOver} 
         onPointerOut={onPointerOut}>

@@ -7,22 +7,18 @@ import { useGLTF } from '@react-three/drei';
 import Ur3Upperarm from '../../Meshes/Ur3/upperarm.glb';
 
 export default function Model(props) {
-  
-  const { nodes, materials } = useGLTF(Ur3Upperarm)
-  return [
-{type:'raw',geometry:nodes.node0.geometry, material:nodes.node0.material} ,
-{type:'raw',geometry:nodes.node1.geometry, material:nodes.node1.material},
-{type:'raw',geometry:nodes.node2.geometry, material:nodes.node2.material},
-{type:'raw',geometry:nodes.node3.geometry, material:nodes.node3.material},
-{type:'raw',geometry:nodes.node4.geometry, material:nodes.node4.material},
-{type:'raw',geometry:nodes.node5.geometry, material:nodes.node5.material},
-{type:'raw',geometry:nodes.node6.geometry, material:materials['Rohr.001']},
-{type:'raw',geometry:nodes.node7.geometry, material:nodes.node7.material},
-{type:'raw',geometry:nodes.node8.geometry, material:nodes.node8.material},
-{type:'raw',geometry:nodes.node9.geometry, material:nodes.node9.material},
-{type:'raw',geometry:nodes.node10.geometry, material:nodes.node10.material},
-{type:'raw',geometry:nodes.node11.geometry, material:nodes.node11.material}
 
+  const { nodes } = useGLTF(Ur3Upperarm)
+  return [
+    { type: 'raw', geometry: nodes.eSeries_UR3e_032.geometry, material: nodes.eSeries_UR3e_032.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0]  },
+    { type: 'raw', geometry: nodes.eSeries_UR3e_031.geometry, material: nodes.eSeries_UR3e_031.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0]  },
+    { type: 'raw', geometry: nodes.eSeries_UR3e_015.geometry, material: nodes.eSeries_UR3e_015.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0]  },
+    { type: 'raw', geometry: nodes.eSeries_UR3e_016.geometry, material: nodes.eSeries_UR3e_016.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0]  },
+    { type: 'raw', geometry: nodes.eSeries_UR3e_017.geometry, material: nodes.eSeries_UR3e_017.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0]  },
+    { type: 'raw', geometry: nodes.eSeries_UR3e_018.geometry, material: nodes.eSeries_UR3e_018.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0]  },
+    { type: 'raw', geometry: nodes.eSeries_UR3e_019.geometry, material: nodes.eSeries_UR3e_019.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0]  },
+    { type: 'raw', geometry: nodes.eSeries_UR3e_020.geometry, material: nodes.eSeries_UR3e_020.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0]  },
+    { type: 'raw', geometry: nodes.eSeries_UR3e_021.geometry, material: nodes.eSeries_UR3e_021.material, scale:[0.001, 0.001, 0.001], rotation:[Math.PI/2, 0, 0]  }
   ]
 }
 

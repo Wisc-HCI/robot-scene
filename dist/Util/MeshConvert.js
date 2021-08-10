@@ -32,6 +32,7 @@ var MeshConverter = function MeshConverter(node, idx, materialOverride, opacity)
 
     var group = /*#__PURE__*/_react.default.createElement("group", {
       key: idx,
+      up: [0, 0, 1],
       position: node.position,
       rotation: node.rotation,
       scale: node.scale
@@ -50,7 +51,8 @@ var MeshConverter = function MeshConverter(node, idx, materialOverride, opacity)
       if (opacity < 1.0) {
         var mesh = /*#__PURE__*/_react.default.createElement("group", {
           key: idx,
-          ref: ref
+          ref: ref,
+          up: [0, 0, 1]
         }, /*#__PURE__*/_react.default.createElement("mesh", {
           key: "".concat(idx, "B"),
           geometry: node.geometry,
@@ -122,7 +124,8 @@ var GhostConverter = function GhostConverter(node, idx, highlightColor) {
       key: idx,
       position: node.position,
       rotation: node.rotation,
-      scale: node.scale
+      scale: node.scale,
+      up: [0, 0, 1]
     }, nodes);
 
     return group;
@@ -198,7 +201,8 @@ var hullToGroupAndRef = function hullToGroupAndRef(hull) {
   if (color.a < 1.0) {
     group = /*#__PURE__*/_react.default.createElement("group", {
       key: hullKey,
-      ref: ref
+      ref: ref,
+      up: [0, 0, 1]
     }, /*#__PURE__*/_react.default.createElement("mesh", {
       key: "".concat(hullKey, "B"),
       geometry: geometry,

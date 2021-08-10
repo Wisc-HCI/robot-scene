@@ -61,7 +61,6 @@ import RobotiqCollision85OuterKnuckle from
 './MeshLoaders/Robotiq2f85/collision/robotiq_arg2f_85_outer_knuckle';
 import RobotiqCollisionBaseLink from
 './MeshLoaders/Robotiq2f85/collision/robotiq_arg2f_base_link';
-
 import RobotiqVisual85BaseLink from
 './MeshLoaders/Robotiq2f85/visual/robotiq_arg2f_85_base_link';
 import RobotiqVisual85InnerFinger from
@@ -76,6 +75,27 @@ import RobotiqVisual85Pad from
 './MeshLoaders/Robotiq2f85/visual/robotiq_arg2f_85_pad';
 import RobotiqVisualGripper from
 './MeshLoaders/Robotiq2f85/visual/robotiq_gripper_coupling';
+//---------------------------------------------- RobotiqWisc
+import RobotiqWiscVisualBaseLink from 
+'./MeshLoaders/RobotiqWisc/visual/robotiq_85_base_link';
+import RobotiqWiscVisualKnuckleLink from 
+'./MeshLoaders/RobotiqWisc/visual/robotiq_85_knuckle_link';
+import RobotiqWiscVisualFingerLink from 
+'./MeshLoaders/RobotiqWisc/visual/robotiq_85_finger_link';
+import RobotiqWiscVisualFingerTipLink from 
+'./MeshLoaders/RobotiqWisc/visual/robotiq_85_finger_tip_link';
+import RobotiqWiscVisualInnerKnuckleLink from 
+'./MeshLoaders/RobotiqWisc/visual/robotiq_85_inner_knuckle_link';
+import RobotiqWiscCollisionBaseLink from 
+'./MeshLoaders/RobotiqWisc/collision/robotiq_85_base_link';
+import RobotiqWiscCollisionKnuckleLink from 
+'./MeshLoaders/RobotiqWisc/collision/robotiq_85_knuckle_link';
+import RobotiqWiscCollisionFingerLink from 
+'./MeshLoaders/RobotiqWisc/collision/robotiq_85_finger_link';
+import RobotiqWiscCollisionFingerTipLink from 
+'./MeshLoaders/RobotiqWisc/collision/robotiq_85_finger_tip_link';
+import RobotiqWiscCollisionInnerKnuckleLink from 
+'./MeshLoaders/RobotiqWisc/collision/robotiq_85_inner_knuckle_link';
 //-------------------------------------------------Baxter
 import Pedestal_Link_Collision from
 './MeshLoaders/Baxter/base/Pedestal_link_collision';
@@ -217,6 +237,17 @@ const MeshLookupTable = {
   'package://robotiq/robotiq_2f_85_gripper_visualization/meshes/visual/robotiq_arg2f_85_outer_knuckle.dae': RobotiqVisual85OuterKnuckle, //huge
   'package://robotiq/robotiq_2f_85_gripper_visualization/meshes/visual/robotiq_arg2f_85_pad.dae': RobotiqVisual85Pad,// huge
   'package://robotiq/robotiq_2f_85_gripper_visualization/meshes/visual/robotiq_gripper_coupling.stl': RobotiqVisualGripper, //huge
+  //---------------------------------------------------------RobotiqWisc
+  'package://robotiq_85_description/meshes/visual/robotiq_85_base_link.dae':RobotiqWiscVisualBaseLink,
+  'package://robotiq_85_description/meshes/visual/robotiq_85_knuckle_link.dae':RobotiqWiscVisualKnuckleLink,
+  'package://robotiq_85_description/meshes/visual/robotiq_85_finger_link.dae':RobotiqWiscVisualFingerLink,
+  'package://robotiq_85_description/meshes/visual/robotiq_85_inner_knuckle_link.dae':RobotiqWiscVisualInnerKnuckleLink,
+  'package://robotiq_85_description/meshes/visual/robotiq_85_finger_tip_link.dae':RobotiqWiscVisualFingerTipLink,
+  'package://robotiq_85_description/meshes/collision/robotiq_85_base_link.stl':RobotiqWiscCollisionBaseLink,
+  'package://robotiq_85_description/meshes/collision/robotiq_85_knuckle_link.stl':RobotiqWiscCollisionKnuckleLink,
+  'package://robotiq_85_description/meshes/collision/robotiq_85_finger_link.stl':RobotiqWiscCollisionFingerLink,
+  'package://robotiq_85_description/meshes/collision/robotiq_85_inner_knuckle_link.stl':RobotiqWiscCollisionInnerKnuckleLink,
+  'package://robotiq_85_description/meshes/collision/robotiq_85_finger_tip_link.stl':RobotiqWiscCollisionFingerTipLink,
   //------------------------------------------------------------------Baxter
    'package://baxter_common/baxter_description/meshes/base/PEDESTAL.DAE':PEDESTAL,
    'package://baxter_common/baxter_description/meshes/base/pedestal_link_collision.DAE':Pedestal_Link_Collision,
@@ -232,29 +263,29 @@ const MeshLookupTable = {
    'package://baxter_common/baxter_description/meshes/upper_shoulder/S0.DAE':S0,
    'package://baxter_common/baxter_description/meshes/wrist/W2.DAE': W2,
    //---------------------------------------------------------------------Ur3
-    'package://universal_robot/ur_description/meshes/ur3/visual/base.dae' : Ur3Base,
-    'package://universal_robot/ur_description/meshes/ur3/visual/forearm.dae': Ur3Forearm,
-    'package://universal_robot/ur_description/meshes/ur3/visual/shoulder.dae' : Ur3Shoulder,
-    'package://universal_robot/ur_description/meshes/ur3/visual/upperarm.dae' : Ur3Upperarm,
-    'package://universal_robot/ur_description/meshes/ur3/visual/wrist1.dae' : Ur3Wrist1, //missing
-    'package://universal_robot/ur_description/meshes/ur3/visual/wrist2.dae' : Ur3Wrist2,
-    'package://universal_robot/ur_description/meshes/ur3/visual/wrist3.dae' : Ur3Wrist3,
+    'package://ur_description/meshes/ur3/visual/base.dae' : Ur3Base,
+    'package://ur_description/meshes/ur3/visual/forearm.dae': Ur3Forearm,
+    'package://ur_description/meshes/ur3/visual/shoulder.dae' : Ur3Shoulder,
+    'package://ur_description/meshes/ur3/visual/upperarm.dae' : Ur3Upperarm,
+    'package://ur_description/meshes/ur3/visual/wrist1.dae' : Ur3Wrist1, //missing
+    'package://ur_description/meshes/ur3/visual/wrist2.dae' : Ur3Wrist2,
+    'package://ur_description/meshes/ur3/visual/wrist3.dae' : Ur3Wrist3,
     //--------------------------------------------------------------------Ur5
-    'package://universal_robot/ur_description/meshes/ur5/visual/base.dae' : Ur5Base,
-    'package://universal_robot/ur_description/meshes/ur5/visual/forearm.dae': Ur5Forearm,
-    'package://universal_robot/ur_description/meshes/ur5/visual/shoulder.dae' : Ur5Shoulder,
-    'package://universal_robot/ur_description/meshes/ur5/visual/upperarm.dae' : Ur5Upperarm,
-    'package://universal_robot/ur_description/meshes/ur5/visual/wrist1.dae' : Ur5Wrist1,
-    'package://universal_robot/ur_description/meshes/ur3/visual/wrist2.dae' : Ur5Wrist2,
-    'package://universal_robot/ur_description/meshes/ur3/visual/wrist3.dae' : Ur5Wrist3,
+    'package://ur_description/meshes/ur5/visual/base.dae' : Ur5Base,
+    'package://ur_description/meshes/ur5/visual/forearm.dae': Ur5Forearm,
+    'package://ur_description/meshes/ur5/visual/shoulder.dae' : Ur5Shoulder,
+    'package://ur_description/meshes/ur5/visual/upperarm.dae' : Ur5Upperarm,
+    'package://ur_description/meshes/ur5/visual/wrist1.dae' : Ur5Wrist1,
+    'package://ur_description/meshes/ur3/visual/wrist2.dae' : Ur5Wrist2,
+    'package://ur_description/meshes/ur3/visual/wrist3.dae' : Ur5Wrist3,
     //--------------------------------------------------------------------Ur10
-     'package://universal_robot/ur_description/meshes/ur10/visual/base.dae' : Ur10Base,
-     'package://universal_robot/ur_description/meshes/ur10/visual/forearm.dae': Ur10Forearm,
-     'package://universal_robot/ur_description/meshes/ur10/visual/shoulder.dae' : Ur10Shoulder,
-     'package://universal_robot/ur_description/meshes/ur10/visual/upperarm.dae' : Ur10Upperarm,
-     'package://universal_robot/ur_description/meshes/ur10/visual/wrist1.dae' : Ur10Wrist1,
-     'package://universal_robot/ur_description/meshes/ur10/visual/wrist2.dae' : Ur10Wrist2,
-     'package://universal_robot/ur_description/meshes/ur10/visual/wrist3.dae' : Ur10Wrist3,
+     'package://ur_description/meshes/ur10/visual/base.dae' : Ur10Base,
+     'package://ur_description/meshes/ur10/visual/forearm.dae': Ur10Forearm,
+     'package://ur_description/meshes/ur10/visual/shoulder.dae' : Ur10Shoulder,
+     'package://ur_description/meshes/ur10/visual/upperarm.dae' : Ur10Upperarm,
+     'package://ur_description/meshes/ur10/visual/wrist1.dae' : Ur10Wrist1,
+     'package://ur_description/meshes/ur10/visual/wrist2.dae' : Ur10Wrist2,
+     'package://ur_description/meshes/ur10/visual/wrist3.dae' : Ur10Wrist3,
      //-------------------------------------------------------------------Other
      'package://app/meshes/3DBenchy.stl': Benchy,
      'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/MK2-Printer/MK2-Printer.stl':MK2Printer,
