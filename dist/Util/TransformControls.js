@@ -21,6 +21,9 @@ var _SceneStore = _interopRequireDefault(require("../SceneStore"));
 
 var _lodash = _interopRequireDefault(require("lodash.pick"));
 
+var _excluded = ["children"],
+    _excluded2 = ["camera", "itemKey", "highlightColor"];
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -47,14 +50,14 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 
 var TransformControls = function TransformControls(_ref) {
   var children = _ref.children,
-      props = _objectWithoutProperties(_ref, ["children"]);
+      props = _objectWithoutProperties(_ref, _excluded);
 
   var transformOnlyPropNames = ['enabled', 'axis', 'mode', 'translationSnap', 'rotationSnap', 'scaleSnap', 'space', 'size', 'showX', 'showY', 'showZ'];
 
   var camera = props.camera,
       itemKey = props.itemKey,
       highlightColor = props.highlightColor,
-      rest = _objectWithoutProperties(props, ["camera", "itemKey", "highlightColor"]);
+      rest = _objectWithoutProperties(props, _excluded2);
 
   var transforms = (0, _SceneStore.default)((0, _react.useCallback)(function (state) {
     var transforms = [];
