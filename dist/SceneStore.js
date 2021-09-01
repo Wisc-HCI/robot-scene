@@ -11,8 +11,6 @@ var _immer = _interopRequireDefault(require("immer"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var immer = function immer(config) {
   return function (set, get, api) {
     return config(function (fn) {
@@ -22,9 +20,7 @@ var immer = function immer(config) {
 };
 
 var store = function store(set, get) {
-  var _ref;
-
-  return _ref = {
+  return {
     items: {},
     lines: {},
     tfs: {},
@@ -157,7 +153,7 @@ var store = function store(set, get) {
     },
     setItemColor: function setItemColor(key, color) {
       return set(function (state) {
-        state.items[key].scale = color;
+        state.items[key].color = color;
       });
     },
     setItemHighlighted: function setItemHighlighted(key, value) {
@@ -206,73 +202,79 @@ var store = function store(set, get) {
         state.lines[key].vertices.push(vertex);
       });
     },
-    removeLineVertex: function removeLineVertex(key) {
-      return set(function (state) {
-        state.lines[key].vertices.pop();
-      });
-    },
     setLineVertex: function setLineVertex(key, index, vertex) {
       return set(function (state) {
         state.lines[key].vertices[index] = vertex;
       });
+    },
+    removeLineVertex: function removeLineVertex(key, index) {
+      return set(function (state) {
+        state.lines[key].vertices.splice(index, 1);
+      });
+    },
+    // TF mutation
+    setTfTranslation: function setTfTranslation(key, translation) {
+      return set(function (state) {
+        state.tfs[key].translation = translation;
+      });
+    },
+    setTfRotation: function setTfRotation(key, rotation) {
+      return set(function (state) {
+        state.tfs[key].rotation = rotation;
+      });
+    },
+    // Hull mutation
+    setHullName: function setHullName(key, name) {
+      return set(function (state) {
+        state.hulls[key].name = name;
+      });
+    },
+    setHullVertices: function setHullVertices(key, vertices) {
+      return set(function (state) {
+        state.hulls[key].vertices = vertices;
+      });
+    },
+    addHullVertex: function addHullVertex(key, vertex) {
+      return set(function (state) {
+        state.hulls[key].vertices.push(vertex);
+      });
+    },
+    setHullVertex: function setHullVertex(key, index, vertex) {
+      return set(function (state) {
+        state.hulls[key].vertices[index] = vertex;
+      });
+    },
+    removeHullVertex: function removeHullVertex(key, index) {
+      return set(function (state) {
+        state.hulls[key].vertices.splice(index, 1);
+      });
+    },
+    setHullColor: function setHullColor(key, color) {
+      return set(function (state) {
+        state.hulls[key].scale = color;
+      });
+    },
+    setHullHighlighted: function setHullHighlighted(key, value) {
+      return set(function (state) {
+        state.hulls[key].highlighted = value;
+      });
+    },
+    setHullOnClick: function setHullOnClick(key, fn) {
+      return set(function (state) {
+        state.hulls[key].onClick = fn;
+      });
+    },
+    setHullOnPointerOver: function setHullOnPointerOver(key, fn) {
+      return set(function (state) {
+        state.hulls[key].onPointerOver = fn;
+      });
+    },
+    setHullOnPointerOut: function setHullOnPointerOut(key, fn) {
+      return set(function (state) {
+        state.hulls[key].onPointerOut = fn;
+      });
     }
-  }, _defineProperty(_ref, "removeLineVertex", function removeLineVertex(key, index) {
-    return set(function (state) {
-      state.lines[key].vertices.splice(index, 1);
-    });
-  }), _defineProperty(_ref, "setTfTranslation", function setTfTranslation(key, translation) {
-    return set(function (state) {
-      state.tfs[key].translation = translation;
-    });
-  }), _defineProperty(_ref, "setTfRotation", function setTfRotation(key, rotation) {
-    return set(function (state) {
-      state.tfs[key].rotation = rotation;
-    });
-  }), _defineProperty(_ref, "setHullName", function setHullName(key, name) {
-    return set(function (state) {
-      state.hulls[key].name = name;
-    });
-  }), _defineProperty(_ref, "setHullVertices", function setHullVertices(key, vertices) {
-    return set(function (state) {
-      state.hulls[key].vertices = vertices;
-    });
-  }), _defineProperty(_ref, "addHullVertex", function addHullVertex(key, vertex) {
-    return set(function (state) {
-      state.hulls[key].vertices.push(vertex);
-    });
-  }), _defineProperty(_ref, "removeHullVertex", function removeHullVertex(key) {
-    return set(function (state) {
-      state.hulls[key].vertices.pop();
-    });
-  }), _defineProperty(_ref, "setHullVertex", function setHullVertex(key, index, vertex) {
-    return set(function (state) {
-      state.hulls[key].vertices[index] = vertex;
-    });
-  }), _defineProperty(_ref, "removeHullVertex", function removeHullVertex(key, index) {
-    return set(function (state) {
-      state.hulls[key].vertices.splice(index, 1);
-    });
-  }), _defineProperty(_ref, "setHullColor", function setHullColor(key, color) {
-    return set(function (state) {
-      state.hulls[key].scale = color;
-    });
-  }), _defineProperty(_ref, "setHullHighlighted", function setHullHighlighted(key, value) {
-    return set(function (state) {
-      state.hulls[key].highlighted = value;
-    });
-  }), _defineProperty(_ref, "setHullOnClick", function setHullOnClick(key, fn) {
-    return set(function (state) {
-      state.hulls[key].onClick = fn;
-    });
-  }), _defineProperty(_ref, "setHullOnPointerOver", function setHullOnPointerOver(key, fn) {
-    return set(function (state) {
-      state.hulls[key].onPointerOver = fn;
-    });
-  }), _defineProperty(_ref, "setHullOnPointerOut", function setHullOnPointerOut(key, fn) {
-    return set(function (state) {
-      state.hulls[key].onPointerOut = fn;
-    });
-  }), _ref;
+  };
 };
 
 var useSceneStore = (0, _zustand.default)(immer(store));

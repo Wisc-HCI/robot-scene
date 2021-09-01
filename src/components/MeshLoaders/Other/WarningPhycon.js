@@ -8,8 +8,15 @@ import WarningPhycon from '../../Meshes/Other/WarningPhycon.glb';
 
 export default function Model(props) {
 
-  const { nodes, materials } = useGLTF(WarningPhycon);
-  return [{type:'raw', geometry:nodes.WarningPhycon.geometry, material:nodes.WarningPhycon.material}]
+  const { nodes } = useGLTF(WarningPhycon);
+  return [ {
+    type:'group',
+    scale: [0.005,0.005,0.005],
+    position: [-1.5,-0.60,0],
+    children: [
+      { type: 'raw', geometry: nodes.WarningPhycon.geometry, material: nodes.WarningPhycon.material }
+    ]}
+  ]
 
 }
 

@@ -162,10 +162,11 @@ import OpenWaypointMarker from './MeshLoaders/Other/OpenWaypointMarker';
 import Pedestal from './MeshLoaders/Other/Pedestal';
 import Table from './MeshLoaders/Other/Table';
 import WarningPhycon from './MeshLoaders/Other/WarningPhycon';
-
-
-
-
+import Tag from './MeshLoaders/Other/Tag';
+import Flag from './MeshLoaders/Other/Flag';
+import Blade from './MeshLoaders/Other/Blade';
+import HandleL from './MeshLoaders/Other/HandleL';
+import HandleR from './MeshLoaders/Other/HandleR';
 
 import { Sphere, Cube, Cylinder, Arrow } from './Util/StandardMeshes';
 
@@ -175,6 +176,13 @@ const MeshLookupTable = {
   'cylinder':Cylinder,
   'arrow':Arrow,
   'flatarrow':FlatArrow,
+  'warning':WarningPhycon,
+  'info':InfoPhycon,
+  'tag':Tag,
+  'flag':Flag,
+  'blade':Blade,
+  'handle_l':HandleL,
+  'handle_r':HandleR,
   'package://nao_meshes/meshes/V40/HeadPitch.dae': HeadPitch,
   'package://nao_meshes/meshes/V40/HeadYaw.dae': HeadYaw,
   'package://nao_meshes/meshes/V40/LAnklePitch.dae': LAnklePitch,
@@ -299,26 +307,6 @@ const MeshLookupTable = {
      //'package://app/meshes/InfoPhycon.stl': InfoPhycon, // not showing
      'package://app/meshes/LocationMarker.stl': LocationMarker,
      'package://app/meshes/OpenWaypointMarker.stl': OpenWaypointMarker, //
-     //'package://app/meshes/WarningPhycon.stl': WarningPhycon // not showing
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 const MeshLookup = (path) => MeshLookupTable[path]();

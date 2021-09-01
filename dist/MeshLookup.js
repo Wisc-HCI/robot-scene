@@ -241,6 +241,16 @@ var _Table = _interopRequireDefault(require("./MeshLoaders/Other/Table"));
 
 var _WarningPhycon = _interopRequireDefault(require("./MeshLoaders/Other/WarningPhycon"));
 
+var _Tag = _interopRequireDefault(require("./MeshLoaders/Other/Tag"));
+
+var _Flag = _interopRequireDefault(require("./MeshLoaders/Other/Flag"));
+
+var _Blade = _interopRequireDefault(require("./MeshLoaders/Other/Blade"));
+
+var _HandleL = _interopRequireDefault(require("./MeshLoaders/Other/HandleL"));
+
+var _HandleR = _interopRequireDefault(require("./MeshLoaders/Other/HandleR"));
+
 var _StandardMeshes = require("./Util/StandardMeshes");
 
 var _MeshLookupTable;
@@ -255,6 +265,13 @@ var MeshLookupTable = (_MeshLookupTable = {
   'cylinder': _StandardMeshes.Cylinder,
   'arrow': _StandardMeshes.Arrow,
   'flatarrow': _Arrow.default,
+  'warning': _WarningPhycon.default,
+  'info': _InfoPhycon.default,
+  'tag': _Tag.default,
+  'flag': _Flag.default,
+  'blade': _Blade.default,
+  'handle_l': _HandleL.default,
+  'handle_r': _HandleR.default,
   'package://nao_meshes/meshes/V40/HeadPitch.dae': _HeadPitch.default,
   'package://nao_meshes/meshes/V40/HeadYaw.dae': _HeadYaw.default,
   'package://nao_meshes/meshes/V40/LAnklePitch.dae': _LAnklePitch.default,

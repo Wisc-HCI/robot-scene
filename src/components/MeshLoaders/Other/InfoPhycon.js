@@ -8,10 +8,15 @@ import InfoPhycon from '../../Meshes/Other/InfoPhycon.glb';
 
 export default function Model(props) {
 
-  const { nodes, materials } = useGLTF(InfoPhycon)
-  return [
-{type:'raw', geometry:nodes.InfoPhycon.geometry, material:nodes.InfoPhycon.material}
-]
+  const { nodes } = useGLTF(InfoPhycon)
+  return [ {
+    type:'group',
+    scale: [0.005,0.005,0.005],
+    position: [-1.25,1.25,0],
+    children: [
+      { type: 'raw', geometry: nodes.InfoPhycon.geometry, material: nodes.InfoPhycon.material }
+    ]}
+  ]
 }
 
 useGLTF.preload(InfoPhycon)
