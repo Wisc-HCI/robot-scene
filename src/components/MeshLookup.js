@@ -167,6 +167,14 @@ import Flag from './MeshLoaders/Other/Flag';
 import Blade from './MeshLoaders/Other/Blade';
 import HandleL from './MeshLoaders/Other/HandleL';
 import HandleR from './MeshLoaders/Other/HandleR';
+import Knife from './MeshLoaders/Other/Knife';
+import Conveyor from './MeshLoaders/Other/Conveyor';
+import TransportJig from './MeshLoaders/Other/TransportJig';
+import AssemblyJig from './MeshLoaders/Other/AssemblyJig';
+import BladeWithTransportJig from './MeshLoaders/Other/BladeWithTransportJig';
+import KnifeWithTransportJig from './MeshLoaders/Other/KnifeWithTransportJig';
+import ConveyorDispatcher from './MeshLoaders/Other/ConveyorDispatcher';
+import ConveyorReceiver from './MeshLoaders/Other/ConveyorReceiver';
 
 import { Sphere, Cube, Cylinder, Arrow } from './Util/StandardMeshes';
 
@@ -181,8 +189,16 @@ const MeshLookupTable = {
   'tag':Tag,
   'flag':Flag,
   'blade':Blade,
+  'knife':Knife,
   'handle_l':HandleL,
   'handle_r':HandleR,
+  'conveyor':Conveyor,
+  'transport_jig':TransportJig,
+  'assembly_jig':AssemblyJig,
+  'blade_with_transport_jig':BladeWithTransportJig,
+  'knife_with_transport_jig':KnifeWithTransportJig,
+  'conveyor_dispatcher':ConveyorDispatcher,
+  'conveyor_receiver':ConveyorReceiver,
   'package://nao_meshes/meshes/V40/HeadPitch.dae': HeadPitch,
   'package://nao_meshes/meshes/V40/HeadYaw.dae': HeadYaw,
   'package://nao_meshes/meshes/V40/LAnklePitch.dae': LAnklePitch,

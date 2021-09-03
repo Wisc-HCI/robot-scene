@@ -44,6 +44,7 @@ const store = (set,get) => ({
   setItemOnMove: (key, fn) => set(state => {state.items[key].onMove = fn}),
   // Line mutation
   setLineName: (key, name) => set(state => {state.lines[key].name = name}),
+  setLineWidth: (key, width) => set(state => {state.lines[key].width = width}),
   setLineVertices: (key, vertices) => set(state => {state.items.vertices = vertices}),
   addLineVertex: (key, vertex) => set(state => {state.lines[key].vertices.push(vertex)}),
   setLineVertex: (key, index, vertex) => set(state => {state.lines[key].vertices[index] = vertex}),

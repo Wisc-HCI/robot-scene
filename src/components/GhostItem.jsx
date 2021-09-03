@@ -23,8 +23,10 @@ const GhostItem = forwardRef(({itemKey,highlightColor},ref) => {
 
     
     return (
-      <group ref={ref}>
-        {ghostGroup}
+      <group ref={ref} up={[0,0,1]}>
+        <group rotation={[Math.PI/2,0,0]}>
+          {ghostGroup}
+        </group>
       </group>
     )
 })

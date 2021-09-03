@@ -25,6 +25,7 @@ export default function Scene(props) {
         shadows
         style={{ background: backgroundColor ? backgroundColor : "#d0d0d0" }}
         resize={{ polyfill: ResizeObserver }}
+        onPointerMissed={props.onPointerMissed ? props.onPointerMissed : ()=>{}}
       >
         <Suspense fallback={<Loading />}>
           <Content {...props} />
