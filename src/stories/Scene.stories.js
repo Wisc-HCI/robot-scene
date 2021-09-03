@@ -167,6 +167,7 @@ RandomShapes.args = {
     planeColor: '#a8a8a8',
     highlightColor: '#ffffff',
     plane: -0.75,
+    fov: 60,
     onPointerMissed: () => console.log('Missed Click')
 }
 export const EvD = Template.bind({});
@@ -662,6 +663,7 @@ EvD.args = {
     planeColor: '#141414',
     highlightColor: '#ffffff',
     plane: -0.75,
+    fov: 60,
     onPointerMissed: () => console.log('Missed Click')
 }
 export const Movement = Template.bind({});
@@ -755,6 +757,7 @@ Movement.args = {
     planeColor: '#a8a8a8',
     highlightColor: '#ffffff',
     plane: -0.75,
+    fov: 60,
     onPointerMissed: () => console.log('Missed Click')
 }
 
@@ -810,6 +813,7 @@ MeshDebugging.args = {
     planeColor: '#a8a8a8',
     highlightColor: '#ffffff',
     plane: -0.75,
+    fov: 60,
     onPointerMissed: () => console.log('Missed Click')
 }
 

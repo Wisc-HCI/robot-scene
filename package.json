@@ -1,6 +1,6 @@
 {
   "name": "robot-scene",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "main": "dist/index.js",
   "private": false,
   "files": [

@@ -106,11 +106,14 @@ function Content(props) {
       backgroundColor = props.backgroundColor,
       planeColor = props.planeColor,
       highlightColor = props.highlightColor,
-      plane = props.plane;
+      plane = props.plane,
+      fov = props.fov;
   var camera = (0, _fiber.useThree)(function (state) {
     return state.camera;
   });
   camera.up.set(0, 0, 1);
+  camera.fov = fov ? fov : 60;
+  camera.updateProjectionMatrix();
 
   var _useSceneStore = (0, _SceneStore.default)(function (state) {
     var reducedTfs = Object.entries(state.tfs).map(function (pair) {

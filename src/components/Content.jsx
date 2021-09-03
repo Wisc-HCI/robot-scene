@@ -43,11 +43,13 @@ export default function Content(props) {
 
   const { displayTfs, displayGrid, isPolar, 
           backgroundColor, planeColor, 
-          highlightColor, plane } = props;
+          highlightColor, plane, fov } = props;
 
   const camera = useThree((state) => state.camera);
 
   camera.up.set(0,0,1);
+  camera.fov = fov ? fov : 60;
+  camera.updateProjectionMatrix();
 
   const [tfs, items, lines, hulls] = useSceneStore(state => {
 
