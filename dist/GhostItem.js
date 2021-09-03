@@ -57,8 +57,11 @@ var GhostItem = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
     shape: shape
   }, highlightColor);
   return /*#__PURE__*/_react.default.createElement("group", {
-    ref: ref
-  }, ghostGroup);
+    ref: ref,
+    up: [0, 0, 1]
+  }, /*#__PURE__*/_react.default.createElement("group", {
+    rotation: [Math.PI / 2, 0, 0]
+  }, ghostGroup));
 });
 var _default = GhostItem;
 exports.default = _default;

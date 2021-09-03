@@ -52,7 +52,8 @@ function Scene(props) {
     },
     resize: {
       polyfill: _resizeObserver.ResizeObserver
-    }
+    },
+    onPointerMissed: props.onPointerMissed ? props.onPointerMissed : function () {}
   }, /*#__PURE__*/_react.default.createElement(_react.Suspense, {
     fallback: /*#__PURE__*/_react.default.createElement(Loading, null)
   }, /*#__PURE__*/_react.default.createElement(_Content.default, props)));

@@ -7,25 +7,25 @@ exports.default = Model;
 
 var _drei = require("@react-three/drei");
 
-var _Blade = _interopRequireDefault(require("../../Meshes/Other/Blade.glb"));
+var _AssemblyJig = _interopRequireDefault(require("../../Meshes/Other/AssemblyJig.glb"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Model(props) {
-  var _useGLTF = (0, _drei.useGLTF)(_Blade.default),
+  var _useGLTF = (0, _drei.useGLTF)(_AssemblyJig.default),
       nodes = _useGLTF.nodes,
       materials = _useGLTF.materials;
 
   return [{
     type: 'group',
-    rotation: [Math.PI, 0, 0],
+    rotation: [-Math.PI / 2, 0, 0],
     children: [{
       type: 'raw',
-      geometry: nodes.Blade.geometry,
-      material: materials['Blade.material'],
+      geometry: nodes.AssemblyJig.geometry,
+      material: materials.AssemblyJigMaterial,
       scale: [5, 5, 5]
     }]
   }];
 }
 
-_drei.useGLTF.preload(_Blade.default);
+_drei.useGLTF.preload(_AssemblyJig.default);

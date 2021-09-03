@@ -251,6 +251,22 @@ var _HandleL = _interopRequireDefault(require("./MeshLoaders/Other/HandleL"));
 
 var _HandleR = _interopRequireDefault(require("./MeshLoaders/Other/HandleR"));
 
+var _Knife = _interopRequireDefault(require("./MeshLoaders/Other/Knife"));
+
+var _Conveyor = _interopRequireDefault(require("./MeshLoaders/Other/Conveyor"));
+
+var _TransportJig = _interopRequireDefault(require("./MeshLoaders/Other/TransportJig"));
+
+var _AssemblyJig = _interopRequireDefault(require("./MeshLoaders/Other/AssemblyJig"));
+
+var _BladeWithTransportJig = _interopRequireDefault(require("./MeshLoaders/Other/BladeWithTransportJig"));
+
+var _KnifeWithTransportJig = _interopRequireDefault(require("./MeshLoaders/Other/KnifeWithTransportJig"));
+
+var _ConveyorDispatcher = _interopRequireDefault(require("./MeshLoaders/Other/ConveyorDispatcher"));
+
+var _ConveyorReceiver = _interopRequireDefault(require("./MeshLoaders/Other/ConveyorReceiver"));
+
 var _StandardMeshes = require("./Util/StandardMeshes");
 
 var _MeshLookupTable;
@@ -270,8 +286,16 @@ var MeshLookupTable = (_MeshLookupTable = {
   'tag': _Tag.default,
   'flag': _Flag.default,
   'blade': _Blade.default,
+  'knife': _Knife.default,
   'handle_l': _HandleL.default,
   'handle_r': _HandleR.default,
+  'conveyor': _Conveyor.default,
+  'transport_jig': _TransportJig.default,
+  'assembly_jig': _AssemblyJig.default,
+  'blade_with_transport_jig': _BladeWithTransportJig.default,
+  'knife_with_transport_jig': _KnifeWithTransportJig.default,
+  'conveyor_dispatcher': _ConveyorDispatcher.default,
+  'conveyor_receiver': _ConveyorReceiver.default,
   'package://nao_meshes/meshes/V40/HeadPitch.dae': _HeadPitch.default,
   'package://nao_meshes/meshes/V40/HeadYaw.dae': _HeadYaw.default,
   'package://nao_meshes/meshes/V40/LAnklePitch.dae': _LAnklePitch.default,

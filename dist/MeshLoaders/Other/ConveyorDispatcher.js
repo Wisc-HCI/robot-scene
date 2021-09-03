@@ -7,25 +7,23 @@ exports.default = Model;
 
 var _drei = require("@react-three/drei");
 
-var _Blade = _interopRequireDefault(require("../../Meshes/Other/Blade.glb"));
+var _ConveyorDispatcher = _interopRequireDefault(require("../../Meshes/Other/ConveyorDispatcher.glb"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Model(props) {
-  var _useGLTF = (0, _drei.useGLTF)(_Blade.default),
+  var _useGLTF = (0, _drei.useGLTF)(_ConveyorDispatcher.default),
       nodes = _useGLTF.nodes,
       materials = _useGLTF.materials;
 
   return [{
     type: 'group',
-    rotation: [Math.PI, 0, 0],
     children: [{
       type: 'raw',
-      geometry: nodes.Blade.geometry,
-      material: materials['Blade.material'],
-      scale: [5, 5, 5]
+      geometry: nodes.ConveyorDispatcher.geometry,
+      material: materials.ConveyorAddonMaterial
     }]
   }];
 }
 
-_drei.useGLTF.preload(_Blade.default);
+_drei.useGLTF.preload(_ConveyorDispatcher.default);

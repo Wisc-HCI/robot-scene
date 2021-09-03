@@ -192,6 +192,11 @@ var store = function store(set, get) {
         state.lines[key].name = name;
       });
     },
+    setLineWidth: function setLineWidth(key, width) {
+      return set(function (state) {
+        state.lines[key].width = width;
+      });
+    },
     setLineVertices: function setLineVertices(key, vertices) {
       return set(function (state) {
         state.items.vertices = vertices;
