@@ -23,8 +23,6 @@ var _Hull = _interopRequireDefault(require("./Hull"));
 
 var _Line = _interopRequireDefault(require("./Line"));
 
-var _SceneStore = _interopRequireDefault(require("./SceneStore"));
-
 var _Light = require("./Util/Light");
 
 var _MaterialMaker = require("./Util/MaterialMaker");
@@ -61,30 +59,33 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, allLines, allHulls) {
+var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, allLines, allHulls, store) {
   var TFComponent = activeTf === 'world' ? _TF.WorldTF : _TF.default;
   return /*#__PURE__*/_react.default.createElement(TFComponent, {
     key: activeTf,
     tfKey: activeTf,
-    displayTfs: displayTfs
+    displayTfs: displayTfs,
+    store: store
   }, allTfs.filter(function (v) {
     return v.frame === activeTf || activeTf === 'world' && !v.frame;
   }).map(function (tf) {
-    return renderTree(tf.tfKey, displayTfs, allTfs, allItems, allLines, allHulls);
+    return renderTree(tf.tfKey, displayTfs, allTfs, allItems, allLines, allHulls, store);
   }), allItems.filter(function (v) {
     return v.frame === activeTf || activeTf === 'world' && !v.frame;
   }).map(function (item) {
     return /*#__PURE__*/_react.default.createElement(_Item.default, {
       key: item.itemKey,
       itemKey: item.itemKey,
-      node: item.node
+      node: item.node,
+      store: store
     });
   }), allLines.filter(function (v) {
     return v.frame === activeTf || activeTf === 'world' && !v.frame;
   }).map(function (line) {
     return /*#__PURE__*/_react.default.createElement(_Line.default, {
       key: line.lineKey,
-      lineKey: line.lineKey
+      lineKey: line.lineKey,
+      store: store
     });
   }), allHulls.filter(function (v) {
     return v.frame === activeTf || activeTf === 'world' && !v.frame;
@@ -92,7 +93,8 @@ var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, all
     return /*#__PURE__*/_react.default.createElement(_Hull.default, {
       key: hull.hullKey,
       hullKey: hull.hullKey,
-      node: hull.node
+      node: hull.node,
+      store: store
     });
   }));
 };
@@ -107,7 +109,8 @@ function Content(props) {
       planeColor = props.planeColor,
       highlightColor = props.highlightColor,
       plane = props.plane,
-      fov = props.fov;
+      fov = props.fov,
+      store = props.store;
   var camera = (0, _fiber.useThree)(function (state) {
     return state.camera;
   });
@@ -115,7 +118,7 @@ function Content(props) {
   camera.fov = fov ? fov : 60;
   camera.updateProjectionMatrix();
 
-  var _useSceneStore = (0, _SceneStore.default)(function (state) {
+  var _store = store(function (state) {
     var reducedTfs = Object.entries(state.tfs).map(function (pair) {
       var _pair = _slicedToArray(pair, 2),
           tfKey = _pair[0],
@@ -176,11 +179,11 @@ function Content(props) {
     });
     return [reducedTfs, reducedItems, reducedLines, reducedHulls];
   }),
-      _useSceneStore2 = _slicedToArray(_useSceneStore, 4),
-      tfs = _useSceneStore2[0],
-      items = _useSceneStore2[1],
-      lines = _useSceneStore2[2],
-      hulls = _useSceneStore2[3];
+      _store2 = _slicedToArray(_store, 4),
+      tfs = _store2[0],
+      items = _store2[1],
+      lines = _store2[2],
+      hulls = _store2[3];
 
   var highlightedItemRefs = [].concat.apply([], items.filter(function (item) {
     return item.highlighted;
@@ -234,7 +237,7 @@ function Content(props) {
     scale: 1000,
     position: [0, 0, plane ? plane - 0.01 : -0.01],
     material: _MaterialMaker.MaterialMaker.apply(void 0, planeRGBA)
-  }), renderTree('world', displayTfs, tfs, items, lines, hulls), /*#__PURE__*/_react.default.createElement("group", {
+  }), renderTree('world', displayTfs, tfs, items, lines, hulls, store), /*#__PURE__*/_react.default.createElement("group", {
     position: [0, 0, plane ? plane : 0],
     rotation: [Math.PI / 2, 0, 0],
     up: [0, 0, 1]
@@ -257,7 +260,8 @@ function Content(props) {
           orbitControls.current.enabled = false;
         }
       },
-      onMove: movableItem.onMove
+      onMove: movableItem.onMove,
+      store: store
     });
   }), /*#__PURE__*/_react.default.createElement(_postprocessing.EffectComposer, {
     autoClear: false,

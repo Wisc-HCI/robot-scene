@@ -9,11 +9,7 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _SceneStore = _interopRequireDefault(require("./SceneStore"));
-
 var _MeshConvert = require("./Util/MeshConvert");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -33,18 +29,19 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var GhostItem = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
   var itemKey = _ref.itemKey,
-      highlightColor = _ref.highlightColor;
+      highlightColor = _ref.highlightColor,
+      store = _ref.store;
 
-  var _useSceneStore = (0, _SceneStore.default)((0, _react.useCallback)(function (state) {
+  var _store = store((0, _react.useCallback)(function (state) {
     var _state$items$itemKey, _state$items$itemKey2, _state$items$itemKey3, _state$items$itemKey4;
 
     return [(_state$items$itemKey = state.items[itemKey]) === null || _state$items$itemKey === void 0 ? void 0 : _state$items$itemKey.position, (_state$items$itemKey2 = state.items[itemKey]) === null || _state$items$itemKey2 === void 0 ? void 0 : _state$items$itemKey2.rotation, (_state$items$itemKey3 = state.items[itemKey]) === null || _state$items$itemKey3 === void 0 ? void 0 : _state$items$itemKey3.scale, (_state$items$itemKey4 = state.items[itemKey]) === null || _state$items$itemKey4 === void 0 ? void 0 : _state$items$itemKey4.shape];
   }, [itemKey])),
-      _useSceneStore2 = _slicedToArray(_useSceneStore, 4),
-      position = _useSceneStore2[0],
-      rotation = _useSceneStore2[1],
-      scale = _useSceneStore2[2],
-      shape = _useSceneStore2[3];
+      _store2 = _slicedToArray(_store, 4),
+      position = _store2[0],
+      rotation = _store2[1],
+      scale = _store2[2],
+      shape = _store2[3];
 
   (0, _react.useLayoutEffect)(function () {
     var _ref$current, _ref$current2, _ref$current3;

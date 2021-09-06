@@ -13,11 +13,7 @@ var _fiber = require("@react-three/fiber");
 
 var _drei = require("@react-three/drei");
 
-var _SceneStore = _interopRequireDefault(require("./SceneStore"));
-
 var _antd = require("antd");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -37,24 +33,26 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function Item(_ref) {
   var itemKey = _ref.itemKey,
-      node = _ref.node;
+      node = _ref.node,
+      store = _ref.store;
 
-  var _useSceneStore = (0, _SceneStore.default)((0, _react.useCallback)(function (state) {
+  var _store = store((0, _react.useCallback)(function (state) {
     var _state$items$itemKey, _state$items$itemKey2, _state$items$itemKey3, _state$items$itemKey4, _state$items$itemKey5;
 
     return [(_state$items$itemKey = state.items[itemKey]) === null || _state$items$itemKey === void 0 ? void 0 : _state$items$itemKey.name, (_state$items$itemKey2 = state.items[itemKey]) === null || _state$items$itemKey2 === void 0 ? void 0 : _state$items$itemKey2.showName, (_state$items$itemKey3 = state.items[itemKey]) === null || _state$items$itemKey3 === void 0 ? void 0 : _state$items$itemKey3.onClick, (_state$items$itemKey4 = state.items[itemKey]) === null || _state$items$itemKey4 === void 0 ? void 0 : _state$items$itemKey4.onPointerOver, (_state$items$itemKey5 = state.items[itemKey]) === null || _state$items$itemKey5 === void 0 ? void 0 : _state$items$itemKey5.onPointerOut];
   }, [itemKey])),
-      _useSceneStore2 = _slicedToArray(_useSceneStore, 5),
-      name = _useSceneStore2[0],
-      showName = _useSceneStore2[1],
-      onClick = _useSceneStore2[2],
-      onPointerOver = _useSceneStore2[3],
-      onPointerOut = _useSceneStore2[4];
+      _store2 = _slicedToArray(_store, 5),
+      name = _store2[0],
+      showName = _store2[1],
+      onClick = _store2[2],
+      onPointerOver = _store2[3],
+      onPointerOut = _store2[4];
 
   var ref = (0, _react.useRef)();
   (0, _fiber.useFrame)((0, _react.useCallback)(function () {
     // Outside of react rendering, adjust the positions of all tfs.
-    var item = _SceneStore.default.getState().items[itemKey];
+    var item = store.getState().items[itemKey];
+    console.log(item);
 
     if (ref.current) {
       ref.current.position.set(item.position.x, item.position.y, item.position.z);

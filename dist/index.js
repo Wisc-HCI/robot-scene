@@ -15,9 +15,17 @@ Object.defineProperty(exports, "useSceneStore", {
     return _SceneStore.default;
   }
 });
+Object.defineProperty(exports, "SceneSlice", {
+  enumerable: true,
+  get: function get() {
+    return _SceneSlice.SceneSlice;
+  }
+});
 
 var _Scene = _interopRequireDefault(require("./Scene"));
 
 var _SceneStore = _interopRequireDefault(require("./SceneStore"));
+
+var _SceneSlice = require("./SceneSlice");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

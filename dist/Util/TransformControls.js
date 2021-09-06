@@ -17,12 +17,10 @@ var _GhostItem = _interopRequireDefault(require("../GhostItem"));
 
 var _TransformControls = require("three/examples/jsm/controls/TransformControls");
 
-var _SceneStore = _interopRequireDefault(require("../SceneStore"));
-
 var _lodash = _interopRequireDefault(require("lodash.pick"));
 
 var _excluded = ["children"],
-    _excluded2 = ["camera", "itemKey", "highlightColor"];
+    _excluded2 = ["camera", "itemKey", "highlightColor", "store"];
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57,9 +55,10 @@ var TransformControls = function TransformControls(_ref) {
   var camera = props.camera,
       itemKey = props.itemKey,
       highlightColor = props.highlightColor,
+      store = props.store,
       rest = _objectWithoutProperties(props, _excluded2);
 
-  var transforms = (0, _SceneStore.default)((0, _react.useCallback)(function (state) {
+  var transforms = store((0, _react.useCallback)(function (state) {
     var transforms = [];
     var tfKey = state.items[itemKey].frame;
 
@@ -157,11 +156,13 @@ var TransformControls = function TransformControls(_ref) {
     dispose: undefined,
     object: controls
   }, transformProps)), /*#__PURE__*/_react.default.createElement(_TF.GhostTF, {
-    transforms: transforms
+    transforms: transforms,
+    store: store
   }, /*#__PURE__*/_react.default.createElement(_GhostItem.default, {
     ref: target,
     highlightColor: highlightColor,
-    itemKey: itemKey
+    itemKey: itemKey,
+    store: store
   }))) : null;
 };
 
