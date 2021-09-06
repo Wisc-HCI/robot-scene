@@ -1,19 +1,19 @@
 import React, { useCallback, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import useSceneStore from "./SceneStore";
+// import store from "./SceneStore";
 import { ARROW_GEOM } from "./Util/StandardMeshes";
 import { MaterialMaker } from './Util/MaterialMaker';
 import { Quaternion } from 'three';
 
 // const STANDARD_ROTATION = new Quaternion(0,0,1,0)
 
-export default function TF({ tfKey, displayTfs, children }) {
+export default function TF({ tfKey, displayTfs, children, store }) {
 
   const ref = useRef();
 
   useFrame(useCallback(() => {
     // Outside of react rendering, adjust the positions of all tfs.
-    const tf = useSceneStore.getState().tfs[tfKey];
+    const tf = store.getState().tfs[tfKey];
 
     if (ref.current) {
       // console.log(ref.current)
@@ -68,14 +68,14 @@ export function WorldTF({ displayTfs, children }) {
   );
 };
 
-export function GhostTF({ transforms, children }) {
+export function GhostTF({ transforms, children, store }) {
 
   if (transforms.length > 0) {
     const pos = [transforms[0].position.x,transforms[0].position.y,transforms[0].position.z];
     const rot = [transforms[0].rotation.x,transforms[0].rotation.y,transforms[0].rotation.z,transforms[0].rotation.w]
     return (
       <group position={pos} quaternion={rot} up={[0,0,1]}>
-        <GhostTF transforms={transforms.filter((_,i)=>i!==0)}>
+        <GhostTF transforms={transforms.filter((_,i)=>i!==0)} store={store}>
           {children}
         </GhostTF>
       </group>

@@ -6,7 +6,7 @@ import TF, {WorldTF} from "./TF";
 import Item from "./Item";
 import Hull from "./Hull";
 import Line from "./Line";
-import useSceneStore from './SceneStore';
+// import useSceneStore from './SceneStore';
 import { AmbientLight, DirectionalLight } from './Util/Light';
 import { MaterialMaker } from './Util/MaterialMaker';
 import { hexToRgb } from './Util/ColorConversion';
@@ -14,23 +14,23 @@ import { OrbitControls } from '@react-three/drei';
 import { TransformControls } from './Util/TransformControls';
 import { itemToGroupAndChildRefs, hullToGroupAndRef } from './Util/MeshConvert';
 
-const renderTree = (activeTf,displayTfs,allTfs,allItems,allLines,allHulls) => {
+const renderTree = (activeTf,displayTfs,allTfs,allItems,allLines,allHulls,store) => {
   
   const TFComponent = activeTf==='world' ? WorldTF : TF;
 
   return (
-    <TFComponent key={activeTf} tfKey={activeTf} displayTfs={displayTfs}>
+    <TFComponent key={activeTf} tfKey={activeTf} displayTfs={displayTfs} store={store}>
       {allTfs.filter(v=>v.frame===activeTf||(activeTf==='world'&&!v.frame)).map(tf=>(
-        renderTree(tf.tfKey,displayTfs,allTfs,allItems,allLines,allHulls)
+        renderTree(tf.tfKey,displayTfs,allTfs,allItems,allLines,allHulls,store)
       ))}
       {allItems.filter(v=>v.frame===activeTf||(activeTf==='world'&&!v.frame)).map(item=>(
-        <Item key={item.itemKey} itemKey={item.itemKey} node={item.node}/>
+        <Item key={item.itemKey} itemKey={item.itemKey} node={item.node} store={store}/>
       ))}
       {allLines.filter(v=>v.frame===activeTf||(activeTf==='world'&&!v.frame)).map(line=>(
-        <Line key={line.lineKey} lineKey={line.lineKey} />
+        <Line key={line.lineKey} lineKey={line.lineKey} store={store}/>
       ))}
       {allHulls.filter(v=>v.frame===activeTf||(activeTf==='world'&&!v.frame)).map(hull=>(
-        <Hull key={hull.hullKey} hullKey={hull.hullKey} node={hull.node}/>
+        <Hull key={hull.hullKey} hullKey={hull.hullKey} node={hull.node} store={store}/>
       ))}
     </TFComponent>
   )
@@ -43,7 +43,7 @@ export default function Content(props) {
 
   const { displayTfs, displayGrid, isPolar, 
           backgroundColor, planeColor, 
-          highlightColor, plane, fov } = props;
+          highlightColor, plane, fov, store } = props;
 
   const camera = useThree((state) => state.camera);
 
@@ -51,7 +51,7 @@ export default function Content(props) {
   camera.fov = fov ? fov : 60;
   camera.updateProjectionMatrix();
 
-  const [tfs, items, lines, hulls] = useSceneStore(state => {
+  const [tfs, items, lines, hulls] = store(state => {
 
     const reducedTfs = Object.entries(state.tfs).map(pair=>{
       const [tfKey, tf] = pair;
@@ -128,7 +128,7 @@ export default function Content(props) {
 
       <Circle receiveShadow scale={1000} position={[0, 0, plane ? plane-0.01 : -0.01]} material={MaterialMaker(...planeRGBA)}/>
       
-      {renderTree('world',displayTfs,tfs,items,lines,hulls)}
+      {renderTree('world',displayTfs,tfs,items,lines,hulls,store)}
       
       <group position={[0, 0, plane ? plane : 0]} rotation={[Math.PI/2,0,0]} up={[0,0,1]}>
         {displayGrid && (
@@ -149,6 +149,7 @@ export default function Content(props) {
             onDragEnd={() => {if (orbitControls.current) {orbitControls.current.enabled = true}}}
             onDragStart={() => {if (orbitControls.current) {orbitControls.current.enabled = false}}}
             onMove={movableItem.onMove}
+            store={store}
           />
         ))
       }

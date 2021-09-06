@@ -1,13 +1,12 @@
 import React, { useRef, useCallback } from 'react';
 import { useFrame } from "@react-three/fiber";
 import { Html } from '@react-three/drei';
-import useSceneStore from './SceneStore';
 import { Tag } from 'antd';
 
-export default function Item({itemKey, node}) {
+export default function Item({itemKey, node, store}) {
   
   const [ name, showName, onClick, onPointerOver, onPointerOut ] =
-    useSceneStore(useCallback(state=>([
+    store(useCallback(state=>([
       state.items[itemKey]?.name,
       state.items[itemKey]?.showName,
       state.items[itemKey]?.onClick,
@@ -15,12 +14,12 @@ export default function Item({itemKey, node}) {
       state.items[itemKey]?.onPointerOut
     ]), [itemKey]))
 
-    const ref = useRef()
+    const ref = useRef();
 
     useFrame(useCallback(() => {
       // Outside of react rendering, adjust the positions of all tfs.
-      const item = useSceneStore.getState().items[itemKey];
-      
+      const item = store.getState().items[itemKey];
+      console.log(item)
       if (ref.current) {
         ref.current.position.set(
           item.position.x, 

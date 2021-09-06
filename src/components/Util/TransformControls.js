@@ -3,7 +3,7 @@ import { useThree, } from '@react-three/fiber';
 import { GhostTF } from '../TF';
 import GhostItem from '../GhostItem';
 import { TransformControls as TransformControlsImpl } from 'three/examples/jsm/controls/TransformControls';
-import useSceneStore from '../SceneStore';
+// import useSceneStore from '../SceneStore';
 import pick from 'lodash.pick';
 
 export const TransformControls = ({ children, ...props }) => {
@@ -21,9 +21,9 @@ export const TransformControls = ({ children, ...props }) => {
     'showZ'
   ]
 
-  const { camera, itemKey, highlightColor, ...rest } = props;
+  const { camera, itemKey, highlightColor, store, ...rest } = props;
 
-  const transforms = useSceneStore(useCallback(state=>{
+  const transforms = store(useCallback(state=>{
     let transforms = [];
     let tfKey = state.items[itemKey].frame;
     while (tfKey && tfKey !== 'world') {
@@ -46,7 +46,7 @@ export const TransformControls = ({ children, ...props }) => {
   const defaultCamera = useThree(({ camera }) => camera)
   const invalidate = useThree(({ invalidate }) => invalidate)
 
-  const explCamera = camera || defaultCamera
+  const explCamera = camera || defaultCamera;
 
   const [controls] = useState(() => new TransformControlsImpl(explCamera, gl.domElement))
   const [transforming, setTransforming] = useState(false)
@@ -95,8 +95,8 @@ export const TransformControls = ({ children, ...props }) => {
   return controls ? (
     <>
       <primitive ref={ref} dispose={undefined} object={controls} {...transformProps} />
-      <GhostTF transforms={transforms}>
-        <GhostItem ref={target} highlightColor={highlightColor} itemKey={itemKey}/>
+      <GhostTF transforms={transforms} store={store}>
+        <GhostItem ref={target} highlightColor={highlightColor} itemKey={itemKey} store={store}/>
       </GhostTF>
     </>
   ) : null

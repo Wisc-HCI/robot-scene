@@ -18,7 +18,7 @@ export default function Scene(props) {
   // For the objects in props.content, render the objects.
   // Those should be in the suspense element.
 
-  const { backgroundColor } = props;
+  const { backgroundColor, store } = props;
 
   return (
       <Canvas
@@ -28,7 +28,7 @@ export default function Scene(props) {
         onPointerMissed={props.onPointerMissed ? props.onPointerMissed : ()=>{}}
       >
         <Suspense fallback={<Loading />}>
-          <Content {...props} />
+          <Content {...props} store={store}/>
         </Suspense>
 
       </Canvas>

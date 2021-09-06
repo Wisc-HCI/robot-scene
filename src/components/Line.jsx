@@ -1,10 +1,10 @@
 import React, {useCallback} from 'react';
 import { Line } from '@react-three/drei';
-import useSceneStore from './SceneStore';
+// import useSceneStore from './SceneStore';
 
 export default function SceneLine(props) {
-  const { lineKey } = props;
-  const {vertices, width} = useSceneStore(useCallback(state => ({
+  const { lineKey, store } = props;
+  const {vertices, width} = store(useCallback(state => ({
     vertices: state.lines[lineKey].vertices,
     width: state.lines[lineKey].width
   }),[lineKey]));

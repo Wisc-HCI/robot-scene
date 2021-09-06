@@ -1,11 +1,11 @@
 import React, { useCallback, useLayoutEffect, forwardRef } from 'react';
-import useSceneStore from './SceneStore';
+// import useSceneStore from './SceneStore';
 import {itemToGhost} from './Util/MeshConvert';
 
-const GhostItem = forwardRef(({itemKey,highlightColor},ref) => {
+const GhostItem = forwardRef(({itemKey,highlightColor,store},ref) => {
   
     const [ position, rotation, scale, shape ] =
-        useSceneStore(useCallback(state=>([
+        store(useCallback(state=>([
         state.items[itemKey]?.position,
         state.items[itemKey]?.rotation,
         state.items[itemKey]?.scale,

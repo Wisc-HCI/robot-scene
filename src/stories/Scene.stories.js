@@ -1,5 +1,4 @@
 import React, { useLayoutEffect } from 'react';
-
 import Scene from '../components/Scene';
 import useSceneStore from '../components/SceneStore';
 import { MeshLookupTable } from '../components/MeshLookup';
@@ -14,7 +13,7 @@ const Template = (args) => {
     useLayoutEffect(() => {
         useSceneStore.setState({ tfs, items, hulls, lines })
     }, [tfs, items, hulls, lines])
-    return <div style={{ height: 'calc(100vh - 2rem)', width: 'calc(100vw - 2rem)' }}><Scene {...otherArgs} /></div>
+    return <div style={{ height: 'calc(100vh - 2rem)', width: 'calc(100vw - 2rem)' }}><Scene {...otherArgs} store={useSceneStore}/></div>
 };
 
 export const RandomShapes = Template.bind({});
