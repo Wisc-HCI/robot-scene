@@ -2,7 +2,7 @@ import React, { createRef } from 'react';
 import { Vector3, BackSide, FrontSide } from 'three';
 import { ConvexGeometry } from 'three-stdlib';
 import { MeshLookup, MeshLookupTable } from '../MeshLookup';
-import { MaterialMaker, GhostMaterial } from './MaterialMaker';
+import { GhostMaterial } from './MaterialMaker';
 import { rgbToHex } from './ColorConversion';
 
 export const MeshConverter = (node, idx, materialOverride, opacity) => {
@@ -31,11 +31,13 @@ export const MeshConverter = (node, idx, materialOverride, opacity) => {
             >
               <meshLambertMaterial 
                 transparent
+                wireframe={materialOverride.wireframe}
                 attach='material'
                 opacity={opacity} 
                 color={rgbToHex(materialOverride)} 
                 side={BackSide}
               />
+              
             </mesh>
             <mesh
               key={`${idx}F`}
@@ -47,6 +49,7 @@ export const MeshConverter = (node, idx, materialOverride, opacity) => {
               <meshLambertMaterial 
                 transparent
                 attach='material'
+                wireframe={materialOverride.wireframe}
                 opacity={opacity} 
                 color={rgbToHex(materialOverride)} 
                 side={FrontSide}
@@ -67,6 +70,7 @@ export const MeshConverter = (node, idx, materialOverride, opacity) => {
             <meshLambertMaterial 
               attach='material'
               opacity={opacity} 
+              wireframe={materialOverride.wireframe}
               color={rgbToHex(materialOverride)}
             />
           </mesh>
@@ -114,7 +118,7 @@ export const GhostConverter = (node, idx, highlightColor) => {
 
 export const itemToGroupAndChildRefs = item => {
   const { color, shape } = item;
-  const materialOverride = color ? color : undefined;
+  const materialOverride = color ? {...color, wireframe: item.wireframe} : undefined;
   const opacity = color ? color.a : 1.0;
   let content = [];
 
@@ -150,7 +154,7 @@ export const itemToGhost = (item, highlightColor) => {
 }
 
 export const hullToGroupAndRef = hull => {
-  const { color, vertices, hullKey } = hull;
+  const { color, vertices, hullKey, wireframe } = hull;
   const ref = createRef();
 
   const geometry = new ConvexGeometry(vertices.map(v => new Vector3(v.x, v.y, v.z)));
@@ -167,6 +171,7 @@ export const hullToGroupAndRef = hull => {
         >
           <meshLambertMaterial 
             transparent
+            wireframe={wireframe}
             attach='material'
             opacity={color.a} 
             color={rgbToHex(color)} 
@@ -183,6 +188,7 @@ export const hullToGroupAndRef = hull => {
             transparent
             attach='material'
             opacity={color.a} 
+            wireframe={wireframe}
             color={rgbToHex(color)} 
             side={FrontSide}
           />
@@ -199,6 +205,7 @@ export const hullToGroupAndRef = hull => {
       >
         <meshLambertMaterial 
           transparent
+          wireframe={wireframe}
           attach='material'
           opacity={color.a} 
           color={rgbToHex(color)}

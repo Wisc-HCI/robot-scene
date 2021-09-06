@@ -169,12 +169,16 @@ import HandleL from './MeshLoaders/Other/HandleL';
 import HandleR from './MeshLoaders/Other/HandleR';
 import Knife from './MeshLoaders/Other/Knife';
 import Conveyor from './MeshLoaders/Other/Conveyor';
+import ConveyorCollision from './MeshLoaders/Other/ConveyorCollision';
 import TransportJig from './MeshLoaders/Other/TransportJig';
 import AssemblyJig from './MeshLoaders/Other/AssemblyJig';
+import AssemblyJigCollision from './MeshLoaders/Other/AssemblyJigCollision';
 import BladeWithTransportJig from './MeshLoaders/Other/BladeWithTransportJig';
 import KnifeWithTransportJig from './MeshLoaders/Other/KnifeWithTransportJig';
 import ConveyorDispatcher from './MeshLoaders/Other/ConveyorDispatcher';
 import ConveyorReceiver from './MeshLoaders/Other/ConveyorReceiver';
+import ConveyorDispatcherCollision from './MeshLoaders/Other/ConveyorDispatcherCollision';
+import ConveyorReceiverCollision from './MeshLoaders/Other/ConveyorReceiverCollision';
 
 import { Sphere, Cube, Cylinder, Arrow } from './Util/StandardMeshes';
 
@@ -193,12 +197,16 @@ const MeshLookupTable = {
   'handle_l':HandleL,
   'handle_r':HandleR,
   'conveyor':Conveyor,
+  'conveyor_collision':ConveyorCollision,
   'transport_jig':TransportJig,
   'assembly_jig':AssemblyJig,
+  'assembly_jig_collision':AssemblyJigCollision,
   'blade_with_transport_jig':BladeWithTransportJig,
   'knife_with_transport_jig':KnifeWithTransportJig,
   'conveyor_dispatcher':ConveyorDispatcher,
   'conveyor_receiver':ConveyorReceiver,
+  'conveyor_dispatcher_collision':ConveyorDispatcherCollision,
+  'conveyor_receiver_collision':ConveyorReceiverCollision,
   'package://nao_meshes/meshes/V40/HeadPitch.dae': HeadPitch,
   'package://nao_meshes/meshes/V40/HeadYaw.dae': HeadYaw,
   'package://nao_meshes/meshes/V40/LAnklePitch.dae': LAnklePitch,

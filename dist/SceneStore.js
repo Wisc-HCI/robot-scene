@@ -156,6 +156,11 @@ var store = function store(set, get) {
         state.items[key].color = color;
       });
     },
+    setItemWireframe: function setItemWireframe(key, wireframe) {
+      return set(function (state) {
+        state.items[key].wireframe = wireframe;
+      });
+    },
     setItemHighlighted: function setItemHighlighted(key, value) {
       return set(function (state) {
         state.items[key].highlighted = value;
@@ -257,6 +262,11 @@ var store = function store(set, get) {
     setHullColor: function setHullColor(key, color) {
       return set(function (state) {
         state.hulls[key].scale = color;
+      });
+    },
+    setHullWireframe: function setHullWireframe(key, wireframe) {
+      return set(function (state) {
+        state.hulls[key].wireframe = wireframe;
       });
     },
     setHullHighlighted: function setHullHighlighted(key, value) {

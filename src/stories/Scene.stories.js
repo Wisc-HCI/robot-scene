@@ -289,6 +289,19 @@ EvD.args = {
             showName: false,
             onClick: (e) => { e.stopPropagation() }
         },
+        bladeConveyorCollision: {
+            shape: 'conveyor_collision',
+            name: "Blade Production Conveyor Belt Collision",
+            frame: "world",
+            position: { x: -0.85, y: -0.25, z: -0.75 },
+            rotation: { w: 0.707, x: 0, y: 0, z: 0.707 },
+            color: {r: 255, g: 0, b: 0, a: 0.3},
+            scale: { x: 1, y: 1, z: 1},
+            highlighted: false,
+            showName: false,
+            wireframe: true,
+            onClick: (e) => { e.stopPropagation() }
+        },
         conveyorReceiver: {
             shape: 'conveyor_receiver',
             name: "Blade Receiver",
@@ -298,6 +311,19 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             highlighted: false,
             showName: false,
+            onClick: (e) => { e.stopPropagation() }
+        },
+        conveyorReceiverCollision: {
+            shape: 'conveyor_receiver_collision',
+            name: "Blade Receiver Collision",
+            frame: "world",
+            position: { x: -0.85, y: -0.25, z: -0.75 },
+            rotation: { w: 0.707, x: 0, y: 0, z: 0.707 },
+            color: {r: 255, g: 0, b: 0, a: 0.3},
+            scale: { x: 1, y: 1, z: 1 },
+            highlighted: false,
+            showName: false,
+            wireframe: true,
             onClick: (e) => { e.stopPropagation() }
         },
         knifeConveyor: {
@@ -311,6 +337,19 @@ EvD.args = {
             showName: false,
             onClick: (e) => { e.stopPropagation() }
         },
+        knifeConveyorCollision: {
+            shape: 'conveyor_collision',
+            name: "Blade Production Conveyor Belt Collision",
+            frame: "world",
+            position: { x: 0.85, y: -0.25, z: -0.75 },
+            rotation: { w: 0.707, x: 0, y: 0, z: -0.707 },
+            color: {r: 255, g: 0, b: 0, a: 0.3},
+            scale: { x: 1, y: 1, z: 1},
+            highlighted: false,
+            showName: false,
+            wireframe: true,
+            onClick: (e) => { e.stopPropagation() }
+        },
         conveyorDispatcher: {
             shape: 'conveyor_dispatcher',
             name: "Knife Dispatcher",
@@ -320,6 +359,19 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             highlighted: false,
             showName: false,
+            onClick: (e) => { e.stopPropagation() }
+        },
+        conveyorDispatcherCollision: {
+            shape: 'conveyor_dispatcher_collision',
+            name: "Knife Dispatcher",
+            frame: "world",
+            position: { x: 0.85, y: -0.25, z: -0.75 },
+            rotation: { w: 0.707, x: 0, y: 0, z: -0.707 },
+            color: {r: 255, g: 0, b: 0, a: 0.3},
+            scale: { x: 1, y: 1, z: 1 },
+            highlighted: false,
+            showName: false,
+            wireframe: true,
             onClick: (e) => { e.stopPropagation() }
         },
         pedestal: {
@@ -402,6 +454,19 @@ EvD.args = {
             scale: { x: 0.2, y: 0.2, z: 0.2 },
             highlighted: false,
             showName: false,
+            onClick: (e) => { e.stopPropagation() }
+        },
+        assemblyJigCollision: {
+            shape: "assembly_jig_collision",
+            name: "Assembly Jig Collision",
+            frame: "world",
+            position: { x: 0.2, y: 0.28, z: 0.14 },
+            rotation: { w: -0.5, x: 0.5, y: -0.5, z: -0.5 },
+            scale: { x: 0.2, y: 0.2, z: 0.2 },
+            color: {r: 255, g: 0, b: 0, a:0.3 },
+            highlighted: false,
+            showName: false,
+            ghost:true,
             onClick: (e) => { e.stopPropagation() }
         },
         // bladeWithTransportJig: {
@@ -633,28 +698,29 @@ EvD.args = {
         // }
     },
     hulls: {
-        // usage: {
-        //   name: 'Robot Space Usage',
-        //   frame: 'world',
-        //   vertices: [
-        //     {x:-0.5,y:-0.5,z:0},
-        //     {x:0.5,y:-0.5,z:0},
-        //     {x:0.5,y:0.5,z:0},
-        //     {x:-0.5,y:0.5,z:0},
-        //     {x:-0.5,y:0.5,z:1},
-        //     {x:-0.5,y:-0.5,z:1},
-        //     {x:0.5,y:-0.5,z:1},
-        //     {x:0.5,y:0.5,z:1},
-        //     {x:-0.75,y:0,z:0.5},
-        //     {x:0.75,y:0,z:0.5},
-        //     {x:0,y:0.75,z:0.5},
-        //     {x:0,y:-0.75,z:0.5},
-        //   ],
-        //   color:{ r: 10, g: 200, b: 235, a: 0.5 },
-        //   highlighted: true,
-        //   showName: true,
-        //   onClick: ()=>console.log('Space Usage')
-        // }
+        usage: {
+          name: 'Robot Space Usage',
+          frame: 'world',
+          vertices: [
+            {x:-0.5,y:-0.5,z:0},
+            {x:0.5,y:-0.5,z:0},
+            {x:0.5,y:0.5,z:0},
+            {x:-0.5,y:0.5,z:0},
+            {x:-0.5,y:0.5,z:1},
+            {x:-0.5,y:-0.5,z:1},
+            {x:0.5,y:-0.5,z:1},
+            {x:0.5,y:0.5,z:1},
+            {x:-0.75,y:0,z:0.5},
+            {x:0.75,y:0,z:0.5},
+            {x:0,y:0.75,z:0.5},
+            {x:0,y:-0.75,z:0.5},
+          ],
+          color:{ r: 10, g: 200, b: 235, a: 0.5 },
+          wireframe: true,
+          highlighted: true,
+          showName: true,
+          onClick: ()=>console.log('Space Usage')
+        }
     },
     displayTfs: false,
     displayGrid: true,

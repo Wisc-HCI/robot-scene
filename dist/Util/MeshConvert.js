@@ -23,6 +23,12 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var MeshConverter = function MeshConverter(node, idx, materialOverride, opacity) {
   // console.log(node);
   if (node.type === 'group') {
@@ -61,6 +67,7 @@ var MeshConverter = function MeshConverter(node, idx, materialOverride, opacity)
           receiveShadow: false
         }, /*#__PURE__*/_react.default.createElement("meshLambertMaterial", {
           transparent: true,
+          wireframe: materialOverride.wireframe,
           attach: "material",
           opacity: opacity,
           color: (0, _ColorConversion.rgbToHex)(materialOverride),
@@ -74,6 +81,7 @@ var MeshConverter = function MeshConverter(node, idx, materialOverride, opacity)
         }, /*#__PURE__*/_react.default.createElement("meshLambertMaterial", {
           transparent: true,
           attach: "material",
+          wireframe: materialOverride.wireframe,
           opacity: opacity,
           color: (0, _ColorConversion.rgbToHex)(materialOverride),
           side: _three.FrontSide
@@ -91,6 +99,7 @@ var MeshConverter = function MeshConverter(node, idx, materialOverride, opacity)
         }, /*#__PURE__*/_react.default.createElement("meshLambertMaterial", {
           attach: "material",
           opacity: opacity,
+          wireframe: materialOverride.wireframe,
           color: (0, _ColorConversion.rgbToHex)(materialOverride)
         }));
 
@@ -148,7 +157,9 @@ exports.GhostConverter = GhostConverter;
 var itemToGroupAndChildRefs = function itemToGroupAndChildRefs(item) {
   var color = item.color,
       shape = item.shape;
-  var materialOverride = color ? color : undefined;
+  var materialOverride = color ? _objectSpread(_objectSpread({}, color), {}, {
+    wireframe: item.wireframe
+  }) : undefined;
   var opacity = color ? color.a : 1.0;
   var content = [];
 
@@ -191,7 +202,8 @@ exports.itemToGhost = itemToGhost;
 var hullToGroupAndRef = function hullToGroupAndRef(hull) {
   var color = hull.color,
       vertices = hull.vertices,
-      hullKey = hull.hullKey;
+      hullKey = hull.hullKey,
+      wireframe = hull.wireframe;
   var ref = /*#__PURE__*/(0, _react.createRef)();
   var geometry = new _threeStdlib.ConvexGeometry(vertices.map(function (v) {
     return new _three.Vector3(v.x, v.y, v.z);
@@ -210,6 +222,7 @@ var hullToGroupAndRef = function hullToGroupAndRef(hull) {
       receiveShadow: false
     }, /*#__PURE__*/_react.default.createElement("meshLambertMaterial", {
       transparent: true,
+      wireframe: wireframe,
       attach: "material",
       opacity: color.a,
       color: (0, _ColorConversion.rgbToHex)(color),
@@ -223,6 +236,7 @@ var hullToGroupAndRef = function hullToGroupAndRef(hull) {
       transparent: true,
       attach: "material",
       opacity: color.a,
+      wireframe: wireframe,
       color: (0, _ColorConversion.rgbToHex)(color),
       side: _three.FrontSide
     })));
@@ -235,6 +249,7 @@ var hullToGroupAndRef = function hullToGroupAndRef(hull) {
       receiveShadow: true
     }, /*#__PURE__*/_react.default.createElement("meshLambertMaterial", {
       transparent: true,
+      wireframe: wireframe,
       attach: "material",
       opacity: color.a,
       color: (0, _ColorConversion.rgbToHex)(color)
