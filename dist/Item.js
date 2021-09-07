@@ -52,7 +52,6 @@ function Item(_ref) {
   (0, _fiber.useFrame)((0, _react.useCallback)(function () {
     // Outside of react rendering, adjust the positions of all tfs.
     var item = store.getState().items[itemKey];
-    console.log(item);
 
     if (ref.current) {
       ref.current.position.set(item.position.x, item.position.y, item.position.z);

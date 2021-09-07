@@ -19,7 +19,6 @@ export default function Item({itemKey, node, store}) {
     useFrame(useCallback(() => {
       // Outside of react rendering, adjust the positions of all tfs.
       const item = store.getState().items[itemKey];
-      console.log(item)
       if (ref.current) {
         ref.current.position.set(
           item.position.x, 
