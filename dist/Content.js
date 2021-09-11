@@ -167,12 +167,12 @@ function Content(props) {
       var _hullToGroupAndRef = (0, _MeshConvert.hullToGroupAndRef)(hull),
           _hullToGroupAndRef2 = _slicedToArray(_hullToGroupAndRef, 2),
           node = _hullToGroupAndRef2[0],
-          ref = _hullToGroupAndRef2[1];
+          childrenRefs = _hullToGroupAndRef2[1];
 
       return {
         hullKey: hullKey,
         node: node,
-        ref: ref,
+        childrenRefs: childrenRefs,
         frame: hull.frame,
         highlighted: hull.highlighted
       };
@@ -190,11 +190,11 @@ function Content(props) {
   }).map(function (item) {
     return item.childrenRefs;
   }));
-  var highlightedHullRefs = hulls.filter(function (hull) {
+  var highlightedHullRefs = [].concat.apply([], hulls.filter(function (hull) {
     return hull.highlighted;
   }).map(function (hull) {
-    return hull.ref;
-  });
+    return hull.childrenRefs;
+  }));
   var highlightedRefs = [].concat(_toConsumableArray(highlightedItemRefs), _toConsumableArray(highlightedHullRefs));
   var movableItems = items.filter(function (item) {
     return ['translate', 'rotate', 'scale'].indexOf(item.transformMode) > -1;
@@ -204,6 +204,45 @@ function Content(props) {
   var orbitControls = (0, _react.useRef)();
   var planeRGB = (0, _ColorConversion.hexToRgb)(planeColor ? planeColor : "a8a8a8");
   var planeRGBA = [planeRGB.r, planeRGB.g, planeRGB.b, 0.5];
+  (0, _fiber.useFrame)((0, _react.useCallback)(function (_ref) {
+    var clock = _ref.clock;
+    var time = clock.getElapsedTime() * 1000;
+    items.forEach(function (item) {
+      var colorInstruction = store.getState().items[item.itemKey].color;
+
+      if (colorInstruction) {
+        var r = typeof colorInstruction.r === 'function' ? colorInstruction.r(time) / 255 : colorInstruction.r / 255;
+        var g = typeof colorInstruction.g === 'function' ? colorInstruction.g(time) / 255 : colorInstruction.g / 255;
+        var b = typeof colorInstruction.b === 'function' ? colorInstruction.b(time) / 255 : colorInstruction.b / 255;
+        var opacity = typeof colorInstruction.a === 'function' ? colorInstruction.a(time) : colorInstruction.a;
+        item.childrenRefs.forEach(function (ref) {
+          if (ref.current && ref.current.material) {
+            ref.current.material.color.setRGB(r, g, b);
+            ref.current.material.opacity = opacity;
+            ref.current.material.transparent = opacity === 1 ? false : true;
+          }
+        });
+      } // Ignore if no colorInstruction
+
+    });
+    hulls.forEach(function (hull) {
+      var colorInstruction = store.getState().hulls[hull.hullKey].color;
+
+      if (colorInstruction) {
+        var r = typeof colorInstruction.r === 'function' ? colorInstruction.r(time) / 255 : colorInstruction.r / 255;
+        var g = typeof colorInstruction.g === 'function' ? colorInstruction.g(time) / 255 : colorInstruction.g / 255;
+        var b = typeof colorInstruction.b === 'function' ? colorInstruction.b(time) / 255 : colorInstruction.b / 255;
+        var opacity = typeof colorInstruction.a === 'function' ? colorInstruction.a(time) : colorInstruction.a;
+        hull.childrenRefs.forEach(function (ref) {
+          if (ref.current && ref.current.material) {
+            ref.current.material.color.setRGB(r, g, b);
+            ref.current.material.opacity = opacity;
+            ref.current.material.transparent = opacity === 1 ? false : true;
+          }
+        });
+      }
+    });
+  }, [items, hulls]));
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_drei.OrbitControls, {
     ref: orbitControls
   }), /*#__PURE__*/_react.default.createElement("pointLight", {

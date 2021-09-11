@@ -272,7 +272,7 @@ EvD.args = {
             position: { x: 0, y: 0.36, z: -0.37 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
-            color: { r: 40, g: 40, b: 40, a: 1 },
+            color: { r: 10, g: 10, b: 10, a: 1 },
             highlighted: false,
             showName: false,
             onClick: (e) => { e.stopPropagation() }
@@ -380,7 +380,7 @@ EvD.args = {
             position: { x: 0, y: -0.15, z: -0.38 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
-            color: { r: 50, g: 50, b: 50, a: 1 },
+            color: {r: 15, g: 15, b: 15, a: 1},
             highlighted: false,
             showName: false,
             onClick: (e) => { e.stopPropagation() }
@@ -714,9 +714,9 @@ EvD.args = {
             {x:0,y:0.75,z:0.5},
             {x:0,y:-0.75,z:0.5},
           ],
-          color:{ r: 10, g: 200, b: 235, a: 0.5 },
-          wireframe: true,
-          highlighted: true,
+          color:{ r: 10, g: 200, b: 235, a: (time)=>(Math.sin(time/1000)/6+0.25) },
+          wireframe: false,
+          highlighted: false,
           showName: true,
           onClick: ()=>console.log('Space Usage')
         }
@@ -811,6 +811,82 @@ Movement.args = {
                 z:transform.local.scale.z,
               });
             }
+          }
+    },
+    lines: {},
+    hulls: {},
+    displayTfs: false,
+    displayGrid: true,
+    isPolar: false,
+    backgroundColor: '#d0d0d0',
+    planeColor: '#a8a8a8',
+    highlightColor: '#ffffff',
+    plane: -0.75,
+    fov: 60,
+    onPointerMissed: () => console.log('Missed Click')
+}
+
+export const Animation = Template.bind({});
+Animation.args = {
+    tfs: {
+        static: {
+            frame: 'world',
+            translation: { x: (time=>Math.cos(time/1000)), y: (time)=>Math.sin(time/1000), z: 0 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 }
+        }
+    },
+    items: {
+        immovable: {
+            shape: "cube",
+            name: "Immovable Cube",
+            frame: "static",
+            position: { x: 0, y: 0, z: (time)=>Math.sin(time/1000)+1},
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: { r: (time)=>(Math.sin(time/1000)/2+0.5)*255, g: 10, b: 10, a: 1 },
+            scale: { x: 0.5, y: 0.5, z: 0.5 },
+            highlighted: true,
+            onClick: () => {console.log('cube')},
+            onPointerOver: () => {console.log('hover')},
+            onPointerOut: () => {console.log('hover out')}
+          }, 
+          translateCube: {
+            shape: "cube",
+            name: "Translate Cube (Async)",
+            frame: "static",
+            position: { x: 1, y: 1, z: 1 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: { r: 10, g: 10, b: 10, a: (time)=>(Math.sin(time/1000)/2+0.5)},
+            scale: { x: 0.5, y: 0.5, z: 0.5 },
+            highlighted: false,
+            onClick: () => {console.log('cube')},
+            onPointerOver: () => {console.log('hover')},
+            onPointerOut: () => {console.log('hover out')}
+          },
+          rotateCube: {
+            shape: "cube",
+            name: "Rotate Cube",
+            frame: "static",
+            position: { x: 1, y: 0, z: 1 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: { r: 10, g: 255, b: 10, a: 1 },
+            scale: { x: 0.5, y: (time)=>Math.sin(time/1000)/2+1, z: 0.5 },
+            highlighted: false,
+            onClick: () => {console.log('cube')},
+            onPointerOver: () => {console.log('hover')},
+            onPointerOut: () => {console.log('hover out')}
+          },
+          scaleCube: {
+            shape: "cube",
+            name: "Scale Cube",
+            frame: "static",
+            position: { x: 0, y: 1, z: 1 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: { r: 10, g: 10, b: 255, a: 1 },
+            scale: { x: 0.5, y: 0.5, z: 0.5 },
+            highlighted: false,
+            onClick: () => {console.log('cube')},
+            onPointerOver: () => {console.log('hover')},
+            onPointerOut: () => {console.log('hover out')}
           }
     },
     lines: {},

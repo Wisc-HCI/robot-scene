@@ -31,14 +31,16 @@ function TF(_ref) {
       children = _ref.children,
       store = _ref.store;
   var ref = (0, _react.useRef)();
-  (0, _fiber.useFrame)((0, _react.useCallback)(function () {
+  (0, _fiber.useFrame)((0, _react.useCallback)(function (_ref2) {
+    var clock = _ref2.clock;
     // Outside of react rendering, adjust the positions of all tfs.
     var tf = store.getState().tfs[tfKey];
+    var time = clock.getElapsedTime() * 1000;
 
     if (ref.current) {
       // console.log(ref.current)
-      ref.current.position.set(tf.translation.x, tf.translation.y, tf.translation.z);
-      ref.current.quaternion.set(tf.rotation.x, tf.rotation.y, tf.rotation.z, tf.rotation.w);
+      ref.current.position.set(typeof tf.translation.x === 'function' ? tf.translation.x(time) : tf.translation.x, typeof tf.translation.y === 'function' ? tf.translation.y(time) : tf.translation.y, typeof tf.translation.z === 'function' ? tf.translation.z(time) : tf.translation.z);
+      ref.current.quaternion.set(typeof tf.rotation.x === 'function' ? tf.rotation.x(time) : tf.rotation.x, typeof tf.rotation.y === 'function' ? tf.rotation.y(time) : tf.rotation.y, typeof tf.rotation.z === 'function' ? tf.rotation.z(time) : tf.rotation.z, typeof tf.rotation.w === 'function' ? tf.rotation.w(time) : tf.rotation.w);
     }
   }, [tfKey, ref]));
   var arrow = (0, _StandardMeshes.ARROW_GEOM)();
@@ -71,9 +73,9 @@ function TF(_ref) {
 
 ;
 
-function WorldTF(_ref2) {
-  var displayTfs = _ref2.displayTfs,
-      children = _ref2.children;
+function WorldTF(_ref3) {
+  var displayTfs = _ref3.displayTfs,
+      children = _ref3.children;
   var arrow = (0, _StandardMeshes.ARROW_GEOM)();
   return /*#__PURE__*/_react.default.createElement("group", {
     dispose: null,
@@ -103,10 +105,10 @@ function WorldTF(_ref2) {
 
 ;
 
-function GhostTF(_ref3) {
-  var transforms = _ref3.transforms,
-      children = _ref3.children,
-      store = _ref3.store;
+function GhostTF(_ref4) {
+  var transforms = _ref4.transforms,
+      children = _ref4.children,
+      store = _ref4.store;
 
   if (transforms.length > 0) {
     var pos = [transforms[0].position.x, transforms[0].position.y, transforms[0].position.z];

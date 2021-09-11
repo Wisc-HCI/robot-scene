@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { useThree } from '@react-three/fiber';
+import React, { useRef, useCallback } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
 import { Circle } from "@react-three/drei";
 import { EffectComposer, Outline, SMAA } from "@react-three/postprocessing";
 import TF, {WorldTF} from "./TF";
@@ -77,9 +77,9 @@ export default function Content(props) {
     
     const reducedHulls = Object.entries(state.hulls).map(pair=>{
       const [hullKey, hull] = pair;
-      const [node, ref] = hullToGroupAndRef(hull);
+      const [node,childrenRefs] = hullToGroupAndRef(hull);
       return {
-        hullKey,node,ref,
+        hullKey,node,childrenRefs,
         frame:hull.frame,
         highlighted:hull.highlighted
       }
@@ -94,7 +94,7 @@ export default function Content(props) {
   });
 
   const highlightedItemRefs = [].concat.apply([],items.filter(item=>item.highlighted).map(item=>item.childrenRefs));
-  const highlightedHullRefs = hulls.filter(hull=>hull.highlighted).map(hull=>hull.ref);
+  const highlightedHullRefs = [].concat.apply([],hulls.filter(hull=>hull.highlighted).map(hull=>hull.childrenRefs));
   const highlightedRefs = [...highlightedItemRefs, ...highlightedHullRefs];
   const movableItems = items.filter(item=>['translate','rotate','scale'].indexOf(item.transformMode)>-1);
 
@@ -104,6 +104,43 @@ export default function Content(props) {
 
   const planeRGB = hexToRgb(planeColor ? planeColor : "a8a8a8");
   const planeRGBA = [planeRGB.r,planeRGB.g,planeRGB.b,0.5];
+
+  useFrame(useCallback(({clock})=>{
+    const time = clock.getElapsedTime() * 1000;
+    items.forEach(item=>{
+      const colorInstruction = store.getState().items[item.itemKey].color;
+      if (colorInstruction) {
+        const r = typeof colorInstruction.r === 'function' ? colorInstruction.r(time)/255 : colorInstruction.r/255;
+        const g = typeof colorInstruction.g === 'function' ? colorInstruction.g(time)/255 : colorInstruction.g/255;
+        const b = typeof colorInstruction.b === 'function' ? colorInstruction.b(time)/255 : colorInstruction.b/255;
+        const opacity = typeof colorInstruction.a === 'function' ? colorInstruction.a(time) : colorInstruction.a;
+        item.childrenRefs.forEach(ref=>{
+          if (ref.current && ref.current.material) {
+            ref.current.material.color.setRGB(r,g,b);
+            ref.current.material.opacity = opacity;
+            ref.current.material.transparent = opacity === 1 ? false : true
+          }
+        })
+      }
+      // Ignore if no colorInstruction
+    })
+    hulls.forEach(hull=>{
+      const colorInstruction = store.getState().hulls[hull.hullKey].color;
+      if (colorInstruction) {
+        const r = typeof colorInstruction.r === 'function' ? colorInstruction.r(time)/255 : colorInstruction.r/255;
+        const g = typeof colorInstruction.g === 'function' ? colorInstruction.g(time)/255 : colorInstruction.g/255;
+        const b = typeof colorInstruction.b === 'function' ? colorInstruction.b(time)/255 : colorInstruction.b/255;
+        const opacity = typeof colorInstruction.a === 'function' ? colorInstruction.a(time) : colorInstruction.a;
+        hull.childrenRefs.forEach(ref=>{
+          if (ref.current && ref.current.material) {
+            ref.current.material.color.setRGB(r,g,b);
+            ref.current.material.opacity = opacity;
+            ref.current.material.transparent = opacity === 1 ? false : true
+          }
+        })
+      }
+    })
+  },[items,hulls]))
 
   return (
     <React.Fragment>
@@ -163,7 +200,7 @@ export default function Content(props) {
           pulseSpeed={0.3}
           visibleEdgeColor={highlightColor ? highlightColor : '#ffffff'}
           hiddenEdgeColor={highlightColor ? highlightColor : '#ffffff'}/>
-          <SMAA/>
+        <SMAA/>
       </EffectComposer>
 
     </React.Fragment>

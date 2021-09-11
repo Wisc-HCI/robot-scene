@@ -1,6 +1,5 @@
 import React, {useCallback} from 'react';
 import { Line } from '@react-three/drei';
-// import useSceneStore from './SceneStore';
 
 export default function SceneLine(props) {
   const { lineKey, store } = props;

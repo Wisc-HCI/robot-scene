@@ -13,16 +13,16 @@ export const MeshConverter = (node, idx, materialOverride, opacity) => {
       <group key={idx} up={[0,0,1]} position={node.position} rotation={node.rotation} scale={node.scale}>
         {nodes.map(node => node[0])}
       </group>
-    const refs = [].concat.apply([], nodes.map(node => node[1]));
+    const refs = [].concat.apply([], nodes.map(node => node[1]))
     return [group, refs];
   } else {
-    const ref = createRef();
-
+    const frontRef = createRef();
+    const backRef = createRef();
     if (materialOverride) {
-      if (opacity < 1.0) {
         const mesh =
-          <group key={idx} ref={ref} up={[0,0,1]} >
+          <group key={idx} up={[0,0,1]} >
             <mesh
+              ref={backRef}
               key={`${idx}B`}
               geometry={node.geometry}
               scale={node.scale}
@@ -34,12 +34,13 @@ export const MeshConverter = (node, idx, materialOverride, opacity) => {
                 wireframe={materialOverride.wireframe}
                 attach='material'
                 opacity={opacity} 
-                color={rgbToHex(materialOverride)} 
+                // color='#000000' 
                 side={BackSide}
               />
               
             </mesh>
             <mesh
+              ref={frontRef}
               key={`${idx}F`}
               geometry={node.geometry}
               scale={node.scale}
@@ -51,35 +52,16 @@ export const MeshConverter = (node, idx, materialOverride, opacity) => {
                 attach='material'
                 wireframe={materialOverride.wireframe}
                 opacity={opacity} 
-                color={rgbToHex(materialOverride)} 
+                color='#000000'
                 side={FrontSide}
               />
             </mesh>
           </group>
-        return [mesh, [ref]]
+        return [mesh, [frontRef,backRef]]
       } else {
-        const mesh =
-          <mesh
-            ref={ref}
-            key={idx}
-            geometry={node.geometry}
-            scale={node.scale}
-            castShadow={true}
-            receiveShadow={true}
-          >
-            <meshLambertMaterial 
-              attach='material'
-              opacity={opacity} 
-              wireframe={materialOverride.wireframe}
-              color={rgbToHex(materialOverride)}
-            />
-          </mesh>
-        return [mesh,[ref]]
-      }
-    } else {
       const mesh =
         <mesh
-          ref={ref}
+          ref={frontRef}
           key={idx}
           geometry={node.geometry}
           material={node.material}
@@ -87,7 +69,7 @@ export const MeshConverter = (node, idx, materialOverride, opacity) => {
           castShadow={true}
           receiveShadow={true}
         />
-      return [mesh,[ref]]
+      return [mesh,[frontRef]]
     }
   }
 }
@@ -154,16 +136,15 @@ export const itemToGhost = (item, highlightColor) => {
 }
 
 export const hullToGroupAndRef = hull => {
-  const { color, vertices, hullKey, wireframe } = hull;
-  const ref = createRef();
+  const { vertices, hullKey, wireframe } = hull;
+  const frontRef = createRef();
+  const backRef = createRef();
 
   const geometry = new ConvexGeometry(vertices.map(v => new Vector3(v.x, v.y, v.z)));
-  let group = null;
-
-  if (color.a < 1.0) {
-    group = 
-      <group key={hullKey} ref={ref} up={[0,0,1]} >
+  const group = 
+      <group key={hullKey} up={[0,0,1]} >
         <mesh
+          ref={backRef}
           key={`${hullKey}B`}
           geometry={geometry}
           castShadow={false}
@@ -173,12 +154,11 @@ export const hullToGroupAndRef = hull => {
             transparent
             wireframe={wireframe}
             attach='material'
-            opacity={color.a} 
-            color={rgbToHex(color)} 
             side={BackSide}
           />
         </mesh>
         <mesh
+          ref={frontRef}
           key={`${hullKey}F`}
           geometry={geometry}
           castShadow={false}
@@ -187,30 +167,10 @@ export const hullToGroupAndRef = hull => {
           <meshLambertMaterial 
             transparent
             attach='material'
-            opacity={color.a} 
             wireframe={wireframe}
-            color={rgbToHex(color)} 
             side={FrontSide}
           />
         </mesh>
       </group>
-  } else {
-    group = 
-      <mesh
-        ref={ref}
-        key={`${hullKey}`}
-        geometry={geometry}
-        castShadow={true}
-        receiveShadow={true}
-      >
-        <meshLambertMaterial 
-          transparent
-          wireframe={wireframe}
-          attach='material'
-          opacity={color.a} 
-          color={rgbToHex(color)}
-        />
-      </mesh>
-  }
-  return [group,ref]
+  return [group,[frontRef,backRef]]
 }

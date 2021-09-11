@@ -11,22 +11,22 @@ export default function TF({ tfKey, displayTfs, children, store }) {
 
   const ref = useRef();
 
-  useFrame(useCallback(() => {
+  useFrame(useCallback(({clock}) => {
     // Outside of react rendering, adjust the positions of all tfs.
     const tf = store.getState().tfs[tfKey];
-
+    const time = clock.getElapsedTime() * 1000;
     if (ref.current) {
       // console.log(ref.current)
       ref.current.position.set(
-        tf.translation.x,
-        tf.translation.y,
-        tf.translation.z
+        typeof tf.translation.x === 'function' ? tf.translation.x(time) : tf.translation.x,
+        typeof tf.translation.y === 'function' ? tf.translation.y(time) : tf.translation.y,
+        typeof tf.translation.z === 'function' ? tf.translation.z(time) : tf.translation.z,
       );
       ref.current.quaternion.set(
-        tf.rotation.x,
-        tf.rotation.y,
-        tf.rotation.z,
-        tf.rotation.w
+        typeof tf.rotation.x === 'function' ? tf.rotation.x(time) : tf.rotation.x,
+        typeof tf.rotation.y === 'function' ? tf.rotation.y(time) : tf.rotation.y,
+        typeof tf.rotation.z === 'function' ? tf.rotation.z(time) : tf.rotation.z,
+        typeof tf.rotation.w === 'function' ? tf.rotation.w(time) : tf.rotation.w
       );
     }
   },[tfKey, ref]));

@@ -23,6 +23,8 @@ var _Content = _interopRequireDefault(require("./Content"));
 
 var THREE = _interopRequireWildcard(require("three"));
 
+var _SceneStore = _interopRequireDefault(require("./SceneStore"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -60,6 +62,6 @@ function Scene(props) {
   }, /*#__PURE__*/_react.default.createElement(_react.Suspense, {
     fallback: /*#__PURE__*/_react.default.createElement(Loading, null)
   }, /*#__PURE__*/_react.default.createElement(_Content.default, _extends({}, props, {
-    store: store
+    store: store ? store : _SceneStore.default
   }))));
 }

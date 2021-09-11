@@ -49,14 +49,16 @@ function Item(_ref) {
       onPointerOut = _store2[4];
 
   var ref = (0, _react.useRef)();
-  (0, _fiber.useFrame)((0, _react.useCallback)(function () {
+  (0, _fiber.useFrame)((0, _react.useCallback)(function (_ref2) {
+    var clock = _ref2.clock;
     // Outside of react rendering, adjust the positions of all tfs.
     var item = store.getState().items[itemKey];
+    var time = clock.getElapsedTime() * 1000;
 
     if (ref.current) {
-      ref.current.position.set(item.position.x, item.position.y, item.position.z);
-      ref.current.quaternion.set(item.rotation.x, item.rotation.y, item.rotation.z, item.rotation.w);
-      ref.current.scale.set(item.scale.x, item.scale.y, item.scale.z);
+      ref.current.position.set(typeof item.position.x === 'function' ? item.position.x(time) : item.position.x, typeof item.position.y === 'function' ? item.position.y(time) : item.position.y, typeof item.position.z === 'function' ? item.position.z(time) : item.position.z);
+      ref.current.quaternion.set(typeof item.rotation.x === 'function' ? item.rotation.x(time) : item.rotation.x, typeof item.rotation.y === 'function' ? item.rotation.y(time) : item.rotation.y, typeof item.rotation.z === 'function' ? item.rotation.z(time) : item.rotation.z, typeof item.rotation.w === 'function' ? item.rotation.w(time) : item.rotation.w);
+      ref.current.scale.set(typeof item.scale.x === 'function' ? item.scale.x(time) : item.scale.x, typeof item.scale.y === 'function' ? item.scale.y(time) : item.scale.y, typeof item.scale.z === 'function' ? item.scale.z(time) : item.scale.z);
     }
   }, [itemKey, ref]));
   return /*#__PURE__*/_react.default.createElement("group", {

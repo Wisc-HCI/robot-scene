@@ -6,6 +6,7 @@ import { Progress } from 'antd';
 import { ResizeObserver } from "@juggle/resize-observer";
 import Content from './Content';
 import * as THREE from 'three';
+import useSceneStore from './SceneStore'
 
 THREE.Object3D.DefaultUp = new THREE.Vector3(0, 0, 1);
 
@@ -28,7 +29,7 @@ export default function Scene(props) {
         onPointerMissed={props.onPointerMissed ? props.onPointerMissed : ()=>{}}
       >
         <Suspense fallback={<Loading />}>
-          <Content {...props} store={store}/>
+          <Content {...props} store={store ? store : useSceneStore}/>
         </Suspense>
 
       </Canvas>
