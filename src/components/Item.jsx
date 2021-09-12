@@ -37,13 +37,13 @@ export default function Item({itemKey, node, store}) {
           typeof item.scale.y === 'function' ? item.scale.y(time) : item.scale.y,
           typeof item.scale.z === 'function' ? item.scale.z(time) : item.scale.z,
         );
+        ref.current.visible = !item.hidden;
       }
   },[itemKey,ref]));
   return (
     <group ref={ref} up={[0,0,1]}>
       <group
         up={[0,0,1]} 
-        scale={[1,1,1]}
         rotation={[Math.PI/2,0,0]}
         onPointerDown={onClick} 
         onPointerOver={onPointerOver} 
@@ -51,7 +51,7 @@ export default function Item({itemKey, node, store}) {
         {node}
       </group>
       {showName && (
-        <Html distanceFactor={7} position={[0, 1, 0]}>
+        <Html distanceFactor={3} position={[0,0,0.2]}>
           <Tag style={{ opacity: 0.75 }} className="disable-text-selection">
             {name}
           </Tag>

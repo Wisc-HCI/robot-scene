@@ -13,16 +13,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function Model(props) {
   var _useGLTF = (0, _drei.useGLTF)(_Tag.default),
-      nodes = _useGLTF.nodes;
+      nodes = _useGLTF.nodes,
+      materials = _useGLTF.materials;
 
   return [{
     type: 'group',
-    rotation: [-Math.PI / 2, 0, 0],
     children: [{
       type: 'raw',
-      geometry: nodes.mesh_0.geometry,
-      material: nodes.mesh_0.material,
-      scale: [0.1, 0.1, 0.1]
+      geometry: nodes.Tag.geometry,
+      material: materials.Material
     }]
   }];
 }

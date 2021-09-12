@@ -35,29 +35,29 @@ function Hull(_ref) {
       store = _ref.store;
 
   var _store = store((0, _react.useCallback)(function (state) {
-    var _state$items$hullKey, _state$items$hullKey2, _state$items$hullKey3, _state$items$hullKey4, _state$items$hullKey5;
-
-    return [(_state$items$hullKey = state.items[hullKey]) === null || _state$items$hullKey === void 0 ? void 0 : _state$items$hullKey.name, (_state$items$hullKey2 = state.items[hullKey]) === null || _state$items$hullKey2 === void 0 ? void 0 : _state$items$hullKey2.showName, (_state$items$hullKey3 = state.items[hullKey]) === null || _state$items$hullKey3 === void 0 ? void 0 : _state$items$hullKey3.onClick, (_state$items$hullKey4 = state.items[hullKey]) === null || _state$items$hullKey4 === void 0 ? void 0 : _state$items$hullKey4.onPointerOver, (_state$items$hullKey5 = state.items[hullKey]) === null || _state$items$hullKey5 === void 0 ? void 0 : _state$items$hullKey5.onPointerOut];
+    return [state.hulls[hullKey].name, state.hulls[hullKey].showName, state.hulls[hullKey].onClick, state.hulls[hullKey].onPointerOver, state.hulls[hullKey].onPointerOut, state.hulls[hullKey].hidden];
   }, [hullKey])),
-      _store2 = _slicedToArray(_store, 5),
+      _store2 = _slicedToArray(_store, 6),
       name = _store2[0],
       showName = _store2[1],
       onClick = _store2[2],
       onPointerOver = _store2[3],
-      onPointerOut = _store2[4];
+      onPointerOut = _store2[4],
+      hidden = _store2[5];
 
   var ref = (0, _react.useRef)();
   return /*#__PURE__*/_react.default.createElement("group", {
     ref: ref,
-    up: [0, 0, 1]
+    up: [0, 0, 1],
+    visible: !hidden
   }, /*#__PURE__*/_react.default.createElement("group", {
     up: [0, 0, 1],
     onPointerDown: onClick,
     onPointerOver: onPointerOver,
     onPointerOut: onPointerOut
   }, node), showName && /*#__PURE__*/_react.default.createElement(_drei.Html, {
-    distanceFactor: 7,
-    position: [0, 1, 0]
+    distanceFactor: 2,
+    position: [0, 0, 0.5]
   }, /*#__PURE__*/_react.default.createElement(_antd.Tag, {
     style: {
       opacity: 0.75

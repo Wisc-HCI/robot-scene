@@ -22,13 +22,16 @@ function SceneLine(props) {
   var _store = store((0, _react.useCallback)(function (state) {
     return {
       vertices: state.lines[lineKey].vertices,
-      width: state.lines[lineKey].width
+      width: state.lines[lineKey].width,
+      hidden: state.lines[lineKey].hidden
     };
   }, [lineKey])),
       vertices = _store.vertices,
-      width = _store.width;
+      width = _store.width,
+      hidden = _store.hidden;
 
   return /*#__PURE__*/_react.default.createElement(_drei.Line, {
+    visible: !hidden,
     points: vertices.map(function (vertex) {
       return [vertex.position.x, vertex.position.y, vertex.position.z];
     }),

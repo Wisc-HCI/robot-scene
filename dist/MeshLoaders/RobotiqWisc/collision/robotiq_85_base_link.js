@@ -16,10 +16,13 @@ function Model(props) {
       nodes = _useGLTF.nodes;
 
   return [{
-    type: 'raw',
-    rotation: [Math.PI / 2, 0, 0],
-    geometry: nodes.mesh_0.geometry,
-    material: nodes.mesh_0.material
+    type: 'group',
+    rotation: [-Math.PI / 2, 0, 0],
+    children: [{
+      type: 'raw',
+      geometry: nodes.mesh_0.geometry,
+      material: nodes.mesh_0.material
+    }]
   }];
 }
 

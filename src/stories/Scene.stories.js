@@ -13,7 +13,7 @@ const Template = (args) => {
     useLayoutEffect(() => {
         useSceneStore.setState({ tfs, items, hulls, lines })
     }, [tfs, items, hulls, lines])
-    return <div style={{ height: 'calc(100vh - 2rem)', width: 'calc(100vw - 2rem)' }}><Scene {...otherArgs} store={useSceneStore}/></div>
+    return <div style={{ height: 'calc(100vh - 2rem)', width: 'calc(100vw - 2rem)' }}><Scene {...otherArgs} store={useSceneStore} /></div>
 };
 
 export const RandomShapes = Template.bind({});
@@ -135,7 +135,29 @@ RandomShapes.args = {
             scale: { x: 1, y: 1, z: 1 },
             highlighted: false,
             onClick: () => { console.log('printer') }
-        }
+        },
+        10: {
+            frame: 'world',
+            name: 'Tag',
+            shape: 'tag',
+            position: { x: 3, y: 1, z: 1 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            scale: { x: -1, y: 1, z: 1 },
+            highlighted: false,
+            showName: true,
+            color: {r:255,g:0,b:0,a:1}
+        },
+        11: {
+            frame: 'world',
+            name: 'flag',
+            shape: 'flag',
+            position: { x: 3, y: 1.4, z: 1 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            scale: { x: -1, y: 1, z: 1 },
+            highlighted: false,
+            showName: false,
+            color: {r:255,g:0,b:0,a:1}
+        },
     },
     lines: {
         line1: {
@@ -294,8 +316,8 @@ EvD.args = {
             frame: "world",
             position: { x: -0.85, y: -0.25, z: -0.75 },
             rotation: { w: 0.707, x: 0, y: 0, z: 0.707 },
-            color: {r: 255, g: 0, b: 0, a: 0.3},
-            scale: { x: 1, y: 1, z: 1},
+            color: { r: 255, g: 0, b: 0, a: 0.3 },
+            scale: { x: 1, y: 1, z: 1 },
             highlighted: false,
             showName: false,
             wireframe: true,
@@ -318,7 +340,7 @@ EvD.args = {
             frame: "world",
             position: { x: -0.85, y: -0.25, z: -0.75 },
             rotation: { w: 0.707, x: 0, y: 0, z: 0.707 },
-            color: {r: 255, g: 0, b: 0, a: 0.3},
+            color: { r: 255, g: 0, b: 0, a: 0.3 },
             scale: { x: 1, y: 1, z: 1 },
             highlighted: false,
             showName: false,
@@ -342,8 +364,8 @@ EvD.args = {
             frame: "world",
             position: { x: 0.85, y: -0.25, z: -0.75 },
             rotation: { w: 0.707, x: 0, y: 0, z: -0.707 },
-            color: {r: 255, g: 0, b: 0, a: 0.3},
-            scale: { x: 1, y: 1, z: 1},
+            color: { r: 255, g: 0, b: 0, a: 0.3 },
+            scale: { x: 1, y: 1, z: 1 },
             highlighted: false,
             showName: false,
             wireframe: true,
@@ -357,7 +379,7 @@ EvD.args = {
             rotation: { w: 0.707, x: 0, y: 0, z: -0.707 },
             scale: { x: 1, y: 1, z: 1 },
             highlighted: false,
-            showName: false,
+            showName: true,
             onClick: (e) => { e.stopPropagation() }
         },
         conveyorDispatcherCollision: {
@@ -366,7 +388,7 @@ EvD.args = {
             frame: "world",
             position: { x: 0.85, y: -0.25, z: -0.75 },
             rotation: { w: 0.707, x: 0, y: 0, z: -0.707 },
-            color: {r: 255, g: 0, b: 0, a: 0.3},
+            color: { r: 255, g: 0, b: 0, a: 0.3 },
             scale: { x: 1, y: 1, z: 1 },
             highlighted: false,
             showName: false,
@@ -380,7 +402,7 @@ EvD.args = {
             position: { x: 0, y: -0.15, z: -0.38 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
-            color: {r: 15, g: 15, b: 15, a: 1},
+            color: { r: 15, g: 15, b: 15, a: 1 },
             highlighted: false,
             showName: false,
             onClick: (e) => { e.stopPropagation() }
@@ -462,23 +484,12 @@ EvD.args = {
             position: { x: 0.2, y: 0.28, z: 0.14 },
             rotation: { w: -0.5, x: 0.5, y: -0.5, z: -0.5 },
             scale: { x: 0.2, y: 0.2, z: 0.2 },
-            color: {r: 255, g: 0, b: 0, a:0.3 },
+            color: { r: 255, g: 0, b: 0, a: 0.3 },
             highlighted: false,
             showName: false,
-            ghost:true,
+            ghost: true,
             onClick: (e) => { e.stopPropagation() }
         },
-        // bladeWithTransportJig: {
-        //   shape: "blade_with_transport_jig",
-        //   name: "Blade with Transport Jig",
-        //   frame: "world",
-        //   position: { x: 0.2, y: 0.58, z: 0.078 },
-        //   rotation: { w: 0.707, x: 0.707, y: 0, z: 0 },
-        //   scale: {x:0.2,y:0.2,z:0.2},
-        //   highlighted: false,
-        //   showName: false,
-        //   onClick: (e)=>{e.stopPropagation()}
-        // },
         knifeWithTransportJig: {
             shape: "knife_with_transport_jig",
             name: "Knife with Transport Jig",
@@ -492,17 +503,6 @@ EvD.args = {
             onMove: (t) => console.log(t),
             onClick: (e) => { e.stopPropagation() }
         },
-        // knife: {
-        //   shape: "knife",
-        //   name: "Knife",
-        //   frame: "world",
-        //   position: { x: 0.2, y: 0.38, z: 0.078 },
-        //   rotation: { w: 0.707, x: 0.707, y: 0, z: 0 },
-        //   scale: {x:0.2,y:0.2,z:0.2},
-        //   highlighted: false,
-        //   showName: false,
-        //   onClick: (e)=>{e.stopPropagation()}
-        // },
         base: {
             shape: "package://ur_description/meshes/ur3/visual/base.dae",
             name: 'Base',
@@ -678,47 +678,164 @@ EvD.args = {
             showName: false,
             onClick: (e) => { e.stopPropagation() },
             highlighted: false
+        },
+        gripperBaseLinkCollision: {
+            shape: "package://robotiq_85_description/meshes/collision/robotiq_85_base_link.stl",
+            name: "Gripper Base Collision",
+            frame: "simulated_robotiq_85_base_link",
+            position: { x: 0, y: 0, z: 0 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: {r:255,g:0,b:0,a:0.6},
+            scale: { x: 1, y: 1, z: 1 },
+            showName: false,
+            wireframe: true,
+            onClick: (e) => { e.stopPropagation() },
+            highlighted: false
+        },
+        gripperLeftKnuckleCollision: {
+            shape: "package://robotiq_85_description/meshes/collision/robotiq_85_knuckle_link.stl",
+            name: "Gripper Left Knuckle Collision",
+            frame: "simulated_robotiq_85_left_knuckle_link",
+            position: { x: 0, y: 0, z: 0 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: {r:255,g:0,b:0,a:0.6},
+            scale: { x: 1, y: 1, z: 1 },
+            showName: false,
+            onClick: (e) => { e.stopPropagation() },
+            highlighted: false
+        },
+        gripperRightKnuckleCollision: {
+            shape: "package://robotiq_85_description/meshes/collision/robotiq_85_knuckle_link.stl",
+            name: "Gripper Right Knuckle Collision",
+            frame: "simulated_robotiq_85_right_knuckle_link",
+            position: { x: 0, y: 0, z: 0 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: {r:255,g:0,b:0,a:0.6},
+            scale: { x: 1, y: 1, z: 1 },
+            showName: false,
+            wireframe: true,
+            onClick: (e) => { e.stopPropagation() },
+            highlighted: false
+        },
+        gripperLeftFingerCollision: {
+            shape: "package://robotiq_85_description/meshes/collision/robotiq_85_finger_link.stl",
+            name: "Gripper Left Finger Collision",
+            frame: "simulated_robotiq_85_left_finger_link",
+            position: { x: 0, y: 0, z: 0 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: {r:255,g:0,b:0,a:0.6},
+            scale: { x: 1, y: 1, z: 1 },
+            showName: false,
+            wireframe: true,
+            onClick: (e) => { e.stopPropagation() },
+            highlighted: false
+        },
+        gripperRightFingerCollision: {
+            shape: "package://robotiq_85_description/meshes/collision/robotiq_85_finger_link.stl",
+            name: "Gripper Right Finger Collision",
+            frame: "simulated_robotiq_85_right_finger_link",
+            position: { x: 0, y: 0, z: 0 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: {r:255,g:0,b:0,a:0.6},
+            scale: { x: 1, y: 1, z: 1 },
+            showName: false,
+            wireframe: true,
+            onClick: (e) => { e.stopPropagation() },
+            highlighted: false
+        },
+        gripperLeftInnerKnuckleCollision: {
+            shape: "package://robotiq_85_description/meshes/collision/robotiq_85_inner_knuckle_link.stl",
+            name: "Gripper Left Inner Knuckle Collision",
+            frame: "simulated_robotiq_85_left_inner_knuckle_link",
+            position: { x: 0, y: 0, z: 0 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: {r:255,g:0,b:0,a:0.6},
+            scale: { x: 1, y: 1, z: 1 },
+            showName: false,
+            wireframe: true,
+            onClick: (e) => { e.stopPropagation() },
+            highlighted: false
+        },
+        gripperRightInnerKnuckleCollision: {
+            shape: "package://robotiq_85_description/meshes/collision/robotiq_85_inner_knuckle_link.stl",
+            name: "Gripper Right Inner Knuckle Collision",
+            frame: "simulated_robotiq_85_right_inner_knuckle_link",
+            position: { x: 0, y: 0, z: 0 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: {r:255,g:0,b:0,a:0.6},
+            scale: { x: 1, y: 1, z: 1 },
+            showName: false,
+            wireframe: true,
+            onClick: (e) => { e.stopPropagation() },
+            highlighted: false
+        },
+        gripperLeftFingerTipCollision: {
+            shape: "package://robotiq_85_description/meshes/collision/robotiq_85_finger_tip_link.stl",
+            name: "Gripper Left Finger Tip Collision",
+            frame: "simulated_robotiq_85_left_finger_tip_link",
+            position: { x: 0, y: 0, z: 0 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: {r:255,g:0,b:0,a:0.6},
+            scale: { x: 1, y: 1, z: 1 },
+            showName: false,
+            wireframe: true,
+            onClick: (e) => { e.stopPropagation() },
+            highlighted: false
+        },
+        gripperRightFingerTipCollision: {
+            shape: "package://robotiq_85_description/meshes/collision/robotiq_85_finger_tip_link.stl",
+            name: "Gripper Right Finger Tip Collision",
+            frame: "simulated_robotiq_85_right_finger_tip_link",
+            position: { x: 0, y: 0, z: 0 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: {r:255,g:0,b:0,a:0.6},
+            scale: { x: 1, y: 1, z: 1 },
+            showName: false,
+            wireframe: true,
+            onClick: (e) => { e.stopPropagation() },
+            highlighted: false
         }
     },
     lines: {
-        // line1: {
-        //   name: "Line1",
-        //   frame: "world",
-        //   width: 1,
-        //   vertices: [{position:{x:0,y:0,z:0},color:{r:0,g:0,b:0}},
-        //               {position:{x:1,y:0,z:0},color:{r:255,g:0,b:0}},
-        //               {position:{x:1,y:1,z:0},color:{r:255,g:255,b:0}},
-        //               {position:{x:0,y:1,z:0},color:{r:0,g:255,b:0}},
-        //               {position:{x:0,y:1,z:1},color:{r:0,g:255,b:255}},
-        //               {position:{x:0,y:0,z:1},color:{r:0,g:0,b:255}},
-        //               {position:{x:1,y:0,z:1},color:{r:255,g:0,b:255}},
-        //               {position:{x:1,y:1,z:1},color:{r:255,g:255,b:255}}],
-        //   highlighted: false
-        // }
+        line1: {
+          name: "Line1",
+          frame: "world",
+          width: 1,
+          vertices: [{position:{x:0,y:0,z:0},color:{r:0,g:0,b:0}},
+                      {position:{x:1,y:0,z:0},color:{r:255,g:0,b:0}},
+                      {position:{x:1,y:1,z:0},color:{r:255,g:255,b:0}},
+                      {position:{x:0,y:1,z:0},color:{r:0,g:255,b:0}},
+                      {position:{x:0,y:1,z:1},color:{r:0,g:255,b:255}},
+                      {position:{x:0,y:0,z:1},color:{r:0,g:0,b:255}},
+                      {position:{x:1,y:0,z:1},color:{r:255,g:0,b:255}},
+                      {position:{x:1,y:1,z:1},color:{r:255,g:255,b:255}}],
+          hidden: true
+        }
     },
     hulls: {
         usage: {
-          name: 'Robot Space Usage',
-          frame: 'world',
-          vertices: [
-            {x:-0.5,y:-0.5,z:0},
-            {x:0.5,y:-0.5,z:0},
-            {x:0.5,y:0.5,z:0},
-            {x:-0.5,y:0.5,z:0},
-            {x:-0.5,y:0.5,z:1},
-            {x:-0.5,y:-0.5,z:1},
-            {x:0.5,y:-0.5,z:1},
-            {x:0.5,y:0.5,z:1},
-            {x:-0.75,y:0,z:0.5},
-            {x:0.75,y:0,z:0.5},
-            {x:0,y:0.75,z:0.5},
-            {x:0,y:-0.75,z:0.5},
-          ],
-          color:{ r: 10, g: 200, b: 235, a: (time)=>(Math.sin(time/1000)/6+0.25) },
-          wireframe: false,
-          highlighted: false,
-          showName: true,
-          onClick: ()=>console.log('Space Usage')
+            name: 'Robot Space Usage',
+            frame: 'world',
+            vertices: [
+                { x: -0.5, y: -0.5, z: 0 },
+                { x: 0.5, y: -0.5, z: 0 },
+                { x: 0.5, y: 0.5, z: 0 },
+                { x: -0.5, y: 0.5, z: 0 },
+                { x: -0.5, y: 0.5, z: 1 },
+                { x: -0.5, y: -0.5, z: 1 },
+                { x: 0.5, y: -0.5, z: 1 },
+                { x: 0.5, y: 0.5, z: 1 },
+                { x: -0.75, y: 0, z: 0.5 },
+                { x: 0.75, y: 0, z: 0.5 },
+                { x: 0, y: 0.75, z: 0.5 },
+                { x: 0, y: -0.75, z: 0.5 },
+            ],
+            color: { r: 10, g: 200, b: 235, a: (time) => (Math.sin(time / 1000) / 6 + 0.25) },
+            wireframe: false,
+            highlighted: false,
+            showName: false,
+            hidden: true,
+            onClick: () => console.log('Space Usage')
         }
     },
     displayTfs: false,
@@ -750,11 +867,11 @@ Movement.args = {
             color: { r: 255, g: 10, b: 10, a: 1 },
             scale: { x: 0.5, y: 0.5, z: 0.5 },
             highlighted: true,
-            onClick: () => {console.log('cube')},
-            onPointerOver: () => {console.log('hover')},
-            onPointerOut: () => {console.log('hover out')}
-          }, 
-          translateCube: {
+            onClick: () => { console.log('cube') },
+            onPointerOver: () => { console.log('hover') },
+            onPointerOut: () => { console.log('hover out') }
+        },
+        translateCube: {
             shape: "cube",
             name: "Translate Cube (Async)",
             frame: "static",
@@ -763,13 +880,13 @@ Movement.args = {
             color: { r: 10, g: 10, b: 10, a: 1 },
             scale: { x: 0.5, y: 0.5, z: 0.5 },
             highlighted: false,
-            onClick: () => {console.log('cube')},
-            onPointerOver: () => {console.log('hover')},
-            onPointerOut: () => {console.log('hover out')},
+            onClick: () => { console.log('cube') },
+            onPointerOver: () => { console.log('hover') },
+            onPointerOut: () => { console.log('hover out') },
             transformMode: 'translate',
-            onMove: (transform)=>console.log(transform)
-          },
-          rotateCube: {
+            onMove: (transform) => console.log(transform)
+        },
+        rotateCube: {
             shape: "cube",
             name: "Rotate Cube",
             frame: "static",
@@ -778,20 +895,20 @@ Movement.args = {
             color: { r: 10, g: 255, b: 10, a: 1 },
             scale: { x: 0.5, y: 0.5, z: 0.5 },
             highlighted: false,
-            onClick: () => {console.log('cube')},
-            onPointerOver: () => {console.log('hover')},
-            onPointerOut: () => {console.log('hover out')},
+            onClick: () => { console.log('cube') },
+            onPointerOver: () => { console.log('hover') },
+            onPointerOut: () => { console.log('hover out') },
             transformMode: 'rotate',
             onMove: (transform) => {
-              useSceneStore.getState().setItemRotation('rotateCube',{
-                x:transform.local.quaternion.x,
-                y:transform.local.quaternion.y,
-                z:transform.local.quaternion.z,
-                w:transform.local.quaternion.w
-              });
+                useSceneStore.getState().setItemRotation('rotateCube', {
+                    x: transform.local.quaternion.x,
+                    y: transform.local.quaternion.y,
+                    z: transform.local.quaternion.z,
+                    w: transform.local.quaternion.w
+                });
             }
-          },
-          scaleCube: {
+        },
+        scaleCube: {
             shape: "cube",
             name: "Scale Cube",
             frame: "static",
@@ -800,18 +917,18 @@ Movement.args = {
             color: { r: 10, g: 10, b: 255, a: 1 },
             scale: { x: 0.5, y: 0.5, z: 0.5 },
             highlighted: false,
-            onClick: () => {console.log('cube')},
-            onPointerOver: () => {console.log('hover')},
-            onPointerOut: () => {console.log('hover out')},
+            onClick: () => { console.log('cube') },
+            onPointerOver: () => { console.log('hover') },
+            onPointerOut: () => { console.log('hover out') },
             transformMode: 'scale',
             onMove: (transform) => {
-              useSceneStore.getState().setItemScale('scaleCube',{
-                x:transform.local.scale.x,
-                y:transform.local.scale.y,
-                z:transform.local.scale.z,
-              });
+                useSceneStore.getState().setItemScale('scaleCube', {
+                    x: transform.local.scale.x,
+                    y: transform.local.scale.y,
+                    z: transform.local.scale.z,
+                });
             }
-          }
+        }
     },
     lines: {},
     hulls: {},
@@ -831,7 +948,7 @@ Animation.args = {
     tfs: {
         static: {
             frame: 'world',
-            translation: { x: (time=>Math.cos(time/1000)), y: (time)=>Math.sin(time/1000), z: 0 },
+            translation: { x: (time => Math.cos(time / 1000)), y: (time) => Math.sin(time / 1000), z: 0 },
             rotation: { w: 1, x: 0, y: 0, z: 0 }
         }
     },
@@ -840,42 +957,42 @@ Animation.args = {
             shape: "cube",
             name: "Immovable Cube",
             frame: "static",
-            position: { x: 0, y: 0, z: (time)=>Math.sin(time/1000)+1},
+            position: { x: 0, y: 0, z: (time) => Math.sin(time / 1000) + 1 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: (time)=>(Math.sin(time/1000)/2+0.5)*255, g: 10, b: 10, a: 1 },
+            color: { r: (time) => (Math.sin(time / 1000) / 2 + 0.5) * 255, g: 10, b: 10, a: 1 },
             scale: { x: 0.5, y: 0.5, z: 0.5 },
             highlighted: true,
-            onClick: () => {console.log('cube')},
-            onPointerOver: () => {console.log('hover')},
-            onPointerOut: () => {console.log('hover out')}
-          }, 
-          translateCube: {
+            onClick: () => { console.log('cube') },
+            onPointerOver: () => { console.log('hover') },
+            onPointerOut: () => { console.log('hover out') }
+        },
+        translateCube: {
             shape: "cube",
             name: "Translate Cube (Async)",
             frame: "static",
             position: { x: 1, y: 1, z: 1 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 10, g: 10, b: 10, a: (time)=>(Math.sin(time/1000)/2+0.5)},
+            color: { r: 10, g: 10, b: 10, a: (time) => (Math.sin(time / 1000) / 2 + 0.5) },
             scale: { x: 0.5, y: 0.5, z: 0.5 },
             highlighted: false,
-            onClick: () => {console.log('cube')},
-            onPointerOver: () => {console.log('hover')},
-            onPointerOut: () => {console.log('hover out')}
-          },
-          rotateCube: {
+            onClick: () => { console.log('cube') },
+            onPointerOver: () => { console.log('hover') },
+            onPointerOut: () => { console.log('hover out') }
+        },
+        rotateCube: {
             shape: "cube",
             name: "Rotate Cube",
             frame: "static",
             position: { x: 1, y: 0, z: 1 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             color: { r: 10, g: 255, b: 10, a: 1 },
-            scale: { x: 0.5, y: (time)=>Math.sin(time/1000)/2+1, z: 0.5 },
+            scale: { x: 0.5, y: (time) => Math.sin(time / 1000) / 2 + 1, z: 0.5 },
             highlighted: false,
-            onClick: () => {console.log('cube')},
-            onPointerOver: () => {console.log('hover')},
-            onPointerOut: () => {console.log('hover out')}
-          },
-          scaleCube: {
+            onClick: () => { console.log('cube') },
+            onPointerOver: () => { console.log('hover') },
+            onPointerOut: () => { console.log('hover out') }
+        },
+        scaleCube: {
             shape: "cube",
             name: "Scale Cube",
             frame: "static",
@@ -884,10 +1001,10 @@ Animation.args = {
             color: { r: 10, g: 10, b: 255, a: 1 },
             scale: { x: 0.5, y: 0.5, z: 0.5 },
             highlighted: false,
-            onClick: () => {console.log('cube')},
-            onPointerOver: () => {console.log('hover')},
-            onPointerOut: () => {console.log('hover out')}
-          }
+            onClick: () => { console.log('cube') },
+            onPointerOver: () => { console.log('hover') },
+            onPointerOut: () => { console.log('hover out') }
+        }
     },
     lines: {},
     hulls: {},
@@ -908,22 +1025,22 @@ let debugItems = {};
 var y = -10;
 var x = -12;
 
-Object.keys(MeshLookupTable).forEach((key,i)=>{
-    if (x===0){
-    x += 2;
-    }else if (x>0){
-    if(x % 10 ===0){
-        y += 2;
-        x = -10;
-    }else{
+Object.keys(MeshLookupTable).forEach((key, i) => {
+    if (x === 0) {
         x += 2;
-    }
-    }else{
-    x += 2;
+    } else if (x > 0) {
+        if (x % 10 === 0) {
+            y += 2;
+            x = -10;
+        } else {
+            x += 2;
+        }
+    } else {
+        x += 2;
     }
     debugTfs[`${i}`] = {
         name: `${i}`,
-        translation: {x: x, y:y, z: 0},
+        translation: { x: x, y: y, z: 0 },
         rotation: { w: 1, x: 0, y: 0, z: 0 }
     };
     debugItems[key] = {

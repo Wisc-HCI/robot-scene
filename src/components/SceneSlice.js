@@ -33,6 +33,7 @@ export const SceneSlice = (set) => ({
   setItemColor: (key, color) => set(state => {state.items[key].color = color}),
   setItemWireframe: (key, wireframe) => set(state => {state.items[key].wireframe = wireframe}),
   setItemHighlighted: (key, value) => set(state => {state.items[key].highlighted = value}),
+  setItemHidden: (key, value) => set(state => {state.items[key].hidden = value}),
   setItemOnClick: (key, fn) => set(state => {state.items[key].onClick = fn}),
   setItemOnPointerOver: (key, fn) => set(state => {state.items[key].onPointerOver = fn}),
   setItemOnPointerOut: (key, fn) => set(state => {state.items[key].onPointerOut = fn}),
@@ -41,9 +42,10 @@ export const SceneSlice = (set) => ({
   // Line mutation
   setLineName: (key, name) => set(state => {state.lines[key].name = name}),
   setLineWidth: (key, width) => set(state => {state.lines[key].width = width}),
-  setLineVertices: (key, vertices) => set(state => {state.items.vertices = vertices}),
+  setLineVertices: (key, vertices) => set(state => {state.items[key].vertices = vertices}),
   addLineVertex: (key, vertex) => set(state => {state.lines[key].vertices.push(vertex)}),
   setLineVertex: (key, index, vertex) => set(state => {state.lines[key].vertices[index] = vertex}),
+  setLineHidden: (key, value) => set(state => {state.lines[key].hidden = value}),
   removeLineVertex: (key, index) => set(state => {state.lines[key].vertices.splice(index, 1)}),
   // TF mutation
   setTfTranslation: (key, translation) => set(state => {state.tfs[key].translation = translation}),
@@ -57,6 +59,7 @@ export const SceneSlice = (set) => ({
   setHullColor: (key, color) => set(state => {state.hulls[key].scale = color}),
   setHullWireframe: (key, wireframe) => set(state => {state.hulls[key].wireframe = wireframe}),
   setHullHighlighted: (key, value) => set(state => {state.hulls[key].highlighted = value}),
+  setHullHidden: (key, value) => set(state => {state.hulls[key].hidden = value}),
   setHullOnClick: (key, fn) => set(state => {state.hulls[key].onClick = fn}),
   setHullOnPointerOver: (key, fn) => set(state => {state.hulls[key].onPointerOver = fn}),
   setHullOnPointerOut: (key, fn) => set(state => {state.hulls[key].onPointerOut = fn}),

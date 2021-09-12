@@ -4,7 +4,7 @@ import { useGLTF } from '@react-three/drei'
 export default function Model(props) {
   const { nodes } = useGLTF(RobotiqCollision85BaseLink)
   return (
-    [{type:'raw',rotation:[Math.PI/2,0,0],geometry:nodes.mesh_0.geometry, material:nodes.mesh_0.material}]
+    [{ type: 'group', rotation:[-Math.PI/2,0,0], children: [{ type: 'raw', geometry: nodes.mesh_0.geometry, material: nodes.mesh_0.material }] }]
   )
 }
 

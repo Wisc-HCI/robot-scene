@@ -3,30 +3,31 @@ import { Html } from '@react-three/drei';
 // import useSceneStore from './SceneStore';
 import { Tag } from 'antd';
 
-export default function Hull({hullKey, node, store}) {
-  
-  const [ name, showName, onClick, onPointerOver, onPointerOut ] =
-    store(useCallback(state=>([
-      state.items[hullKey]?.name,
-      state.items[hullKey]?.showName,
-      state.items[hullKey]?.onClick,
-      state.items[hullKey]?.onPointerOver,
-      state.items[hullKey]?.onPointerOut
+export default function Hull({ hullKey, node, store }) {
+
+  const [name, showName, onClick, onPointerOver, onPointerOut, hidden] =
+    store(useCallback(state => ([
+      state.hulls[hullKey].name,
+      state.hulls[hullKey].showName,
+      state.hulls[hullKey].onClick,
+      state.hulls[hullKey].onPointerOver,
+      state.hulls[hullKey].onPointerOut,
+      state.hulls[hullKey].hidden
     ]), [hullKey]))
 
   const ref = useRef()
 
   return (
-    <group ref={ref} up={[0,0,1]}>
-      <group 
-        up={[0,0,1]}
-        onPointerDown={onClick} 
-        onPointerOver={onPointerOver} 
+    <group ref={ref} up={[0, 0, 1]} visible={!hidden}>
+      <group
+        up={[0, 0, 1]}
+        onPointerDown={onClick}
+        onPointerOver={onPointerOver}
         onPointerOut={onPointerOut}>
         {node}
       </group>
       {showName && (
-        <Html distanceFactor={7} position={[0, 1, 0]}>
+        <Html distanceFactor={2} position={[0, 0, 0.5]}>
           <Tag style={{ opacity: 0.75 }} className="disable-text-selection">
             {name}
           </Tag>

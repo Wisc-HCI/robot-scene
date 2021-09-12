@@ -152,6 +152,11 @@ var SceneSlice = function SceneSlice(set) {
         state.items[key].highlighted = value;
       });
     },
+    setItemHidden: function setItemHidden(key, value) {
+      return set(function (state) {
+        state.items[key].hidden = value;
+      });
+    },
     setItemOnClick: function setItemOnClick(key, fn) {
       return set(function (state) {
         state.items[key].onClick = fn;
@@ -190,7 +195,7 @@ var SceneSlice = function SceneSlice(set) {
     },
     setLineVertices: function setLineVertices(key, vertices) {
       return set(function (state) {
-        state.items.vertices = vertices;
+        state.items[key].vertices = vertices;
       });
     },
     addLineVertex: function addLineVertex(key, vertex) {
@@ -201,6 +206,11 @@ var SceneSlice = function SceneSlice(set) {
     setLineVertex: function setLineVertex(key, index, vertex) {
       return set(function (state) {
         state.lines[key].vertices[index] = vertex;
+      });
+    },
+    setLineHidden: function setLineHidden(key, value) {
+      return set(function (state) {
+        state.lines[key].hidden = value;
       });
     },
     removeLineVertex: function removeLineVertex(key, index) {
@@ -258,6 +268,11 @@ var SceneSlice = function SceneSlice(set) {
     setHullHighlighted: function setHullHighlighted(key, value) {
       return set(function (state) {
         state.hulls[key].highlighted = value;
+      });
+    },
+    setHullHidden: function setHullHidden(key, value) {
+      return set(function (state) {
+        state.hulls[key].hidden = value;
       });
     },
     setHullOnClick: function setHullOnClick(key, fn) {
