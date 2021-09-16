@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Circle } from "@react-three/drei";
 import { EffectComposer, Outline, SMAA } from "@react-three/postprocessing";
@@ -43,9 +43,19 @@ export default function Content(props) {
 
   const { displayTfs, displayGrid, isPolar, 
           backgroundColor, planeColor, 
-          highlightColor, plane, fov, store } = props;
+          highlightColor, plane, fov, store,
+          paused
+        } = props;
 
-  const camera = useThree((state) => state.camera);
+  const [camera, clock] = useThree((state) => [state.camera,state.clock]);
+
+  if (clock.running && paused) {
+    clock.stop();
+    clock.start();
+    clock.stop();
+  } else if (!clock.running && !paused) {
+    clock.start();
+  }
 
   camera.up.set(0,0,1);
   camera.fov = fov ? fov : 60;

@@ -30,6 +30,10 @@ function SceneLine(props) {
       width = _store.width,
       hidden = _store.hidden;
 
+  if (vertices.length === 0) {
+    return null;
+  }
+
   return /*#__PURE__*/_react.default.createElement(_drei.Line, {
     visible: !hidden,
     points: vertices.map(function (vertex) {

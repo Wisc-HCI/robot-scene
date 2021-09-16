@@ -9,6 +9,10 @@ export default function SceneLine(props) {
     hidden: state.lines[lineKey].hidden
   }),[lineKey]));
 
+  if (vertices.length === 0) {
+    return null
+  }
+
   return (
     <Line
         visible={!hidden}

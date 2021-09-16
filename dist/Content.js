@@ -110,10 +110,24 @@ function Content(props) {
       highlightColor = props.highlightColor,
       plane = props.plane,
       fov = props.fov,
-      store = props.store;
-  var camera = (0, _fiber.useThree)(function (state) {
-    return state.camera;
-  });
+      store = props.store,
+      paused = props.paused;
+
+  var _useThree = (0, _fiber.useThree)(function (state) {
+    return [state.camera, state.clock];
+  }),
+      _useThree2 = _slicedToArray(_useThree, 2),
+      camera = _useThree2[0],
+      clock = _useThree2[1];
+
+  if (clock.running && paused) {
+    clock.stop();
+    clock.start();
+    clock.stop();
+  } else if (!clock.running && !paused) {
+    clock.start();
+  }
+
   camera.up.set(0, 0, 1);
   camera.fov = fov ? fov : 60;
   camera.updateProjectionMatrix();

@@ -189,6 +189,7 @@ RandomShapes.args = {
     highlightColor: '#ffffff',
     plane: -0.75,
     fov: 60,
+    paused: false,
     onPointerMissed: () => console.log('Missed Click')
 }
 export const EvD = Template.bind({});
@@ -801,14 +802,16 @@ EvD.args = {
           name: "Line1",
           frame: "world",
           width: 1,
-          vertices: [{position:{x:0,y:0,z:0},color:{r:0,g:0,b:0}},
-                      {position:{x:1,y:0,z:0},color:{r:255,g:0,b:0}},
-                      {position:{x:1,y:1,z:0},color:{r:255,g:255,b:0}},
-                      {position:{x:0,y:1,z:0},color:{r:0,g:255,b:0}},
-                      {position:{x:0,y:1,z:1},color:{r:0,g:255,b:255}},
-                      {position:{x:0,y:0,z:1},color:{r:0,g:0,b:255}},
-                      {position:{x:1,y:0,z:1},color:{r:255,g:0,b:255}},
-                      {position:{x:1,y:1,z:1},color:{r:255,g:255,b:255}}],
+          vertices: [
+            {position:{x:0,y:0,z:0},color:{r:0,g:0,b:0}},
+            {position:{x:1,y:0,z:0},color:{r:255,g:0,b:0}},
+            {position:{x:1,y:1,z:0},color:{r:255,g:255,b:0}},
+            {position:{x:0,y:1,z:0},color:{r:0,g:255,b:0}},
+            {position:{x:0,y:1,z:1},color:{r:0,g:255,b:255}},
+            {position:{x:0,y:0,z:1},color:{r:0,g:0,b:255}},
+            {position:{x:1,y:0,z:1},color:{r:255,g:0,b:255}},
+            {position:{x:1,y:1,z:1},color:{r:255,g:255,b:255}}
+        ],
           hidden: true
         }
     },
@@ -846,6 +849,7 @@ EvD.args = {
     highlightColor: '#ffffff',
     plane: -0.75,
     fov: 60,
+    paused: false,
     onPointerMissed: () => console.log('Missed Click')
 }
 export const Movement = Template.bind({});
@@ -940,6 +944,7 @@ Movement.args = {
     highlightColor: '#ffffff',
     plane: -0.75,
     fov: 60,
+    paused: false,
     onPointerMissed: () => console.log('Missed Click')
 }
 
@@ -1016,6 +1021,7 @@ Animation.args = {
     highlightColor: '#ffffff',
     plane: -0.75,
     fov: 60,
+    paused: false,
     onPointerMissed: () => console.log('Missed Click')
 }
 
@@ -1072,6 +1078,7 @@ MeshDebugging.args = {
     highlightColor: '#ffffff',
     plane: -0.75,
     fov: 60,
+    paused: false,
     onPointerMissed: () => console.log('Missed Click')
 }
 
