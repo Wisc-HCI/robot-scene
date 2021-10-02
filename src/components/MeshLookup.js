@@ -124,13 +124,20 @@ import S1 from
 import W2 from
 './MeshLoaders/Baxter/wrist/W2';
 //--------------------------------------------------Ur3
-import Ur3Base from './MeshLoaders/Ur3/base';
-import Ur3Forearm from './MeshLoaders/Ur3/forearm';
-import Ur3Shoulder from './MeshLoaders/Ur3/shoulder';
-import Ur3Upperarm from './MeshLoaders/Ur3/upperarm';
-import Ur3Wrist1 from './MeshLoaders/Ur3/wrist1';
-import Ur3Wrist2 from './MeshLoaders/Ur3/wrist2';
-import Ur3Wrist3 from './MeshLoaders/Ur3/wrist3';
+import Ur3Base from './MeshLoaders/Ur3/visual/base';
+import Ur3Forearm from './MeshLoaders/Ur3/visual/forearm';
+import Ur3Shoulder from './MeshLoaders/Ur3/visual/shoulder';
+import Ur3Upperarm from './MeshLoaders/Ur3/visual/upperarm';
+import Ur3Wrist1 from './MeshLoaders/Ur3/visual/wrist1';
+import Ur3Wrist2 from './MeshLoaders/Ur3/visual/wrist2';
+import Ur3Wrist3 from './MeshLoaders/Ur3/visual/wrist3';
+import Ur3BaseCollision from './MeshLoaders/Ur3/collision/base';
+import Ur3ForearmCollision from './MeshLoaders/Ur3/collision/forearm';
+import Ur3ShoulderCollision from './MeshLoaders/Ur3/collision/shoulder';
+import Ur3UpperarmCollision from './MeshLoaders/Ur3/collision/upperarm';
+import Ur3Wrist1Collision from './MeshLoaders/Ur3/collision/wrist1';
+import Ur3Wrist2Collision from './MeshLoaders/Ur3/collision/wrist2';
+import Ur3Wrist3Collision from './MeshLoaders/Ur3/collision/wrist3';
 //--------------------------------------------------Ur5
 import Ur5Base from './MeshLoaders/Ur5/base';
 import Ur5Forearm from './MeshLoaders/Ur5/forearm';
@@ -299,9 +306,16 @@ const MeshLookupTable = {
     'package://ur_description/meshes/ur3/visual/forearm.dae': Ur3Forearm,
     'package://ur_description/meshes/ur3/visual/shoulder.dae' : Ur3Shoulder,
     'package://ur_description/meshes/ur3/visual/upperarm.dae' : Ur3Upperarm,
-    'package://ur_description/meshes/ur3/visual/wrist1.dae' : Ur3Wrist1, //missing
+    'package://ur_description/meshes/ur3/visual/wrist1.dae' : Ur3Wrist1, 
     'package://ur_description/meshes/ur3/visual/wrist2.dae' : Ur3Wrist2,
     'package://ur_description/meshes/ur3/visual/wrist3.dae' : Ur3Wrist3,
+    'package://ur_description/meshes/ur3/collision/base.stl' : Ur3BaseCollision,
+    'package://ur_description/meshes/ur3/collision/forearm.stl': Ur3ForearmCollision,
+    'package://ur_description/meshes/ur3/collision/shoulder.stl' : Ur3ShoulderCollision,
+    'package://ur_description/meshes/ur3/collision/upperarm.stl' : Ur3UpperarmCollision,
+    'package://ur_description/meshes/ur3/collision/wrist1.stl' : Ur3Wrist1Collision,
+    'package://ur_description/meshes/ur3/collision/wrist2.stl' : Ur3Wrist2Collision,
+    'package://ur_description/meshes/ur3/collision/wrist3.stl' : Ur3Wrist3Collision,
     //--------------------------------------------------------------------Ur5
     'package://ur_description/meshes/ur5/visual/base.dae' : Ur5Base,
     'package://ur_description/meshes/ur5/visual/forearm.dae': Ur5Forearm,
