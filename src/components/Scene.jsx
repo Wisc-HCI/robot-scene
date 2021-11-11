@@ -1,5 +1,4 @@
 import React, { Suspense } from 'react';
-import "antd/dist/antd.css";
 import { Canvas } from "@react-three/fiber";
 import { useProgress, Html } from "@react-three/drei";
 import { Progress } from 'antd';

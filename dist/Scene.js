@@ -9,13 +9,11 @@ exports.default = Scene;
 
 var _react = _interopRequireWildcard(require("react"));
 
-require("antd/dist/antd.css");
-
 var _fiber = require("@react-three/fiber");
 
 var _drei = require("@react-three/drei");
 
-var _antd2 = require("antd");
+var _antd = require("antd");
 
 var _resizeObserver = require("@juggle/resize-observer");
 
@@ -39,7 +37,7 @@ function Loading() {
   var _useProgress = (0, _drei.useProgress)(),
       progress = _useProgress.progress;
 
-  return /*#__PURE__*/_react.default.createElement(_drei.Html, null, /*#__PURE__*/_react.default.createElement(_antd2.Progress, {
+  return /*#__PURE__*/_react.default.createElement(_drei.Html, null, /*#__PURE__*/_react.default.createElement(_antd.Progress, {
     type: "circle",
     percent: progress.toPrecision(2)
   }));

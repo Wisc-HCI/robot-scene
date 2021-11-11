@@ -171,47 +171,61 @@ var _S2 = _interopRequireDefault(require("./MeshLoaders/Baxter/lower_shoulder/S1
 
 var _W3 = _interopRequireDefault(require("./MeshLoaders/Baxter/wrist/W2"));
 
-var _base = _interopRequireDefault(require("./MeshLoaders/Ur3/base"));
+var _base = _interopRequireDefault(require("./MeshLoaders/Ur3/visual/base"));
 
-var _forearm = _interopRequireDefault(require("./MeshLoaders/Ur3/forearm"));
+var _forearm = _interopRequireDefault(require("./MeshLoaders/Ur3/visual/forearm"));
 
-var _shoulder = _interopRequireDefault(require("./MeshLoaders/Ur3/shoulder"));
+var _shoulder = _interopRequireDefault(require("./MeshLoaders/Ur3/visual/shoulder"));
 
-var _upperarm = _interopRequireDefault(require("./MeshLoaders/Ur3/upperarm"));
+var _upperarm = _interopRequireDefault(require("./MeshLoaders/Ur3/visual/upperarm"));
 
-var _wrist = _interopRequireDefault(require("./MeshLoaders/Ur3/wrist1"));
+var _wrist = _interopRequireDefault(require("./MeshLoaders/Ur3/visual/wrist1"));
 
-var _wrist2 = _interopRequireDefault(require("./MeshLoaders/Ur3/wrist2"));
+var _wrist2 = _interopRequireDefault(require("./MeshLoaders/Ur3/visual/wrist2"));
 
-var _wrist3 = _interopRequireDefault(require("./MeshLoaders/Ur3/wrist3"));
+var _wrist3 = _interopRequireDefault(require("./MeshLoaders/Ur3/visual/wrist3"));
 
-var _base2 = _interopRequireDefault(require("./MeshLoaders/Ur5/base"));
+var _base2 = _interopRequireDefault(require("./MeshLoaders/Ur3/collision/base"));
 
-var _forearm2 = _interopRequireDefault(require("./MeshLoaders/Ur5/forearm"));
+var _forearm2 = _interopRequireDefault(require("./MeshLoaders/Ur3/collision/forearm"));
 
-var _shoulder2 = _interopRequireDefault(require("./MeshLoaders/Ur5/shoulder"));
+var _shoulder2 = _interopRequireDefault(require("./MeshLoaders/Ur3/collision/shoulder"));
 
-var _upperarm2 = _interopRequireDefault(require("./MeshLoaders/Ur5/upperarm"));
+var _upperarm2 = _interopRequireDefault(require("./MeshLoaders/Ur3/collision/upperarm"));
 
-var _wrist4 = _interopRequireDefault(require("./MeshLoaders/Ur5/wrist1"));
+var _wrist4 = _interopRequireDefault(require("./MeshLoaders/Ur3/collision/wrist1"));
 
-var _wrist5 = _interopRequireDefault(require("./MeshLoaders/Ur5/wrist2"));
+var _wrist5 = _interopRequireDefault(require("./MeshLoaders/Ur3/collision/wrist2"));
 
-var _wrist6 = _interopRequireDefault(require("./MeshLoaders/Ur5/wrist3"));
+var _wrist6 = _interopRequireDefault(require("./MeshLoaders/Ur3/collision/wrist3"));
 
-var _base3 = _interopRequireDefault(require("./MeshLoaders/Ur10/base"));
+var _base3 = _interopRequireDefault(require("./MeshLoaders/Ur5/base"));
 
-var _forearm3 = _interopRequireDefault(require("./MeshLoaders/Ur10/forearm"));
+var _forearm3 = _interopRequireDefault(require("./MeshLoaders/Ur5/forearm"));
 
-var _shoulder3 = _interopRequireDefault(require("./MeshLoaders/Ur10/shoulder"));
+var _shoulder3 = _interopRequireDefault(require("./MeshLoaders/Ur5/shoulder"));
 
-var _upperarm3 = _interopRequireDefault(require("./MeshLoaders/Ur10/upperarm"));
+var _upperarm3 = _interopRequireDefault(require("./MeshLoaders/Ur5/upperarm"));
 
-var _wrist7 = _interopRequireDefault(require("./MeshLoaders/Ur10/wrist1"));
+var _wrist7 = _interopRequireDefault(require("./MeshLoaders/Ur5/wrist1"));
 
-var _wrist8 = _interopRequireDefault(require("./MeshLoaders/Ur10/wrist2"));
+var _wrist8 = _interopRequireDefault(require("./MeshLoaders/Ur5/wrist2"));
 
-var _wrist9 = _interopRequireDefault(require("./MeshLoaders/Ur10/wrist3"));
+var _wrist9 = _interopRequireDefault(require("./MeshLoaders/Ur5/wrist3"));
+
+var _base4 = _interopRequireDefault(require("./MeshLoaders/Ur10/base"));
+
+var _forearm4 = _interopRequireDefault(require("./MeshLoaders/Ur10/forearm"));
+
+var _shoulder4 = _interopRequireDefault(require("./MeshLoaders/Ur10/shoulder"));
+
+var _upperarm4 = _interopRequireDefault(require("./MeshLoaders/Ur10/upperarm"));
+
+var _wrist10 = _interopRequireDefault(require("./MeshLoaders/Ur10/wrist1"));
+
+var _wrist11 = _interopRequireDefault(require("./MeshLoaders/Ur10/wrist2"));
+
+var _wrist12 = _interopRequireDefault(require("./MeshLoaders/Ur10/wrist3"));
 
 var _DBenchy = _interopRequireDefault(require("./MeshLoaders/Other/3DBenchy"));
 
@@ -413,16 +427,22 @@ var MeshLookupTable = (_MeshLookupTable = {
   'package://ur_description/meshes/ur3/visual/shoulder.dae': _shoulder.default,
   'package://ur_description/meshes/ur3/visual/upperarm.dae': _upperarm.default,
   'package://ur_description/meshes/ur3/visual/wrist1.dae': _wrist.default,
-  //missing
   'package://ur_description/meshes/ur3/visual/wrist2.dae': _wrist2.default,
   'package://ur_description/meshes/ur3/visual/wrist3.dae': _wrist3.default,
+  'package://ur_description/meshes/ur3/collision/base.stl': _base2.default,
+  'package://ur_description/meshes/ur3/collision/forearm.stl': _forearm2.default,
+  'package://ur_description/meshes/ur3/collision/shoulder.stl': _shoulder2.default,
+  'package://ur_description/meshes/ur3/collision/upperarm.stl': _upperarm2.default,
+  'package://ur_description/meshes/ur3/collision/wrist1.stl': _wrist4.default,
+  'package://ur_description/meshes/ur3/collision/wrist2.stl': _wrist5.default,
+  'package://ur_description/meshes/ur3/collision/wrist3.stl': _wrist6.default,
   //--------------------------------------------------------------------Ur5
-  'package://ur_description/meshes/ur5/visual/base.dae': _base2.default,
-  'package://ur_description/meshes/ur5/visual/forearm.dae': _forearm2.default,
-  'package://ur_description/meshes/ur5/visual/shoulder.dae': _shoulder2.default,
-  'package://ur_description/meshes/ur5/visual/upperarm.dae': _upperarm2.default,
-  'package://ur_description/meshes/ur5/visual/wrist1.dae': _wrist4.default
-}, _defineProperty(_MeshLookupTable, "package://ur_description/meshes/ur3/visual/wrist2.dae", _wrist5.default), _defineProperty(_MeshLookupTable, "package://ur_description/meshes/ur3/visual/wrist3.dae", _wrist6.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/base.dae', _base3.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/forearm.dae', _forearm3.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/shoulder.dae', _shoulder3.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/upperarm.dae', _upperarm3.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/wrist1.dae', _wrist7.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/wrist2.dae', _wrist8.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/wrist3.dae', _wrist9.default), _defineProperty(_MeshLookupTable, 'package://app/meshes/3DBenchy.stl', _DBenchy.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/MK2-Printer/MK2-Printer.stl', _MK2Printer.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/MK2-Printer.stl', _CollisionMk2Printer.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/Box/Box.stl', _Box.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/Box.stl', _CollisionBox.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/ur3e-Pedestal/Pedestal.stl', _Pedestal.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/Pedestal.stl', _CollisionPedestal.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/Table/Table.stl', _Table.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/Table.stl', _CollisionTable.default), _defineProperty(_MeshLookupTable, 'package://app/meshes/LocationMarker.stl', _LocationMarker.default), _defineProperty(_MeshLookupTable, 'package://app/meshes/OpenWaypointMarker.stl', _OpenWaypointMarker.default), _MeshLookupTable);
+  'package://ur_description/meshes/ur5/visual/base.dae': _base3.default,
+  'package://ur_description/meshes/ur5/visual/forearm.dae': _forearm3.default,
+  'package://ur_description/meshes/ur5/visual/shoulder.dae': _shoulder3.default,
+  'package://ur_description/meshes/ur5/visual/upperarm.dae': _upperarm3.default,
+  'package://ur_description/meshes/ur5/visual/wrist1.dae': _wrist7.default
+}, _defineProperty(_MeshLookupTable, "package://ur_description/meshes/ur3/visual/wrist2.dae", _wrist8.default), _defineProperty(_MeshLookupTable, "package://ur_description/meshes/ur3/visual/wrist3.dae", _wrist9.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/base.dae', _base4.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/forearm.dae', _forearm4.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/shoulder.dae', _shoulder4.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/upperarm.dae', _upperarm4.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/wrist1.dae', _wrist10.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/wrist2.dae', _wrist11.default), _defineProperty(_MeshLookupTable, 'package://ur_description/meshes/ur10/visual/wrist3.dae', _wrist12.default), _defineProperty(_MeshLookupTable, 'package://app/meshes/3DBenchy.stl', _DBenchy.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/MK2-Printer/MK2-Printer.stl', _MK2Printer.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/MK2-Printer.stl', _CollisionMk2Printer.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/Box/Box.stl', _Box.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/Box.stl', _CollisionBox.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/ur3e-Pedestal/Pedestal.stl', _Pedestal.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/Pedestal.stl', _CollisionPedestal.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/Table/Table.stl', _Table.default), _defineProperty(_MeshLookupTable, 'package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/Table.stl', _CollisionTable.default), _defineProperty(_MeshLookupTable, 'package://app/meshes/LocationMarker.stl', _LocationMarker.default), _defineProperty(_MeshLookupTable, 'package://app/meshes/OpenWaypointMarker.stl', _OpenWaypointMarker.default), _MeshLookupTable);
 exports.MeshLookupTable = MeshLookupTable;
 
 var MeshLookup = function MeshLookup(path) {
