@@ -9,7 +9,7 @@ var _three = require("three");
 
 var _threeStdlib = require("three-stdlib");
 
-var _BufferGeometryUtils = require("three/examples/jsm/utils/BufferGeometryUtils.js");
+var _BufferGeometryUtils = require("three-stdlib/utils/BufferGeometryUtils");
 
 /*
  * Box Mesh
@@ -107,7 +107,7 @@ var ARROW_GEOM = function ARROW_GEOM(params) {
   ARROW_BASE_GEOM.applyMatrix4(m);
   m.setPosition(new _three.Vector3(0, shaftLength + capLength * 0.5, 0));
   ARROW_CAP_GEOM.applyMatrix4(m);
-  return _BufferGeometryUtils.BufferGeometryUtils.mergeBufferGeometries([ARROW_CAP_GEOM, ARROW_BASE_GEOM]);
+  return (0, _BufferGeometryUtils.mergeBufferGeometries)([ARROW_CAP_GEOM, ARROW_BASE_GEOM]);
 };
 /*
  * Mesh Lookup Table

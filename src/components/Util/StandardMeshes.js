@@ -7,7 +7,7 @@ import {
 
 import { RoundedBoxGeometry } from 'three-stdlib';
 
-import { BufferGeometryUtils } from "three/examples/jsm/utils/BufferGeometryUtils.js";
+import { mergeBufferGeometries } from "three-stdlib/utils/BufferGeometryUtils";
 
 /*
  * Box Mesh
@@ -112,7 +112,7 @@ export const ARROW_GEOM = (params) => {
   m.setPosition(new Vector3(0, shaftLength + capLength * 0.5, 0));
   ARROW_CAP_GEOM.applyMatrix4(m);
 
-  return BufferGeometryUtils.mergeBufferGeometries([
+  return mergeBufferGeometries([
     ARROW_CAP_GEOM,
     ARROW_BASE_GEOM
   ]);
