@@ -1,7 +1,8 @@
 {
   "name": "robot-scene",
-  "version": "0.5.4",
-  "main": "dist/index.js",
+  "version": "0.5.5",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
   "private": false,
   "files": [
     "dist",
@@ -41,9 +42,9 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public && rm -rf docs && mv storybook-static docs",
     "clean": "rimraf dist",
+    "rollup": "rollup -c",
     "compile": "npm run clean && cross-env NODE_ENV=production babel src/components --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,stories.js,__snapshots__",
-    "generate-all": "npm run compile && npm run build-storybook",
-    "pub": "npm run generate-all && npm run build"
+    "generate-all": "npm run build-storybook && rollup -c"
   },
   "eslintConfig": {
     "extends": [
@@ -81,10 +82,19 @@
       "last 1 safari version"
     ]
   },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
   "devDependencies": {
     "@babel/cli": "^7.13.16",
-    "@babel/preset-env": "^7.14.1",
-    "@babel/preset-react": "^7.13.13",
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "@babel/preset-react": "^7.16.0",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "@rollup/plugin-url": "^6.1.0",
     "@storybook/addon-actions": "^6.3.12",
     "@storybook/addon-essentials": "^6.3.12",
     "@storybook/addon-links": "^6.3.12",
@@ -94,6 +104,8 @@
     "@storybook/react": "^6.3.12",
     "@storybook/storybook-deployer": "^2.8.10",
     "@storybook/theming": "^6.3.12",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "rollup": "^2.59.0",
+    "rollup-plugin-terser": "^7.0.2"
   }
 }

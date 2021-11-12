@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useLayoutEffect, useState, useCallback } from 'react';
 import { useThree, } from '@react-three/fiber';
-import { GhostTF } from '../TF';
-import GhostItem from '../GhostItem';
+import { GhostTF } from '../TF.jsx';
+import GhostItem from '../GhostItem.jsx';
 import { TransformControls as TransformControlsImpl } from 'three/examples/jsm/controls/TransformControls';
 // import useSceneStore from '../SceneStore';
 import pick from 'lodash.pick';
