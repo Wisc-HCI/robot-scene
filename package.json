@@ -1,6 +1,6 @@
 {
   "name": "robot-scene",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "private": false,
@@ -18,8 +18,8 @@
   },
   "dependencies": {
     "@juggle/resize-observer": "^3.3.1",
-    "@react-three/drei": "^7.2.2",
-    "@react-three/fiber": "^7.0.6",
+    "@react-three/drei": "^7.22.1",
+    "@react-three/fiber": "^7.0.19",
     "@react-three/postprocessing": "^2.0.5",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -30,21 +30,20 @@
     "react-dom": "^17.0.2",
     "react-scripts": "^4.0.3",
     "three": "^0.130.1",
-    "three-stdlib": "^2.3.1",
+    "three-stdlib": "^2.5.9",
     "web-vitals": "^1.1.2",
     "zustand": "^3.5.1"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "cross-env BABEL_ENV=production babel src -d dist",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public && rm -rf docs && mv storybook-static docs",
     "clean": "rimraf dist",
-    "rollup": "rollup -c",
     "compile": "npm run clean && cross-env NODE_ENV=production babel src/components --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,stories.js,__snapshots__",
-    "generate-all": "npm run build-storybook && npm run rollup"
+    "generate-all": "npm run compile && npm run build-storybook"
   },
   "eslintConfig": {
     "extends": [
@@ -91,10 +90,6 @@
     "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.0",
     "@babel/preset-react": "^7.16.0",
-    "@rollup/plugin-babel": "^5.3.0",
-    "@rollup/plugin-commonjs": "^21.0.1",
-    "@rollup/plugin-node-resolve": "^13.0.6",
-    "@rollup/plugin-url": "^6.1.0",
     "@storybook/addon-actions": "^6.3.12",
     "@storybook/addon-essentials": "^6.3.12",
     "@storybook/addon-links": "^6.3.12",
@@ -104,9 +99,6 @@
     "@storybook/react": "^6.3.12",
     "@storybook/storybook-deployer": "^2.8.10",
     "@storybook/theming": "^6.3.12",
-    "cross-env": "^7.0.3",
-    "rollup": "^2.59.0",
-    "rollup-plugin-import-file": "^1.0.1",
-    "rollup-plugin-terser": "^7.0.2"
+    "cross-env": "^7.0.3"
   }
 }

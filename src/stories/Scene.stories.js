@@ -299,7 +299,7 @@ EvD.args = {
             color: { r: 10, g: 10, b: 10, a: 1 },
             highlighted: false,
             showName: false,
-            onClick: (e) => { e.stopPropagation() }
+            onClick: ()=>console.log('clicked table')
         },
         bladeConveyor: {
             shape: 'conveyor',
@@ -310,7 +310,7 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             highlighted: false,
             showName: false,
-            onClick: (e) => { e.stopPropagation() }
+            onClick: ()=>console.log('clicked conveyor')
         },
         bladeConveyorCollision: {
             shape: 'conveyor_collision',
@@ -323,7 +323,7 @@ EvD.args = {
             highlighted: false,
             showName: false,
             wireframe: true,
-            onClick: (e) => { e.stopPropagation() }
+            onClick: ()=>{}
         },
         conveyorReceiver: {
             shape: 'conveyor_receiver',
@@ -334,7 +334,7 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             highlighted: false,
             showName: false,
-            onClick: (e) => { e.stopPropagation() }
+            onClick: ()=>console.log('clicked conveyor_receiver')
         },
         conveyorReceiverCollision: {
             shape: 'conveyor_receiver_collision',
@@ -347,7 +347,7 @@ EvD.args = {
             highlighted: false,
             showName: false,
             wireframe: true,
-            onClick: (e) => { e.stopPropagation() }
+            onClick: ()=>{}
         },
         knifeConveyor: {
             shape: 'conveyor',
@@ -358,7 +358,7 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             highlighted: false,
             showName: false,
-            onClick: (e) => { e.stopPropagation() }
+            onClick: ()=>console.log('clicked conveyor')
         },
         knifeConveyorCollision: {
             shape: 'conveyor_collision',
@@ -371,7 +371,7 @@ EvD.args = {
             highlighted: false,
             showName: false,
             wireframe: true,
-            onClick: (e) => { e.stopPropagation() }
+            onClick: ()=>{}
         },
         conveyorDispatcher: {
             shape: 'conveyor_dispatcher',
@@ -382,7 +382,7 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             highlighted: false,
             showName: true,
-            onClick: (e) => { e.stopPropagation() }
+            onClick: ()=>console.log('clicked conveyor_dispatcher')
         },
         conveyorDispatcherCollision: {
             shape: 'conveyor_dispatcher_collision',
@@ -395,7 +395,7 @@ EvD.args = {
             highlighted: false,
             showName: false,
             wireframe: true,
-            onClick: (e) => { e.stopPropagation() }
+            onClick: ()=>{}
         },
         pedestal: {
             shape: "package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/ur3e-Pedestal/Pedestal.stl",
@@ -407,7 +407,7 @@ EvD.args = {
             color: { r: 15, g: 15, b: 15, a: 1 },
             highlighted: false,
             showName: false,
-            onClick: (e) => { e.stopPropagation() }
+            onClick: ()=>console.log('clicked pedestal')
         },
         printer: {
             shape: "package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/MK2-Printer/MK2-Printer.stl",
@@ -418,7 +418,7 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             highlighted: false,
             showName: false,
-            onClick: (e) => { e.stopPropagation() }
+            onClick: ()=>console.log('clicked 3D printer')
         },
         blade: {
             shape: "blade",
@@ -431,7 +431,7 @@ EvD.args = {
             showName: false,
             // transformMode: 'translate',
             onMove: (t) => console.log(t),
-            onClick: (e) => { e.stopPropagation() }
+            onClick: ()=>console.log('clicked blade')
         },
         leftHandle: {
             shape: "handle_l",
@@ -442,7 +442,7 @@ EvD.args = {
             scale: { x: 0.2, y: 0.2, z: 0.2 },
             highlighted: false,
             showName: false,
-            onClick: (e) => { e.stopPropagation() }
+            onClick: ()=>console.log('clicked left handle')
         },
         rightHandle: {
             shape: "handle_r",
@@ -453,7 +453,7 @@ EvD.args = {
             scale: { x: 0.2, y: 0.2, z: 0.2 },
             highlighted: false,
             showName: false,
-            onClick: (e) => { e.stopPropagation() }
+            onClick: ()=>console.log('clicked right handle')
         },
         transportJig: {
             shape: "transport_jig",
@@ -466,7 +466,7 @@ EvD.args = {
             showName: false,
             // transformMode: 'rotate',
             onMove: (t) => console.log(t),
-            onClick: (e) => { e.stopPropagation() }
+            onClick: ()=>console.log('clicked transport jig')
         },
         assemblyJig: {
             shape: "assembly_jig",
@@ -477,7 +477,7 @@ EvD.args = {
             scale: { x: 0.2, y: 0.2, z: 0.2 },
             highlighted: false,
             showName: false,
-            onClick: (e) => { e.stopPropagation() }
+            onClick: ()=>console.log('clicked assembly jig')
         },
         assemblyJigCollision: {
             shape: "assembly_jig_collision",
@@ -490,7 +490,7 @@ EvD.args = {
             highlighted: false,
             showName: false,
             ghost: true,
-            onClick: (e) => { e.stopPropagation() }
+            onClick: ()=>{}
         },
         knifeWithTransportJig: {
             shape: "knife_with_transport_jig",
@@ -503,7 +503,7 @@ EvD.args = {
             showName: false,
             // transformMode: 'translate',
             onMove: (t) => console.log(t),
-            onClick: (e) => { e.stopPropagation() }
+            onClick: ()=>console.log('clicked knife w/ transport jig')
         },
         // base: {
         //     shape: "package://ur_description/meshes/ur3/visual/base.dae",
@@ -514,7 +514,7 @@ EvD.args = {
         //     scale: { x: 1, y: 1, z: 1 },
         //     showName: false,
         //     wireframe : true,
-        //     onClick: (e) => { e.stopPropagation() },
+        //     onClick: ()=>console.log('clicked '),
         //     highlighted: false
         // },
         shoulderLink: {
@@ -525,7 +525,7 @@ EvD.args = {
             rotation: { w: 0, x: 0, y: 0, z: 1 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>console.log('clicked robot'),
             highlighted: false,
         },
         shoulderLinkCollision:{
@@ -538,7 +538,7 @@ EvD.args = {
             color: {r:255,g:0,b:0,a:0.6},
             showName: false,
             wireframe: true,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>{},
             highlighted: false,
         },
         upperArmLink: {
@@ -549,7 +549,7 @@ EvD.args = {
             rotation: { w: 0.5, x: 0.5, y: -0.5, z: -0.5 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>console.log('clicked robot'),
             highlighted: false,
         },
        upperArmLinkCollision:{
@@ -562,7 +562,7 @@ EvD.args = {
             color: {r:255,g:0,b:0,a:0.6},
             showName: false,
             wireframe: true,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>{},
             highlighted: false,
         },
         forearmLink: {
@@ -573,7 +573,7 @@ EvD.args = {
             rotation: { w: 0.5, x: 0.5, y: -0.5, z: -0.5 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>console.log('clicked robot'),
             highlighted: false,
         },
         forearmLinkCollision: {
@@ -586,7 +586,7 @@ EvD.args = {
             color: {r:255,g:0,b:0,a:0.6},
             showName: false,
             wireframe: true,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>{},
             highlighted: false,
         },
         wrist1Link: {
@@ -597,7 +597,7 @@ EvD.args = {
             rotation: { w: 0.7071068, x: 0.7071068, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>console.log('clicked robot'),
             highlighted: false,
         },
         wrist1LinkCollision: {
@@ -610,7 +610,7 @@ EvD.args = {
             color: {r:255,g:0,b:0,a:0.6},
             showName: false,
             wireframe: true,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>{},
             highlighted: false,
         },
 
@@ -622,7 +622,7 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>console.log('clicked robot'),
             highlighted: false,
         },
         wrist2LinkCollision: {
@@ -635,7 +635,7 @@ EvD.args = {
             color: {r:255,g:0,b:0,a:0.6},
             showName: false,
             wireframe: true,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>{},
             highlighted: false,
         },
         wrist3Link: {
@@ -646,7 +646,7 @@ EvD.args = {
             rotation: { w: 0.7071068, x: 0.7071068, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>console.log('clicked robot'),
             highlighted: false,
         },
         wrist3LinkCollision:{
@@ -659,7 +659,7 @@ EvD.args = {
             color: {r:255,g:0,b:0,a:0.6},
             showName: false,
             wireframe: true,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>{},
             highlighted: false,
         },
         gripperBaseLink: {
@@ -670,7 +670,7 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>console.log('clicked robot'),
             highlighted: false
         },
         gripperLeftKnuckle: {
@@ -681,7 +681,7 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>console.log('clicked robot'),
             highlighted: false
         },
         gripperRightKnuckle: {
@@ -692,7 +692,7 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>console.log('clicked robot'),
             highlighted: false
         },
         gripperLeftFinger: {
@@ -703,7 +703,7 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>console.log('clicked robot'),
             highlighted: false
         },
         gripperRightFinger: {
@@ -714,7 +714,7 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>console.log('clicked robot'),
             highlighted: false
         },
         gripperLeftInnerKnuckle: {
@@ -725,7 +725,7 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>console.log('clicked robot'),
             highlighted: false
         },
         gripperRightInnerKnuckle: {
@@ -736,7 +736,7 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>console.log('clicked robot'),
             highlighted: false
         },
         gripperLeftFingerTip: {
@@ -747,7 +747,7 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>console.log('clicked robot'),
             highlighted: false
         },
         gripperRightFingerTip: {
@@ -758,7 +758,7 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>console.log('clicked robot'),
             highlighted: false
         },
         gripperBaseLinkCollision: {
@@ -771,7 +771,7 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
             wireframe: true,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>{},
             highlighted: false
         },
         gripperLeftKnuckleCollision: {
@@ -783,7 +783,7 @@ EvD.args = {
             color: {r:255,g:0,b:0,a:0.6},
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>{},
             highlighted: false
         },
         gripperRightKnuckleCollision: {
@@ -796,7 +796,7 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
             wireframe: true,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>{},
             highlighted: false
         },
         gripperLeftFingerCollision: {
@@ -809,7 +809,7 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
             wireframe: true,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>{},
             highlighted: false
         },
         gripperRightFingerCollision: {
@@ -822,7 +822,7 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
             wireframe: true,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>{},
             highlighted: false
         },
         gripperLeftInnerKnuckleCollision: {
@@ -835,7 +835,7 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
             wireframe: true,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>{},
             highlighted: false
         },
         gripperRightInnerKnuckleCollision: {
@@ -848,7 +848,7 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
             wireframe: true,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>{},
             highlighted: false
         },
         gripperLeftFingerTipCollision: {
@@ -861,7 +861,7 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
             wireframe: true,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>{},
             highlighted: false
         },
         gripperRightFingerTipCollision: {
@@ -874,7 +874,7 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
             wireframe: true,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>{},
             highlighted: false
         },
         base: {
@@ -885,7 +885,7 @@ EvD.args = {
             rotation: { w: 0, x: 0, y: 0, z: 1 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>console.log('clicked '),
             highlighted: false
         },
         ur3Base:{
@@ -897,7 +897,7 @@ EvD.args = {
             color: {r:255,g:0,b:0,a:0.6},
             scale: { x: 1, y: 1, z: 1 },
             wireframe : true,
-            onClick: (e) => { e.stopPropagation() },
+            onClick: ()=>console.log('clicked '),
             highlighted:true
         },
     },
