@@ -1,7 +1,7 @@
 import React, { useRef, useCallback, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Circle } from "@react-three/drei";
-import { EffectComposer, Outline, SMAA } from "@react-three/postprocessing";
+import { EffectComposer, Outline } from "@react-three/postprocessing";
 import TF, {WorldTF} from "./TF";
 import Item from "./Item";
 import Hull from "./Hull";
@@ -109,6 +109,7 @@ export default function Content(props) {
   const movableItems = items.filter(item=>['translate','rotate','scale'].indexOf(item.transformMode)>-1);
 
   const ambientLightRef = useRef();
+  const pointLightRef = useRef();
   const directionalLightRef = useRef();
   const orbitControls = useRef();
 
@@ -155,7 +156,7 @@ export default function Content(props) {
   return (
     <React.Fragment>
       <OrbitControls ref={orbitControls}/>
-      <pointLight intensity={0.5} position={[-1,-3,3]} color='#FFFAEE'/>
+      <pointLight ref={pointLightRef} intensity={0.5} position={[-1,-3,3]} color='#FFFAEE'/>
       <AmbientLight ref={ambientLightRef} intensity={0.7} color='white'/>
       <DirectionalLight
         ref={directionalLightRef}
@@ -201,7 +202,7 @@ export default function Content(props) {
         ))
       }
 
-      <EffectComposer autoClear={false} multisampling={0}>
+      <EffectComposer autoClear={false}>
         <Outline 
           selection={highlightedRefs} 
           xRay
@@ -210,7 +211,6 @@ export default function Content(props) {
           pulseSpeed={0.3}
           visibleEdgeColor={highlightColor ? highlightColor : '#ffffff'}
           hiddenEdgeColor={highlightColor ? highlightColor : '#ffffff'}/>
-        <SMAA/>
       </EffectComposer>
 
     </React.Fragment>

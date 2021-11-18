@@ -214,6 +214,7 @@ function Content(props) {
     return ['translate', 'rotate', 'scale'].indexOf(item.transformMode) > -1;
   });
   var ambientLightRef = (0, _react.useRef)();
+  var pointLightRef = (0, _react.useRef)();
   var directionalLightRef = (0, _react.useRef)();
   var orbitControls = (0, _react.useRef)();
   var planeRGB = (0, _ColorConversion.hexToRgb)(planeColor ? planeColor : "a8a8a8");
@@ -260,6 +261,7 @@ function Content(props) {
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_drei.OrbitControls, {
     ref: orbitControls
   }), /*#__PURE__*/_react.default.createElement("pointLight", {
+    ref: pointLightRef,
     intensity: 0.5,
     position: [-1, -3, 3],
     color: "#FFFAEE"
@@ -317,8 +319,7 @@ function Content(props) {
       store: store
     });
   }), /*#__PURE__*/_react.default.createElement(_postprocessing.EffectComposer, {
-    autoClear: false,
-    multisampling: 0
+    autoClear: false
   }, /*#__PURE__*/_react.default.createElement(_postprocessing.Outline, {
     selection: highlightedRefs,
     xRay: true,
@@ -327,5 +328,5 @@ function Content(props) {
     pulseSpeed: 0.3,
     visibleEdgeColor: highlightColor ? highlightColor : '#ffffff',
     hiddenEdgeColor: highlightColor ? highlightColor : '#ffffff'
-  }), /*#__PURE__*/_react.default.createElement(_postprocessing.SMAA, null)));
+  })));
 }
