@@ -15,15 +15,15 @@ var _drei = require("@react-three/drei");
 
 var _postprocessing = require("@react-three/postprocessing");
 
-var _TF = _interopRequireWildcard(require("./TF.jsx"));
+var _TF = _interopRequireWildcard(require("./TF"));
 
-var _Item = _interopRequireDefault(require("./Item.jsx"));
+var _Item = _interopRequireDefault(require("./Item"));
 
-var _Hull = _interopRequireDefault(require("./Hull.jsx"));
+var _Hull = _interopRequireDefault(require("./Hull"));
 
-var _Line = _interopRequireDefault(require("./Line.jsx"));
+var _Line = _interopRequireDefault(require("./Line"));
 
-var _Light = require("./Util/Light.jsx");
+var _Light = require("./Util/Light");
 
 var _MaterialMaker = require("./Util/MaterialMaker");
 

@@ -17,7 +17,7 @@ var _antd = require("antd");
 
 var _resizeObserver = require("@juggle/resize-observer");
 
-var _Content = _interopRequireDefault(require("./Content.jsx"));
+var _Content = _interopRequireDefault(require("./Content"));
 
 var THREE = _interopRequireWildcard(require("three"));
 

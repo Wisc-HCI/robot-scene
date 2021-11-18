@@ -22,7 +22,7 @@ Object.defineProperty(exports, "useSceneStore", {
   }
 });
 
-var _Scene = _interopRequireDefault(require("./Scene.jsx"));
+var _Scene = _interopRequireDefault(require("./Scene"));
 
 var _SceneStore = _interopRequireDefault(require("./SceneStore"));
 

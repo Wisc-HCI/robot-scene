@@ -3,7 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { useProgress, Html } from "@react-three/drei";
 import { Progress } from 'antd';
 import { ResizeObserver } from "@juggle/resize-observer";
-import Content from './Content.jsx';
+import Content from './Content';
 import * as THREE from 'three';
 import useSceneStore from './SceneStore'
 

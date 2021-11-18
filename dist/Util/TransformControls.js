@@ -11,9 +11,9 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _fiber = require("@react-three/fiber");
 
-var _TF = require("../TF.jsx");
+var _TF = require("../TF");
 
-var _GhostItem = _interopRequireDefault(require("../GhostItem.jsx"));
+var _GhostItem = _interopRequireDefault(require("../GhostItem"));
 
 var _TransformControls = require("three/examples/jsm/controls/TransformControls");
 

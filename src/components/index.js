@@ -1,4 +1,4 @@
-import Scene from './Scene.jsx';
+import Scene from './Scene';
 import useSceneStore from './SceneStore';
 import { SceneSlice } from './SceneSlice';
 
