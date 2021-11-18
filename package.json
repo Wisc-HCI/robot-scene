@@ -1,8 +1,7 @@
 {
   "name": "robot-scene",
-  "version": "0.5.7",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
+  "version": "0.5.8",
+  "main": "dist/index.js",
   "private": false,
   "files": [
     "dist",
