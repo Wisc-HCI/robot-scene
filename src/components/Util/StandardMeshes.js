@@ -46,7 +46,7 @@ export const SPHERE_GEOM = (params) => {
 
   radius = radius === undefined ? sphereGeomDefaultRadius : radius;
 
-  return new SphereBufferGeometry(radius);
+  return new SphereBufferGeometry(radius, 32, 32);
 };
 
 /*
@@ -62,7 +62,7 @@ export const CYLINDER_GEOM = (params) => {
   radius = radius === undefined ? cylinderGeomDefaultRadius : radius;
   height = height === undefined ? cylinderGeomDefaultHeight : height;
 
-  return new CylinderBufferGeometry(radius, radius, height, 16, 1, false);
+  return new CylinderBufferGeometry(radius, radius, height, 32, 1, false);
 };
 
 /*
@@ -77,32 +77,30 @@ export const coneGeomHeadDiameter = 0.2;
 export const coneGeomShaftLength = 0.6;
 
 export const ARROW_GEOM = (params) => {
-  // I am really not a fan of girth here but it is technically the
-  // best descriptor. Please help workshop it.
-  let { length, girth } = params === undefined ? {} : params;
+  let { length, radius } = params === undefined ? {} : params;
 
   length = length === undefined ? 1 : length;
-  girth = girth === undefined ? 1 : girth;
+  radius = radius === undefined ? 1 : radius;
 
   const capLength = coneGeomHeadLength * length;
-  const capRadius = coneGeomHeadDiameter * 0.5 * girth;
+  const capRadius = coneGeomHeadDiameter * 0.5 * radius;
 
   const ARROW_CAP_GEOM = new CylinderBufferGeometry(
     0,
     capRadius,
     capLength,
-    12,
+    32,
     1
   );
 
   const shaftLength = coneGeomShaftLength * length;
-  const shaftRadius = coneGeomShaftDiameter * 0.5 * girth;
+  const shaftRadius = coneGeomShaftDiameter * 0.5 * radius;
 
   const ARROW_BASE_GEOM = new CylinderBufferGeometry(
     shaftRadius,
     shaftRadius,
     shaftLength,
-    12,
+    32,
     1
   );
 
@@ -117,6 +115,36 @@ export const ARROW_GEOM = (params) => {
     ARROW_BASE_GEOM
   ]);
 };
+
+export const CAPSULE_GEOM = (params) => {
+  let { radius, height } = params === undefined ? {} : params;
+
+  radius = radius === undefined ? cylinderGeomDefaultRadius : radius;
+  height = height === undefined ? cylinderGeomDefaultHeight : height;
+
+  const INNER_GEOM = new CylinderBufferGeometry(radius, radius, height, 32, 1, true);
+  const UPPER_SPHERE_GEOM = new SphereBufferGeometry(radius, 32, 32, Math.PI,Math.PI);
+  const LOWER_SPHERE_GEOM = new SphereBufferGeometry(radius, 32, 32, Math.PI, Math.PI);
+
+  var upperM = new Matrix4();
+  upperM.makeRotationX(Math.PI/2)
+  upperM.setPosition(0, height/2, 0);
+
+  var lowerM = new Matrix4();
+  lowerM.makeRotationX(-Math.PI/2)
+  lowerM.setPosition(0, -height/2, 0);
+ 
+
+  UPPER_SPHERE_GEOM.applyMatrix4(upperM);
+  LOWER_SPHERE_GEOM.applyMatrix4(lowerM);
+
+  return mergeBufferGeometries([
+    INNER_GEOM,
+    UPPER_SPHERE_GEOM,
+    LOWER_SPHERE_GEOM
+  ]);
+};
+
 
 /*
  * Mesh Lookup Table
@@ -139,6 +167,7 @@ export const StandardMeshesLookup = (meshName, params) => {
 
   return geometry;
 };
+
 
 export const Cube = () => ([{type:'raw',geometry:BOX_GEOM({}),scale:[1,1,1]}])
 export const Sphere = () => ([{type:'raw',geometry:SPHERE_GEOM({}),scale:[1,1,1]}])

@@ -322,8 +322,8 @@ const MeshLookupTable = {
     'package://ur_description/meshes/ur5/visual/shoulder.dae' : Ur5Shoulder,
     'package://ur_description/meshes/ur5/visual/upperarm.dae' : Ur5Upperarm,
     'package://ur_description/meshes/ur5/visual/wrist1.dae' : Ur5Wrist1,
-    'package://ur_description/meshes/ur3/visual/wrist2.dae' : Ur5Wrist2,
-    'package://ur_description/meshes/ur3/visual/wrist3.dae' : Ur5Wrist3,
+    'package://ur_description/meshes/ur5/visual/wrist2.dae' : Ur5Wrist2,
+    'package://ur_description/meshes/ur5/visual/wrist3.dae' : Ur5Wrist3,
     //--------------------------------------------------------------------Ur10
      'package://ur_description/meshes/ur10/visual/base.dae' : Ur10Base,
      'package://ur_description/meshes/ur10/visual/forearm.dae': Ur10Forearm,

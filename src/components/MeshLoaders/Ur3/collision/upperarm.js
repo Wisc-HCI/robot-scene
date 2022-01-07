@@ -7,8 +7,10 @@ import { useGLTF } from '@react-three/drei';
 
 export default function Model(props) {
   const { nodes} = useGLTF(Ur3Upperarm);
-  return [{type:'raw',geometry:nodes.upperarm.geometry,material:nodes.upperarm.material}]
+  return [
+    {type:'raw',geometry:nodes.upperarm.geometry,material:nodes.upperarm.material}
+  ]
   
 }
 
-useGLTF.preload('Ur3Upperarm');
+useGLTF.preload(Ur3Upperarm);

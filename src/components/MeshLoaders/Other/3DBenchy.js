@@ -8,7 +8,7 @@ import Benchy from '../../Meshes/Other/3DBenchy.glb';
 
 export default function Model(props) {
 
-  const { nodes, materials } = useGLTF(Benchy);
+  const { nodes } = useGLTF(Benchy);
   return [{type:'raw', geometry:nodes['3DBenchy'].geometry, material:nodes['3DBenchy'].material} ]
 
 

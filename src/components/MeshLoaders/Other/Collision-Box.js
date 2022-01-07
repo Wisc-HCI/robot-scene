@@ -7,7 +7,7 @@ import { useGLTF } from '@react-three/drei';
 import Collision_Box from '../../Meshes/Other/Collision-Box.glb';
 
 export default function Model(props) {
-  const { nodes, materials } = useGLTF(Collision_Box)
+  const { nodes } = useGLTF(Collision_Box)
   return [
 {type:'raw', geometry:nodes['Collision-Box'].geometry, material:nodes['Collision-Box'].material}
 

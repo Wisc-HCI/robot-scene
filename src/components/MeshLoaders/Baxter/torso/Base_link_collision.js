@@ -5,7 +5,7 @@ import { useGLTF } from '@react-three/drei';
 import Base_Link_Collision from '../../../Meshes/Baxter/torso/base_link_collision.glb';
 
 export default function Model(props) {
-  const { nodes, materials } = useGLTF(Base_Link_Collision)
+  const { nodes } = useGLTF(Base_Link_Collision)
   return [{type:'raw', geometry:nodes['TORSO-L'].geometry, material:nodes['TORSO-L'].material}]
 }
 

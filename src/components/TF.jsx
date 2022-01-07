@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber";
 // import store from "./SceneStore";
 import { ARROW_GEOM } from "./Util/StandardMeshes";
 import { MaterialMaker } from './Util/MaterialMaker';
-import { Quaternion } from 'three';
+// import { Quaternion } from 'three';
 
 // const STANDARD_ROTATION = new Quaternion(0,0,1,0)
 
@@ -29,7 +29,7 @@ export default function TF({ tfKey, displayTfs, children, store }) {
         typeof tf.rotation.w === 'function' ? tf.rotation.w(time) : tf.rotation.w
       );
     }
-  },[tfKey, ref]));
+  },[tfKey, ref, store]));
 
   const arrow = ARROW_GEOM();
 

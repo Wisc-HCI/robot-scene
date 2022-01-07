@@ -8,7 +8,7 @@ import Collision_Mk2_Printer from '../../Meshes/Other/Collision-MK2-Printer.glb'
 
 export default function Model(props) {
 
-  const { nodes, materials } = useGLTF(Collision_Mk2_Printer)
+  const { nodes } = useGLTF(Collision_Mk2_Printer)
   return [
 {type:'raw', geometry:nodes['Collision-MK2-Printer'].geometry, material:nodes['Collision-MK2-Printer'].material}
 ]

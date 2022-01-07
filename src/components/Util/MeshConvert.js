@@ -3,7 +3,7 @@ import { Vector3, BackSide, FrontSide } from 'three';
 import { ConvexGeometry } from 'three-stdlib';
 import { MeshLookup, MeshLookupTable } from '../MeshLookup';
 import { GhostMaterial } from './MaterialMaker';
-import { rgbToHex } from './ColorConversion';
+// import { rgbToHex } from './ColorConversion';
 
 export const MeshConverter = (node, idx, materialOverride, opacity) => {
   // console.log(node);
@@ -52,7 +52,7 @@ export const MeshConverter = (node, idx, materialOverride, opacity) => {
                 attach='material'
                 wireframe={materialOverride.wireframe}
                 opacity={opacity} 
-                color='#000000'
+                // color='#000000'
                 side={FrontSide}
               />
             </mesh>
@@ -71,6 +71,32 @@ export const MeshConverter = (node, idx, materialOverride, opacity) => {
         />
       return [mesh,[frontRef]]
     }
+  }
+}
+
+export const NestedGhostConverter = (node, idx, highlightColor) => {
+  // console.log(node);
+  if (node.type === 'group') {
+    const nodes = node.children.map((child, i) => NestedGhostConverter(child, i, highlightColor));
+    const group =
+      <group key={idx} up={[0,0,1]} position={node.position} rotation={node.rotation} scale={node.scale}>
+        {nodes.map(node => node[0])}
+      </group>
+    const refs = [].concat.apply([], nodes.map(node => node[1]))
+    return [group, refs];
+  } else {
+    const ref = createRef();
+    const mesh =
+        <mesh
+          ref={ref}
+          key={idx}
+          geometry={node.geometry}
+          material={GhostMaterial(highlightColor)}
+          scale={node.scale}
+          castShadow={true}
+          receiveShadow={true}
+        />
+    return [mesh,[ref]]
   }
 }
 
@@ -99,8 +125,8 @@ export const GhostConverter = (node, idx, highlightColor) => {
 }
 
 export const itemToGroupAndChildRefs = item => {
-  const { color, shape } = item;
-  const materialOverride = color ? {...color, wireframe: item.wireframe} : undefined;
+  const { color, shape, wireframe } = item;
+  const materialOverride = color ? {...color, wireframe} : undefined;
   const opacity = color ? color.a : 1.0;
   let content = [];
 
@@ -133,6 +159,20 @@ export const itemToGhost = (item, highlightColor) => {
       {nodes}
     </>
   );
+}
+
+export const itemToGhostAndChildRefs = (item,highlightColor) => {
+  const { shape } = item;
+  let content = shape in MeshLookupTable ? MeshLookup(shape) : [];
+  
+  const nodes = content.map((node, i) => NestedGhostConverter(node, i, highlightColor));
+  const group =
+    <>
+      {nodes.map(node => node[0])}
+    </>
+  const refs = [].concat.apply([], nodes.map(node => node[1]));
+
+  return [group, refs];
 }
 
 export const hullToGroupAndRef = hull => {

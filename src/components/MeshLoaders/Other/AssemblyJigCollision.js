@@ -4,11 +4,11 @@ import AssemblyJigCollisionFile from '../../Meshes/Other/AssemblyJigCollision.gl
 export default function Model(props) {
   const { nodes } = useGLTF(AssemblyJigCollisionFile);
   return [
-      { type: 'group', rotation: [Math.PI, 0, 0], children: [
+      { type: 'group', rotation: [Math.PI/2, 0, 0], children: [
         {
             type:'raw',
-            geometry:nodes.mesh_0.geometry,
-            material:nodes.mesh_0.material,
+            geometry:nodes.Mesh_0.geometry,
+            material:nodes.Mesh_0.material,
             scale:[5,5,5]
           }
       ]}

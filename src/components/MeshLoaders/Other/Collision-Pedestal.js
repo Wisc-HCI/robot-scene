@@ -8,7 +8,7 @@ import Collision_Pedestal from '../../Meshes/Other/Collision-Pedestal.glb';
 
 export default function Model(props) {
 
-  const { nodes, materials } = useGLTF(Collision_Pedestal)
+  const { nodes } = useGLTF(Collision_Pedestal)
   return [{type:'raw', geometry:nodes['Collision-Pedestal'].geometry, material:nodes['Collision-Pedestal'].material} ]
 
 

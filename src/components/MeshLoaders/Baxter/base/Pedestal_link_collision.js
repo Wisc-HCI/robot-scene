@@ -7,9 +7,8 @@ import Pedestal_Link_Collision from '../../../Meshes/Baxter/base/pedestal_link_c
 
 
 export default function Model(props) {
-  const { nodes, materials } = useGLTF(Pedestal_Link_Collision);
-  return [{type:'raw', geometry:nodes['PEDESTAL-L'].geometry,
-          material:nodes['PEDESTAL-L'].material}]
+  const { nodes } = useGLTF(Pedestal_Link_Collision);
+  return [{type:'raw', geometry:nodes['PEDESTAL-L'].geometry, material:nodes['PEDESTAL-L'].material}]
 }
 
 useGLTF.preload(Pedestal_Link_Collision)

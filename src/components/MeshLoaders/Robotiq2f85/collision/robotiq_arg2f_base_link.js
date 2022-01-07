@@ -8,7 +8,7 @@ import RobotiqCollisionBaseLink from '../../../Meshes/Robotiq2f85/collision/robo
 
 export default function Model(props) {
 
-  const { nodes, materials } = useGLTF(RobotiqCollisionBaseLink)
+  const { nodes } = useGLTF(RobotiqCollisionBaseLink)
   return [{type:'group', scale:[0.001,0.001,0.001],children:[{type:'raw', geometry:nodes.Robotiq_Arg2F_Base_Link.geometry,
   material:nodes.Robotiq_Arg2F_Base_Link.material}]}]
 

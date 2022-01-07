@@ -1,7 +1,6 @@
-import React, { useRef, useCallback, useEffect } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
+import React, { useRef } from 'react';
+import { useThree } from '@react-three/fiber';
 import { Circle } from "@react-three/drei";
-import { EffectComposer, Outline } from "@react-three/postprocessing";
 import TF, {WorldTF} from "./TF";
 import Item from "./Item";
 import Hull from "./Hull";
@@ -12,25 +11,25 @@ import { MaterialMaker } from './Util/MaterialMaker';
 import { hexToRgb } from './Util/ColorConversion';
 import { OrbitControls } from '@react-three/drei';
 import { TransformControls } from './Util/TransformControls';
-import { itemToGroupAndChildRefs, hullToGroupAndRef } from './Util/MeshConvert';
+import shallow from 'zustand/shallow';
 
-const renderTree = (activeTf,displayTfs,allTfs,allItems,allLines,allHulls,store) => {
+const renderTree = (activeTf,displayTfs,allTfs,allItems,allLines,allHulls,store, highlightColor) => {
   
   const TFComponent = activeTf==='world' ? WorldTF : TF;
 
   return (
     <TFComponent key={activeTf} tfKey={activeTf} displayTfs={displayTfs} store={store}>
       {allTfs.filter(v=>v.frame===activeTf||(activeTf==='world'&&!v.frame)).map(tf=>(
-        renderTree(tf.tfKey,displayTfs,allTfs,allItems,allLines,allHulls,store)
+        renderTree(tf.tfKey,displayTfs,allTfs,allItems,allLines,allHulls,store,highlightColor)
       ))}
       {allItems.filter(v=>v.frame===activeTf||(activeTf==='world'&&!v.frame)).map(item=>(
-        <Item key={item.itemKey} itemKey={item.itemKey} node={item.node} store={store}/>
+        <Item key={item.itemKey} itemKey={item.itemKey} node={item.node} store={store} highlightColor={highlightColor}/>
       ))}
       {allLines.filter(v=>v.frame===activeTf||(activeTf==='world'&&!v.frame)).map(line=>(
         <Line key={line.lineKey} lineKey={line.lineKey} store={store}/>
       ))}
       {allHulls.filter(v=>v.frame===activeTf||(activeTf==='world'&&!v.frame)).map(hull=>(
-        <Hull key={hull.hullKey} hullKey={hull.hullKey} node={hull.node} store={store}/>
+        <Hull key={hull.hullKey} hullKey={hull.hullKey} node={hull.node} store={store} highlightColor={highlightColor}/>
       ))}
     </TFComponent>
   )
@@ -70,11 +69,9 @@ export default function Content(props) {
 
     const reducedItems = Object.entries(state.items).map(pair=>{
       const [itemKey, item] = pair;
-      const [node,childrenRefs] = itemToGroupAndChildRefs(item);
       return {
-        itemKey,node,childrenRefs,
+        itemKey,
         frame:item.frame,
-        highlighted:item.highlighted,
         transformMode:item.transformMode,
         onMove:item.onMove
       }
@@ -87,11 +84,8 @@ export default function Content(props) {
     
     const reducedHulls = Object.entries(state.hulls).map(pair=>{
       const [hullKey, hull] = pair;
-      const [node,childrenRefs] = hullToGroupAndRef(hull);
       return {
-        hullKey,node,childrenRefs,
-        frame:hull.frame,
-        highlighted:hull.highlighted
+        hullKey,frame:hull.frame
       }
     })
 
@@ -101,11 +95,11 @@ export default function Content(props) {
       reducedLines,
       reducedHulls
     ]
-  });
+  }, shallow);
 
-  const highlightedItemRefs = [].concat.apply([],items.filter(item=>item.highlighted).map(item=>item.childrenRefs));
-  const highlightedHullRefs = [].concat.apply([],hulls.filter(hull=>hull.highlighted).map(hull=>hull.childrenRefs));
-  const highlightedRefs = [...highlightedItemRefs, ...highlightedHullRefs];
+  // const highlightedItemRefs = [].concat.apply([],items.filter(item=>item.highlighted).map(item=>item.childrenRefs));
+  // const highlightedHullRefs = [].concat.apply([],hulls.filter(hull=>hull.highlighted).map(hull=>hull.childrenRefs));
+  // const highlightedRefs = [...highlightedItemRefs, ...highlightedHullRefs];
   const movableItems = items.filter(item=>['translate','rotate','scale'].indexOf(item.transformMode)>-1);
 
   const ambientLightRef = useRef();
@@ -115,43 +109,6 @@ export default function Content(props) {
 
   const planeRGB = hexToRgb(planeColor ? planeColor : "a8a8a8");
   const planeRGBA = [planeRGB.r,planeRGB.g,planeRGB.b,0.5];
-
-  useFrame(useCallback(({clock})=>{
-    const time = clock.getElapsedTime() * 1000;
-    items.forEach(item=>{
-      const colorInstruction = store.getState().items[item.itemKey].color;
-      if (colorInstruction) {
-        const r = typeof colorInstruction.r === 'function' ? colorInstruction.r(time)/255 : colorInstruction.r/255;
-        const g = typeof colorInstruction.g === 'function' ? colorInstruction.g(time)/255 : colorInstruction.g/255;
-        const b = typeof colorInstruction.b === 'function' ? colorInstruction.b(time)/255 : colorInstruction.b/255;
-        const opacity = typeof colorInstruction.a === 'function' ? colorInstruction.a(time) : colorInstruction.a;
-        item.childrenRefs.forEach(ref=>{
-          if (ref.current && ref.current.material) {
-            ref.current.material.color.setRGB(r,g,b);
-            ref.current.material.opacity = opacity;
-            ref.current.material.transparent = opacity === 1 ? false : true
-          }
-        })
-      }
-      // Ignore if no colorInstruction
-    })
-    hulls.forEach(hull=>{
-      const colorInstruction = store.getState().hulls[hull.hullKey].color;
-      if (colorInstruction) {
-        const r = typeof colorInstruction.r === 'function' ? colorInstruction.r(time)/255 : colorInstruction.r/255;
-        const g = typeof colorInstruction.g === 'function' ? colorInstruction.g(time)/255 : colorInstruction.g/255;
-        const b = typeof colorInstruction.b === 'function' ? colorInstruction.b(time)/255 : colorInstruction.b/255;
-        const opacity = typeof colorInstruction.a === 'function' ? colorInstruction.a(time) : colorInstruction.a;
-        hull.childrenRefs.forEach(ref=>{
-          if (ref.current && ref.current.material) {
-            ref.current.material.color.setRGB(r,g,b);
-            ref.current.material.opacity = opacity;
-            ref.current.material.transparent = opacity === 1 ? false : true
-          }
-        })
-      }
-    })
-  },[items,hulls]))
 
   return (
     <React.Fragment>
@@ -176,7 +133,7 @@ export default function Content(props) {
 
       <Circle receiveShadow scale={1000} position={[0, 0, plane ? plane-0.01 : -0.01]} material={MaterialMaker(...planeRGBA)}/>
       
-      {renderTree('world',displayTfs,tfs,items,lines,hulls,store)}
+      {renderTree('world',displayTfs,tfs,items,lines,hulls,store,highlightColor)}
       
       <group position={[0, 0, plane ? plane : 0]} rotation={[Math.PI/2,0,0]} up={[0,0,1]}>
         {displayGrid && (
@@ -201,17 +158,6 @@ export default function Content(props) {
           />
         ))
       }
-
-      <EffectComposer autoClear={false}>
-        <Outline 
-          selection={highlightedRefs} 
-          xRay
-          blur={true}
-          edgeStrength={15}
-          pulseSpeed={0.3}
-          visibleEdgeColor={highlightColor ? highlightColor : '#ffffff'}
-          hiddenEdgeColor={highlightColor ? highlightColor : '#ffffff'}/>
-      </EffectComposer>
 
     </React.Fragment>
   );

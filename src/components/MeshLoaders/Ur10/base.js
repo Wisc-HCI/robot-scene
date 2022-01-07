@@ -7,10 +7,9 @@ import { useGLTF } from '@react-three/drei';
 
 export default function Model(props) {
 
-  const { nodes, materials } = useGLTF(Ur10Base)
+  const { nodes } = useGLTF(Ur10Base)
   return [
-
-{type:'raw',geometry:nodes.Base.geometry, material:nodes.Base.material}]
+    { type: 'raw', geometry: nodes.Base.geometry, material: nodes.Base.material }]
 }
 
 useGLTF.preload(Ur10Base)

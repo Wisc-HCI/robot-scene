@@ -8,7 +8,7 @@ import OpenWaypointMarker from '../../Meshes/Other/OpenWaypointMarker.glb';
 
 export default function Model(props) {
 
-  const { nodes, materials } = useGLTF(OpenWaypointMarker)
+  const { nodes } = useGLTF(OpenWaypointMarker)
   return [
 {type:'raw', geometry:nodes.OpenWaypointMarker.geometry, material:nodes.OpenWaypointMarker.material}
 ]

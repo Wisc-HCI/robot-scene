@@ -7,7 +7,7 @@ import { useGLTF } from '@react-three/drei'
 import Box from '../../Meshes/Other/Box.glb';
 
 export default function Model(props) {
-  const { nodes, materials } = useGLTF(Box);
+  const { nodes } = useGLTF(Box);
   return [{type:'raw',geometry:nodes.Box.geometry, material:nodes.Box.material}]
 
 }

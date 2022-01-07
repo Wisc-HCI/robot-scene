@@ -7,7 +7,7 @@ import { useGLTF } from '@react-three/drei'
 import Pedestal from "../../Meshes/Other/Pedestal.glb"
 
 export default function Model(props) {
-  const { nodes, materials } = useGLTF(Pedestal)
+  const { nodes } = useGLTF(Pedestal)
   return [{type:'raw',geometry:nodes.Pedestal.geometry, material:nodes.Pedestal.material}]
 }
 

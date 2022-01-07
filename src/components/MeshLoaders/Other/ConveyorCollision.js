@@ -7,8 +7,8 @@ export default function Model(props) {
       { type: 'group', rotation: [-Math.PI / 2, 0, 0], children: [
         {
             type:'raw',
-            geometry:nodes.mesh_0.geometry,
-            material:nodes.mesh_0.material
+            geometry:nodes.ConveyorCollision.geometry,
+            material:nodes.ConveyorCollision.material
           }
       ]}
     ]

@@ -8,7 +8,7 @@ import RobotiqCollision85OuterKnuckle from '../../../Meshes/Robotiq2f85/collisio
 
 export default function Model(props) {
 
-  const { nodes, materials } = useGLTF(RobotiqCollision85OuterKnuckle);
+  const { nodes } = useGLTF(RobotiqCollision85OuterKnuckle);
   return [{type:'group', scale:[0.001,0.001,0.001],children:[{type:'raw',geometry:nodes.node.geometry,material:nodes.node.material,
           rotation:[Math.PI / 2, 0, 0]}]}]
 

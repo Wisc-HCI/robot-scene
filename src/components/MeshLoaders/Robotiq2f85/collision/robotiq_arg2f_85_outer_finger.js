@@ -8,7 +8,7 @@ import RobotiqCollision85OuterFinger from '../../../Meshes/Robotiq2f85/collision
 
 export default function Model(props) {
 
-  const { nodes, materials } = useGLTF(RobotiqCollision85OuterFinger)
+  const { nodes } = useGLTF(RobotiqCollision85OuterFinger)
   return [{type:'group', scale:[0.001,0.001,0.001],children:[{type:'raw', geometry:nodes.node.geometry,
          material:nodes.node.material,rotation:[Math.PI / 2, 0, 0]}]}]
 

@@ -12,15 +12,15 @@ const GhostItem = forwardRef(({itemKey,highlightColor,store},ref) => {
         state.items[itemKey]?.shape,
         ]), [itemKey]))
 
-    if ([
-      position?.x, position?.y, position?.z, 
-      rotation?.x, rotation?.y, rotation?.z, rotation?.w, 
-      scale?.x, scale?.y, scale?.z
-    ].map(value=>typeof value === 'function')
-     .filter(value=>value===true)
-     .length > 0) {
-       return null
-     }
+    // if ([
+    //   position?.x, position?.y, position?.z, 
+    //   rotation?.x, rotation?.y, rotation?.z, rotation?.w, 
+    //   scale?.x, scale?.y, scale?.z
+    // ].map(value=>typeof value === 'function')
+    //  .filter(value=>value===true)
+    //  .length > 0) {
+    //    return null
+    //  }
 
     useLayoutEffect(
     ()=>{
