@@ -23,6 +23,16 @@ module.exports = {
       use: 'file-loader',
       include: path.resolve(__dirname, '../')
     });
+    config.module.rules.push({
+      test: /\.(patt)$/,
+      use: 'file-loader',
+      include: path.resolve(__dirname, '../')
+    });
+    config.module.rules.push({
+      test: /\.(dat)$/,
+      use: 'file-loader',
+      include: path.resolve(__dirname, '../')
+    });
 
     // Return the altered config
     return config;

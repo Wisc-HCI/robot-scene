@@ -16,6 +16,8 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "dependencies": {
+    "@ar-js-org/ar.js": "^3.3.3-es6-beta-01",
+    "@artcom/react-three-arjs": "^0.3.2",
     "@juggle/resize-observer": "^3.3.1",
     "@react-three/drei": "^7.22.1",
     "@react-three/fiber": "^7.0.19",
@@ -34,7 +36,7 @@
     "zustand": "^3.5.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "HTTPS=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
