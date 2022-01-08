@@ -42,11 +42,11 @@ export default function Content(props) {
 
   const { displayTfs, displayGrid, isPolar, 
           backgroundColor, planeColor, 
-          highlightColor, plane, fov, store,
+          highlightColor, plane, store,
           paused
         } = props;
 
-  const [camera, clock] = useThree((state) => [state.camera,state.clock]);
+  const clock = useThree((state) => state.clock);
 
   if (clock.running && paused) {
     clock.stop();
@@ -56,9 +56,9 @@ export default function Content(props) {
     clock.start();
   }
 
-  camera.up.set(0,0,1);
-  camera.fov = fov ? fov : 60;
-  camera.updateProjectionMatrix();
+  // camera.up.set(0,0,1);
+  // camera.fov = fov ? fov : 60;
+  // camera.updateProjectionMatrix();
 
   const [tfs, items, lines, hulls] = store(state => {
 

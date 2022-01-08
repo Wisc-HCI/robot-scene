@@ -18,10 +18,11 @@ export default function Scene(props) {
   // For the objects in props.content, render the objects.
   // Those should be in the suspense element.
 
-  const { backgroundColor, store } = props;
+  const { backgroundColor, store, fov } = props;
 
   return (
       <Canvas
+        camera={{up:[0,0,1],fov,position:[0,-3,3]}}
         shadows
         style={{ background: backgroundColor ? backgroundColor : "#d0d0d0" }}
         resize={{ polyfill: ResizeObserver }}
