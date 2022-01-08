@@ -17,13 +17,12 @@ var _StandardMeshes = require("./Util/StandardMeshes");
 
 var _MaterialMaker = require("./Util/MaterialMaker");
 
-var _three = require("three");
-
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 // import store from "./SceneStore";
+// import { Quaternion } from 'three';
 // const STANDARD_ROTATION = new Quaternion(0,0,1,0)
 function TF(_ref) {
   var tfKey = _ref.tfKey,
@@ -42,7 +41,7 @@ function TF(_ref) {
       ref.current.position.set(typeof tf.translation.x === 'function' ? tf.translation.x(time) : tf.translation.x, typeof tf.translation.y === 'function' ? tf.translation.y(time) : tf.translation.y, typeof tf.translation.z === 'function' ? tf.translation.z(time) : tf.translation.z);
       ref.current.quaternion.set(typeof tf.rotation.x === 'function' ? tf.rotation.x(time) : tf.rotation.x, typeof tf.rotation.y === 'function' ? tf.rotation.y(time) : tf.rotation.y, typeof tf.rotation.z === 'function' ? tf.rotation.z(time) : tf.rotation.z, typeof tf.rotation.w === 'function' ? tf.rotation.w(time) : tf.rotation.w);
     }
-  }, [tfKey, ref]));
+  }, [tfKey, ref, store]));
   var arrow = (0, _StandardMeshes.ARROW_GEOM)();
   return /*#__PURE__*/_react.default.createElement("group", {
     ref: ref,

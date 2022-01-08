@@ -25,4 +25,4 @@ function Model(props) {
   }];
 }
 
-_drei.useGLTF.preload('Ur3Upperarm');
+_drei.useGLTF.preload(_upperarm.default);

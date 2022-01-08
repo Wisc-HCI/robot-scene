@@ -41,15 +41,16 @@ var GhostItem = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
       position = _store2[0],
       rotation = _store2[1],
       scale = _store2[2],
-      shape = _store2[3];
+      shape = _store2[3]; // if ([
+  //   position?.x, position?.y, position?.z, 
+  //   rotation?.x, rotation?.y, rotation?.z, rotation?.w, 
+  //   scale?.x, scale?.y, scale?.z
+  // ].map(value=>typeof value === 'function')
+  //  .filter(value=>value===true)
+  //  .length > 0) {
+  //    return null
+  //  }
 
-  if ([position === null || position === void 0 ? void 0 : position.x, position === null || position === void 0 ? void 0 : position.y, position === null || position === void 0 ? void 0 : position.z, rotation === null || rotation === void 0 ? void 0 : rotation.x, rotation === null || rotation === void 0 ? void 0 : rotation.y, rotation === null || rotation === void 0 ? void 0 : rotation.z, rotation === null || rotation === void 0 ? void 0 : rotation.w, scale === null || scale === void 0 ? void 0 : scale.x, scale === null || scale === void 0 ? void 0 : scale.y, scale === null || scale === void 0 ? void 0 : scale.z].map(function (value) {
-    return typeof value === 'function';
-  }).filter(function (value) {
-    return value === true;
-  }).length > 0) {
-    return null;
-  }
 
   (0, _react.useLayoutEffect)(function () {
     var _ref$current, _ref$current2, _ref$current3;

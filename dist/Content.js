@@ -13,8 +13,6 @@ var _fiber = require("@react-three/fiber");
 
 var _drei = require("@react-three/drei");
 
-var _postprocessing = require("@react-three/postprocessing");
-
 var _TF = _interopRequireWildcard(require("./TF"));
 
 var _Item = _interopRequireDefault(require("./Item"));
@@ -31,21 +29,13 @@ var _ColorConversion = require("./Util/ColorConversion");
 
 var _TransformControls = require("./Util/TransformControls");
 
-var _MeshConvert = require("./Util/MeshConvert");
+var _shallow = _interopRequireDefault(require("zustand/shallow"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -59,7 +49,7 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, allLines, allHulls, store) {
+var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, allLines, allHulls, store, highlightColor) {
   var TFComponent = activeTf === 'world' ? _TF.WorldTF : _TF.default;
   return /*#__PURE__*/_react.default.createElement(TFComponent, {
     key: activeTf,
@@ -69,7 +59,7 @@ var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, all
   }, allTfs.filter(function (v) {
     return v.frame === activeTf || activeTf === 'world' && !v.frame;
   }).map(function (tf) {
-    return renderTree(tf.tfKey, displayTfs, allTfs, allItems, allLines, allHulls, store);
+    return renderTree(tf.tfKey, displayTfs, allTfs, allItems, allLines, allHulls, store, highlightColor);
   }), allItems.filter(function (v) {
     return v.frame === activeTf || activeTf === 'world' && !v.frame;
   }).map(function (item) {
@@ -77,7 +67,8 @@ var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, all
       key: item.itemKey,
       itemKey: item.itemKey,
       node: item.node,
-      store: store
+      store: store,
+      highlightColor: highlightColor
     });
   }), allLines.filter(function (v) {
     return v.frame === activeTf || activeTf === 'world' && !v.frame;
@@ -94,7 +85,8 @@ var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, all
       key: hull.hullKey,
       hullKey: hull.hullKey,
       node: hull.node,
-      store: store
+      store: store,
+      highlightColor: highlightColor
     });
   }));
 };
@@ -148,17 +140,9 @@ function Content(props) {
           itemKey = _pair2[0],
           item = _pair2[1];
 
-      var _itemToGroupAndChildR = (0, _MeshConvert.itemToGroupAndChildRefs)(item),
-          _itemToGroupAndChildR2 = _slicedToArray(_itemToGroupAndChildR, 2),
-          node = _itemToGroupAndChildR2[0],
-          childrenRefs = _itemToGroupAndChildR2[1];
-
       return {
         itemKey: itemKey,
-        node: node,
-        childrenRefs: childrenRefs,
         frame: item.frame,
-        highlighted: item.highlighted,
         transformMode: item.transformMode,
         onMove: item.onMove
       };
@@ -178,38 +162,22 @@ function Content(props) {
           hullKey = _pair4[0],
           hull = _pair4[1];
 
-      var _hullToGroupAndRef = (0, _MeshConvert.hullToGroupAndRef)(hull),
-          _hullToGroupAndRef2 = _slicedToArray(_hullToGroupAndRef, 2),
-          node = _hullToGroupAndRef2[0],
-          childrenRefs = _hullToGroupAndRef2[1];
-
       return {
         hullKey: hullKey,
-        node: node,
-        childrenRefs: childrenRefs,
-        frame: hull.frame,
-        highlighted: hull.highlighted
+        frame: hull.frame
       };
     });
     return [reducedTfs, reducedItems, reducedLines, reducedHulls];
-  }),
+  }, _shallow.default),
       _store2 = _slicedToArray(_store, 4),
       tfs = _store2[0],
       items = _store2[1],
       lines = _store2[2],
-      hulls = _store2[3];
+      hulls = _store2[3]; // const highlightedItemRefs = [].concat.apply([],items.filter(item=>item.highlighted).map(item=>item.childrenRefs));
+  // const highlightedHullRefs = [].concat.apply([],hulls.filter(hull=>hull.highlighted).map(hull=>hull.childrenRefs));
+  // const highlightedRefs = [...highlightedItemRefs, ...highlightedHullRefs];
 
-  var highlightedItemRefs = [].concat.apply([], items.filter(function (item) {
-    return item.highlighted;
-  }).map(function (item) {
-    return item.childrenRefs;
-  }));
-  var highlightedHullRefs = [].concat.apply([], hulls.filter(function (hull) {
-    return hull.highlighted;
-  }).map(function (hull) {
-    return hull.childrenRefs;
-  }));
-  var highlightedRefs = [].concat(_toConsumableArray(highlightedItemRefs), _toConsumableArray(highlightedHullRefs));
+
   var movableItems = items.filter(function (item) {
     return ['translate', 'rotate', 'scale'].indexOf(item.transformMode) > -1;
   });
@@ -219,45 +187,6 @@ function Content(props) {
   var orbitControls = (0, _react.useRef)();
   var planeRGB = (0, _ColorConversion.hexToRgb)(planeColor ? planeColor : "a8a8a8");
   var planeRGBA = [planeRGB.r, planeRGB.g, planeRGB.b, 0.5];
-  (0, _fiber.useFrame)((0, _react.useCallback)(function (_ref) {
-    var clock = _ref.clock;
-    var time = clock.getElapsedTime() * 1000;
-    items.forEach(function (item) {
-      var colorInstruction = store.getState().items[item.itemKey].color;
-
-      if (colorInstruction) {
-        var r = typeof colorInstruction.r === 'function' ? colorInstruction.r(time) / 255 : colorInstruction.r / 255;
-        var g = typeof colorInstruction.g === 'function' ? colorInstruction.g(time) / 255 : colorInstruction.g / 255;
-        var b = typeof colorInstruction.b === 'function' ? colorInstruction.b(time) / 255 : colorInstruction.b / 255;
-        var opacity = typeof colorInstruction.a === 'function' ? colorInstruction.a(time) : colorInstruction.a;
-        item.childrenRefs.forEach(function (ref) {
-          if (ref.current && ref.current.material) {
-            ref.current.material.color.setRGB(r, g, b);
-            ref.current.material.opacity = opacity;
-            ref.current.material.transparent = opacity === 1 ? false : true;
-          }
-        });
-      } // Ignore if no colorInstruction
-
-    });
-    hulls.forEach(function (hull) {
-      var colorInstruction = store.getState().hulls[hull.hullKey].color;
-
-      if (colorInstruction) {
-        var r = typeof colorInstruction.r === 'function' ? colorInstruction.r(time) / 255 : colorInstruction.r / 255;
-        var g = typeof colorInstruction.g === 'function' ? colorInstruction.g(time) / 255 : colorInstruction.g / 255;
-        var b = typeof colorInstruction.b === 'function' ? colorInstruction.b(time) / 255 : colorInstruction.b / 255;
-        var opacity = typeof colorInstruction.a === 'function' ? colorInstruction.a(time) : colorInstruction.a;
-        hull.childrenRefs.forEach(function (ref) {
-          if (ref.current && ref.current.material) {
-            ref.current.material.color.setRGB(r, g, b);
-            ref.current.material.opacity = opacity;
-            ref.current.material.transparent = opacity === 1 ? false : true;
-          }
-        });
-      }
-    });
-  }, [items, hulls]));
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_drei.OrbitControls, {
     ref: orbitControls
   }), /*#__PURE__*/_react.default.createElement("pointLight", {
@@ -292,7 +221,7 @@ function Content(props) {
     scale: 1000,
     position: [0, 0, plane ? plane - 0.01 : -0.01],
     material: _MaterialMaker.MaterialMaker.apply(void 0, planeRGBA)
-  }), renderTree('world', displayTfs, tfs, items, lines, hulls, store), /*#__PURE__*/_react.default.createElement("group", {
+  }), renderTree('world', displayTfs, tfs, items, lines, hulls, store, highlightColor), /*#__PURE__*/_react.default.createElement("group", {
     position: [0, 0, plane ? plane : 0],
     rotation: [Math.PI / 2, 0, 0],
     up: [0, 0, 1]
@@ -318,15 +247,5 @@ function Content(props) {
       onMove: movableItem.onMove,
       store: store
     });
-  }), /*#__PURE__*/_react.default.createElement(_postprocessing.EffectComposer, {
-    autoClear: false
-  }, /*#__PURE__*/_react.default.createElement(_postprocessing.Outline, {
-    selection: highlightedRefs,
-    xRay: true,
-    blur: true,
-    edgeStrength: 15,
-    pulseSpeed: 0.3,
-    visibleEdgeColor: highlightColor ? highlightColor : '#ffffff',
-    hiddenEdgeColor: highlightColor ? highlightColor : '#ffffff'
-  })));
+  }));
 }

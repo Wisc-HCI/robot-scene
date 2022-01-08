@@ -11,51 +11,117 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _drei = require("@react-three/drei");
 
+var _fiber = require("@react-three/fiber");
+
+var _three = require("three");
+
+var _threeStdlib = require("three-stdlib");
+
 var _antd = require("antd");
+
+var _shallow = _interopRequireDefault(require("zustand/shallow"));
+
+var _Helpers = require("./Util/Helpers");
+
+var _MaterialMaker = require("./Util/MaterialMaker");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 function Hull(_ref) {
   var hullKey = _ref.hullKey,
-      node = _ref.node,
-      store = _ref.store;
+      store = _ref.store,
+      highlightColor = _ref.highlightColor;
+  var hull = store((0, _react.useCallback)(function (state) {
+    return state.hulls[hullKey];
+  }, [hullKey]), _shallow.default);
+  var frontRef = (0, _react.useRef)();
+  var backRef = (0, _react.useRef)();
+  var ghostFrontRef = (0, _react.useRef)();
+  var ghostBackRef = (0, _react.useRef)();
+  var initialVertices = typeof hull.vertices === 'function' ? hull.vertices(0) : hull.vertices;
+  var geometry = new _threeStdlib.ConvexGeometry(initialVertices.map(function (v) {
+    return new _three.Vector3(v.x, v.y, v.z);
+  }));
+  (0, _fiber.useFrame)((0, _react.useCallback)(function (_ref2) {
+    var clock = _ref2.clock;
+    // Outside of react rendering, adjust the positions of all tfs.
+    var hullState = store.getState().hulls[hullKey];
+    var time = clock.getElapsedTime() * 1000;
+    (0, _Helpers.updateShapeMaterial)(backRef, hullState.color, time);
+    (0, _Helpers.updateShapeMaterial)(frontRef, hullState.color, time);
 
-  var _store = store((0, _react.useCallback)(function (state) {
-    return [state.hulls[hullKey].name, state.hulls[hullKey].showName, state.hulls[hullKey].onClick, state.hulls[hullKey].onPointerOver, state.hulls[hullKey].onPointerOut, state.hulls[hullKey].hidden];
-  }, [hullKey])),
-      _store2 = _slicedToArray(_store, 6),
-      name = _store2[0],
-      showName = _store2[1],
-      onClick = _store2[2],
-      onPointerOver = _store2[3],
-      onPointerOut = _store2[4],
-      hidden = _store2[5];
+    if (ghostFrontRef.current && ghostBackRef.current) {
+      var coeficient = Math.sin(time / 700) / 5 + 1;
+      var power = -Math.sin(time / 700) / 2 + 3;
+      ghostFrontRef.current.material.uniforms.coeficient.value = coeficient;
+      ghostFrontRef.current.material.uniforms.power.value = power;
+      ghostBackRef.current.material.uniforms.coeficient.value = coeficient;
+      ghostBackRef.current.material.uniforms.power.value = power;
+    }
 
-  var ref = (0, _react.useRef)();
+    var vertices = typeof hull.vertices === 'function' ? hull.vertices(time) : hull.vertices;
+
+    if (vertices !== initialVertices) {
+      var newGeom = new _threeStdlib.ConvexGeometry(vertices.map(function (v) {
+        return new _three.Vector3(v.x, v.y, v.z);
+      }));
+      frontRef.current.geometry = newGeom;
+      backRef.current.geometry = newGeom;
+      ghostFrontRef.current.geometry = newGeom;
+      ghostBackRef.current.geometry = newGeom;
+    }
+  }, [hullKey, frontRef, backRef, store, initialVertices, hull]));
   return /*#__PURE__*/_react.default.createElement("group", {
-    ref: ref,
     up: [0, 0, 1],
-    visible: !hidden
+    visible: !hull.hidden
   }, /*#__PURE__*/_react.default.createElement("group", {
     up: [0, 0, 1],
-    onPointerDown: onClick,
-    onPointerOver: onPointerOver,
-    onPointerOut: onPointerOut
-  }, node), showName && /*#__PURE__*/_react.default.createElement(_drei.Html, {
+    onPointerDown: hull.onClick,
+    onPointerOver: hull.onPointerOver,
+    onPointerOut: hull.onPointerOut
+  }, /*#__PURE__*/_react.default.createElement("mesh", {
+    ref: backRef,
+    key: "".concat(hullKey, "B"),
+    geometry: geometry,
+    castShadow: false,
+    receiveShadow: false
+  }, /*#__PURE__*/_react.default.createElement("meshLambertMaterial", {
+    transparent: true,
+    wireframe: hull.wireframe,
+    attach: "material",
+    side: _three.BackSide
+  })), /*#__PURE__*/_react.default.createElement("mesh", {
+    ref: frontRef,
+    key: "".concat(hullKey, "F"),
+    geometry: geometry,
+    castShadow: false,
+    receiveShadow: false
+  }, /*#__PURE__*/_react.default.createElement("meshLambertMaterial", {
+    transparent: true,
+    attach: "material",
+    wireframe: hull.wireframe,
+    side: _three.FrontSide
+  })), hull.highlighted && /*#__PURE__*/_react.default.createElement("mesh", {
+    key: "HB",
+    ref: ghostBackRef,
+    geometry: geometry,
+    material: (0, _MaterialMaker.GhostMaterial)(highlightColor),
+    castShadow: false,
+    receiveShadow: false,
+    side: _three.BackSide
+  }), hull.highlighted && /*#__PURE__*/_react.default.createElement("mesh", {
+    key: "HF",
+    ref: ghostFrontRef,
+    geometry: geometry,
+    material: (0, _MaterialMaker.GhostMaterial)(highlightColor),
+    castShadow: false,
+    receiveShadow: false,
+    side: _three.FrontSide
+  })), hull.showName && /*#__PURE__*/_react.default.createElement(_drei.Html, {
     distanceFactor: 2,
     position: [0, 0, 0.5]
   }, /*#__PURE__*/_react.default.createElement(_antd.Tag, {
@@ -63,5 +129,5 @@ function Hull(_ref) {
       opacity: 0.75
     },
     className: "disable-text-selection"
-  }, name)));
+  }, hull.name)));
 }

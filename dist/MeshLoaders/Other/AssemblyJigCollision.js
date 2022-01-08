@@ -17,11 +17,11 @@ function Model(props) {
 
   return [{
     type: 'group',
-    rotation: [Math.PI, 0, 0],
+    rotation: [Math.PI / 2, 0, 0],
     children: [{
       type: 'raw',
-      geometry: nodes.mesh_0.geometry,
-      material: nodes.mesh_0.material,
+      geometry: nodes.Mesh_0.geometry,
+      material: nodes.Mesh_0.material,
       scale: [5, 5, 5]
     }]
   }];

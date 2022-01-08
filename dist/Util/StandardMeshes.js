@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.sphereGeomDefaultRadius = exports.cylinderGeomDefaultRadius = exports.cylinderGeomDefaultHeight = exports.coneGeomShaftLength = exports.coneGeomShaftDiameter = exports.coneGeomHeadLength = exports.coneGeomHeadDiameter = exports.boxGeomDefaultDim = exports.StandardMeshesLookup = exports.Sphere = exports.STANDARD_MESHES = exports.SPHERE_GEOM = exports.Cylinder = exports.Cube = exports.CYLINDER_GEOM = exports.BOX_GEOM = exports.Arrow = exports.ARROW_GEOM = void 0;
+exports.sphereGeomDefaultRadius = exports.cylinderGeomDefaultRadius = exports.cylinderGeomDefaultHeight = exports.coneGeomShaftLength = exports.coneGeomShaftDiameter = exports.coneGeomHeadLength = exports.coneGeomHeadDiameter = exports.boxGeomDefaultDim = exports.StandardMeshesLookup = exports.Sphere = exports.STANDARD_MESHES = exports.SPHERE_GEOM = exports.Cylinder = exports.Cube = exports.CYLINDER_GEOM = exports.CAPSULE_GEOM = exports.BOX_GEOM = exports.Arrow = exports.ARROW_GEOM = void 0;
 
 var _three = require("three");
 
@@ -49,7 +49,7 @@ var SPHERE_GEOM = function SPHERE_GEOM(params) {
       radius = _ref2.radius;
 
   radius = radius === undefined ? sphereGeomDefaultRadius : radius;
-  return new _three.SphereBufferGeometry(radius);
+  return new _three.SphereBufferGeometry(radius, 32, 32);
 };
 /*
  * Cylinder Mesh
@@ -69,7 +69,7 @@ var CYLINDER_GEOM = function CYLINDER_GEOM(params) {
 
   radius = radius === undefined ? cylinderGeomDefaultRadius : radius;
   height = height === undefined ? cylinderGeomDefaultHeight : height;
-  return new _three.CylinderBufferGeometry(radius, radius, height, 16, 1, false);
+  return new _three.CylinderBufferGeometry(radius, radius, height, 32, 1, false);
 };
 /*
  * Arrow Mesh
@@ -88,20 +88,18 @@ var coneGeomShaftLength = 0.6;
 exports.coneGeomShaftLength = coneGeomShaftLength;
 
 var ARROW_GEOM = function ARROW_GEOM(params) {
-  // I am really not a fan of girth here but it is technically the
-  // best descriptor. Please help workshop it.
   var _ref4 = params === undefined ? {} : params,
       length = _ref4.length,
-      girth = _ref4.girth;
+      radius = _ref4.radius;
 
   length = length === undefined ? 1 : length;
-  girth = girth === undefined ? 1 : girth;
+  radius = radius === undefined ? 1 : radius;
   var capLength = coneGeomHeadLength * length;
-  var capRadius = coneGeomHeadDiameter * 0.5 * girth;
-  var ARROW_CAP_GEOM = new _three.CylinderBufferGeometry(0, capRadius, capLength, 12, 1);
+  var capRadius = coneGeomHeadDiameter * 0.5 * radius;
+  var ARROW_CAP_GEOM = new _three.CylinderBufferGeometry(0, capRadius, capLength, 32, 1);
   var shaftLength = coneGeomShaftLength * length;
-  var shaftRadius = coneGeomShaftDiameter * 0.5 * girth;
-  var ARROW_BASE_GEOM = new _three.CylinderBufferGeometry(shaftRadius, shaftRadius, shaftLength, 12, 1);
+  var shaftRadius = coneGeomShaftDiameter * 0.5 * radius;
+  var ARROW_BASE_GEOM = new _three.CylinderBufferGeometry(shaftRadius, shaftRadius, shaftLength, 32, 1);
   var m = new _three.Matrix4();
   m.setPosition(new _three.Vector3(0, shaftLength * 0.5, 0));
   ARROW_BASE_GEOM.applyMatrix4(m);
@@ -109,12 +107,35 @@ var ARROW_GEOM = function ARROW_GEOM(params) {
   ARROW_CAP_GEOM.applyMatrix4(m);
   return (0, _BufferGeometryUtils.mergeBufferGeometries)([ARROW_CAP_GEOM, ARROW_BASE_GEOM]);
 };
+
+exports.ARROW_GEOM = ARROW_GEOM;
+
+var CAPSULE_GEOM = function CAPSULE_GEOM(params) {
+  var _ref5 = params === undefined ? {} : params,
+      radius = _ref5.radius,
+      height = _ref5.height;
+
+  radius = radius === undefined ? cylinderGeomDefaultRadius : radius;
+  height = height === undefined ? cylinderGeomDefaultHeight : height;
+  var INNER_GEOM = new _three.CylinderBufferGeometry(radius, radius, height, 32, 1, true);
+  var UPPER_SPHERE_GEOM = new _three.SphereBufferGeometry(radius, 32, 32, Math.PI, Math.PI);
+  var LOWER_SPHERE_GEOM = new _three.SphereBufferGeometry(radius, 32, 32, Math.PI, Math.PI);
+  var upperM = new _three.Matrix4();
+  upperM.makeRotationX(Math.PI / 2);
+  upperM.setPosition(0, height / 2, 0);
+  var lowerM = new _three.Matrix4();
+  lowerM.makeRotationX(-Math.PI / 2);
+  lowerM.setPosition(0, -height / 2, 0);
+  UPPER_SPHERE_GEOM.applyMatrix4(upperM);
+  LOWER_SPHERE_GEOM.applyMatrix4(lowerM);
+  return (0, _BufferGeometryUtils.mergeBufferGeometries)([INNER_GEOM, UPPER_SPHERE_GEOM, LOWER_SPHERE_GEOM]);
+};
 /*
  * Mesh Lookup Table
  */
 
 
-exports.ARROW_GEOM = ARROW_GEOM;
+exports.CAPSULE_GEOM = CAPSULE_GEOM;
 var STANDARD_MESHES = ["cube", "sphere", "cylinder", "arrow"];
 exports.STANDARD_MESHES = STANDARD_MESHES;
 

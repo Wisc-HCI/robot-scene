@@ -5,7 +5,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.itemToGroupAndChildRefs = exports.itemToGhost = exports.hullToGroupAndRef = exports.MeshConverter = exports.GhostConverter = void 0;
+exports.itemToGroupAndChildRefs = exports.itemToGhostAndChildRefs = exports.itemToGhost = exports.hullToGroupAndRef = exports.NestedGhostConverter = exports.MeshConverter = exports.GhostConverter = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -17,8 +17,6 @@ var _MeshLookup = require("../MeshLookup");
 
 var _MaterialMaker = require("./MaterialMaker");
 
-var _ColorConversion = require("./ColorConversion");
-
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -29,6 +27,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+// import { rgbToHex } from './ColorConversion';
 var MeshConverter = function MeshConverter(node, idx, materialOverride, opacity) {
   // console.log(node);
   if (node.type === 'group') {
@@ -83,8 +82,8 @@ var MeshConverter = function MeshConverter(node, idx, materialOverride, opacity)
         transparent: true,
         attach: "material",
         wireframe: materialOverride.wireframe,
-        opacity: opacity,
-        color: "#000000",
+        opacity: opacity // color='#000000'
+        ,
         side: _three.FrontSide
       })));
 
@@ -106,6 +105,46 @@ var MeshConverter = function MeshConverter(node, idx, materialOverride, opacity)
 };
 
 exports.MeshConverter = MeshConverter;
+
+var NestedGhostConverter = function NestedGhostConverter(node, idx, highlightColor) {
+  // console.log(node);
+  if (node.type === 'group') {
+    var nodes = node.children.map(function (child, i) {
+      return NestedGhostConverter(child, i, highlightColor);
+    });
+
+    var group = /*#__PURE__*/_react.default.createElement("group", {
+      key: idx,
+      up: [0, 0, 1],
+      position: node.position,
+      rotation: node.rotation,
+      scale: node.scale
+    }, nodes.map(function (node) {
+      return node[0];
+    }));
+
+    var refs = [].concat.apply([], nodes.map(function (node) {
+      return node[1];
+    }));
+    return [group, refs];
+  } else {
+    var ref = /*#__PURE__*/(0, _react.createRef)();
+
+    var mesh = /*#__PURE__*/_react.default.createElement("mesh", {
+      ref: ref,
+      key: idx,
+      geometry: node.geometry,
+      material: (0, _MaterialMaker.GhostMaterial)(highlightColor),
+      scale: node.scale,
+      castShadow: true,
+      receiveShadow: true
+    });
+
+    return [mesh, [ref]];
+  }
+};
+
+exports.NestedGhostConverter = NestedGhostConverter;
 
 var GhostConverter = function GhostConverter(node, idx, highlightColor) {
   if (node.type === 'group') {
@@ -140,9 +179,10 @@ exports.GhostConverter = GhostConverter;
 
 var itemToGroupAndChildRefs = function itemToGroupAndChildRefs(item) {
   var color = item.color,
-      shape = item.shape;
+      shape = item.shape,
+      wireframe = item.wireframe;
   var materialOverride = color ? _objectSpread(_objectSpread({}, color), {}, {
-    wireframe: item.wireframe
+    wireframe: wireframe
   }) : undefined;
   var opacity = color ? color.a : 1.0;
   var content = [];
@@ -182,6 +222,25 @@ var itemToGhost = function itemToGhost(item, highlightColor) {
 };
 
 exports.itemToGhost = itemToGhost;
+
+var itemToGhostAndChildRefs = function itemToGhostAndChildRefs(item, highlightColor) {
+  var shape = item.shape;
+  var content = shape in _MeshLookup.MeshLookupTable ? (0, _MeshLookup.MeshLookup)(shape) : [];
+  var nodes = content.map(function (node, i) {
+    return NestedGhostConverter(node, i, highlightColor);
+  });
+
+  var group = /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, nodes.map(function (node) {
+    return node[0];
+  }));
+
+  var refs = [].concat.apply([], nodes.map(function (node) {
+    return node[1];
+  }));
+  return [group, refs];
+};
+
+exports.itemToGhostAndChildRefs = itemToGhostAndChildRefs;
 
 var hullToGroupAndRef = function hullToGroupAndRef(hull) {
   var vertices = hull.vertices,
