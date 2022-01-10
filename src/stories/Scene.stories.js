@@ -203,6 +203,7 @@ RandomShapes.args = {
     plane: -0.75,
     fov: 60,
     paused: false,
+    arEnabled: false,
     onPointerMissed: () => console.log('Missed Click')
 }
 export const EvD = Template.bind({});
@@ -970,6 +971,7 @@ EvD.args = {
     plane: -0.75,
     fov: 60,
     paused: false,
+    arEnabled: false,
     onPointerMissed: () => console.log('Missed Click')
 }
 export const Movement = Template.bind({});
@@ -1065,6 +1067,7 @@ Movement.args = {
     plane: -0.75,
     fov: 60,
     paused: false,
+    arEnabled: false,
     onPointerMissed: () => console.log('Missed Click')
 }
 
@@ -1142,6 +1145,7 @@ Animation.args = {
     plane: -0.75,
     fov: 60,
     paused: false,
+    arEnabled: false,
     onPointerMissed: () => console.log('Missed Click')
 }
 
@@ -1199,6 +1203,7 @@ MeshDebugging.args = {
     plane: -0.75,
     fov: 60,
     paused: false,
+    arEnabled: false,
     onPointerMissed: () => console.log('Missed Click')
 }
 

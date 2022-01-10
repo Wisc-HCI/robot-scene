@@ -6,6 +6,7 @@ import { ResizeObserver } from "@juggle/resize-observer";
 import Content from './Content';
 import * as THREE from 'three';
 import useSceneStore from './SceneStore'
+import { ZapparCamera, ImageTracker, ZapparCanvas } from '@zappar/zappar-react-three-fiber';
 
 THREE.Object3D.DefaultUp = new THREE.Vector3(0, 0, 1);
 
@@ -18,9 +19,25 @@ export default function Scene(props) {
   // For the objects in props.content, render the objects.
   // Those should be in the suspense element.
 
-  const { backgroundColor, store, fov } = props;
+  const { backgroundColor, store, fov, arEnabled } = props;
 
-  return (
+  if (arEnabled) {
+    return (
+      <ZapparCanvas
+        camera={{up:[0,0,1],fov,position:[0,-3,3]}}
+        shadows
+        style={{ background: backgroundColor ? backgroundColor : "#d0d0d0" }}
+        resize={{ polyfill: ResizeObserver }}
+        onPointerMissed={props.onPointerMissed ? props.onPointerMissed : ()=>{}}
+      >
+        <Suspense fallback={<Loading />}>
+          <Content {...props} store={store ? store : useSceneStore} arEnabled/>
+        </Suspense>
+
+      </ZapparCanvas>
+  );
+  } else {
+    return (
       <Canvas
         camera={{up:[0,0,1],fov,position:[0,-3,3]}}
         shadows
@@ -33,5 +50,7 @@ export default function Scene(props) {
         </Suspense>
 
       </Canvas>
-  );
+    )
+  }
+  
 }

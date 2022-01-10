@@ -33,6 +33,11 @@ module.exports = {
       use: 'file-loader',
       include: path.resolve(__dirname, '../')
     });
+    config.module.rules.push({
+      test: /zcv\.wasm$/,
+      type: "javascript/auto",
+      loader: "file-loader",
+    });
 
     // Return the altered config
     return config;
