@@ -6,7 +6,7 @@ import { ResizeObserver } from "@juggle/resize-observer";
 import Content from './Content';
 import * as THREE from 'three';
 import useSceneStore from './SceneStore'
-import { ZapparCamera, ImageTracker, ZapparCanvas } from '@zappar/zappar-react-three-fiber';
+import { ZapparCamera, InstantTracker, ZapparCanvas } from '@zappar/zappar-react-three-fiber';
 
 THREE.Object3D.DefaultUp = new THREE.Vector3(0, 0, 1);
 
@@ -29,10 +29,14 @@ export default function Scene(props) {
         style={{ background: backgroundColor ? backgroundColor : "#d0d0d0" }}
         resize={{ polyfill: ResizeObserver }}
         onPointerMissed={props.onPointerMissed ? props.onPointerMissed : ()=>{}}
-      >
+      > 
+        <ZapparCamera />
+        <InstantTracker >
         <Suspense fallback={<Loading />}>
           <Content {...props} store={store ? store : useSceneStore} arEnabled/>
         </Suspense>
+        </InstantTracker>
+        
 
       </ZapparCanvas>
   );
