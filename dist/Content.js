@@ -1,6 +1,6 @@
 "use strict";
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -101,16 +101,11 @@ function Content(props) {
       planeColor = props.planeColor,
       highlightColor = props.highlightColor,
       plane = props.plane,
-      fov = props.fov,
       store = props.store,
       paused = props.paused;
-
-  var _useThree = (0, _fiber.useThree)(function (state) {
-    return [state.camera, state.clock];
-  }),
-      _useThree2 = _slicedToArray(_useThree, 2),
-      camera = _useThree2[0],
-      clock = _useThree2[1];
+  var clock = (0, _fiber.useThree)(function (state) {
+    return state.clock;
+  });
 
   if (clock.running && paused) {
     clock.stop();
@@ -118,11 +113,10 @@ function Content(props) {
     clock.stop();
   } else if (!clock.running && !paused) {
     clock.start();
-  }
+  } // camera.up.set(0,0,1);
+  // camera.fov = fov ? fov : 60;
+  // camera.updateProjectionMatrix();
 
-  camera.up.set(0, 0, 1);
-  camera.fov = fov ? fov : 60;
-  camera.updateProjectionMatrix();
 
   var _store = store(function (state) {
     var reducedTfs = Object.entries(state.tfs).map(function (pair) {

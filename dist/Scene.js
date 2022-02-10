@@ -1,6 +1,6 @@
 "use strict";
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -20,6 +20,8 @@ var _resizeObserver = require("@juggle/resize-observer");
 var _Content = _interopRequireDefault(require("./Content"));
 
 var THREE = _interopRequireWildcard(require("three"));
+
+var _xr = require("@react-three/xr");
 
 var _SceneStore = _interopRequireDefault(require("./SceneStore"));
 
@@ -47,8 +49,16 @@ function Scene(props) {
   // For the objects in props.content, render the objects.
   // Those should be in the suspense element.
   var backgroundColor = props.backgroundColor,
-      store = props.store;
-  return /*#__PURE__*/_react.default.createElement(_fiber.Canvas, {
+      store = props.store,
+      fov = props.fov,
+      xrEnabled = props.xrEnabled;
+  var CanvasComponent = xrEnabled === 'vr' ? _xr.VRCanvas : xrEnabled === 'ar' ? _xr.ARCanvas : _fiber.Canvas;
+  return /*#__PURE__*/_react.default.createElement(CanvasComponent, {
+    camera: {
+      up: [0, 0, 1],
+      fov: fov,
+      position: [0, -3, 3]
+    },
     shadows: true,
     style: {
       background: backgroundColor ? backgroundColor : "#d0d0d0"

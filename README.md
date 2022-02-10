@@ -1,6 +1,6 @@
 # RobotScene
 
-[TRY IT OUT HERE](https://wisc-hci.github.io/robot-scene/)
+[Storybook](https://wisc-hci.github.io/robot-scene/)
 
 ## Contribute
 

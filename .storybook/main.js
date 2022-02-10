@@ -12,6 +12,9 @@ module.exports = {
     "@storybook/addon-storysource"
     // "@storybook/preset-create-react-app"
   ],
+  "core": {
+    "builder": "webpack5"
+  },
   webpackFinal: async (config, { configType }) => {
     // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
     // You can change the configuration based on that.
