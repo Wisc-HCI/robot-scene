@@ -1,5 +1,4 @@
 import Scene from './Scene';
-import useSceneStore from './SceneStore';
-import { SceneSlice } from './SceneSlice';
+import { SceneSlice, ImmerSceneSlice, useDefaultSceneStore } from "./defaultStore";
 
-export { Scene, useSceneStore, SceneSlice }
+export { Scene, useDefaultSceneStore, SceneSlice, ImmerSceneSlice }

@@ -1,214 +1,23 @@
 import React, { useLayoutEffect } from 'react';
 import Scene from '../components/Scene';
-import useSceneStore from '../components/SceneStore';
-import { MeshLookupTable } from '../components/MeshLookup';
+import { useDefaultSceneStore } from '../components';
 
 export default {
-    title: 'Scene',
+    title: 'CoFrame',
     component: Scene,
 }
 
 const Template = (args) => {
-    const { tfs, items, hulls, lines, ...otherArgs } = args;
+    const { tfs, items, hulls, lines, texts, ...otherArgs } = args;
     useLayoutEffect(() => {
-        useSceneStore.setState({ tfs, items, hulls, lines })
-    }, [tfs, items, hulls, lines])
-    return <div style={{ height: 'calc(100vh - 2rem)', width: 'calc(100vw - 2rem)' }}><Scene {...otherArgs} store={useSceneStore} /></div>
+        useDefaultSceneStore.setState({ tfs, items, hulls, lines, texts })
+    }, [tfs, items, hulls, lines, texts])
+    return <div style={{ height: 'calc(100vh - 2rem)', width: 'calc(100vw - 2rem)' }}><Scene {...otherArgs} store={useDefaultSceneStore} /></div>
 };
 
-export const RandomShapes = Template.bind({});
-RandomShapes.args = {
-    tfs: {
-        other1: {
-            frame: 'world',
-            translation: { x: 1, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 }
-        },
-        other2: {
-            name: 'world',
-            translation: { x: -2, y: 0, z: 2 },
-            rotation: { w: 0.525322, x: 0.8509035, y: 0, z: 0 }
-        },
-        other3: {
-            name: 'world',
-            translation: { x: 2, y: 0, z: 1 },
-            rotation: { w: -0.604, x: -0.002, y: -0.756, z: 0.252 }
-        }
-    },
-    items: {
-        1: {
-            shape: "cube",
-            name: "My Cube",
-            frame: "world",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 255, g: 50, b: 10, a: 0.75 },
-            scale: { x: 0.5, y: 0.5, z: 0.5 },
-            highlighted: true,
-            onClick: () => { console.log('cube') },
-            onPointerOver: () => { console.log('hover') },
-            onPointerOut: () => { console.log('hover out') }
-        },
-        2: {
-            shape: "sphere",
-            name: "My Sphere",
-            frame: "world",
-            position: { x: 0, y: 2, z: 2 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 255, g: 255, b: 30, a: 0.35 },
-            scale: { x: 1, y: 2, z: 1 },
-            highlighted: true,
-            showName: true,
-            onClick: () => { console.log('sphere') }
-        },
-        3: {
-            shape: "cylinder",
-            name: "My Cylinder",
-            frame: "other2",
-            shapeParams: {height: 1.25},
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 10, g: 200, b: 235, a: 0.5 },
-            scale: { x: 1, y: 1, z: 1 },
-            highlighted: false,
-            onClick: () => { console.log('cylinder') }
-        },
-        a3: {
-            shape: "capsule",
-            name: "My Capsule",
-            frame: "other2",
-            shapeParams: {height: 0.25},
-            position: { x: 1.2, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 10, g: 200, b: 235, a: 0.5 },
-            scale: { x: 1, y: 1, z: 1 },
-            highlighted: false,
-            onClick: () => { console.log('capsule') }
-        },
-        4: {
-            shape: "flatarrow",
-            name: "My Arrow 1",
-            frame: "world",
-            position: { x: 1, y: 0, z: 1 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 70, g: 70, b: 250, a: 0.5 },
-            scale: { x: 1, y: 1, z: 1 },
-            highlighted: true,
-            onClick: () => { console.log('flatarrow') }
-        },
-        5: {
-            shape: "arrow",
-            name: "My Arrow 2",
-            frame: "other1",
-            position: { x: 1, y: 0, z: 0 },
-            rotation: { w: -0.604, x: -0.002, y: -0.756, z: 0.252 },
-            color: { r: 255, g: 70, b: 250, a: 0.5 },
-            scale: { x: 1, y: 1, z: 1 },
-            highlighted: true,
-            onClick: () => { console.log('arrow2') }
-        },
-        6: {
-            shape: "arrow",
-            name: "My Arrow 3",
-            frame: "other3",
-            position: { x: 1, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 255, g: 70, b: 250, a: 0.5 },
-            scale: { x: 1, y: 2, z: 1 },
-            highlighted: false,
-            onClick: () => { console.log('arrow3') }
-        },
-        7: {
-            shape: "package://nao_meshes/meshes/V40/HeadPitch.dae",
-            name: "Nao Head",
-            frame: "world",
-            position: { x: 0, y: 2, z: 1 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            showName: true,
-            highlighted: true,
-            onClick: () => { console.log('head') }
-        },
-        8: {
-            shape: "package://nao_meshes/meshes/V40/LAnkleRoll.dae",
-            name: "Nao Ankle",
-            frame: "world",
-            position: { x: 1, y: 0.5, z: 1 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            highlighted: false,
-            onClick: () => { console.log('ankle') }
-        },
-        9: {
-            shape: "package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/MK2-Printer/MK2-Printer.stl",
-            name: "3d Printer",
-            frame: "world",
-            position: { x: -1, y: 1, z: .3 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            highlighted: false,
-            onClick: () => { console.log('printer') }
-        },
-        10: {
-            frame: 'world',
-            name: 'Tag',
-            shape: 'tag',
-            position: { x: 3, y: 1, z: 1 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: -1, y: 1, z: 1 },
-            highlighted: false,
-            showName: true,
-            color: {r:255,g:0,b:0,a:1}
-        },
-        11: {
-            frame: 'world',
-            name: 'flag',
-            shape: 'flag',
-            position: { x: 3, y: 1.4, z: 1 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: -1, y: 1, z: 1 },
-            highlighted: false,
-            showName: false,
-            color: {r:255,g:0,b:0,a:1}
-        },
-    },
-    lines: {
-        line1: {
-            name: "Line1",
-            frame: "world",
-            width: 1,
-            vertices: [{ position: { x: 1, y: 2, z: 0 }, color: { r: 255, g: 0, b: 0 } },
-            { position: { x: 2, y: 1, z: 1 }, color: { r: 0, g: 255, b: 0 } },
-            { position: { x: 2, y: 2, z: 1 }, color: { r: 0, g: 0, b: 255 } }],
-            highlighted: false
-        },
-        line2: {
-            name: "Line1",
-            frame: "other1",
-            width: 3,
-            vertices: [{ position: { x: 1, y: 0, z: 0 }, color: { r: 0, g: 0, b: 255 } },
-            { position: { x: 1, y: 0, z: 1 }, color: { r: 100, g: 100, b: 255 } },
-            { position: { x: 2, y: 1, z: 1 }, color: { r: 50, g: 50, b: 255 } },
-            { position: { x: 2, y: 2, z: 1 }, color: { r: 255, g: 255, b: 255 } }],
-            highlighted: false
-        }
-    },
-    hulls: {},
-    displayTfs: true,
-    displayGrid: true,
-    isPolar: false,
-    backgroundColor: '#d0d0d0',
-    planeColor: '#a8a8a8',
-    highlightColor: '#ffffff',
-    plane: -0.75,
-    fov: 60,
-    paused: false,
-    arEnabled: false,
-    onPointerMissed: () => console.log('Missed Click')
-}
-export const EvD = Template.bind({});
-EvD.storyName = "EvD Layout";
-EvD.args = {
+export const CoFrame = Template.bind({});
+CoFrame.storyName = "CoFrame";
+CoFrame.args = {
     tfs: {
         'simulated_base_link': {
             frame: 'world',
@@ -312,8 +121,28 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             color: { r: 10, g: 10, b: 10, a: 1 },
             highlighted: false,
+            showName: false
+        },
+        tableGizmo: {
+            shape: "package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/Table/Table.stl",
+            name: "Table",
+            frame: "gizmo",
+            position: { x: 0, y: 0, z: 0 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            scale: { x: 1, y: 1, z: 1 },
+            color: { r: 10, g: 10, b: 10, a: 1 },
+            highlighted: false,
             showName: false,
-            onClick: ()=>console.log('clicked table')
+        },
+        printerGizmo: {
+            shape: "package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/MK2-Printer/MK2-Printer.stl",
+            name: "3D Printer",
+            frame: "gizmo",
+            position: { x: 0, y: 0, z: .66 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            scale: { x: 1, y: 1, z: 1 },
+            highlighted: false,
+            showName: false
         },
         bladeConveyor: {
             shape: 'conveyor',
@@ -323,8 +152,7 @@ EvD.args = {
             rotation: { w: 0.707, x: 0, y: 0, z: 0.707 },
             scale: { x: 1, y: 1, z: 1 },
             highlighted: false,
-            showName: false,
-            onClick: ()=>console.log('clicked conveyor')
+            showName: false
         },
         bladeConveyorCollision: {
             shape: 'conveyor_collision',
@@ -337,7 +165,6 @@ EvD.args = {
             highlighted: false,
             showName: false,
             wireframe: true,
-            onClick: ()=>{}
         },
         conveyorReceiver: {
             shape: 'conveyor_receiver',
@@ -347,8 +174,7 @@ EvD.args = {
             rotation: { w: 0.707, x: 0, y: 0, z: 0.707 },
             scale: { x: 1, y: 1, z: 1 },
             highlighted: false,
-            showName: false,
-            onClick: ()=>console.log('clicked conveyor_receiver')
+            showName: false
         },
         conveyorReceiverCollision: {
             shape: 'conveyor_receiver_collision',
@@ -361,7 +187,6 @@ EvD.args = {
             highlighted: false,
             showName: false,
             wireframe: true,
-            onClick: ()=>{}
         },
         knifeConveyor: {
             shape: 'conveyor',
@@ -371,8 +196,7 @@ EvD.args = {
             rotation: { w: 0.707, x: 0, y: 0, z: -0.707 },
             scale: { x: 1, y: 1, z: 1 },
             highlighted: false,
-            showName: false,
-            onClick: ()=>console.log('clicked conveyor')
+            showName: false
         },
         knifeConveyorCollision: {
             shape: 'conveyor_collision',
@@ -385,7 +209,6 @@ EvD.args = {
             highlighted: false,
             showName: false,
             wireframe: true,
-            onClick: ()=>{}
         },
         conveyorDispatcher: {
             shape: 'conveyor_dispatcher',
@@ -395,8 +218,7 @@ EvD.args = {
             rotation: { w: 0.707, x: 0, y: 0, z: -0.707 },
             scale: { x: 1, y: 1, z: 1 },
             highlighted: false,
-            showName: true,
-            onClick: ()=>console.log('clicked conveyor_dispatcher')
+            showName: true
         },
         conveyorDispatcherCollision: {
             shape: 'conveyor_dispatcher_collision',
@@ -409,7 +231,6 @@ EvD.args = {
             highlighted: false,
             showName: false,
             wireframe: true,
-            onClick: ()=>{}
         },
         pedestal: {
             shape: "package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/ur3e-Pedestal/Pedestal.stl",
@@ -420,8 +241,7 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             color: { r: 15, g: 15, b: 15, a: 1 },
             highlighted: false,
-            showName: false,
-            onClick: ()=>console.log('clicked pedestal')
+            showName: false
         },
         printer: {
             shape: "package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/MK2-Printer/MK2-Printer.stl",
@@ -431,9 +251,7 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             highlighted: true,
-            showName: false,
-            // color: { r: 15, g: 15, b: 15, a: 1 },
-            onClick: ()=>console.log('clicked 3D printer')
+            showName: false
         },
         blade: {
             shape: "blade",
@@ -443,10 +261,7 @@ EvD.args = {
             rotation: { w: 0.644, x: 0.310, y: -0.296, z: -0.638 },
             scale: { x: 0.2, y: 0.2, z: 0.2 },
             highlighted: false,
-            showName: false,
-            // transformMode: 'translate',
-            onMove: (t) => console.log(t),
-            onClick: ()=>console.log('clicked blade')
+            showName: false
         },
         leftHandle: {
             shape: "handle_l",
@@ -456,8 +271,7 @@ EvD.args = {
             rotation: { w: 0.707, x: 0.707, y: 0, z: 0 },
             scale: { x: 0.2, y: 0.2, z: 0.2 },
             highlighted: false,
-            showName: false,
-            onClick: ()=>console.log('clicked left handle')
+            showName: false
         },
         rightHandle: {
             shape: "handle_r",
@@ -467,8 +281,7 @@ EvD.args = {
             rotation: { w: 0.707, x: 0.707, y: 0, z: 0 },
             scale: { x: 0.2, y: 0.2, z: 0.2 },
             highlighted: false,
-            showName: false,
-            onClick: ()=>console.log('clicked right handle')
+            showName: false
         },
         transportJig: {
             shape: "transport_jig",
@@ -478,10 +291,7 @@ EvD.args = {
             rotation: { w: 0.644, x: 0.310, y: -0.296, z: -0.638 },
             scale: { x: 0.2, y: 0.2, z: 0.2 },
             highlighted: false,
-            showName: false,
-            // transformMode: 'rotate',
-            onMove: (t) => console.log(t),
-            onClick: ()=>console.log('clicked transport jig')
+            showName: false
         },
         assemblyJig: {
             shape: "assembly_jig",
@@ -491,8 +301,7 @@ EvD.args = {
             rotation: { w: -0.5, x: 0.5, y: -0.5, z: -0.5 },
             scale: { x: 0.2, y: 0.2, z: 0.2 },
             highlighted: false,
-            showName: false,
-            onClick: ()=>console.log('clicked assembly jig')
+            showName: false
         },
         assemblyJigCollision: {
             shape: "assembly_jig_collision",
@@ -505,7 +314,6 @@ EvD.args = {
             highlighted: false,
             showName: false,
             wireframe: true,
-            onClick: ()=>{}
         },
         knifeWithTransportJig: {
             shape: "knife_with_transport_jig",
@@ -515,10 +323,7 @@ EvD.args = {
             rotation: { w: -0.372, x: 0.604, y: -0.602, z: 0.368 },
             scale: { x: 0.2, y: 0.2, z: 0.2 },
             highlighted: false,
-            showName: false,
-            // transformMode: 'translate',
-            onMove: (t) => console.log(t),
-            onClick: ()=>console.log('clicked knife w/ transport jig')
+            showName: false
         },
         base: {
             shape: "package://ur_description/meshes/ur3/collision/base.stl",
@@ -530,7 +335,6 @@ EvD.args = {
             color: {r:255,g:0,b:0,a:1},
             showName: false,
             wireframe : true,
-            onClick: ()=>console.log('clicked '),
             highlighted: false
         },
         shoulderLink: {
@@ -541,7 +345,6 @@ EvD.args = {
             rotation: { w: 0, x: 0, y: 0, z: 1 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: ()=>console.log('clicked robot'),
             highlighted: false,
         },
         shoulderLinkCollision:{
@@ -554,7 +357,6 @@ EvD.args = {
             color: {r:255,g:0,b:0,a:1},
             showName: false,
             wireframe: true,
-            onClick: ()=>{},
             highlighted: false,
         },
         upperArmLink: {
@@ -565,7 +367,6 @@ EvD.args = {
             rotation: { w: 0.5, x: 0.5, y: -0.5, z: -0.5 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: ()=>console.log('clicked robot'),
             highlighted: false,
         },
        upperArmLinkCollision:{
@@ -578,7 +379,6 @@ EvD.args = {
             color: {r:255,g:0,b:0,a:1},
             showName: false,
             wireframe: true,
-            onClick: ()=>{},
             highlighted: false,
         },
         forearmLink: {
@@ -589,7 +389,6 @@ EvD.args = {
             rotation: { w: 0.5, x: 0.5, y: -0.5, z: -0.5 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: ()=>console.log('clicked robot'),
             highlighted: false,
         },
         forearmLinkCollision: {
@@ -602,7 +401,6 @@ EvD.args = {
             color: {r:255,g:0,b:0,a:1},
             showName: false,
             wireframe: true,
-            onClick: ()=>{},
             highlighted: false,
         },
         wrist1Link: {
@@ -613,7 +411,6 @@ EvD.args = {
             rotation: { w: 0.7071068, x: 0.7071068, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: ()=>console.log('clicked robot'),
             highlighted: false,
         },
         wrist1LinkCollision: {
@@ -626,7 +423,6 @@ EvD.args = {
             color: {r:255,g:0,b:0,a:1},
             showName: false,
             wireframe: true,
-            onClick: ()=>{},
             highlighted: false,
         },
 
@@ -638,7 +434,6 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: ()=>console.log('clicked robot'),
             highlighted: false,
         },
         wrist2LinkCollision: {
@@ -651,7 +446,6 @@ EvD.args = {
             color: {r:255,g:0,b:0,a:1},
             showName: false,
             wireframe: true,
-            onClick: ()=>{},
             highlighted: false,
         },
         wrist3Link: {
@@ -662,7 +456,6 @@ EvD.args = {
             rotation: { w: 0.7071068, x: 0.7071068, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: ()=>console.log('clicked robot'),
             highlighted: false,
         },
         wrist3LinkCollision:{
@@ -675,7 +468,6 @@ EvD.args = {
             color: {r:255,g:0,b:0,a:1},
             showName: false,
             wireframe: true,
-            onClick: ()=>{},
             highlighted: false,
         },
         gripperBaseLink: {
@@ -686,7 +478,6 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: ()=>console.log('clicked robot'),
             highlighted: false
         },
         gripperLeftKnuckle: {
@@ -697,7 +488,6 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: ()=>console.log('clicked robot'),
             highlighted: false
         },
         gripperRightKnuckle: {
@@ -708,7 +498,6 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: ()=>console.log('clicked robot'),
             highlighted: false
         },
         gripperLeftFinger: {
@@ -719,7 +508,6 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: ()=>console.log('clicked robot'),
             highlighted: false
         },
         gripperRightFinger: {
@@ -730,7 +518,6 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: ()=>console.log('clicked robot'),
             highlighted: false
         },
         gripperLeftInnerKnuckle: {
@@ -741,7 +528,6 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: ()=>console.log('clicked robot'),
             highlighted: false
         },
         gripperRightInnerKnuckle: {
@@ -752,7 +538,6 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: ()=>console.log('clicked robot'),
             highlighted: false
         },
         gripperLeftFingerTip: {
@@ -763,7 +548,6 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: ()=>console.log('clicked robot'),
             highlighted: false
         },
         gripperRightFingerTip: {
@@ -774,7 +558,6 @@ EvD.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: ()=>console.log('clicked robot'),
             highlighted: false
         },
         gripperBaseLinkCollision: {
@@ -787,7 +570,6 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
             wireframe: true,
-            onClick: ()=>{},
             highlighted: false
         },
         gripperLeftKnuckleCollision: {
@@ -799,7 +581,6 @@ EvD.args = {
             color: {r:255,g:0,b:0,a:1},
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: ()=>{},
             highlighted: false
         },
         gripperRightKnuckleCollision: {
@@ -812,7 +593,6 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
             wireframe: true,
-            onClick: ()=>{},
             highlighted: false
         },
         gripperLeftFingerCollision: {
@@ -825,7 +605,6 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
             wireframe: true,
-            onClick: ()=>{},
             highlighted: false
         },
         gripperRightFingerCollision: {
@@ -838,7 +617,6 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
             wireframe: true,
-            onClick: ()=>{},
             highlighted: false
         },
         gripperLeftInnerKnuckleCollision: {
@@ -851,7 +629,6 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
             wireframe: true,
-            onClick: ()=>{},
             highlighted: false
         },
         gripperRightInnerKnuckleCollision: {
@@ -864,7 +641,6 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
             wireframe: true,
-            onClick: ()=>{},
             highlighted: false
         },
         gripperLeftFingerTipCollision: {
@@ -877,7 +653,6 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
             wireframe: true,
-            onClick: ()=>{},
             highlighted: false
         },
         gripperRightFingerTipCollision: {
@@ -890,7 +665,6 @@ EvD.args = {
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
             wireframe: true,
-            onClick: ()=>{},
             highlighted: false
         },
         base: {
@@ -901,7 +675,6 @@ EvD.args = {
             rotation: { w: 0, x: 0, y: 0, z: 1 },
             scale: { x: 1, y: 1, z: 1 },
             showName: false,
-            onClick: ()=>console.log('clicked '),
             highlighted: true
         },
         ur3Base:{
@@ -913,7 +686,6 @@ EvD.args = {
             color: {r:255,g:0,b:0,a:1},
             scale: { x: 1, y: 1, z: 1 },
             wireframe : true,
-            onClick: ()=>console.log('clicked '),
             highlighted:true,
             hidden:true
         },
@@ -958,8 +730,21 @@ EvD.args = {
             wireframe: false,
             highlighted: true,
             showName: false,
-            hidden: false,
-            onClick: () => console.log('Space Usage')
+            hidden: false
+        }
+    },
+    texts: {
+        workcellLabel: {
+            value: "Work Cell",
+            frame: "world",
+            position: { x: 0, y: 0, z: 1.3 },
+            color: { r: 10, g: 10, b: 255, a: 1 }
+        },
+        miniworkcellLabel: {
+            value: "Mini Work Cell",
+            frame: "gizmo",
+            position: { x: 0, y: 0, z: 1.3 },
+            color: { r: 10, g: 10, b: 255, a: 1 }
         }
     },
     displayTfs: false,
@@ -970,240 +755,7 @@ EvD.args = {
     highlightColor: '#ffffff',
     plane: -0.75,
     fov: 60,
-    paused: false,
-    arEnabled: false,
+    ar: false,
+    vr: false,
     onPointerMissed: () => console.log('Missed Click')
 }
-export const Movement = Template.bind({});
-Movement.args = {
-    tfs: {
-        static: {
-            frame: 'world',
-            translation: { x: -1, y: 1, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 }
-        }
-    },
-    items: {
-        immovable: {
-            shape: "cube",
-            name: "Immovable Cube",
-            frame: "static",
-            position: { x: 0, y: 0, z: 1 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 255, g: 10, b: 10, a: 1 },
-            scale: { x: 0.5, y: 0.5, z: 0.5 },
-            highlighted: true,
-            onClick: () => { console.log('cube') },
-            onPointerOver: () => { console.log('hover') },
-            onPointerOut: () => { console.log('hover out') }
-        },
-        translateCube: {
-            shape: "cube",
-            name: "Translate Cube (Async)",
-            frame: "static",
-            position: { x: 1, y: 1, z: 1 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 10, g: 10, b: 10, a: 1 },
-            scale: { x: 0.5, y: 0.5, z: 0.5 },
-            highlighted: false,
-            onClick: () => { console.log('cube') },
-            onPointerOver: () => { console.log('hover') },
-            onPointerOut: () => { console.log('hover out') },
-            transformMode: 'translate',
-            onMove: (transform) => console.log(transform)
-        },
-        rotateCube: {
-            shape: "cube",
-            name: "Rotate Cube",
-            frame: "static",
-            position: { x: 1, y: 0, z: 1 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 10, g: 255, b: 10, a: 1 },
-            scale: { x: 0.5, y: 0.5, z: 0.5 },
-            highlighted: false,
-            onClick: () => { console.log('cube') },
-            onPointerOver: () => { console.log('hover') },
-            onPointerOut: () => { console.log('hover out') },
-            transformMode: 'rotate',
-            onMove: (transform) => {
-                useSceneStore.getState().setItemRotation('rotateCube', {
-                    x: transform.local.quaternion.x,
-                    y: transform.local.quaternion.y,
-                    z: transform.local.quaternion.z,
-                    w: transform.local.quaternion.w
-                });
-            }
-        },
-        scaleCube: {
-            shape: "cube",
-            name: "Scale Cube",
-            frame: "static",
-            position: { x: 0, y: 1, z: 1 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 10, g: 10, b: 255, a: 1 },
-            scale: { x: 0.5, y: 0.5, z: 0.5 },
-            highlighted: false,
-            onClick: () => { console.log('cube') },
-            onPointerOver: () => { console.log('hover') },
-            onPointerOut: () => { console.log('hover out') },
-            transformMode: 'scale',
-            onMove: (transform) => {
-                useSceneStore.getState().setItemScale('scaleCube', {
-                    x: transform.local.scale.x,
-                    y: transform.local.scale.y,
-                    z: transform.local.scale.z,
-                });
-            }
-        }
-    },
-    lines: {},
-    hulls: {},
-    displayTfs: false,
-    displayGrid: true,
-    isPolar: false,
-    backgroundColor: '#d0d0d0',
-    planeColor: '#a8a8a8',
-    highlightColor: '#ffffff',
-    plane: -0.75,
-    fov: 60,
-    paused: false,
-    arEnabled: false,
-    onPointerMissed: () => console.log('Missed Click')
-}
-
-export const Animation = Template.bind({});
-Animation.args = {
-    tfs: {
-        static: {
-            frame: 'world',
-            translation: { x: (time => Math.cos(time / 1000)), y: (time) => Math.sin(time / 1000), z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 }
-        }
-    },
-    items: {
-        immovable: {
-            shape: "cube",
-            name: "Immovable Cube",
-            frame: "static",
-            position: { x: 0, y: 0, z: (time) => Math.sin(time / 1000) + 1 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: (time) => (Math.sin(time / 1000) / 2 + 0.5) * 255, g: 10, b: 10, a: 1 },
-            scale: { x: 0.5, y: 0.5, z: 0.5 },
-            highlighted: true,
-            onClick: () => { console.log('cube') },
-            onPointerOver: () => { console.log('hover') },
-            onPointerOut: () => { console.log('hover out') }
-        },
-        translateCube: {
-            shape: "cube",
-            name: "Translate Cube (Async)",
-            frame: "static",
-            position: { x: 1, y: 1, z: 1 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 10, g: 10, b: 10, a: (time) => (Math.sin(time / 1000) / 2 + 0.5) },
-            scale: { x: 0.5, y: 0.5, z: 0.5 },
-            highlighted: false,
-            onClick: () => { console.log('cube') },
-            onPointerOver: () => { console.log('hover') },
-            onPointerOut: () => { console.log('hover out') }
-        },
-        rotateCube: {
-            shape: "cube",
-            name: "Rotate Cube",
-            frame: "static",
-            position: { x: 1, y: 0, z: 1 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 10, g: 255, b: 10, a: 1 },
-            scale: { x: 0.5, y: (time) => Math.sin(time / 1000) / 2 + 1, z: 0.5 },
-            highlighted: false,
-            onClick: () => { console.log('cube') },
-            onPointerOver: () => { console.log('hover') },
-            onPointerOut: () => { console.log('hover out') }
-        },
-        scaleCube: {
-            shape: "cube",
-            name: "Scale Cube",
-            frame: "static",
-            position: { x: 0, y: 1, z: 1 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 10, g: 10, b: 255, a: 1 },
-            scale: { x: 0.5, y: 0.5, z: 0.5 },
-            highlighted: false,
-            onClick: () => { console.log('cube') },
-            onPointerOver: () => { console.log('hover') },
-            onPointerOut: () => { console.log('hover out') }
-        }
-    },
-    lines: {},
-    hulls: {},
-    displayTfs: false,
-    displayGrid: true,
-    isPolar: false,
-    backgroundColor: '#d0d0d0',
-    planeColor: '#a8a8a8',
-    highlightColor: '#ffffff',
-    plane: -0.75,
-    fov: 60,
-    paused: false,
-    arEnabled: false,
-    onPointerMissed: () => console.log('Missed Click')
-}
-
-let debugTfs = {};
-let debugItems = {};
-
-var y = -10;
-var x = -12;
-
-Object.keys(MeshLookupTable).forEach((key, i) => {
-    if (x === 0) {
-        x += 2;
-    } else if (x > 0) {
-        if (x % 10 === 0) {
-            y += 2;
-            x = -10;
-        } else {
-            x += 2;
-        }
-    } else {
-        x += 2;
-    }
-    debugTfs[`${i}`] = {
-        name: `${i}`,
-        translation: { x: x, y: y, z: 0 },
-        rotation: { w: 1, x: 0, y: 0, z: 0 }
-    };
-    debugItems[key] = {
-        shape: key,
-        name: key,
-        frame: `${i}`,
-        position: { x: 0, y: 0, z: 0 },
-        rotation: { w: 1, x: 0, y: 0, z: 0 },
-        scale: key.includes('robotiq_2f_85_gripper_visualization') ? { x: 0.001, y: 0.001, z: 0.001 } : { x: 1, y: 1, z: 1 },
-        editMode: 'inactive',
-        showName: true,
-        highlighted: false,
-        onClick: () => { console.log(key) }
-    }
-
-})
-
-export const MeshDebugging = Template.bind({});
-MeshDebugging.args = {
-    tfs: debugTfs,
-    items: debugItems,
-    lines: {},
-    hulls: {},
-    displayTfs: false,
-    displayGrid: true,
-    isPolar: false,
-    backgroundColor: '#d0d0d0',
-    planeColor: '#a8a8a8',
-    highlightColor: '#ffffff',
-    plane: -0.75,
-    fov: 60,
-    paused: false,
-    arEnabled: false,
-    onPointerMissed: () => console.log('Missed Click')
-}
-

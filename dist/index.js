@@ -3,6 +3,12 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+Object.defineProperty(exports, "ImmerSceneSlice", {
+  enumerable: true,
+  get: function get() {
+    return _defaultStore.ImmerSceneSlice;
+  }
+});
 Object.defineProperty(exports, "Scene", {
   enumerable: true,
   get: function get() {
@@ -12,20 +18,18 @@ Object.defineProperty(exports, "Scene", {
 Object.defineProperty(exports, "SceneSlice", {
   enumerable: true,
   get: function get() {
-    return _SceneSlice.SceneSlice;
+    return _defaultStore.SceneSlice;
   }
 });
-Object.defineProperty(exports, "useSceneStore", {
+Object.defineProperty(exports, "useDefaultSceneStore", {
   enumerable: true,
   get: function get() {
-    return _SceneStore.default;
+    return _defaultStore.useDefaultSceneStore;
   }
 });
 
 var _Scene = _interopRequireDefault(require("./Scene"));
 
-var _SceneStore = _interopRequireDefault(require("./SceneStore"));
-
-var _SceneSlice = require("./SceneSlice");
+var _defaultStore = require("./defaultStore");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

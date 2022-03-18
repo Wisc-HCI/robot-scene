@@ -3,15 +3,88 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.SceneSlice = void 0;
+exports.useDefaultSceneStore = exports.SceneSlice = exports.ImmerSceneSlice = void 0;
 
-var SceneSlice = function SceneSlice(set) {
+var _zustand = _interopRequireDefault(require("zustand"));
+
+var _middleware = require("zustand/middleware");
+
+var _immer = _interopRequireDefault(require("immer"));
+
+var _Timer = require("./Util/Timer");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var immer = function immer(config) {
+  return function (set, get, api) {
+    return config(function (partial, replace) {
+      var nextState = typeof partial === "function" ? (0, _immer.default)(partial) : partial;
+      return set(nextState, replace);
+    }, get, api);
+  };
+};
+
+var SceneSlice = function SceneSlice(set, get) {
   return {
+    clock: new _Timer.Timer(),
     items: {},
-    lines: {},
     tfs: {},
     hulls: {},
-    // Clearing Contents
+    lines: {},
+    texts: {},
+    onMove: function onMove(itemId, worldTransform, localTransform) {
+      return set(function (state) {
+        console.log(localTransform);
+        state.items[itemId].position = _objectSpread({}, localTransform.position);
+        state.items[itemId].rotation = localTransform.quaternion;
+        state.items[itemId].rotation.x = localTransform.quaternion.x;
+        state.items[itemId].rotation.y = localTransform.quaternion.y;
+        state.items[itemId].rotation.z = localTransform.quaternion.z;
+        state.items[itemId].rotation.w = localTransform.quaternion.w;
+        state.items[itemId].scale = _objectSpread({}, localTransform.scale);
+      });
+    },
+    onClick: function onClick(id, hidden, event) {
+      if (!hidden) {
+        console.log("id: ".concat(id, " clicked!"));
+      }
+
+      if (get().items[id] && !hidden) {
+        event.stopPropagation();
+      }
+    },
+    onPointerOver: function onPointerOver(id, hidden, event) {// console.log(`id: ${id} hovered!`)
+    },
+    onPointerOut: function onPointerOut(id, hidden, event) {// console.log(`id: ${id} not hovered!`)
+    },
+    pause: function pause() {
+      return set(function (state) {
+        // state.clock.enableFixedDelta();
+        // state.clock.setFixedDelta(0);
+        state.clock.setTimescale(0);
+      });
+    },
+    play: function play(speed) {
+      return set(function (state) {
+        // state.clock.disableFixedDelta();
+        state.clock.setTimescale(speed ? speed : 1);
+      });
+    },
+    reset: function reset(time) {
+      return set(function (state) {
+        console.log("setting time to ".concat(time));
+        state.clock._elapsed = time ? time * 1000 : 0;
+      });
+    },
+    // setClockTime: () => set(state=>{
+    //     state.clock._elapsed
+    // }),
     clearItems: function clearItems() {
       return set(function (_) {
         return {
@@ -294,3 +367,7 @@ var SceneSlice = function SceneSlice(set) {
 };
 
 exports.SceneSlice = SceneSlice;
+var ImmerSceneSlice = immer((0, _middleware.subscribeWithSelector)(SceneSlice));
+exports.ImmerSceneSlice = ImmerSceneSlice;
+var useDefaultSceneStore = (0, _zustand.default)(ImmerSceneSlice);
+exports.useDefaultSceneStore = useDefaultSceneStore;

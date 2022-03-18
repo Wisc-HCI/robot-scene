@@ -13,8 +13,6 @@ var _fiber = require("@react-three/fiber");
 
 var _drei = require("@react-three/drei");
 
-var _antd = require("antd");
-
 var _MeshLookup = require("./MeshLookup");
 
 var _three = require("three");
@@ -22,6 +20,8 @@ var _three = require("three");
 var _MaterialMaker = require("./Util/MaterialMaker");
 
 var _Helpers = require("./Util/Helpers");
+
+var _SceneContext = require("./SceneContext");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -31,80 +31,103 @@ var GENERIC_SHAPES = ['cube', 'cylinder', 'sphere', 'capsule', 'arrow'];
 
 function Item(_ref) {
   var itemKey = _ref.itemKey,
-      store = _ref.store,
       highlightColor = _ref.highlightColor;
-  var item = store((0, _react.useCallback)(function (state) {
+  var onClick = (0, _SceneContext.useSceneStore)(function (state) {
+    return state.onClick;
+  });
+
+  var _onPointerOver = (0, _SceneContext.useSceneStore)(function (state) {
+    return state.onPointerOver;
+  });
+
+  var _onPointerOut = (0, _SceneContext.useSceneStore)(function (state) {
+    return state.onPointerOut;
+  });
+
+  var clock = (0, _SceneContext.useSceneStore)(function (state) {
+    return state.clock;
+  });
+  var item = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
     return state.items[itemKey];
   }, [itemKey]));
   var content = GENERIC_SHAPES.includes(item.shape) ? (0, _Helpers.createGenericShape)(item) : item.shape in _MeshLookup.MeshLookupTable ? (0, _MeshLookup.MeshLookup)(item.shape) : [];
   var ref = (0, _react.useRef)();
-  (0, _fiber.useFrame)((0, _react.useCallback)(function (_ref2) {
-    var clock = _ref2.clock;
-    // Outside of react rendering, adjust the positions of all tfs.
-    var itemState = store.getState().items[itemKey];
-    var time = clock.getElapsedTime() * 1000;
+  (0, _fiber.useFrame)((0, _react.useCallback)(function () {
+    // Outside of react rendering, adjust the positions of the item.
+    var time = clock.getElapsed() * 1000;
 
     if (ref.current) {
-      ref.current.position.set(typeof itemState.position.x === 'function' ? itemState.position.x(time) : itemState.position.x, typeof itemState.position.y === 'function' ? itemState.position.y(time) : itemState.position.y, typeof itemState.position.z === 'function' ? itemState.position.z(time) : itemState.position.z);
-      ref.current.quaternion.set(typeof itemState.rotation.x === 'function' ? itemState.rotation.x(time) : itemState.rotation.x, typeof itemState.rotation.y === 'function' ? itemState.rotation.y(time) : itemState.rotation.y, typeof itemState.rotation.z === 'function' ? itemState.rotation.z(time) : itemState.rotation.z, typeof itemState.rotation.w === 'function' ? itemState.rotation.w(time) : itemState.rotation.w);
-      ref.current.scale.set(typeof itemState.scale.x === 'function' ? itemState.scale.x(time) : itemState.scale.x, typeof itemState.scale.y === 'function' ? itemState.scale.y(time) : itemState.scale.y, typeof itemState.scale.z === 'function' ? itemState.scale.z(time) : itemState.scale.z);
-      ref.current.visible = !itemState.hidden;
+      // console.log(ref.current)
+      ref.current.position.set(typeof item.position.x === 'function' ? item.position.x(time) : item.position.x, typeof item.position.y === 'function' ? item.position.y(time) : item.position.y, typeof item.position.z === 'function' ? item.position.z(time) : item.position.z);
+      ref.current.quaternion.set(typeof item.rotation.x === 'function' ? item.rotation.x(time) : item.rotation.x, typeof item.rotation.y === 'function' ? item.rotation.y(time) : item.rotation.y, typeof item.rotation.z === 'function' ? item.rotation.z(time) : item.rotation.z, typeof item.rotation.w === 'function' ? item.rotation.w(time) : item.rotation.w);
+      ref.current.scale.set(typeof item.scale.x === 'function' ? item.scale.x(time) : item.scale.x, typeof item.scale.y === 'function' ? item.scale.y(time) : item.scale.y, typeof item.scale.z === 'function' ? item.scale.z(time) : item.scale.z);
+      ref.current.visible = typeof item.hidden === 'function' ? !item.hidden(time) : !item.hidden;
     }
-  }, [itemKey, ref, store]));
+  }, [item, ref]));
   return /*#__PURE__*/_react.default.createElement("group", {
     ref: ref,
     up: [0, 0, 1]
   }, /*#__PURE__*/_react.default.createElement("group", {
     up: [0, 0, 1],
     rotation: [Math.PI / 2, 0, 0],
-    onPointerDown: item.onClick,
-    onPointerOver: item.onPointerOver,
-    onPointerOut: item.onPointerOut
+    onPointerDown: function onPointerDown(e) {
+      onClick(itemKey, !ref.current.visible, e);
+    },
+    onPointerOver: function onPointerOver(e) {
+      _onPointerOver(itemKey, !ref.current.visible, e);
+    },
+    onPointerOut: function onPointerOut(e) {
+      _onPointerOut(itemKey, !ref.current.visible, e);
+    }
   }, content.map(function (groupOrPart, idx) {
     return /*#__PURE__*/_react.default.createElement(GroupOrPart, {
       key: idx,
       idx: idx,
       groupOrPart: groupOrPart,
       itemKey: itemKey,
-      store: store,
       highlightColor: highlightColor
     });
   })), item.showName && /*#__PURE__*/_react.default.createElement(_drei.Html, {
     distanceFactor: 3,
     position: [0, 0, 0.2]
-  }, /*#__PURE__*/_react.default.createElement(_antd.Tag, {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     style: {
-      opacity: 0.75
-    },
-    className: "disable-text-selection"
+      opacity: 0.75,
+      borderRadius: 2,
+      backgroundColor: 'lightgrey',
+      padding: 5,
+      userSelect: 'none'
+    }
   }, item.name)));
 }
 
-var Part = function Part(_ref3) {
-  var part = _ref3.part,
-      itemKey = _ref3.itemKey,
-      store = _ref3.store,
-      highlightColor = _ref3.highlightColor;
-  var wireframe = store((0, _react.useCallback)(function (state) {
+var Part = function Part(_ref2) {
+  var part = _ref2.part,
+      itemKey = _ref2.itemKey,
+      highlightColor = _ref2.highlightColor;
+  var wireframe = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
     return state.items[itemKey].wireframe;
   }, [itemKey]));
-  var materialOverride = store((0, _react.useCallback)(function (state) {
-    return state.items[itemKey].color !== undefined;
+  var color = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
+    return state.items[itemKey].color;
   }, [itemKey]));
-  var highlighted = store((0, _react.useCallback)(function (state) {
+  var highlighted = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
     return state.items[itemKey].highlighted;
   }, [itemKey]));
+  var materialOverride = color !== undefined;
   var frontRef = (0, _react.useRef)();
   var backRef = (0, _react.useRef)();
   var ghostFrontRef = (0, _react.useRef)();
-  var ghostBackRef = (0, _react.useRef)();
-  (0, _fiber.useFrame)((0, _react.useCallback)(function (_ref4) {
-    var clock = _ref4.clock;
-    // Outside of react rendering, adjust the positions of all tfs.
-    var itemState = store.getState().items[itemKey];
-    var time = clock.getElapsedTime() * 1000;
-    (0, _Helpers.updateShapeMaterial)(backRef, itemState.color, time);
-    (0, _Helpers.updateShapeMaterial)(frontRef, itemState.color, time);
+  var ghostBackRef = (0, _react.useRef)(); // const outlineRef = useRef();
+
+  var clock = (0, _SceneContext.useSceneStore)(function (state) {
+    return state.clock;
+  });
+  (0, _fiber.useFrame)((0, _react.useCallback)(function () {
+    // Outside of react rendering, adjust the color/material.
+    var time = clock.getElapsed() * 1000;
+    (0, _Helpers.updateShapeMaterial)(backRef, color, time);
+    (0, _Helpers.updateShapeMaterial)(frontRef, color, time);
 
     if (ghostFrontRef.current && ghostBackRef.current) {
       var coeficient = Math.sin(time / 700) / 5 + 1;
@@ -114,7 +137,7 @@ var Part = function Part(_ref3) {
       ghostBackRef.current.material.uniforms.coeficient.value = coeficient;
       ghostBackRef.current.material.uniforms.power.value = power;
     }
-  }, [itemKey, frontRef, backRef, store]));
+  }, [itemKey, frontRef, backRef]));
 
   if (materialOverride) {
     return /*#__PURE__*/_react.default.createElement("group", {
@@ -147,7 +170,7 @@ var Part = function Part(_ref3) {
       opacity: 1 // color='#000000'
       ,
       side: _three.FrontSide
-    })), highlighted && /*#__PURE__*/_react.default.createElement("mesh", {
+    })), highlighted && /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("mesh", {
       key: "HB",
       ref: ghostBackRef,
       geometry: part.geometry,
@@ -156,7 +179,7 @@ var Part = function Part(_ref3) {
       castShadow: false,
       receiveShadow: false,
       side: _three.BackSide
-    }), highlighted && /*#__PURE__*/_react.default.createElement("mesh", {
+    })), highlighted && /*#__PURE__*/_react.default.createElement("mesh", {
       key: "HF",
       ref: ghostFrontRef,
       geometry: part.geometry,
@@ -198,12 +221,11 @@ var Part = function Part(_ref3) {
   }
 };
 
-var GroupOrPart = function GroupOrPart(_ref5) {
-  var idx = _ref5.idx,
-      groupOrPart = _ref5.groupOrPart,
-      itemKey = _ref5.itemKey,
-      store = _ref5.store,
-      highlightColor = _ref5.highlightColor;
+var GroupOrPart = function GroupOrPart(_ref3) {
+  var idx = _ref3.idx,
+      groupOrPart = _ref3.groupOrPart,
+      itemKey = _ref3.itemKey,
+      highlightColor = _ref3.highlightColor;
 
   if (groupOrPart.type === 'group') {
     return /*#__PURE__*/_react.default.createElement("group", {
@@ -218,7 +240,6 @@ var GroupOrPart = function GroupOrPart(_ref5) {
         idx: childIdx,
         groupOrPart: groupOrPartChild,
         itemKey: itemKey,
-        store: store,
         highlightColor: highlightColor
       });
     }));
@@ -227,7 +248,6 @@ var GroupOrPart = function GroupOrPart(_ref5) {
       key: idx,
       part: groupOrPart,
       itemKey: itemKey,
-      store: store,
       highlightColor: highlightColor
     });
   }

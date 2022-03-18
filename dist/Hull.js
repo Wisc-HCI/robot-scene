@@ -17,13 +17,13 @@ var _three = require("three");
 
 var _threeStdlib = require("three-stdlib");
 
-var _antd = require("antd");
-
 var _shallow = _interopRequireDefault(require("zustand/shallow"));
 
 var _Helpers = require("./Util/Helpers");
 
 var _MaterialMaker = require("./Util/MaterialMaker");
+
+var _SceneContext = require("./SceneContext");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33,26 +33,42 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function Hull(_ref) {
   var hullKey = _ref.hullKey,
-      store = _ref.store,
       highlightColor = _ref.highlightColor;
-  var hull = store((0, _react.useCallback)(function (state) {
+  var onClick = (0, _SceneContext.useSceneStore)(function (state) {
+    return state.onClick;
+  });
+
+  var _onPointerOver = (0, _SceneContext.useSceneStore)(function (state) {
+    return state.onPointerOver;
+  });
+
+  var _onPointerOut = (0, _SceneContext.useSceneStore)(function (state) {
+    return state.onPointerOut;
+  });
+
+  var hull = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
     return state.hulls[hullKey];
   }, [hullKey]), _shallow.default);
+  var vertices = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
+    return state.hulls[hullKey].vertices;
+  }, [hullKey]));
+  var clock = (0, _SceneContext.useSceneStore)(function (state) {
+    return state.clock;
+  });
   var frontRef = (0, _react.useRef)();
   var backRef = (0, _react.useRef)();
   var ghostFrontRef = (0, _react.useRef)();
   var ghostBackRef = (0, _react.useRef)();
-  var initialVertices = typeof hull.vertices === 'function' ? hull.vertices(0) : hull.vertices;
+  var outlineRef = (0, _react.useRef)();
+  var initialVertices = typeof vertices === 'function' ? vertices(0) : vertices;
   var geometry = new _threeStdlib.ConvexGeometry(initialVertices.map(function (v) {
     return new _three.Vector3(v.x, v.y, v.z);
   }));
-  (0, _fiber.useFrame)((0, _react.useCallback)(function (_ref2) {
-    var clock = _ref2.clock;
+  (0, _fiber.useFrame)((0, _react.useCallback)(function () {
     // Outside of react rendering, adjust the positions of all tfs.
-    var hullState = store.getState().hulls[hullKey];
-    var time = clock.getElapsedTime() * 1000;
-    (0, _Helpers.updateShapeMaterial)(backRef, hullState.color, time);
-    (0, _Helpers.updateShapeMaterial)(frontRef, hullState.color, time);
+    var time = clock.getElapsed() * 1000;
+    (0, _Helpers.updateShapeMaterial)(backRef, hull.color, time);
+    (0, _Helpers.updateShapeMaterial)(frontRef, hull.color, time);
 
     if (ghostFrontRef.current && ghostBackRef.current) {
       var coeficient = Math.sin(time / 700) / 5 + 1;
@@ -63,10 +79,10 @@ function Hull(_ref) {
       ghostBackRef.current.material.uniforms.power.value = power;
     }
 
-    var vertices = typeof hull.vertices === 'function' ? hull.vertices(time) : hull.vertices;
+    var currentVertices = typeof vertices === 'function' ? vertices(time) : vertices;
 
-    if (vertices !== initialVertices) {
-      var newGeom = new _threeStdlib.ConvexGeometry(vertices.map(function (v) {
+    if (currentVertices !== initialVertices) {
+      var newGeom = new _threeStdlib.ConvexGeometry(currentVertices.map(function (v) {
         return new _three.Vector3(v.x, v.y, v.z);
       }));
       frontRef.current.geometry = newGeom;
@@ -74,15 +90,26 @@ function Hull(_ref) {
       ghostFrontRef.current.geometry = newGeom;
       ghostBackRef.current.geometry = newGeom;
     }
-  }, [hullKey, frontRef, backRef, store, initialVertices, hull]));
+
+    var visible = typeof hull.hidden === 'function' ? !hull.hidden(time) : !hull.hidden;
+    frontRef.current.visible = visible;
+    backRef.current.visible = visible;
+    ghostFrontRef.current.visible = visible;
+    ghostFrontRef.current.visible = visible;
+  }, [hullKey, frontRef, backRef, initialVertices, hull]));
   return /*#__PURE__*/_react.default.createElement("group", {
-    up: [0, 0, 1],
-    visible: !hull.hidden
+    up: [0, 0, 1]
   }, /*#__PURE__*/_react.default.createElement("group", {
     up: [0, 0, 1],
-    onPointerDown: hull.onClick,
-    onPointerOver: hull.onPointerOver,
-    onPointerOut: hull.onPointerOut
+    onPointerDown: function onPointerDown(e) {
+      onClick(hullKey, frontRef.current.visible, e);
+    },
+    onPointerOver: function onPointerOver(e) {
+      _onPointerOver(hullKey, frontRef.current.visible, e);
+    },
+    onPointerOut: function onPointerOut(e) {
+      _onPointerOut(hullKey, frontRef.current.visible, e);
+    }
   }, /*#__PURE__*/_react.default.createElement("mesh", {
     ref: backRef,
     key: "".concat(hullKey, "B"),
@@ -112,6 +139,7 @@ function Hull(_ref) {
     material: (0, _MaterialMaker.GhostMaterial)(highlightColor),
     castShadow: false,
     receiveShadow: false,
+    wireframe: true,
     side: _three.BackSide
   }), hull.highlighted && /*#__PURE__*/_react.default.createElement("mesh", {
     key: "HF",
@@ -121,12 +149,22 @@ function Hull(_ref) {
     castShadow: false,
     receiveShadow: false,
     side: _three.FrontSide
+  }), false && hull.highlighted && /*#__PURE__*/_react.default.createElement("mesh", {
+    key: "HFO",
+    ref: outlineRef,
+    geometry: geometry,
+    material: (0, _MaterialMaker.OutlineMaterial)(highlightColor),
+    castShadow: false,
+    receiveShadow: false,
+    side: _three.BackSide
   })), hull.showName && /*#__PURE__*/_react.default.createElement(_drei.Html, {
     distanceFactor: 2,
     position: [0, 0, 0.5]
-  }, /*#__PURE__*/_react.default.createElement(_antd.Tag, {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     style: {
-      opacity: 0.75
+      opacity: 0.75,
+      borderRadius: 2,
+      backgroundColor: 'lightgrey'
     },
     className: "disable-text-selection"
   }, hull.name)));

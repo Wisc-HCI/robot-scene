@@ -4,32 +4,45 @@ import { useFrame } from "@react-three/fiber";
 import { ARROW_GEOM } from "./Util/StandardMeshes";
 import { MaterialMaker } from './Util/MaterialMaker';
 // import { Quaternion } from 'three';
-
+import { useSceneStore } from './SceneContext';
+// import shallow from "zustand/shallow";
 // const STANDARD_ROTATION = new Quaternion(0,0,1,0)
 
-export default function TF({ tfKey, displayTfs, children, store }) {
+export default function TF({ tfKey, displayTfs, children }) {
 
   const ref = useRef();
 
-  useFrame(useCallback(({clock}) => {
+  const [translationX, translationY, translationZ, 
+    rotationX, rotationY, rotationZ, rotationW] = useSceneStore(useCallback(state=>[
+      state.tfs[tfKey].translation.x,
+      state.tfs[tfKey].translation.y,
+      state.tfs[tfKey].translation.z,
+      state.tfs[tfKey].rotation.x,
+      state.tfs[tfKey].rotation.y,
+      state.tfs[tfKey].rotation.z,
+      state.tfs[tfKey].rotation.w
+    ],[tfKey]))
+
+  const clock = useSceneStore(state=>state.clock)
+
+  useFrame(useCallback(() => {
     // Outside of react rendering, adjust the positions of all tfs.
-    const tf = store.getState().tfs[tfKey];
-    const time = clock.getElapsedTime() * 1000;
+    const time = clock.getElapsed() * 1000;
     if (ref.current) {
       // console.log(ref.current)
       ref.current.position.set(
-        typeof tf.translation.x === 'function' ? tf.translation.x(time) : tf.translation.x,
-        typeof tf.translation.y === 'function' ? tf.translation.y(time) : tf.translation.y,
-        typeof tf.translation.z === 'function' ? tf.translation.z(time) : tf.translation.z,
+        typeof translationX === 'function' ? translationX(time) : translationX,
+        typeof translationY === 'function' ? translationY(time) : translationY,
+        typeof translationZ === 'function' ? translationZ(time) : translationZ,
       );
       ref.current.quaternion.set(
-        typeof tf.rotation.x === 'function' ? tf.rotation.x(time) : tf.rotation.x,
-        typeof tf.rotation.y === 'function' ? tf.rotation.y(time) : tf.rotation.y,
-        typeof tf.rotation.z === 'function' ? tf.rotation.z(time) : tf.rotation.z,
-        typeof tf.rotation.w === 'function' ? tf.rotation.w(time) : tf.rotation.w
+        typeof rotationX === 'function' ? rotationX(time) : rotationX,
+        typeof rotationY === 'function' ? rotationY(time) : rotationY,
+        typeof rotationZ === 'function' ? rotationZ(time) : rotationZ,
+        typeof rotationW === 'function' ? rotationW(time) : rotationW
       );
     }
-  },[tfKey, ref, store]));
+  },[tfKey, ref]));
 
   const arrow = ARROW_GEOM();
 
@@ -68,14 +81,75 @@ export function WorldTF({ displayTfs, children }) {
   );
 };
 
-export function GhostTF({ transforms, children, store }) {
+export function GizmoTF({ displayTfs, children }) {
+
+  const arrow = ARROW_GEOM();
+
+  return (
+    <group dispose={null} up={[0,0,1]}>
+      {displayTfs && (
+        <>
+          <axesHelper size={1}/>
+          <mesh key={`$WorldArrowX`} geometry={arrow} material={MaterialMaker(255,0,0,1)} scale={[0.2,0.5,0.2]} rotation={[0,0,-Math.PI/2]}/>
+          <mesh key={`$WorldArrowY`} geometry={arrow} material={MaterialMaker(0,255,0,1)} scale={[0.2,0.5,0.2]} rotation={[0,Math.PI/2,0]}/>
+          <mesh key={`$WorldArrowZ`} geometry={arrow} material={MaterialMaker(0,0,255,1)} scale={[0.2,0.5,0.2]} rotation={[Math.PI/2,0,0]}/>
+        </>
+      )}
+      {children}
+    </group>
+  );
+};
+
+export function GhostTF({ transforms, children }) {
+
+  const ref = useRef();
+
+  const [translationX, translationY, translationZ, 
+    rotationX, rotationY, rotationZ, rotationW] = useSceneStore(useCallback(state=>{
+      if (transforms.length > 0) {
+        const tfKey = transforms[0];
+        return [
+          state.tfs[tfKey].translation.x,
+          state.tfs[tfKey].translation.y,
+          state.tfs[tfKey].translation.z,
+          state.tfs[tfKey].rotation.x,
+          state.tfs[tfKey].rotation.y,
+          state.tfs[tfKey].rotation.z,
+          state.tfs[tfKey].rotation.w
+        ]
+      } else {
+        return [0,0,0,0,0,0,1]
+      }
+    },[transforms]))
+
+  const clock = useSceneStore(state=>state.clock)
+
+  useFrame(useCallback(() => {
+    // Outside of react rendering, adjust the positions of all tfs.
+    const time = clock.getElapsed() * 1000;
+    if (ref.current) {
+      // console.log(ref.current)
+      ref.current.position.set(
+        typeof translationX === 'function' ? translationX(time) : translationX,
+        typeof translationY === 'function' ? translationY(time) : translationY,
+        typeof translationZ === 'function' ? translationZ(time) : translationZ,
+      );
+      ref.current.quaternion.set(
+        typeof rotationX === 'function' ? rotationX(time) : rotationX,
+        typeof rotationY === 'function' ? rotationY(time) : rotationY,
+        typeof rotationZ === 'function' ? rotationZ(time) : rotationZ,
+        typeof rotationW === 'function' ? rotationW(time) : rotationW
+      );
+    }
+  },[translationX, translationY, translationZ, 
+    rotationX, rotationY, rotationZ, rotationW, ref]));
+
+  const arrow = ARROW_GEOM();
 
   if (transforms.length > 0) {
-    const pos = [transforms[0].position.x,transforms[0].position.y,transforms[0].position.z];
-    const rot = [transforms[0].rotation.x,transforms[0].rotation.y,transforms[0].rotation.z,transforms[0].rotation.w]
     return (
-      <group position={pos} quaternion={rot} up={[0,0,1]}>
-        <GhostTF transforms={transforms.filter((_,i)=>i!==0)} store={store}>
+      <group ref={ref} up={[0,0,1]}>
+        <GhostTF transforms={transforms.splice(1)}>
           {children}
         </GhostTF>
       </group>

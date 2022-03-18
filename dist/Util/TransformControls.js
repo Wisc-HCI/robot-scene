@@ -17,10 +17,12 @@ var _GhostItem = _interopRequireDefault(require("../GhostItem"));
 
 var _TransformControls = require("three/examples/jsm/controls/TransformControls");
 
+var _SceneContext = require("../SceneContext");
+
 var _lodash = _interopRequireDefault(require("lodash.pick"));
 
 var _excluded = ["children"],
-    _excluded2 = ["camera", "itemKey", "highlightColor", "store"];
+    _excluded2 = ["camera", "itemKey", "highlightColor"];
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -55,19 +57,14 @@ var TransformControls = function TransformControls(_ref) {
   var camera = props.camera,
       itemKey = props.itemKey,
       highlightColor = props.highlightColor,
-      store = props.store,
       rest = _objectWithoutProperties(props, _excluded2);
 
-  var transforms = store((0, _react.useCallback)(function (state) {
+  var transforms = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
     var transforms = [];
     var tfKey = state.items[itemKey].frame;
 
-    while (tfKey && tfKey !== 'world') {
-      var tf = state.tfs[tfKey];
-      transforms.push({
-        position: tf.translation,
-        rotation: tf.rotation
-      });
+    while (tfKey && tfKey !== 'world' && tfKey !== 'gizmo') {
+      transforms.push(tfKey);
       tfKey = state.tfs[tfKey.frame];
     }
 
@@ -101,31 +98,72 @@ var TransformControls = function TransformControls(_ref) {
       transforming = _useState4[0],
       setTransforming = _useState4[1];
 
+  var _useState5 = (0, _react.useState)(null),
+      _useState6 = _slicedToArray(_useState5, 2),
+      position = _useState6[0],
+      setPosition = _useState6[1];
+
+  var _useState7 = (0, _react.useState)(null),
+      _useState8 = _slicedToArray(_useState7, 2),
+      rotation = _useState8[0],
+      setRotation = _useState8[1];
+
+  var _useState9 = (0, _react.useState)(null),
+      _useState10 = _slicedToArray(_useState9, 2),
+      scale = _useState10[0],
+      setScale = _useState10[1];
+
+  var onMove = (0, _SceneContext.useSceneStore)(function (state) {
+    return state.onMove;
+  });
   (0, _react.useEffect)(function () {
     var callback = function callback(event) {
+      var _target$current, _target$current2, _target$current3;
+
+      var pos = target === null || target === void 0 ? void 0 : (_target$current = target.current) === null || _target$current === void 0 ? void 0 : _target$current.position;
+      var rot = target === null || target === void 0 ? void 0 : (_target$current2 = target.current) === null || _target$current2 === void 0 ? void 0 : _target$current2.quaternion;
+      var scl = target === null || target === void 0 ? void 0 : (_target$current3 = target.current) === null || _target$current3 === void 0 ? void 0 : _target$current3.scale;
+
       if (event.value && !transforming) {
         setTransforming(true);
         props.onDragStart && props.onDragStart();
       } else if (!event.value && transforming) {
         setTransforming(false);
         props.onDragEnd && props.onDragEnd();
+        onMove(itemKey, {
+          position: controls.worldPosition,
+          quaternion: controls.worldQuaternion,
+          scale: controls._worldScale
+        }, {
+          position: pos ? {
+            x: pos.x,
+            y: pos.y,
+            z: pos.z
+          } : null,
+          quaternion: rot ? {
+            x: rot.x,
+            y: rot.y,
+            z: rot.z,
+            w: rot.w
+          } : null,
+          scale: scl ? {
+            x: scl.x,
+            y: scl.y,
+            z: scl.z
+          } : null
+        });
       }
 
-      if (props.onMove) {
-        var _target$current, _target$current2, _target$current3;
+      if (pos) {
+        setPosition(pos);
+      }
 
-        props.onMove({
-          world: {
-            position: controls.worldPosition,
-            quaternion: controls.worldQuaternion,
-            scale: controls._worldScale
-          },
-          local: {
-            position: target === null || target === void 0 ? void 0 : (_target$current = target.current) === null || _target$current === void 0 ? void 0 : _target$current.position,
-            quaternion: target === null || target === void 0 ? void 0 : (_target$current2 = target.current) === null || _target$current2 === void 0 ? void 0 : _target$current2.quaternion,
-            scale: target === null || target === void 0 ? void 0 : (_target$current3 = target.current) === null || _target$current3 === void 0 ? void 0 : _target$current3.scale
-          }
-        });
+      if (rot) {
+        setRotation(rot);
+      }
+
+      if (scl) {
+        setScale(scl);
       }
     };
 
@@ -156,13 +194,14 @@ var TransformControls = function TransformControls(_ref) {
     dispose: undefined,
     object: controls
   }, transformProps)), /*#__PURE__*/_react.default.createElement(_TF.GhostTF, {
-    transforms: transforms,
-    store: store
+    transforms: transforms
   }, /*#__PURE__*/_react.default.createElement(_GhostItem.default, {
     ref: target,
     highlightColor: highlightColor,
     itemKey: itemKey,
-    store: store
+    position: position,
+    rotation: rotation,
+    scale: scale
   }))) : null;
 };
 

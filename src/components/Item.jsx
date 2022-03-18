@@ -1,86 +1,93 @@
 import React, { useRef, useCallback } from 'react';
 import { useFrame } from "@react-three/fiber";
 import { Html } from '@react-three/drei';
-import { Tag } from 'antd';
 import { MeshLookup, MeshLookupTable } from './MeshLookup';
 import { BackSide, FrontSide } from 'three';
 import { GhostMaterial } from './Util/MaterialMaker';
 import { updateShapeMaterial, createGenericShape } from './Util/Helpers';
+import { useSceneStore } from './SceneContext';
 
-const GENERIC_SHAPES = ['cube','cylinder','sphere','capsule','arrow'];
+const GENERIC_SHAPES = ['cube', 'cylinder', 'sphere', 'capsule', 'arrow'];
 
-export default function Item({ itemKey, store, highlightColor }) {
+export default function Item({ itemKey, highlightColor }) {
 
-  const item = store(useCallback(state => (state.items[itemKey]), [itemKey]))
+  const onClick = useSceneStore(state=>state.onClick);
+  const onPointerOver = useSceneStore(state=>state.onPointerOver);
+  const onPointerOut = useSceneStore(state=>state.onPointerOut);
+  const clock = useSceneStore(state=>state.clock);
+
+  const item = useSceneStore(useCallback(state => (state.items[itemKey]), [itemKey]))
 
   const content = GENERIC_SHAPES.includes(item.shape) ? createGenericShape(item) : item.shape in MeshLookupTable ? MeshLookup(item.shape) : [];
 
   const ref = useRef();
 
-  useFrame(useCallback(({ clock }) => {
-    // Outside of react rendering, adjust the positions of all tfs.
-    const itemState = store.getState().items[itemKey];
-    const time = clock.getElapsedTime() * 1000;
+  useFrame(useCallback(() => {
+    // Outside of react rendering, adjust the positions of the item.
+    const time = clock.getElapsed() * 1000;
     if (ref.current) {
+      // console.log(ref.current)
       ref.current.position.set(
-        typeof itemState.position.x === 'function' ? itemState.position.x(time) : itemState.position.x,
-        typeof itemState.position.y === 'function' ? itemState.position.y(time) : itemState.position.y,
-        typeof itemState.position.z === 'function' ? itemState.position.z(time) : itemState.position.z,
+        typeof item.position.x === 'function' ? item.position.x(time) : item.position.x,
+        typeof item.position.y === 'function' ? item.position.y(time) : item.position.y,
+        typeof item.position.z === 'function' ? item.position.z(time) : item.position.z,
       );
       ref.current.quaternion.set(
-        typeof itemState.rotation.x === 'function' ? itemState.rotation.x(time) : itemState.rotation.x,
-        typeof itemState.rotation.y === 'function' ? itemState.rotation.y(time) : itemState.rotation.y,
-        typeof itemState.rotation.z === 'function' ? itemState.rotation.z(time) : itemState.rotation.z,
-        typeof itemState.rotation.w === 'function' ? itemState.rotation.w(time) : itemState.rotation.w
+        typeof item.rotation.x === 'function' ? item.rotation.x(time) : item.rotation.x,
+        typeof item.rotation.y === 'function' ? item.rotation.y(time) : item.rotation.y,
+        typeof item.rotation.z === 'function' ? item.rotation.z(time) : item.rotation.z,
+        typeof item.rotation.w === 'function' ? item.rotation.w(time) : item.rotation.w
       );
       ref.current.scale.set(
-        typeof itemState.scale.x === 'function' ? itemState.scale.x(time) : itemState.scale.x,
-        typeof itemState.scale.y === 'function' ? itemState.scale.y(time) : itemState.scale.y,
-        typeof itemState.scale.z === 'function' ? itemState.scale.z(time) : itemState.scale.z,
+        typeof item.scale.x === 'function' ? item.scale.x(time) : item.scale.x,
+        typeof item.scale.y === 'function' ? item.scale.y(time) : item.scale.y,
+        typeof item.scale.z === 'function' ? item.scale.z(time) : item.scale.z,
       );
-      ref.current.visible = !itemState.hidden;
+      ref.current.visible = typeof item.hidden === 'function' ? !item.hidden(time) : !item.hidden;
     }
-  }, [itemKey, ref, store]));
-
+  }, [item, ref]));
 
   return (
     <group ref={ref} up={[0, 0, 1]}>
       <group
         up={[0, 0, 1]}
         rotation={[Math.PI / 2, 0, 0]}
-        onPointerDown={item.onClick}
-        onPointerOver={item.onPointerOver}
-        onPointerOut={item.onPointerOut}>
-        {content.map((groupOrPart, idx) => (<GroupOrPart key={idx} idx={idx} groupOrPart={groupOrPart} itemKey={itemKey} store={store} highlightColor={highlightColor} />))}
+        onPointerDown={(e)=>{onClick(itemKey,!ref.current.visible,e)}}
+        onPointerOver={(e)=>{onPointerOver(itemKey,!ref.current.visible,e)}}
+        onPointerOut={(e)=>{onPointerOut(itemKey,!ref.current.visible,e)}}>
+        {content.map((groupOrPart, idx) => (<GroupOrPart key={idx} idx={idx} groupOrPart={groupOrPart} itemKey={itemKey} highlightColor={highlightColor} />))}
       </group>
       {item.showName && (
         <Html distanceFactor={3} position={[0, 0, 0.2]}>
-          <Tag style={{ opacity: 0.75 }} className="disable-text-selection">
+          <div style={{ opacity: 0.75, borderRadius: 2, backgroundColor: 'lightgrey', padding: 5, userSelect:'none' }}>
             {item.name}
-          </Tag>
+          </div>
         </Html>
       )}
     </group>
   )
 }
 
-const Part = ({ part, itemKey, store, highlightColor }) => {
+const Part = ({ part, itemKey, highlightColor }) => {
 
-  const wireframe = store(useCallback(state => (state.items[itemKey].wireframe), [itemKey]));
-  const materialOverride = store(useCallback(state => (state.items[itemKey].color !== undefined), [itemKey]))
-  const highlighted = store(useCallback(state => (state.items[itemKey].highlighted), [itemKey]));
+  const wireframe = useSceneStore(useCallback(state => state.items[itemKey].wireframe, [itemKey]));
+  const color = useSceneStore(useCallback(state => state.items[itemKey].color, [itemKey]))
+  const highlighted = useSceneStore(useCallback(state => state.items[itemKey].highlighted, [itemKey]));
+  const materialOverride = color !== undefined;
 
   const frontRef = useRef();
   const backRef = useRef();
   const ghostFrontRef = useRef();
   const ghostBackRef = useRef();
+  // const outlineRef = useRef();
 
-  useFrame(useCallback(({ clock }) => {
-    // Outside of react rendering, adjust the positions of all tfs.
-    const itemState = store.getState().items[itemKey];
-    const time = clock.getElapsedTime() * 1000;
-    updateShapeMaterial(backRef, itemState.color, time);
-    updateShapeMaterial(frontRef, itemState.color, time);
+  const clock = useSceneStore(state=>state.clock);
+
+  useFrame(useCallback(() => {
+    // Outside of react rendering, adjust the color/material.
+    const time = clock.getElapsed() * 1000;
+    updateShapeMaterial(backRef, color, time);
+    updateShapeMaterial(frontRef, color, time);
     if (ghostFrontRef.current && ghostBackRef.current) {
       const coeficient = Math.sin(time/700)/5+1;
       const power = -Math.sin(time/700)/2+3;
@@ -90,7 +97,7 @@ const Part = ({ part, itemKey, store, highlightColor }) => {
       ghostBackRef.current.material.uniforms.power.value = power;
     }
 
-  }, [itemKey, frontRef, backRef, store]));
+  }, [itemKey, frontRef, backRef]));
 
   if (materialOverride) {
     return (
@@ -131,16 +138,30 @@ const Part = ({ part, itemKey, store, highlightColor }) => {
           />
         </mesh>
         {highlighted && (
-          <mesh
-            key='HB'
-            ref={ghostBackRef}
-            geometry={part.geometry}
-            material={GhostMaterial(highlightColor)}
-            scale={part.scale}
-            castShadow={false}
-            receiveShadow={false}
-            side={BackSide}
-          />
+          <>
+            <mesh
+              key='HB'
+              ref={ghostBackRef}
+              geometry={part.geometry}
+              material={GhostMaterial(highlightColor)}
+              scale={part.scale}
+              castShadow={false}
+              receiveShadow={false}
+              side={BackSide}
+            />
+            {/* <mesh
+              key='HBO'
+              ref={outlineRef}
+              geometry={part.geometry}
+              material={OutlineMaterial(highlightColor)}
+              scale={part.scale}
+              castShadow={false}
+              receiveShadow={false}
+              wireframe
+              side={BackSide}
+            /> */}
+          </>
+          
         )}
         {highlighted && (
           <mesh
@@ -201,16 +222,16 @@ const Part = ({ part, itemKey, store, highlightColor }) => {
 
 }
 
-const GroupOrPart = ({ idx, groupOrPart, itemKey, store, highlightColor }) => {
+const GroupOrPart = ({ idx, groupOrPart, itemKey, highlightColor }) => {
   if (groupOrPart.type === 'group') {
     return (
       <group key={idx} up={[0, 0, 1]} position={groupOrPart.position} rotation={groupOrPart.rotation} scale={groupOrPart.scale}>
-        {groupOrPart.children.map((groupOrPartChild, childIdx) => (<GroupOrPart key={childIdx} idx={childIdx} groupOrPart={groupOrPartChild} itemKey={itemKey} store={store} highlightColor={highlightColor} />))}
+        {groupOrPart.children.map((groupOrPartChild, childIdx) => (<GroupOrPart key={childIdx} idx={childIdx} groupOrPart={groupOrPartChild} itemKey={itemKey} highlightColor={highlightColor} />))}
       </group>
     )
   } else {
     return (
-      <Part key={idx} part={groupOrPart} itemKey={itemKey} store={store} highlightColor={highlightColor} />
+      <Part key={idx} part={groupOrPart} itemKey={itemKey} highlightColor={highlightColor} />
     )
   }
 }

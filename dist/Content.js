@@ -21,6 +21,10 @@ var _Hull = _interopRequireDefault(require("./Hull"));
 
 var _Line = _interopRequireDefault(require("./Line"));
 
+var _Text = _interopRequireDefault(require("./Text"));
+
+var _SceneContext = require("./SceneContext");
+
 var _Light = require("./Util/Light");
 
 var _MaterialMaker = require("./Util/MaterialMaker");
@@ -28,8 +32,6 @@ var _MaterialMaker = require("./Util/MaterialMaker");
 var _ColorConversion = require("./Util/ColorConversion");
 
 var _TransformControls = require("./Util/TransformControls");
-
-var _shallow = _interopRequireDefault(require("zustand/shallow"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49,17 +51,16 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, allLines, allHulls, store, highlightColor) {
-  var TFComponent = activeTf === 'world' ? _TF.WorldTF : _TF.default;
+var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, allLines, allHulls, allTexts, highlightColor) {
+  var TFComponent = activeTf === 'world' ? _TF.WorldTF : activeTf === 'gizmo' ? _TF.GizmoTF : _TF.default;
   return /*#__PURE__*/_react.default.createElement(TFComponent, {
     key: activeTf,
     tfKey: activeTf,
-    displayTfs: displayTfs,
-    store: store
+    displayTfs: displayTfs
   }, allTfs.filter(function (v) {
     return v.frame === activeTf || activeTf === 'world' && !v.frame;
   }).map(function (tf) {
-    return renderTree(tf.tfKey, displayTfs, allTfs, allItems, allLines, allHulls, store, highlightColor);
+    return renderTree(tf.tfKey, displayTfs, allTfs, allItems, allLines, allHulls, allTexts, highlightColor);
   }), allItems.filter(function (v) {
     return v.frame === activeTf || activeTf === 'world' && !v.frame;
   }).map(function (item) {
@@ -67,7 +68,6 @@ var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, all
       key: item.itemKey,
       itemKey: item.itemKey,
       node: item.node,
-      store: store,
       highlightColor: highlightColor
     });
   }), allLines.filter(function (v) {
@@ -75,8 +75,7 @@ var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, all
   }).map(function (line) {
     return /*#__PURE__*/_react.default.createElement(_Line.default, {
       key: line.lineKey,
-      lineKey: line.lineKey,
-      store: store
+      lineKey: line.lineKey
     });
   }), allHulls.filter(function (v) {
     return v.frame === activeTf || activeTf === 'world' && !v.frame;
@@ -85,7 +84,14 @@ var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, all
       key: hull.hullKey,
       hullKey: hull.hullKey,
       node: hull.node,
-      store: store,
+      highlightColor: highlightColor
+    });
+  }), allTexts.filter(function (v) {
+    return v.frame === activeTf || activeTf === 'world' && !v.frame;
+  }).map(function (text) {
+    return /*#__PURE__*/_react.default.createElement(_Text.default, {
+      key: text.textKey,
+      textKey: text.textKey,
       highlightColor: highlightColor
     });
   }));
@@ -100,26 +106,26 @@ function Content(props) {
       backgroundColor = props.backgroundColor,
       planeColor = props.planeColor,
       highlightColor = props.highlightColor,
-      plane = props.plane,
-      store = props.store,
-      paused = props.paused;
-  var clock = (0, _fiber.useThree)(function (state) {
+      plane = props.plane;
+  var clock = (0, _SceneContext.useSceneStore)(function (state) {
     return state.clock;
   });
-
-  if (clock.running && paused) {
-    clock.stop();
-    clock.start();
-    clock.stop();
-  } else if (!clock.running && !paused) {
-    clock.start();
-  } // camera.up.set(0,0,1);
+  (0, _fiber.useFrame)(function () {
+    clock.update();
+  }); // const clock = useThree((state) => state.clock);
+  // if (clock.running && paused) {
+  //   clock.stop();
+  //   clock.start();
+  //   clock.stop();
+  // } else if (!clock.running && !paused) {
+  //   clock.start();
+  // }
+  // camera.up.set(0,0,1);
   // camera.fov = fov ? fov : 60;
   // camera.updateProjectionMatrix();
 
-
-  var _store = store(function (state) {
-    var reducedTfs = Object.entries(state.tfs).map(function (pair) {
+  var tfs = (0, _SceneContext.useSceneStore)(function (state) {
+    return Object.entries(state.tfs).map(function (pair) {
       var _pair = _slicedToArray(pair, 2),
           tfKey = _pair[0],
           tf = _pair[1];
@@ -129,7 +135,9 @@ function Content(props) {
         frame: tf.frame
       };
     });
-    var reducedItems = Object.entries(state.items).map(function (pair) {
+  });
+  var items = (0, _SceneContext.useSceneStore)(function (state) {
+    return Object.entries(state.items).map(function (pair) {
       var _pair2 = _slicedToArray(pair, 2),
           itemKey = _pair2[0],
           item = _pair2[1];
@@ -137,11 +145,12 @@ function Content(props) {
       return {
         itemKey: itemKey,
         frame: item.frame,
-        transformMode: item.transformMode,
-        onMove: item.onMove
+        transformMode: item.transformMode
       };
     });
-    var reducedLines = Object.entries(state.lines).map(function (pair) {
+  });
+  var lines = (0, _SceneContext.useSceneStore)(function (state) {
+    return Object.entries(state.lines).map(function (pair) {
       var _pair3 = _slicedToArray(pair, 2),
           lineKey = _pair3[0],
           line = _pair3[1];
@@ -151,7 +160,9 @@ function Content(props) {
         frame: line.frame
       };
     });
-    var reducedHulls = Object.entries(state.hulls).map(function (pair) {
+  });
+  var hulls = (0, _SceneContext.useSceneStore)(function (state) {
+    return Object.entries(state.hulls).map(function (pair) {
       var _pair4 = _slicedToArray(pair, 2),
           hullKey = _pair4[0],
           hull = _pair4[1];
@@ -161,17 +172,19 @@ function Content(props) {
         frame: hull.frame
       };
     });
-    return [reducedTfs, reducedItems, reducedLines, reducedHulls];
-  }, _shallow.default),
-      _store2 = _slicedToArray(_store, 4),
-      tfs = _store2[0],
-      items = _store2[1],
-      lines = _store2[2],
-      hulls = _store2[3]; // const highlightedItemRefs = [].concat.apply([],items.filter(item=>item.highlighted).map(item=>item.childrenRefs));
-  // const highlightedHullRefs = [].concat.apply([],hulls.filter(hull=>hull.highlighted).map(hull=>hull.childrenRefs));
-  // const highlightedRefs = [...highlightedItemRefs, ...highlightedHullRefs];
+  });
+  var texts = (0, _SceneContext.useSceneStore)(function (state) {
+    return Object.entries(state.texts).map(function (pair) {
+      var _pair5 = _slicedToArray(pair, 2),
+          textKey = _pair5[0],
+          text = _pair5[1];
 
-
+      return {
+        textKey: textKey,
+        frame: text.frame
+      };
+    });
+  });
   var movableItems = items.filter(function (item) {
     return ['translate', 'rotate', 'scale'].indexOf(item.transformMode) > -1;
   });
@@ -182,7 +195,8 @@ function Content(props) {
   var planeRGB = (0, _ColorConversion.hexToRgb)(planeColor ? planeColor : "a8a8a8");
   var planeRGBA = [planeRGB.r, planeRGB.g, planeRGB.b, 0.5];
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_drei.OrbitControls, {
-    ref: orbitControls
+    ref: orbitControls,
+    makeDefault: true
   }), /*#__PURE__*/_react.default.createElement("pointLight", {
     ref: pointLightRef,
     intensity: 0.5,
@@ -215,7 +229,7 @@ function Content(props) {
     scale: 1000,
     position: [0, 0, plane ? plane - 0.01 : -0.01],
     material: _MaterialMaker.MaterialMaker.apply(void 0, planeRGBA)
-  }), renderTree('world', displayTfs, tfs, items, lines, hulls, store, highlightColor), /*#__PURE__*/_react.default.createElement("group", {
+  }), renderTree('world', displayTfs, tfs, items, lines, hulls, texts, highlightColor), /*#__PURE__*/_react.default.createElement("group", {
     position: [0, 0, plane ? plane : 0],
     rotation: [Math.PI / 2, 0, 0],
     up: [0, 0, 1]
@@ -237,9 +251,26 @@ function Content(props) {
         if (orbitControls.current) {
           orbitControls.current.enabled = false;
         }
-      },
-      onMove: movableItem.onMove,
-      store: store
+      }
     });
-  }));
+  }), /*#__PURE__*/_react.default.createElement(_drei.GizmoHelper, {
+    alignment: "bottom-right" // widget alignment within scene
+    ,
+    margin: [80, 80] // widget margins (X, Y)
+
+  }, /*#__PURE__*/_react.default.createElement("group", {
+    scale: [80, 80, 80]
+  }, /*#__PURE__*/_react.default.createElement(_Light.AmbientLight, {
+    intensity: 0.4,
+    color: "white"
+  }), /*#__PURE__*/_react.default.createElement("pointLight", {
+    intensity: 0.5,
+    position: [-1, -3, 3],
+    color: "#FFFAEE"
+  }), /*#__PURE__*/_react.default.createElement(_Light.DirectionalLight, {
+    castShadow: true,
+    position: [5, 15, 15],
+    intensity: 0.6,
+    color: "#FFFAEE"
+  }), renderTree('gizmo', displayTfs, tfs, items, lines, hulls, texts, highlightColor))));
 }

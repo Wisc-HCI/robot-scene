@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.WireframeMaterial = exports.RimLightMaterial = exports.MaterialMaker = exports.GhostMaterial = void 0;
+exports.WireframeMaterial = exports.RimLightMaterial = exports.OutlineMaterial = exports.MaterialMaker = exports.GhostMaterial = void 0;
 
 var _three = require("three");
 
@@ -116,3 +116,32 @@ var RimLightMaterial = function RimLightMaterial(hex) {
 };
 
 exports.RimLightMaterial = RimLightMaterial;
+
+var OutlineMaterial = function OutlineMaterial(hex) {
+  var vertexShader = "\n\t\t#include <common>\n\t\t#include <uv_pars_vertex>\n\t\t#include <displacementmap_pars_vertex>\n\t\t#include <fog_pars_vertex>\n\t\t#include <morphtarget_pars_vertex>\n\t\t#include <skinning_pars_vertex>\n\t\t#include <logdepthbuf_pars_vertex>\n\t\t#include <clipping_planes_pars_vertex>\n\t\n\t\tuniform float outlineThickness;\n\t\n\t\tvec4 calculateOutline( vec4 pos, vec3 normal, vec4 skinned ) {\n\t\t\t\tfloat thickness = outlineThickness;\n\t\t\t\tconst float ratio = 1.0; // TODO: support outline thickness ratio for each vertex\n\t\t\t\tvec4 pos2 = projectionMatrix * modelViewMatrix * vec4( skinned.xyz + normal, 1.0 );\n\t\t\t\t// NOTE: subtract pos2 from pos because BackSide objectNormal is negative\n\t\t\t\tvec4 norm = normalize( pos - pos2 );\n\t\t\t\treturn pos + norm * thickness * pos.w * ratio;\n\t\t}\n\t\n\t\tvoid main() {\n\t\n\t\t\t#include <uv_vertex>\n\t\n\t\t  \t#include <beginnormal_vertex>\n\t\t\t#include <morphnormal_vertex>\n\t\t\t#include <skinbase_vertex>\n\t\t\t#include <skinnormal_vertex>\n\t\n\t\t \t#include <begin_vertex>\n\t\t\t#include <morphtarget_vertex>\n\t\t\t#include <skinning_vertex>\n\t\t\t#include <displacementmap_vertex>\n\t\t\t#include <project_vertex>\n\t\n\t\t \tvec3 outlineNormal = - objectNormal; // the outline material is always rendered with BackSide\n\t\n\t\t \tgl_Position = calculateOutline( gl_Position, outlineNormal, vec4( transformed, 1.0 ) );\n\t\n\t\t \t#include <logdepthbuf_vertex>\n\t\t\t#include <clipping_planes_vertex>\n\t\t\t#include <fog_vertex>\n\t\n\t\t}\n\t\t";
+  var fragmentShader = "\n\t\t#include <common>\n\t\t#include <fog_pars_fragment>\n\t\t#include <logdepthbuf_pars_fragment>\n\t\t#include <clipping_planes_pars_fragment>\n\t\n\t\tuniform vec3 outlineColor;\n\t\tuniform float outlineAlpha;\n\t\n\t\tvoid main() {\n\t\n\t\t\t#include <clipping_planes_fragment>\n\t\t\t#include <logdepthbuf_fragment>\n\t\n\t\t\tgl_FragColor = vec4( outlineColor, outlineAlpha );\n\t\n\t\t\t#include <tonemapping_fragment>\n\t\t\t#include <encodings_fragment>\n\t\t\t#include <fog_fragment>\n\t\t\t#include <premultiplied_alpha_fragment>\n\t\n\t\t}\n\t\t";
+  var color = new _three.Color(hex);
+  var uniformsOutline = {
+    outlineThickness: {
+      value: 0.005
+    },
+    outlineColor: {
+      value: [color.r, color.g, color.b]
+    },
+    outlineAlpha: {
+      value: 1.0
+    }
+  };
+  return new _three.ShaderMaterial({
+    type: 'OutlineEffect',
+    uniforms: _three.UniformsUtils.merge([_three.UniformsLib['fog'], _three.UniformsLib['displacementmap'], uniformsOutline]),
+    vertexShader: vertexShader,
+    fragmentShader: fragmentShader,
+    side: _three.BackSide,
+    transparent: true,
+    depthWrite: false // depthTest   : false
+
+  });
+};
+
+exports.OutlineMaterial = OutlineMaterial;

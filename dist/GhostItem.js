@@ -11,6 +11,10 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _MeshConvert = require("./Util/MeshConvert");
 
+var _SceneContext = require("./SceneContext");
+
+var _fiber = require("@react-three/fiber");
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -30,18 +34,26 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var GhostItem = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
   var itemKey = _ref.itemKey,
       highlightColor = _ref.highlightColor,
-      store = _ref.store;
+      position = _ref.position,
+      rotation = _ref.rotation,
+      scale = _ref.scale;
 
-  var _store = store((0, _react.useCallback)(function (state) {
+  var _useSceneStore = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
     var _state$items$itemKey, _state$items$itemKey2, _state$items$itemKey3, _state$items$itemKey4;
 
     return [(_state$items$itemKey = state.items[itemKey]) === null || _state$items$itemKey === void 0 ? void 0 : _state$items$itemKey.position, (_state$items$itemKey2 = state.items[itemKey]) === null || _state$items$itemKey2 === void 0 ? void 0 : _state$items$itemKey2.rotation, (_state$items$itemKey3 = state.items[itemKey]) === null || _state$items$itemKey3 === void 0 ? void 0 : _state$items$itemKey3.scale, (_state$items$itemKey4 = state.items[itemKey]) === null || _state$items$itemKey4 === void 0 ? void 0 : _state$items$itemKey4.shape];
   }, [itemKey])),
-      _store2 = _slicedToArray(_store, 4),
-      position = _store2[0],
-      rotation = _store2[1],
-      scale = _store2[2],
-      shape = _store2[3]; // if ([
+      _useSceneStore2 = _slicedToArray(_useSceneStore, 4),
+      initposition = _useSceneStore2[0],
+      initrotation = _useSceneStore2[1],
+      initscale = _useSceneStore2[2],
+      shape = _useSceneStore2[3];
+
+  console.log({
+    position: position,
+    rotation: rotation,
+    scale: scale
+  }); // if ([
   //   position?.x, position?.y, position?.z, 
   //   rotation?.x, rotation?.y, rotation?.z, rotation?.w, 
   //   scale?.x, scale?.y, scale?.z
@@ -51,14 +63,32 @@ var GhostItem = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
   //    return null
   //  }
 
-
   (0, _react.useLayoutEffect)(function () {
     var _ref$current, _ref$current2, _ref$current3;
 
-    ref === null || ref === void 0 ? void 0 : (_ref$current = ref.current) === null || _ref$current === void 0 ? void 0 : _ref$current.position.set(position.x, position.y, position.z);
-    ref === null || ref === void 0 ? void 0 : (_ref$current2 = ref.current) === null || _ref$current2 === void 0 ? void 0 : _ref$current2.quaternion.set(rotation.x, rotation.y, rotation.z, rotation.w);
-    ref === null || ref === void 0 ? void 0 : (_ref$current3 = ref.current) === null || _ref$current3 === void 0 ? void 0 : _ref$current3.scale.set(scale.x, scale.y, scale.z);
-  }, [ref, position, rotation, scale]);
+    ref === null || ref === void 0 ? void 0 : (_ref$current = ref.current) === null || _ref$current === void 0 ? void 0 : _ref$current.position.set(initposition.x, initposition.y, initposition.z);
+    ref === null || ref === void 0 ? void 0 : (_ref$current2 = ref.current) === null || _ref$current2 === void 0 ? void 0 : _ref$current2.quaternion.set(initrotation.x, initrotation.y, initrotation.z, initrotation.w);
+    ref === null || ref === void 0 ? void 0 : (_ref$current3 = ref.current) === null || _ref$current3 === void 0 ? void 0 : _ref$current3.scale.set(initscale.x, initscale.y, initscale.z);
+  }, [ref, initposition, initrotation, initscale]);
+  (0, _fiber.useFrame)((0, _react.useCallback)(function () {
+    if (position) {
+      var _ref$current4;
+
+      ref === null || ref === void 0 ? void 0 : (_ref$current4 = ref.current) === null || _ref$current4 === void 0 ? void 0 : _ref$current4.position.set(position.x, position.y, position.z);
+    }
+
+    if (rotation) {
+      var _ref$current5;
+
+      ref === null || ref === void 0 ? void 0 : (_ref$current5 = ref.current) === null || _ref$current5 === void 0 ? void 0 : _ref$current5.quaternion.set(rotation.x, rotation.y, rotation.z, rotation.w);
+    }
+
+    if (scale) {
+      var _ref$current6;
+
+      ref === null || ref === void 0 ? void 0 : (_ref$current6 = ref.current) === null || _ref$current6 === void 0 ? void 0 : _ref$current6.scale.set(scale.x, scale.y, scale.z);
+    }
+  }, [position, rotation, scale]));
   var ghostGroup = (0, _MeshConvert.itemToGhost)({
     shape: shape
   }, highlightColor);

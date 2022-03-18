@@ -32,6 +32,11 @@ module.exports = {
       include: path.resolve(__dirname, '../')
     });
     config.module.rules.push({
+      test: /\.(woff)$/,
+      use: 'file-loader',
+      include: path.resolve(__dirname, '../')
+    });
+    config.module.rules.push({
       test: /\.(dat)$/,
       use: 'file-loader',
       include: path.resolve(__dirname, '../')

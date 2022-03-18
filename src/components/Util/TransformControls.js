@@ -3,7 +3,7 @@ import { useThree, } from '@react-three/fiber';
 import { GhostTF } from '../TF';
 import GhostItem from '../GhostItem';
 import { TransformControls as TransformControlsImpl } from 'three/examples/jsm/controls/TransformControls';
-// import useSceneStore from '../SceneStore';
+import { useSceneStore } from '../SceneContext';
 import pick from 'lodash.pick';
 
 export const TransformControls = ({ children, ...props }) => {
@@ -21,17 +21,13 @@ export const TransformControls = ({ children, ...props }) => {
     'showZ'
   ]
 
-  const { camera, itemKey, highlightColor, store, ...rest } = props;
+  const { camera, itemKey, highlightColor, ...rest } = props;
 
-  const transforms = store(useCallback(state=>{
+  const transforms = useSceneStore(useCallback(state=>{
     let transforms = [];
     let tfKey = state.items[itemKey].frame;
-    while (tfKey && tfKey !== 'world') {
-      const tf = state.tfs[tfKey];
-      transforms.push({
-        position:tf.translation,
-        rotation:tf.rotation
-      });
+    while (tfKey && tfKey !== 'world' && tfKey !== 'gizmo') {
+      transforms.push(tfKey);
       tfKey = state.tfs[tfKey.frame]
     }
     return transforms;
@@ -51,29 +47,48 @@ export const TransformControls = ({ children, ...props }) => {
   const [controls] = useState(() => new TransformControlsImpl(explCamera, gl.domElement))
   const [transforming, setTransforming] = useState(false)
 
+  const [position, setPosition] = useState(null);
+  const [rotation, setRotation] = useState(null);
+  const [scale, setScale] = useState(null);
+
+  const onMove = useSceneStore(state=>state.onMove);
+
   useEffect(() => {
     const callback = (event) => {
+      const pos = target?.current?.position;
+      const rot = target?.current?.quaternion;
+      const scl = target?.current?.scale;
       if (event.value && !transforming) {
         setTransforming(true)
         props.onDragStart && props.onDragStart()
       } else if (!event.value && transforming) {
         setTransforming(false)
-        props.onDragEnd && props.onDragEnd()
-      }
-      if (props.onMove) {
-        props.onMove({
-          world: {
+        props.onDragEnd && props.onDragEnd();
+        onMove(
+          itemKey,
+          {
             position: controls.worldPosition,
             quaternion: controls.worldQuaternion,
             scale: controls._worldScale
           },
-          local: {
-            position: target?.current?.position,
-            quaternion: target?.current?.quaternion,
-            scale: target?.current?.scale
+          {
+            position: pos ? {x:pos.x,y:pos.y,z:pos.z} : null,
+            quaternion: rot ? {x:rot.x,y:rot.y,z:rot.z,w:rot.w} : null,
+            scale: scl ? {x:scl.x,y:scl.y,z:scl.z} : null
           }
-        })
+        )
       }
+      if (pos) {
+        setPosition(pos);
+      }
+      if (rot) {
+        setRotation(rot);
+      }
+      if (scl) {
+        setScale(scl);
+      }
+      
+      
     }
     if (controls) {
       controls.addEventListener('dragging-changed', callback)
@@ -95,8 +110,8 @@ export const TransformControls = ({ children, ...props }) => {
   return controls ? (
     <>
       <primitive ref={ref} dispose={undefined} object={controls} {...transformProps} />
-      <GhostTF transforms={transforms} store={store}>
-        <GhostItem ref={target} highlightColor={highlightColor} itemKey={itemKey} store={store}/>
+      <GhostTF transforms={transforms}>
+        <GhostItem ref={target} highlightColor={highlightColor} itemKey={itemKey} position={position} rotation={rotation} scale={scale}/>
       </GhostTF>
     </>
   ) : null
