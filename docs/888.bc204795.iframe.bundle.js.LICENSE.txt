@@ -70,13 +70,6 @@ Original licenses apply:
  * LICENSE file in the root directory of this source tree.
  */
 
-/**
- * postprocessing v6.26.2 build Tue Mar 22 2022
- * https://github.com/pmndrs/postprocessing
- * Copyright 2015-2022 Raoul van Rüschen
- * @license Zlib
- */
-
 /** @license React v0.20.2
  * scheduler.production.min.js
  *

@@ -13,7 +13,6 @@ import { hexToRgb } from './Util/ColorConversion';
 import { OrbitControls } from '@react-three/drei';
 import { TransformControls } from './Util/TransformControls';
 import { EffectComposer, Selection, Outline } from "@react-three/postprocessing"
-import { BlendFunction, KernelSize } from 'postprocessing'
 
 const renderTree = (activeTf, displayTfs, allTfs, allItems, allLines, allHulls, allTexts, highlightColor) => {
 
@@ -145,7 +144,7 @@ export default function Content(props) {
             visibleEdgeColor={highlightColor} 
             hiddenEdgeColor={highlightColor} 
             blur 
-            kernelSize={KernelSize.SMALL}
+            kernelSize={1}
             edgeStrength={50} 
             pulseSpeed={0.25} 
             xRay

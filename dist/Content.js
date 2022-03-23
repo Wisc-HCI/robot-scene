@@ -35,8 +35,6 @@ var _TransformControls = require("./Util/TransformControls");
 
 var _postprocessing = require("@react-three/postprocessing");
 
-var _postprocessing2 = require("postprocessing");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -239,7 +237,7 @@ function Content(props) {
     visibleEdgeColor: highlightColor,
     hiddenEdgeColor: highlightColor,
     blur: true,
-    kernelSize: _postprocessing2.KernelSize.SMALL,
+    kernelSize: 1,
     edgeStrength: 50,
     pulseSpeed: 0.25,
     xRay: true
