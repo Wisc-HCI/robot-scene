@@ -1,18 +1,18 @@
-import React, {useCallback, useRef} from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Billboard, Text } from '@react-three/drei';
 import { useSceneStore } from './SceneContext';
-import Font from './Font.woff';
+// import Font from './Font.woff';
 import { useFrame } from "@react-three/fiber";
 import { updateShapeMaterial } from './Util/Helpers';
 
-export default function SceneText({textKey}) {
-  
+export default function SceneText({ textKey }) {
+
   const groupRef = useRef();
   const textRef = useRef();
 
-  const clock = useSceneStore(state=>state.clock);
+  const clock = useSceneStore(state => state.clock);
 
-  const textInfo = useSceneStore(useCallback(state => state.texts[textKey],[textKey]));
+  const textInfo = useSceneStore(useCallback(state => state.texts[textKey], [textKey]));
 
   useFrame(useCallback(() => {
     // Outside of react rendering, adjust the positions of the item.
@@ -35,17 +35,13 @@ export default function SceneText({textKey}) {
   return (
     <group ref={groupRef}>
       <Billboard follow>
-      <Text
+        <Text
           ref={textRef}
-          font={Font}
           depthOffset={2}
         >
           {textInfo.value}
         </Text>
       </Billboard>
-        
     </group>
-    
-    
   )
 }

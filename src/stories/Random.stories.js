@@ -163,19 +163,21 @@ RandomShapes.args = {
             name: "Line1",
             frame: "world",
             width: 1,
-            vertices: [{ position: { x: 1, y: 2, z: 0 }, color: { r: 255, g: 0, b: 0 } },
-            { position: { x: 2, y: 1, z: 1 }, color: { r: 0, g: 255, b: 0 } },
-            { position: { x: 2, y: 2, z: 1 }, color: { r: 0, g: 0, b: 255 } }],
+            vertices: [
+                { position: { x: 1, y: 2, z: 0 }, color: { r: 255, g: 0, b: 0 } },
+                { position: { x: 2, y: 1, z: 1 }, color: { r: 0, g: 255, b: 0 } },
+                { position: { x: 2, y: 2, z: 1 }, color: { r: 0, g: 0, b: 255 } }],
             highlighted: false
         },
         line2: {
             name: "Line1",
             frame: "other1",
             width: 3,
-            vertices: [{ position: { x: 1, y: 0, z: 0 }, color: { r: 0, g: 0, b: 255 } },
-            { position: { x: 1, y: 0, z: 1 }, color: { r: 100, g: 100, b: 255 } },
-            { position: { x: 2, y: 1, z: 1 }, color: { r: 50, g: 50, b: 255 } },
-            { position: { x: 2, y: 2, z: 1 }, color: { r: 255, g: 255, b: 255 } }],
+            vertices: [
+                { position: { x: 1, y: 0, z: 0 }, color: { r: 0, g: 0, b: 255 } },
+                { position: { x: 1, y: 0, z: 1 }, color: { r: 100, g: 100, b: 255 } },
+                { position: { x: 2, y: 1, z: 1 }, color: { r: 50, g: 50, b: 255 } },
+                { position: { x: 2, y: 2, z: 1 }, color: { r: 255, g: 255, b: 255 } }],
             highlighted: false
         }
     },

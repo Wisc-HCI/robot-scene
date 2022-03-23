@@ -21,9 +21,9 @@ var _shallow = _interopRequireDefault(require("zustand/shallow"));
 
 var _Helpers = require("./Util/Helpers");
 
-var _MaterialMaker = require("./Util/MaterialMaker");
-
 var _SceneContext = require("./SceneContext");
+
+var _postprocessing = require("@react-three/postprocessing");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57,28 +57,16 @@ function Hull(_ref) {
   });
   var frontRef = (0, _react.useRef)();
   var backRef = (0, _react.useRef)();
-  var ghostFrontRef = (0, _react.useRef)();
-  var ghostBackRef = (0, _react.useRef)();
-  var outlineRef = (0, _react.useRef)();
   var initialVertices = typeof vertices === 'function' ? vertices(0) : vertices;
   var geometry = new _threeStdlib.ConvexGeometry(initialVertices.map(function (v) {
     return new _three.Vector3(v.x, v.y, v.z);
   }));
+  console.log(hull.highlighted);
   (0, _fiber.useFrame)((0, _react.useCallback)(function () {
     // Outside of react rendering, adjust the positions of all tfs.
     var time = clock.getElapsed() * 1000;
     (0, _Helpers.updateShapeMaterial)(backRef, hull.color, time);
     (0, _Helpers.updateShapeMaterial)(frontRef, hull.color, time);
-
-    if (ghostFrontRef.current && ghostBackRef.current) {
-      var coeficient = Math.sin(time / 700) / 5 + 1;
-      var power = -Math.sin(time / 700) / 2 + 3;
-      ghostFrontRef.current.material.uniforms.coeficient.value = coeficient;
-      ghostFrontRef.current.material.uniforms.power.value = power;
-      ghostBackRef.current.material.uniforms.coeficient.value = coeficient;
-      ghostBackRef.current.material.uniforms.power.value = power;
-    }
-
     var currentVertices = typeof vertices === 'function' ? vertices(time) : vertices;
 
     if (currentVertices !== initialVertices) {
@@ -87,17 +75,15 @@ function Hull(_ref) {
       }));
       frontRef.current.geometry = newGeom;
       backRef.current.geometry = newGeom;
-      ghostFrontRef.current.geometry = newGeom;
-      ghostBackRef.current.geometry = newGeom;
     }
 
     var visible = typeof hull.hidden === 'function' ? !hull.hidden(time) : !hull.hidden;
     frontRef.current.visible = visible;
     backRef.current.visible = visible;
-    ghostFrontRef.current.visible = visible;
-    ghostFrontRef.current.visible = visible;
   }, [hullKey, frontRef, backRef, initialVertices, hull]));
-  return /*#__PURE__*/_react.default.createElement("group", {
+  return /*#__PURE__*/_react.default.createElement(_postprocessing.Select, {
+    enabled: hull.highlighted
+  }, /*#__PURE__*/_react.default.createElement("group", {
     up: [0, 0, 1]
   }, /*#__PURE__*/_react.default.createElement("group", {
     up: [0, 0, 1],
@@ -132,32 +118,7 @@ function Hull(_ref) {
     attach: "material",
     wireframe: hull.wireframe,
     side: _three.FrontSide
-  })), hull.highlighted && /*#__PURE__*/_react.default.createElement("mesh", {
-    key: "HB",
-    ref: ghostBackRef,
-    geometry: geometry,
-    material: (0, _MaterialMaker.GhostMaterial)(highlightColor),
-    castShadow: false,
-    receiveShadow: false,
-    wireframe: true,
-    side: _three.BackSide
-  }), hull.highlighted && /*#__PURE__*/_react.default.createElement("mesh", {
-    key: "HF",
-    ref: ghostFrontRef,
-    geometry: geometry,
-    material: (0, _MaterialMaker.GhostMaterial)(highlightColor),
-    castShadow: false,
-    receiveShadow: false,
-    side: _three.FrontSide
-  }), false && hull.highlighted && /*#__PURE__*/_react.default.createElement("mesh", {
-    key: "HFO",
-    ref: outlineRef,
-    geometry: geometry,
-    material: (0, _MaterialMaker.OutlineMaterial)(highlightColor),
-    castShadow: false,
-    receiveShadow: false,
-    side: _three.BackSide
-  })), hull.showName && /*#__PURE__*/_react.default.createElement(_drei.Html, {
+  }))), hull.showName && /*#__PURE__*/_react.default.createElement(_drei.Html, {
     distanceFactor: 2,
     position: [0, 0, 0.5]
   }, /*#__PURE__*/_react.default.createElement("div", {
@@ -167,5 +128,5 @@ function Hull(_ref) {
       backgroundColor: 'lightgrey'
     },
     className: "disable-text-selection"
-  }, hull.name)));
+  }, hull.name))));
 }

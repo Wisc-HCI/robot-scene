@@ -6,15 +6,16 @@ import { BackSide, FrontSide } from 'three';
 import { GhostMaterial } from './Util/MaterialMaker';
 import { updateShapeMaterial, createGenericShape } from './Util/Helpers';
 import { useSceneStore } from './SceneContext';
+import { Select } from '@react-three/postprocessing';
 
 const GENERIC_SHAPES = ['cube', 'cylinder', 'sphere', 'capsule', 'arrow'];
 
 export default function Item({ itemKey, highlightColor }) {
 
-  const onClick = useSceneStore(state=>state.onClick);
-  const onPointerOver = useSceneStore(state=>state.onPointerOver);
-  const onPointerOut = useSceneStore(state=>state.onPointerOut);
-  const clock = useSceneStore(state=>state.clock);
+  const onClick = useSceneStore(state => state.onClick);
+  const onPointerOver = useSceneStore(state => state.onPointerOver);
+  const onPointerOut = useSceneStore(state => state.onPointerOut);
+  const clock = useSceneStore(state => state.clock);
 
   const item = useSceneStore(useCallback(state => (state.items[itemKey]), [itemKey]))
 
@@ -48,54 +49,45 @@ export default function Item({ itemKey, highlightColor }) {
   }, [item, ref]));
 
   return (
-    <group ref={ref} up={[0, 0, 1]}>
-      <group
-        up={[0, 0, 1]}
-        rotation={[Math.PI / 2, 0, 0]}
-        onPointerDown={(e)=>{onClick(itemKey,!ref.current.visible,e)}}
-        onPointerOver={(e)=>{onPointerOver(itemKey,!ref.current.visible,e)}}
-        onPointerOut={(e)=>{onPointerOut(itemKey,!ref.current.visible,e)}}>
-        {content.map((groupOrPart, idx) => (<GroupOrPart key={idx} idx={idx} groupOrPart={groupOrPart} itemKey={itemKey} highlightColor={highlightColor} />))}
+    <Select enabled={item.highlighted}>
+      <group ref={ref} up={[0, 0, 1]}>
+        <group
+          up={[0, 0, 1]}
+          rotation={[Math.PI / 2, 0, 0]}
+          onPointerDown={(e) => { onClick(itemKey, !ref.current.visible, e) }}
+          onPointerOver={(e) => { onPointerOver(itemKey, !ref.current.visible, e) }}
+          onPointerOut={(e) => { onPointerOut(itemKey, !ref.current.visible, e) }}>
+          {content.map((groupOrPart, idx) => (<GroupOrPart key={idx} idx={idx} groupOrPart={groupOrPart} itemKey={itemKey} />))}
+        </group>
+        {item.showName && (
+          <Html distanceFactor={3} position={[0, 0, 0.2]}>
+            <div style={{ opacity: 0.75, borderRadius: 2, backgroundColor: 'lightgrey', padding: 5, userSelect: 'none' }}>
+              {item.name}
+            </div>
+          </Html>
+        )}
       </group>
-      {item.showName && (
-        <Html distanceFactor={3} position={[0, 0, 0.2]}>
-          <div style={{ opacity: 0.75, borderRadius: 2, backgroundColor: 'lightgrey', padding: 5, userSelect:'none' }}>
-            {item.name}
-          </div>
-        </Html>
-      )}
-    </group>
+    </Select>
+
   )
 }
 
-const Part = ({ part, itemKey, highlightColor }) => {
+const Part = ({ part, itemKey }) => {
 
   const wireframe = useSceneStore(useCallback(state => state.items[itemKey].wireframe, [itemKey]));
   const color = useSceneStore(useCallback(state => state.items[itemKey].color, [itemKey]))
-  const highlighted = useSceneStore(useCallback(state => state.items[itemKey].highlighted, [itemKey]));
   const materialOverride = color !== undefined;
 
   const frontRef = useRef();
   const backRef = useRef();
-  const ghostFrontRef = useRef();
-  const ghostBackRef = useRef();
-  // const outlineRef = useRef();
 
-  const clock = useSceneStore(state=>state.clock);
+  const clock = useSceneStore(state => state.clock);
 
   useFrame(useCallback(() => {
     // Outside of react rendering, adjust the color/material.
     const time = clock.getElapsed() * 1000;
     updateShapeMaterial(backRef, color, time);
     updateShapeMaterial(frontRef, color, time);
-    if (ghostFrontRef.current && ghostBackRef.current) {
-      const coeficient = Math.sin(time/700)/5+1;
-      const power = -Math.sin(time/700)/2+3;
-      ghostFrontRef.current.material.uniforms.coeficient.value = coeficient;
-      ghostFrontRef.current.material.uniforms.power.value = power;
-      ghostBackRef.current.material.uniforms.coeficient.value = coeficient;
-      ghostBackRef.current.material.uniforms.power.value = power;
-    }
 
   }, [itemKey, frontRef, backRef]));
 
@@ -137,44 +129,6 @@ const Part = ({ part, itemKey, highlightColor }) => {
             side={FrontSide}
           />
         </mesh>
-        {highlighted && (
-          <>
-            <mesh
-              key='HB'
-              ref={ghostBackRef}
-              geometry={part.geometry}
-              material={GhostMaterial(highlightColor)}
-              scale={part.scale}
-              castShadow={false}
-              receiveShadow={false}
-              side={BackSide}
-            />
-            {/* <mesh
-              key='HBO'
-              ref={outlineRef}
-              geometry={part.geometry}
-              material={OutlineMaterial(highlightColor)}
-              scale={part.scale}
-              castShadow={false}
-              receiveShadow={false}
-              wireframe
-              side={BackSide}
-            /> */}
-          </>
-          
-        )}
-        {highlighted && (
-          <mesh
-            key='HF'
-            ref={ghostFrontRef}
-            geometry={part.geometry}
-            material={GhostMaterial(highlightColor)}
-            scale={part.scale}
-            castShadow={false}
-            receiveShadow={false}
-            side={FrontSide}
-          />
-        )}
       </group>
     )
   } else {
@@ -190,30 +144,6 @@ const Part = ({ part, itemKey, highlightColor }) => {
           receiveShadow={true}
           wireframe={wireframe}
         />
-        {highlighted && (
-          <mesh
-            key='HB'
-            ref={ghostBackRef}
-            geometry={part.geometry}
-            material={GhostMaterial(highlightColor)}
-            scale={part.scale}
-            castShadow={false}
-            receiveShadow={false}
-            side={BackSide}
-          />
-        )}
-        {highlighted && (
-          <mesh
-            key='HF'
-            ref={ghostFrontRef}
-            geometry={part.geometry}
-            material={GhostMaterial(highlightColor)}
-            scale={part.scale}
-            castShadow={false}
-            receiveShadow={false}
-            side={FrontSide}
-          />
-        )}
       </>
 
     )

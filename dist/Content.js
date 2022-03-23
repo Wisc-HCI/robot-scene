@@ -33,6 +33,10 @@ var _ColorConversion = require("./Util/ColorConversion");
 
 var _TransformControls = require("./Util/TransformControls");
 
+var _postprocessing = require("@react-three/postprocessing");
+
+var _postprocessing2 = require("postprocessing");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -229,7 +233,17 @@ function Content(props) {
     scale: 1000,
     position: [0, 0, plane ? plane - 0.01 : -0.01],
     material: _MaterialMaker.MaterialMaker.apply(void 0, planeRGBA)
-  }), renderTree('world', displayTfs, tfs, items, lines, hulls, texts, highlightColor), /*#__PURE__*/_react.default.createElement("group", {
+  }), /*#__PURE__*/_react.default.createElement(_postprocessing.Selection, null, /*#__PURE__*/_react.default.createElement(_postprocessing.EffectComposer, {
+    autoClear: false
+  }, /*#__PURE__*/_react.default.createElement(_postprocessing.Outline, {
+    visibleEdgeColor: highlightColor,
+    hiddenEdgeColor: highlightColor,
+    blur: true,
+    kernelSize: _postprocessing2.KernelSize.SMALL,
+    edgeStrength: 50,
+    pulseSpeed: 0.25,
+    xRay: true
+  })), renderTree('world', displayTfs, tfs, items, lines, hulls, texts, highlightColor)), /*#__PURE__*/_react.default.createElement("group", {
     position: [0, 0, plane ? plane : 0],
     rotation: [Math.PI / 2, 0, 0],
     up: [0, 0, 1]
@@ -253,24 +267,5 @@ function Content(props) {
         }
       }
     });
-  }), /*#__PURE__*/_react.default.createElement(_drei.GizmoHelper, {
-    alignment: "bottom-right" // widget alignment within scene
-    ,
-    margin: [80, 80] // widget margins (X, Y)
-
-  }, /*#__PURE__*/_react.default.createElement("group", {
-    scale: [80, 80, 80]
-  }, /*#__PURE__*/_react.default.createElement(_Light.AmbientLight, {
-    intensity: 0.4,
-    color: "white"
-  }), /*#__PURE__*/_react.default.createElement("pointLight", {
-    intensity: 0.5,
-    position: [-1, -3, 3],
-    color: "#FFFAEE"
-  }), /*#__PURE__*/_react.default.createElement(_Light.DirectionalLight, {
-    castShadow: true,
-    position: [5, 15, 15],
-    intensity: 0.6,
-    color: "#FFFAEE"
-  }), renderTree('gizmo', displayTfs, tfs, items, lines, hulls, texts, highlightColor))));
+  }));
 }

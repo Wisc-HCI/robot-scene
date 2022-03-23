@@ -12,14 +12,16 @@ import { MaterialMaker } from './Util/MaterialMaker';
 import { hexToRgb } from './Util/ColorConversion';
 import { OrbitControls } from '@react-three/drei';
 import { TransformControls } from './Util/TransformControls';
+import { EffectComposer, Selection, Outline } from "@react-three/postprocessing"
+import { BlendFunction, KernelSize } from 'postprocessing'
 
 const renderTree = (activeTf, displayTfs, allTfs, allItems, allLines, allHulls, allTexts, highlightColor) => {
 
-  const TFComponent = activeTf === 'world' 
-    ? WorldTF 
-    : activeTf === 'gizmo' 
-    ? GizmoTF
-    : TF;
+  const TFComponent = activeTf === 'world'
+    ? WorldTF
+    : activeTf === 'gizmo'
+      ? GizmoTF
+      : TF;
 
   return (
     <TFComponent key={activeTf} tfKey={activeTf} displayTfs={displayTfs}>
@@ -52,9 +54,9 @@ export default function Content(props) {
     highlightColor, plane
   } = props;
 
-  const clock = useSceneStore(state=>state.clock);
+  const clock = useSceneStore(state => state.clock);
 
-  useFrame(()=>{
+  useFrame(() => {
     clock.update();
   })
 
@@ -137,7 +139,23 @@ export default function Content(props) {
 
       <Circle receiveShadow scale={1000} position={[0, 0, plane ? plane - 0.01 : -0.01]} material={MaterialMaker(...planeRGBA)} />
 
-      {renderTree('world', displayTfs, tfs, items, lines, hulls, texts, highlightColor)}
+      <Selection>
+        <EffectComposer autoClear={false}>
+          <Outline 
+            visibleEdgeColor={highlightColor} 
+            hiddenEdgeColor={highlightColor} 
+            blur 
+            kernelSize={KernelSize.SMALL}
+            edgeStrength={50} 
+            pulseSpeed={0.25} 
+            xRay
+
+          />
+          {/* <SelectiveBloom kernelSize={4} luminanceThreshold={0} intensity={1} luminanceSmoothing={0} /> */}
+        </EffectComposer>
+        {renderTree('world', displayTfs, tfs, items, lines, hulls, texts, highlightColor)}
+      </Selection>
+      
 
       <group position={[0, 0, plane ? plane : 0]} rotation={[Math.PI / 2, 0, 0]} up={[0, 0, 1]}>
         {displayGrid && (
@@ -161,12 +179,12 @@ export default function Content(props) {
         ))
       }
 
-      <GizmoHelper
-        alignment="bottom-right" // widget alignment within scene
-        margin={[80, 80]} // widget margins (X, Y)
+      {/* <GizmoHelper
+        alignment="bottom-right"
+        margin={[80, 80]}
       >
-        
-        <group scale={[80,80,80]}>
+
+        <group scale={[80, 80, 80]}>
           <AmbientLight intensity={0.4} color='white' />
           <pointLight intensity={0.5} position={[-1, -3, 3]} color='#FFFAEE' />
           <DirectionalLight
@@ -174,13 +192,13 @@ export default function Content(props) {
             intensity={0.6}
             color="#FFFAEE"
           />
-          {/* <RoundedBox args={[1,1,1]} radius={0.05} smoothness={4}>
-            <meshPhongMaterial attach="material" color="#f3f3f3" />
-          </RoundedBox> */}
-
+          <mesh hidden>
+            <boxGeometry args={[0.01,0.01,0.01]}/>
+            <meshStandardMaterial color='lime'/>
+          </mesh>
           {renderTree('gizmo', displayTfs, tfs, items, lines, hulls, texts, highlightColor)}
         </group>
-      </GizmoHelper>
+      </GizmoHelper> */}
 
     </React.Fragment>
   );

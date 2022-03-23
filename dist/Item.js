@@ -23,6 +23,8 @@ var _Helpers = require("./Util/Helpers");
 
 var _SceneContext = require("./SceneContext");
 
+var _postprocessing = require("@react-three/postprocessing");
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -64,7 +66,9 @@ function Item(_ref) {
       ref.current.visible = typeof item.hidden === 'function' ? !item.hidden(time) : !item.hidden;
     }
   }, [item, ref]));
-  return /*#__PURE__*/_react.default.createElement("group", {
+  return /*#__PURE__*/_react.default.createElement(_postprocessing.Select, {
+    enabled: item.highlighted
+  }, /*#__PURE__*/_react.default.createElement("group", {
     ref: ref,
     up: [0, 0, 1]
   }, /*#__PURE__*/_react.default.createElement("group", {
@@ -84,8 +88,7 @@ function Item(_ref) {
       key: idx,
       idx: idx,
       groupOrPart: groupOrPart,
-      itemKey: itemKey,
-      highlightColor: highlightColor
+      itemKey: itemKey
     });
   })), item.showName && /*#__PURE__*/_react.default.createElement(_drei.Html, {
     distanceFactor: 3,
@@ -98,28 +101,21 @@ function Item(_ref) {
       padding: 5,
       userSelect: 'none'
     }
-  }, item.name)));
+  }, item.name))));
 }
 
 var Part = function Part(_ref2) {
   var part = _ref2.part,
-      itemKey = _ref2.itemKey,
-      highlightColor = _ref2.highlightColor;
+      itemKey = _ref2.itemKey;
   var wireframe = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
     return state.items[itemKey].wireframe;
   }, [itemKey]));
   var color = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
     return state.items[itemKey].color;
   }, [itemKey]));
-  var highlighted = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
-    return state.items[itemKey].highlighted;
-  }, [itemKey]));
   var materialOverride = color !== undefined;
   var frontRef = (0, _react.useRef)();
   var backRef = (0, _react.useRef)();
-  var ghostFrontRef = (0, _react.useRef)();
-  var ghostBackRef = (0, _react.useRef)(); // const outlineRef = useRef();
-
   var clock = (0, _SceneContext.useSceneStore)(function (state) {
     return state.clock;
   });
@@ -128,15 +124,6 @@ var Part = function Part(_ref2) {
     var time = clock.getElapsed() * 1000;
     (0, _Helpers.updateShapeMaterial)(backRef, color, time);
     (0, _Helpers.updateShapeMaterial)(frontRef, color, time);
-
-    if (ghostFrontRef.current && ghostBackRef.current) {
-      var coeficient = Math.sin(time / 700) / 5 + 1;
-      var power = -Math.sin(time / 700) / 2 + 3;
-      ghostFrontRef.current.material.uniforms.coeficient.value = coeficient;
-      ghostFrontRef.current.material.uniforms.power.value = power;
-      ghostBackRef.current.material.uniforms.coeficient.value = coeficient;
-      ghostBackRef.current.material.uniforms.power.value = power;
-    }
   }, [itemKey, frontRef, backRef]));
 
   if (materialOverride) {
@@ -170,25 +157,7 @@ var Part = function Part(_ref2) {
       opacity: 1 // color='#000000'
       ,
       side: _three.FrontSide
-    })), highlighted && /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("mesh", {
-      key: "HB",
-      ref: ghostBackRef,
-      geometry: part.geometry,
-      material: (0, _MaterialMaker.GhostMaterial)(highlightColor),
-      scale: part.scale,
-      castShadow: false,
-      receiveShadow: false,
-      side: _three.BackSide
-    })), highlighted && /*#__PURE__*/_react.default.createElement("mesh", {
-      key: "HF",
-      ref: ghostFrontRef,
-      geometry: part.geometry,
-      material: (0, _MaterialMaker.GhostMaterial)(highlightColor),
-      scale: part.scale,
-      castShadow: false,
-      receiveShadow: false,
-      side: _three.FrontSide
-    }));
+    })));
   } else {
     return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("mesh", {
       key: "I",
@@ -199,24 +168,6 @@ var Part = function Part(_ref2) {
       castShadow: true,
       receiveShadow: true,
       wireframe: wireframe
-    }), highlighted && /*#__PURE__*/_react.default.createElement("mesh", {
-      key: "HB",
-      ref: ghostBackRef,
-      geometry: part.geometry,
-      material: (0, _MaterialMaker.GhostMaterial)(highlightColor),
-      scale: part.scale,
-      castShadow: false,
-      receiveShadow: false,
-      side: _three.BackSide
-    }), highlighted && /*#__PURE__*/_react.default.createElement("mesh", {
-      key: "HF",
-      ref: ghostFrontRef,
-      geometry: part.geometry,
-      material: (0, _MaterialMaker.GhostMaterial)(highlightColor),
-      scale: part.scale,
-      castShadow: false,
-      receiveShadow: false,
-      side: _three.FrontSide
     }));
   }
 };
