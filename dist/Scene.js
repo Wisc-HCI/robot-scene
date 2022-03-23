@@ -57,10 +57,7 @@ function Scene(_ref) {
 
   // For the objects in props.content, render the objects.
   // Those should be in the suspense element.
-  console.log({
-    ar: ar,
-    vr: vr
-  });
+  // console.log({ar,vr})
   var CanvasComponent = ar ? _xr.ARCanvas : vr ? _xr.VRCanvas : _fiber.Canvas;
   return /*#__PURE__*/_react.default.createElement(CanvasComponent, {
     camera: {

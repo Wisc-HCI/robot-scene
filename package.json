@@ -1,6 +1,6 @@
 {
   "name": "robot-scene",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "main": "dist/index.js",
   "private": false,
   "files": [
@@ -27,6 +27,7 @@
     "immer": "^9.0.12",
     "meshline": "^2.0.4",
     "npm": "^7.20.3",
+    "postprocessing": "^6.26.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "^4.0.3",

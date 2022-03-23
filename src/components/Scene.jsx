@@ -19,7 +19,7 @@ export default function Scene({ backgroundColor, store, fov, ar, vr, onPointerMi
   // For the objects in props.content, render the objects.
   // Those should be in the suspense element.
 
-  console.log({ar,vr})
+  // console.log({ar,vr})
 
   const CanvasComponent = ar ? ARCanvas : vr ? VRCanvas : Canvas;
 
