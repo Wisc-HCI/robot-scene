@@ -68,7 +68,7 @@ function TF(_ref) {
       ref.current.position.set(typeof translationX === 'function' ? translationX(time) : translationX, typeof translationY === 'function' ? translationY(time) : translationY, typeof translationZ === 'function' ? translationZ(time) : translationZ);
       ref.current.quaternion.set(typeof rotationX === 'function' ? rotationX(time) : rotationX, typeof rotationY === 'function' ? rotationY(time) : rotationY, typeof rotationZ === 'function' ? rotationZ(time) : rotationZ, typeof rotationW === 'function' ? rotationW(time) : rotationW);
     }
-  }, [tfKey, ref]));
+  }, [tfKey, ref, translationX, translationY, translationZ, rotationX, rotationY, rotationZ, rotationW]));
   var arrow = (0, _StandardMeshes.ARROW_GEOM)();
   return /*#__PURE__*/_react.default.createElement("group", {
     ref: ref,

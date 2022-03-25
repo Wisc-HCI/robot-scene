@@ -42,7 +42,7 @@ export default function TF({ tfKey, displayTfs, children }) {
         typeof rotationW === 'function' ? rotationW(time) : rotationW
       );
     }
-  },[tfKey, ref]));
+  },[tfKey, ref, translationX, translationY, translationZ, rotationX, rotationY, rotationZ, rotationW]));
 
   const arrow = ARROW_GEOM();
 
