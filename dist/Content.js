@@ -13,16 +13,6 @@ var _fiber = require("@react-three/fiber");
 
 var _drei = require("@react-three/drei");
 
-var _TF = _interopRequireWildcard(require("./TF"));
-
-var _Item = _interopRequireDefault(require("./Item"));
-
-var _Hull = _interopRequireDefault(require("./Hull"));
-
-var _Line = _interopRequireDefault(require("./Line"));
-
-var _Text = _interopRequireDefault(require("./Text"));
-
 var _SceneContext = require("./SceneContext");
 
 var _Light = require("./Util/Light");
@@ -35,11 +25,19 @@ var _TransformControls = require("./Util/TransformControls");
 
 var _postprocessing = require("@react-three/postprocessing");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _Helpers = require("./Util/Helpers");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -52,52 +50,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, allLines, allHulls, allTexts, highlightColor) {
-  var TFComponent = activeTf === 'world' ? _TF.WorldTF : activeTf === 'gizmo' ? _TF.GizmoTF : _TF.default;
-  return /*#__PURE__*/_react.default.createElement(TFComponent, {
-    key: activeTf,
-    tfKey: activeTf,
-    displayTfs: displayTfs
-  }, allTfs.filter(function (v) {
-    return v.frame === activeTf || activeTf === 'world' && !v.frame;
-  }).map(function (tf) {
-    return renderTree(tf.tfKey, displayTfs, allTfs, allItems, allLines, allHulls, allTexts, highlightColor);
-  }), allItems.filter(function (v) {
-    return v.frame === activeTf || activeTf === 'world' && !v.frame;
-  }).map(function (item) {
-    return /*#__PURE__*/_react.default.createElement(_Item.default, {
-      key: item.itemKey,
-      itemKey: item.itemKey,
-      node: item.node,
-      highlightColor: highlightColor
-    });
-  }), allLines.filter(function (v) {
-    return v.frame === activeTf || activeTf === 'world' && !v.frame;
-  }).map(function (line) {
-    return /*#__PURE__*/_react.default.createElement(_Line.default, {
-      key: line.lineKey,
-      lineKey: line.lineKey
-    });
-  }), allHulls.filter(function (v) {
-    return v.frame === activeTf || activeTf === 'world' && !v.frame;
-  }).map(function (hull) {
-    return /*#__PURE__*/_react.default.createElement(_Hull.default, {
-      key: hull.hullKey,
-      hullKey: hull.hullKey,
-      node: hull.node,
-      highlightColor: highlightColor
-    });
-  }), allTexts.filter(function (v) {
-    return v.frame === activeTf || activeTf === 'world' && !v.frame;
-  }).map(function (text) {
-    return /*#__PURE__*/_react.default.createElement(_Text.default, {
-      key: text.textKey,
-      textKey: text.textKey,
-      highlightColor: highlightColor
-    });
-  }));
-};
 
 function Content(props) {
   // For the objects in props.content, render the objects.
@@ -114,35 +66,25 @@ function Content(props) {
   });
   (0, _fiber.useFrame)(function () {
     clock.update();
-  }); // const clock = useThree((state) => state.clock);
-  // if (clock.running && paused) {
-  //   clock.stop();
-  //   clock.start();
-  //   clock.stop();
-  // } else if (!clock.running && !paused) {
-  //   clock.start();
-  // }
-  // camera.up.set(0,0,1);
-  // camera.fov = fov ? fov : 60;
-  // camera.updateProjectionMatrix();
-
+  });
   var tfs = (0, _SceneContext.useSceneStore)(function (state) {
-    return Object.entries(state.tfs).map(function (pair) {
-      var _pair = _slicedToArray(pair, 2),
-          tfKey = _pair[0],
-          tf = _pair[1];
+    return Object.entries(state.tfs).map(function (_ref) {
+      var _ref2 = _slicedToArray(_ref, 2),
+          tfKey = _ref2[0],
+          tf = _ref2[1];
 
       return {
         tfKey: tfKey,
-        frame: tf.frame
+        frame: tf.frame,
+        transformMode: tf.transformMode
       };
     });
   });
   var items = (0, _SceneContext.useSceneStore)(function (state) {
-    return Object.entries(state.items).map(function (pair) {
-      var _pair2 = _slicedToArray(pair, 2),
-          itemKey = _pair2[0],
-          item = _pair2[1];
+    return Object.entries(state.items).map(function (_ref3) {
+      var _ref4 = _slicedToArray(_ref3, 2),
+          itemKey = _ref4[0],
+          item = _ref4[1];
 
       return {
         itemKey: itemKey,
@@ -152,10 +94,10 @@ function Content(props) {
     });
   });
   var lines = (0, _SceneContext.useSceneStore)(function (state) {
-    return Object.entries(state.lines).map(function (pair) {
-      var _pair3 = _slicedToArray(pair, 2),
-          lineKey = _pair3[0],
-          line = _pair3[1];
+    return Object.entries(state.lines).map(function (_ref5) {
+      var _ref6 = _slicedToArray(_ref5, 2),
+          lineKey = _ref6[0],
+          line = _ref6[1];
 
       return {
         lineKey: lineKey,
@@ -164,10 +106,10 @@ function Content(props) {
     });
   });
   var hulls = (0, _SceneContext.useSceneStore)(function (state) {
-    return Object.entries(state.hulls).map(function (pair) {
-      var _pair4 = _slicedToArray(pair, 2),
-          hullKey = _pair4[0],
-          hull = _pair4[1];
+    return Object.entries(state.hulls).map(function (_ref7) {
+      var _ref8 = _slicedToArray(_ref7, 2),
+          hullKey = _ref8[0],
+          hull = _ref8[1];
 
       return {
         hullKey: hullKey,
@@ -176,10 +118,10 @@ function Content(props) {
     });
   });
   var texts = (0, _SceneContext.useSceneStore)(function (state) {
-    return Object.entries(state.texts).map(function (pair) {
-      var _pair5 = _slicedToArray(pair, 2),
-          textKey = _pair5[0],
-          text = _pair5[1];
+    return Object.entries(state.texts).map(function (_ref9) {
+      var _ref10 = _slicedToArray(_ref9, 2),
+          textKey = _ref10[0],
+          text = _ref10[1];
 
       return {
         textKey: textKey,
@@ -187,7 +129,7 @@ function Content(props) {
       };
     });
   });
-  var movableItems = items.filter(function (item) {
+  var movableStuff = [].concat(_toConsumableArray(items), _toConsumableArray(tfs)).filter(function (item) {
     return ['translate', 'rotate', 'scale'].indexOf(item.transformMode) > -1;
   });
   var ambientLightRef = (0, _react.useRef)();
@@ -241,7 +183,7 @@ function Content(props) {
     edgeStrength: 50,
     pulseSpeed: 0.25,
     xRay: true
-  })), renderTree('world', displayTfs, tfs, items, lines, hulls, texts, highlightColor)), /*#__PURE__*/_react.default.createElement("group", {
+  })), (0, _Helpers.renderTree)('world', displayTfs, tfs, items, lines, hulls, texts, highlightColor)), /*#__PURE__*/_react.default.createElement("group", {
     position: [0, 0, plane ? plane : 0],
     rotation: [Math.PI / 2, 0, 0],
     up: [0, 0, 1]
@@ -249,11 +191,20 @@ function Content(props) {
     args: [10, 16, 8, 64, "white", "gray"]
   }) : /*#__PURE__*/_react.default.createElement("gridHelper", {
     args: [20, 20, "white", "gray"]
-  }))), movableItems.map(function (movableItem, idx) {
+  }))), movableStuff.map(function (movableItem, idx) {
     return /*#__PURE__*/_react.default.createElement(_TransformControls.TransformControls, {
       key: "movableItemTransform-".concat(idx),
       itemKey: movableItem.itemKey,
       mode: movableItem.transformMode,
+      structureProps: {
+        displayTfs: displayTfs,
+        tfs: tfs,
+        items: items,
+        lines: lines,
+        hulls: hulls,
+        texts: texts,
+        highlightColor: highlightColor
+      },
       onDragEnd: function onDragEnd() {
         if (orbitControls.current) {
           orbitControls.current.enabled = true;

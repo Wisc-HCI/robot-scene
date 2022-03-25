@@ -53,16 +53,7 @@ var GhostItem = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
     position: position,
     rotation: rotation,
     scale: scale
-  }); // if ([
-  //   position?.x, position?.y, position?.z, 
-  //   rotation?.x, rotation?.y, rotation?.z, rotation?.w, 
-  //   scale?.x, scale?.y, scale?.z
-  // ].map(value=>typeof value === 'function')
-  //  .filter(value=>value===true)
-  //  .length > 0) {
-  //    return null
-  //  }
-
+  });
   (0, _react.useLayoutEffect)(function () {
     var _ref$current, _ref$current2, _ref$current3;
 
@@ -75,20 +66,32 @@ var GhostItem = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
       var _ref$current4;
 
       ref === null || ref === void 0 ? void 0 : (_ref$current4 = ref.current) === null || _ref$current4 === void 0 ? void 0 : _ref$current4.position.set(position.x, position.y, position.z);
+    } else {
+      var _ref$current5;
+
+      ref === null || ref === void 0 ? void 0 : (_ref$current5 = ref.current) === null || _ref$current5 === void 0 ? void 0 : _ref$current5.position.set(initposition.x, initposition.y, initposition.z);
     }
 
     if (rotation) {
-      var _ref$current5;
+      var _ref$current6;
 
-      ref === null || ref === void 0 ? void 0 : (_ref$current5 = ref.current) === null || _ref$current5 === void 0 ? void 0 : _ref$current5.quaternion.set(rotation.x, rotation.y, rotation.z, rotation.w);
+      ref === null || ref === void 0 ? void 0 : (_ref$current6 = ref.current) === null || _ref$current6 === void 0 ? void 0 : _ref$current6.quaternion.set(rotation.x, rotation.y, rotation.z, rotation.w);
+    } else {
+      var _ref$current7;
+
+      ref === null || ref === void 0 ? void 0 : (_ref$current7 = ref.current) === null || _ref$current7 === void 0 ? void 0 : _ref$current7.quaternion.set(initrotation.x, initrotation.y, initrotation.z, initrotation.w);
     }
 
     if (scale) {
-      var _ref$current6;
+      var _ref$current8;
 
-      ref === null || ref === void 0 ? void 0 : (_ref$current6 = ref.current) === null || _ref$current6 === void 0 ? void 0 : _ref$current6.scale.set(scale.x, scale.y, scale.z);
+      ref === null || ref === void 0 ? void 0 : (_ref$current8 = ref.current) === null || _ref$current8 === void 0 ? void 0 : _ref$current8.scale.set(scale.x, scale.y, scale.z);
+    } else {
+      var _ref$current9;
+
+      ref === null || ref === void 0 ? void 0 : (_ref$current9 = ref.current) === null || _ref$current9 === void 0 ? void 0 : _ref$current9.scale.set(initscale.x, initscale.y, initscale.z);
     }
-  }, [position, rotation, scale]));
+  }, [position, rotation, scale, initposition, initrotation, initscale]));
   var ghostGroup = (0, _MeshConvert.itemToGhost)({
     shape: shape
   }, highlightColor);
