@@ -1,3 +1,5 @@
+
+import React from 'react';
 import { BOX_GEOM, CYLINDER_GEOM, SPHERE_GEOM, ARROW_GEOM, CAPSULE_GEOM } from "./StandardMeshes";
 import TF, { WorldTF, GizmoTF } from "../TF";
 import Item from "../Item";
