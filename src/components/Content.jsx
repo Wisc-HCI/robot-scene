@@ -1,48 +1,14 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Circle, GizmoHelper } from "@react-three/drei";
-import TF, { WorldTF, GizmoTF } from "./TF";
-import Item from "./Item";
-import Hull from "./Hull";
-import Line from "./Line";
-import Text from "./Text";
 import { useSceneStore } from './SceneContext';
 import { AmbientLight, DirectionalLight } from './Util/Light';
 import { MaterialMaker } from './Util/MaterialMaker';
 import { hexToRgb } from './Util/ColorConversion';
 import { OrbitControls } from '@react-three/drei';
 import { TransformControls } from './Util/TransformControls';
-import { EffectComposer, Selection, Outline } from "@react-three/postprocessing"
-
-const renderTree = (activeTf, displayTfs, allTfs, allItems, allLines, allHulls, allTexts, highlightColor) => {
-
-  const TFComponent = activeTf === 'world'
-    ? WorldTF
-    : activeTf === 'gizmo'
-      ? GizmoTF
-      : TF;
-
-  return (
-    <TFComponent key={activeTf} tfKey={activeTf} displayTfs={displayTfs}>
-      {allTfs.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(tf => (
-        renderTree(tf.tfKey, displayTfs, allTfs, allItems, allLines, allHulls, allTexts, highlightColor)
-      ))}
-      {allItems.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(item => (
-        <Item key={item.itemKey} itemKey={item.itemKey} node={item.node} highlightColor={highlightColor} />
-      ))}
-      {allLines.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(line => (
-        <Line key={line.lineKey} lineKey={line.lineKey} />
-      ))}
-      {allHulls.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(hull => (
-        <Hull key={hull.hullKey} hullKey={hull.hullKey} node={hull.node} highlightColor={highlightColor} />
-      ))}
-      {allTexts.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(text => (
-        <Text key={text.textKey} textKey={text.textKey} highlightColor={highlightColor} />
-      ))}
-    </TFComponent>
-  )
-
-}
+import { EffectComposer, Selection, Outline } from "@react-three/postprocessing";
+import { renderTree } from './Util/Helpers';
 
 export default function Content(props) {
   // For the objects in props.content, render the objects.
@@ -59,26 +25,15 @@ export default function Content(props) {
     clock.update();
   })
 
-  // const clock = useThree((state) => state.clock);
-
-  // if (clock.running && paused) {
-  //   clock.stop();
-  //   clock.start();
-  //   clock.stop();
-  // } else if (!clock.running && !paused) {
-  //   clock.start();
-  // }
-
-  // camera.up.set(0,0,1);
-  // camera.fov = fov ? fov : 60;
-  // camera.updateProjectionMatrix();
-  const tfs = useSceneStore(state => Object.entries(state.tfs).map(pair => {
-    const [tfKey, tf] = pair;
-    return { tfKey, frame: tf.frame }
+  const tfs = useSceneStore(state => Object.entries(state.tfs).map(([tfKey, tf]) => {
+    return { 
+      tfKey, 
+      frame: tf.frame, 
+      transformMode: tf.transformMode 
+    }
   }))
 
-  const items = useSceneStore(state => Object.entries(state.items).map(pair => {
-    const [itemKey, item] = pair;
+  const items = useSceneStore(state => Object.entries(state.items).map(([itemKey, item]) => {
     return {
       itemKey,
       frame: item.frame,
@@ -86,26 +41,23 @@ export default function Content(props) {
     }
   }))
 
-  const lines = useSceneStore(state => Object.entries(state.lines).map(pair => {
-    const [lineKey, line] = pair;
+  const lines = useSceneStore(state => Object.entries(state.lines).map(([lineKey, line]) => {
     return { lineKey, frame: line.frame }
   }))
 
-  const hulls = useSceneStore(state => Object.entries(state.hulls).map(pair => {
-    const [hullKey, hull] = pair;
+  const hulls = useSceneStore(state => Object.entries(state.hulls).map(([hullKey, hull]) => {
     return {
       hullKey, frame: hull.frame
     }
   }))
 
-  const texts = useSceneStore(state => Object.entries(state.texts).map(pair => {
-    const [textKey, text] = pair;
+  const texts = useSceneStore(state => Object.entries(state.texts).map(([textKey, text]) => {
     return {
       textKey, frame: text.frame
     }
   }))
 
-  const movableItems = items.filter(item => ['translate', 'rotate', 'scale'].indexOf(item.transformMode) > -1);
+  const movableStuff = [...items,...tfs].filter(item => ['translate', 'rotate', 'scale'].indexOf(item.transformMode) > -1);
 
   const ambientLightRef = useRef();
   const pointLightRef = useRef();
@@ -165,13 +117,14 @@ export default function Content(props) {
           )
         )}
       </group>
-
+      
       {
-        movableItems.map((movableItem, idx) => (
+        movableStuff.map((movableItem, idx) => (
           <TransformControls
             key={`movableItemTransform-${idx}`}
             itemKey={movableItem.itemKey}
             mode={movableItem.transformMode}
+            structureProps={{displayTfs, tfs, items, lines, hulls, texts, highlightColor}}
             onDragEnd={() => { if (orbitControls.current) { orbitControls.current.enabled = true } }}
             onDragStart={() => { if (orbitControls.current) { orbitControls.current.enabled = false } }}
           />

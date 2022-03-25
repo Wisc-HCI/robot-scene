@@ -16,16 +16,6 @@ const GhostItem = forwardRef(({itemKey,highlightColor,position,rotation,scale},r
 
         console.log({position,rotation,scale})
 
-    // if ([
-    //   position?.x, position?.y, position?.z, 
-    //   rotation?.x, rotation?.y, rotation?.z, rotation?.w, 
-    //   scale?.x, scale?.y, scale?.z
-    // ].map(value=>typeof value === 'function')
-    //  .filter(value=>value===true)
-    //  .length > 0) {
-    //    return null
-    //  }
-
     useLayoutEffect(
     ()=>{
         ref?.current?.position.set(initposition.x,initposition.y,initposition.z);
@@ -36,15 +26,21 @@ const GhostItem = forwardRef(({itemKey,highlightColor,position,rotation,scale},r
     useFrame(useCallback(()=>{
       if (position) {
         ref?.current?.position.set(position.x,position.y,position.z);
+      } else {
+        ref?.current?.position.set(initposition.x,initposition.y,initposition.z);
       }
       if (rotation) {
         ref?.current?.quaternion.set(rotation.x,rotation.y,rotation.z,rotation.w);
+      } else {
+        ref?.current?.quaternion.set(initrotation.x,initrotation.y,initrotation.z,initrotation.w);
       }
       if (scale) {
         ref?.current?.scale.set(scale.x,scale.y,scale.z);
+      } else {
+        ref?.current?.scale.set(initscale.x,initscale.y,initscale.z);
       }
       
-    },[position,rotation,scale]))
+    },[position,rotation,scale,initposition,initrotation,initscale]))
 
     const ghostGroup = itemToGhost({shape},highlightColor);
     

@@ -1,4 +1,9 @@
 import { BOX_GEOM, CYLINDER_GEOM, SPHERE_GEOM, ARROW_GEOM, CAPSULE_GEOM } from "./StandardMeshes";
+import TF, { WorldTF, GizmoTF } from "../TF";
+import Item from "../Item";
+import Line from "../Line";
+import Hull from "../Hull";
+import Text from "../Text";
 
 export function objectMap(object, mapFn) {
     return Object.keys(object).reduce(function(result, key) {
@@ -37,3 +42,32 @@ export const createGenericShape = (item) => {
     }
     return [{geometry,type:'part'}]
 }
+
+export const renderTree = (activeTf, displayTfs, allTfs, allItems, allLines, allHulls, allTexts, highlightColor, ghosts) => {
+
+    const TFComponent = activeTf === 'world'
+      ? WorldTF
+      : activeTf === 'gizmo'
+        ? GizmoTF
+        : TF;
+  
+    return (
+      <TFComponent key={activeTf} tfKey={activeTf} displayTfs={displayTfs}>
+        {allTfs.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(tf => (
+          renderTree(tf.tfKey, displayTfs, allTfs, allItems, allLines, allHulls, allTexts, highlightColor, ghosts)
+        ))}
+        {allItems.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(item => (
+          <Item key={item.itemKey} itemKey={item.itemKey} node={item.node} highlightColor={highlightColor}/>
+        ))}
+        {allLines.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(line => (
+          <Line key={line.lineKey} lineKey={line.lineKey} />
+        ))}
+        {allHulls.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(hull => (
+          <Hull key={hull.hullKey} hullKey={hull.hullKey} node={hull.node} highlightColor={highlightColor} />
+        ))}
+        {allTexts.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(text => (
+          <Text key={text.textKey} textKey={text.textKey} highlightColor={highlightColor} />
+        ))}
+      </TFComponent>
+    )
+  }
