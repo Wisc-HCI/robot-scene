@@ -20,8 +20,6 @@ const Tree = memo(({
     const filteredTfs = filterActive ? allTfs.filter(tf => tfFilter.includes(tf.key)) : allTfs;
     const newFilterActive = filterActive ? activeTf !== targetRef : filterActive;
 
-    console.log({ activeTf, ghosts, targetId, filterActive, tfFilter, filteredTfs, targetRef })
-
     return (
         <TFComponent objectKey={activeTf} displayTfs={displayTfs} ref={targetId === activeTf ? targetRef : null} {...tfProps} ghost={ghosts} highlightColor={highlightColor}>
             {filteredTfs.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(tf => (

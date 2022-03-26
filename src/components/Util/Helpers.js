@@ -1,12 +1,6 @@
 
 import React, { useRef, useEffect } from 'react';
-import { memoize } from 'lodash';
 import { BOX_GEOM, CYLINDER_GEOM, SPHERE_GEOM, ARROW_GEOM, CAPSULE_GEOM } from "./StandardMeshes";
-import TF, { WorldTF, GizmoTF } from "../TF";
-import Item from "../Item";
-import Line from "../Line";
-import Hull from "../Hull";
-import Text from "../Text";
 
 export function objectMap(object, mapFn) {
     return Object.keys(object).reduce(function (result, key) {

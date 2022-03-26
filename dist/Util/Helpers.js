@@ -12,21 +12,7 @@ exports.useCombinedRefs = useCombinedRefs;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _lodash = require("lodash");
-
 var _StandardMeshes = require("./StandardMeshes");
-
-var _TF = _interopRequireWildcard(require("../TF"));
-
-var _Item = _interopRequireDefault(require("../Item"));
-
-var _Line = _interopRequireDefault(require("../Line"));
-
-var _Hull = _interopRequireDefault(require("../Hull"));
-
-var _Text = _interopRequireDefault(require("../Text"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 

@@ -48,15 +48,6 @@ var Tree = /*#__PURE__*/(0, _react.memo)(function (_ref) {
     return tfFilter.includes(tf.key);
   }) : allTfs;
   var newFilterActive = filterActive ? activeTf !== targetRef : filterActive;
-  console.log({
-    activeTf: activeTf,
-    ghosts: ghosts,
-    targetId: targetId,
-    filterActive: filterActive,
-    tfFilter: tfFilter,
-    filteredTfs: filteredTfs,
-    targetRef: targetRef
-  });
   return /*#__PURE__*/_react.default.createElement(TFComponent, _extends({
     objectKey: activeTf,
     displayTfs: displayTfs,
