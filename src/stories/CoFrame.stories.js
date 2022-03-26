@@ -21,93 +21,111 @@ CoFrame.args = {
     tfs: {
         'simulated_base_link': {
             frame: 'world',
-            translation: { x: 0, y: -0.15, z: 0 },
+            position: { x: 0, y: -0.15, z: 0 },
             rotation: { w: 0, x: 0, y: 0, z: 1 },
+            scale: {x:1,y:1,z:1}
         },
         'simulated_shoulder_link': {
             frame: 'simulated_base_link',
-            translation: { x: 0, y: 0, z: 0.15185 },
+            position: { x: 0, y: 0, z: 0.15185 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
+            scale: {x:1,y:1,z:1}
         },
         'simulated_upper_arm_link': {
             frame: 'simulated_shoulder_link',
-            translation: { x: 0, y: 0, z: 0 },
-            rotation: { w: 0.7071067811140325, x: 0.7071067812590626, y: 0, z: 0 }
+            position: { x: 0, y: 0, z: 0 },
+            rotation: { w: 0.7071067811140325, x: 0.7071067812590626, y: 0, z: 0 },
+            scale: {x:1,y:1,z:1}
         },
         'simulated_forearm_link': {
             frame: 'simulated_upper_arm_link',
-            translation: { x: -0.24355, y: 0, z: 0 },
+            position: { x: -0.24355, y: 0, z: 0 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
+            scale: {x:1,y:1,z:1}
         },
         'simulated_wrist_1_link': {
             frame: 'simulated_forearm_link',
-            translation: { x: -0.2132, y: 0, z: 0.13105 },
+            position: { x: -0.2132, y: 0, z: 0.13105 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
+            scale: {x:1,y:1,z:1}
         },
         'simulated_wrist_2_link': {
             frame: 'simulated_wrist_1_link',
-            translation: { x: 0, y: -0.08535, z: 0 },
+            position: { x: 0, y: -0.08535, z: 0 },
             rotation: { w: 0.7071067811140325, x: 0.7071067812590626, y: 0, z: 0 },
+            scale: {x:1,y:1,z:1}
         },
         'simulated_wrist_3_link': {
             frame: 'simulated_wrist_2_link',
-            translation: { x: 0, y: 0.0921, z: 0 },
+            position: { x: 0, y: 0.0921, z: 0 },
             rotation: { w: 0.7071067811140325, x: -0.7071067812590626, y: 0, z: 0 },
+            scale: {x:1,y:1,z:1}
         },
         'simulated_flange': {
             frame: 'simulated_wrist_3_link',
-            translation: { x: 0, y: 0, z: 0 },
+            position: { x: 0, y: 0, z: 0 },
             rotation: { w: 0.5, x: -0.5, y: -0.5, z: -0.5 },
+            scale: {x:1,y:1,z:1}
         },
         'simulated_tool0': {
             frame: 'simulated_flange',
-            translation: { x: 0, y: 0, z: 0 },
+            position: { x: 0, y: 0, z: 0 },
             rotation: { w: 0.5, x: 0.5, y: 0.5, z: 0.5 },
+            scale: {x:1,y:1,z:1}
         },
         'simulated_robotiq_85_base_link': {
             frame: 'simulated_tool0',
-            translation: { x: 0, y: 0, z: 0 },
+            position: { x: 0, y: 0, z: 0 },
             rotation: { w: 0.5, x: 0.5, y: -0.5, z: 0.5 },
+            scale: {x:1,y:1,z:1}
         },
         'simulated_robotiq_85_left_knuckle_link': {
             frame: 'simulated_robotiq_85_base_link',
-            translation: { x: 0.05490451627, y: 0.03060114443, z: 0 },
+            position: { x: 0.05490451627, y: 0.03060114443, z: 0 },
             rotation: { w: 0, x: 1, y: 0, z: 0 },
+            scale: {x:1,y:1,z:1}
         },
         'simulated_robotiq_85_right_knuckle_link': {
             frame: 'simulated_robotiq_85_base_link',
-            translation: { x: 0.05490451627, y: -0.03060114443, z: 0 },
+            position: { x: 0.05490451627, y: -0.03060114443, z: 0 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
+            scale: {x:1,y:1,z:1}
         },
         'simulated_robotiq_85_left_finger_link': {
             frame: 'simulated_robotiq_85_left_knuckle_link',
-            translation: { x: -0.00408552455, y: -0.03148604435, z: 0 },
+            position: { x: -0.00408552455, y: -0.03148604435, z: 0 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
+            scale: {x:1,y:1,z:1}
         },
         'simulated_robotiq_85_right_finger_link': {
             frame: 'simulated_robotiq_85_right_knuckle_link',
-            translation: { x: -0.00408552455, y: -0.03148604435, z: 0 },
+            position: { x: -0.00408552455, y: -0.03148604435, z: 0 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
+            scale: {x:1,y:1,z:1}
         },
         'simulated_robotiq_85_left_inner_knuckle_link': {
             frame: 'simulated_robotiq_85_base_link',
-            translation: { x: 0.06142, y: 0.0127, z: 0 },
+            position: { x: 0.06142, y: 0.0127, z: 0 },
             rotation: { w: 0, x: 1, y: 0, z: 0 },
+            scale: {x:1,y:1,z:1}
         },
         'simulated_robotiq_85_right_inner_knuckle_link': {
             frame: 'simulated_robotiq_85_base_link',
-            translation: { x: 0.06142, y: -0.0127, z: 0 },
+            position: { x: 0.06142, y: -0.0127, z: 0 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
+            scale: {x:1,y:1,z:1}
         },
         'simulated_robotiq_85_left_finger_tip_link': {
             frame: 'simulated_robotiq_85_left_inner_knuckle_link',
-            translation: { x: 0.04303959807, y: -0.03759940821, z: 0 },
+            position: { x: 0.04303959807, y: -0.03759940821, z: 0 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
+            scale: {x:1,y:1,z:1}
         },
         'simulated_robotiq_85_right_finger_tip_link': {
             frame: 'simulated_robotiq_85_right_inner_knuckle_link',
-            translation: { x: 0.04303959807, y: -0.03759940821, z: 0 },
+            position: { x: 0.04303959807, y: -0.03759940821, z: 0 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
+            scale: {x:1,y:1,z:1}
         }
     },
     items: {

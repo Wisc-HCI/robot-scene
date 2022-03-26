@@ -25,7 +25,9 @@ var _TransformControls = require("./Util/TransformControls");
 
 var _postprocessing = require("@react-three/postprocessing");
 
-var _Helpers = require("./Util/Helpers");
+var _Tree = _interopRequireDefault(require("./Tree"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -60,7 +62,10 @@ function Content(props) {
       backgroundColor = props.backgroundColor,
       planeColor = props.planeColor,
       highlightColor = props.highlightColor,
-      plane = props.plane;
+      plane = props.plane,
+      translateSnap = props.translateSnap,
+      rotateSnap = props.rotateSnap,
+      scaleSnap = props.scaleSnap;
   var clock = (0, _SceneContext.useSceneStore)(function (state) {
     return state.clock;
   });
@@ -70,62 +75,67 @@ function Content(props) {
   var tfs = (0, _SceneContext.useSceneStore)(function (state) {
     return Object.entries(state.tfs).map(function (_ref) {
       var _ref2 = _slicedToArray(_ref, 2),
-          tfKey = _ref2[0],
+          key = _ref2[0],
           tf = _ref2[1];
 
       return {
-        tfKey: tfKey,
+        key: key,
         frame: tf.frame,
-        transformMode: tf.transformMode
+        transformMode: tf.transformMode,
+        source: 'tfs'
       };
     });
   });
   var items = (0, _SceneContext.useSceneStore)(function (state) {
     return Object.entries(state.items).map(function (_ref3) {
       var _ref4 = _slicedToArray(_ref3, 2),
-          itemKey = _ref4[0],
+          key = _ref4[0],
           item = _ref4[1];
 
       return {
-        itemKey: itemKey,
+        key: key,
         frame: item.frame,
-        transformMode: item.transformMode
+        transformMode: item.transformMode,
+        source: 'items'
       };
     });
   });
   var lines = (0, _SceneContext.useSceneStore)(function (state) {
     return Object.entries(state.lines).map(function (_ref5) {
       var _ref6 = _slicedToArray(_ref5, 2),
-          lineKey = _ref6[0],
+          key = _ref6[0],
           line = _ref6[1];
 
       return {
-        lineKey: lineKey,
-        frame: line.frame
+        key: key,
+        frame: line.frame,
+        source: 'lines'
       };
     });
   });
   var hulls = (0, _SceneContext.useSceneStore)(function (state) {
     return Object.entries(state.hulls).map(function (_ref7) {
       var _ref8 = _slicedToArray(_ref7, 2),
-          hullKey = _ref8[0],
+          key = _ref8[0],
           hull = _ref8[1];
 
       return {
-        hullKey: hullKey,
-        frame: hull.frame
+        key: key,
+        frame: hull.frame,
+        source: 'hulls'
       };
     });
   });
   var texts = (0, _SceneContext.useSceneStore)(function (state) {
     return Object.entries(state.texts).map(function (_ref9) {
       var _ref10 = _slicedToArray(_ref9, 2),
-          textKey = _ref10[0],
+          key = _ref10[0],
           text = _ref10[1];
 
       return {
-        textKey: textKey,
-        frame: text.frame
+        key: key,
+        frame: text.frame,
+        source: 'texts'
       };
     });
   });
@@ -183,7 +193,16 @@ function Content(props) {
     edgeStrength: 50,
     pulseSpeed: 0.25,
     xRay: true
-  })), (0, _Helpers.renderTree)('world', displayTfs, tfs, items, lines, hulls, texts, highlightColor)), /*#__PURE__*/_react.default.createElement("group", {
+  })), /*#__PURE__*/_react.default.createElement(_Tree.default, {
+    activeTf: "world",
+    displayTfs: displayTfs,
+    allTfs: tfs,
+    allItems: items,
+    allLines: lines,
+    allHulls: hulls,
+    allTexts: texts,
+    highlightColor: highlightColor
+  })), /*#__PURE__*/_react.default.createElement("group", {
     position: [0, 0, plane ? plane : 0],
     rotation: [Math.PI / 2, 0, 0],
     up: [0, 0, 1]
@@ -191,20 +210,21 @@ function Content(props) {
     args: [10, 16, 8, 64, "white", "gray"]
   }) : /*#__PURE__*/_react.default.createElement("gridHelper", {
     args: [20, 20, "white", "gray"]
-  }))), movableStuff.map(function (movableItem, idx) {
+  }))), movableStuff.map(function (movableObject, idx) {
     return /*#__PURE__*/_react.default.createElement(_TransformControls.TransformControls, {
-      key: "movableItemTransform-".concat(idx),
-      itemKey: movableItem.itemKey,
-      mode: movableItem.transformMode,
-      structureProps: {
-        displayTfs: displayTfs,
-        tfs: tfs,
-        items: items,
-        lines: lines,
-        hulls: hulls,
-        texts: texts,
-        highlightColor: highlightColor
-      },
+      key: "movableObjectTransform-".concat(idx),
+      objectInfo: movableObject,
+      mode: movableObject.transformMode,
+      displayTfs: displayTfs,
+      allTfs: tfs,
+      allItems: items,
+      allLines: lines,
+      allHulls: hulls,
+      allTexts: texts,
+      translateSnap: translateSnap,
+      rotateSnap: rotateSnap,
+      scaleSnap: scaleSnap,
+      highlightColor: highlightColor,
       onDragEnd: function onDragEnd() {
         if (orbitControls.current) {
           orbitControls.current.enabled = true;

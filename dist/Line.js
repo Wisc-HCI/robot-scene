@@ -5,7 +5,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = SceneLine;
+exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -14,6 +14,8 @@ var _drei = require("@react-three/drei");
 var _SceneContext = require("./SceneContext");
 
 var _three = require("three");
+
+var _Helpers = require("./Util/Helpers");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -48,16 +50,18 @@ var Segment = function Segment(_ref) {
   }));
 };
 
-function SceneLine(props) {
-  var lineKey = props.lineKey;
+var _default = /*#__PURE__*/(0, _react.forwardRef)(function (_ref2, forwardedRef) {
+  var objectKey = _ref2.objectKey;
+  var innerRef = (0, _react.useRef)(null);
+  var lineRef = (0, _Helpers.useCombinedRefs)(forwardedRef, innerRef);
 
   var _useSceneStore = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
     return {
-      vertices: state.lines[lineKey].vertices,
-      width: state.lines[lineKey].width,
-      hidden: state.lines[lineKey].hidden
+      vertices: state.lines[objectKey].vertices,
+      width: state.lines[objectKey].width,
+      hidden: state.lines[objectKey].hidden
     };
-  }, [lineKey])),
+  }, [objectKey])),
       vertices = _useSceneStore.vertices,
       width = _useSceneStore.width,
       hidden = _useSceneStore.hidden;
@@ -83,6 +87,7 @@ function SceneLine(props) {
     //   ))}
     // </Select>
     _react.default.createElement(_drei.Line, {
+      ref: lineRef,
       visible: !hidden,
       points: vertices.map(function (vertex) {
         return [vertex.position.x, vertex.position.y, vertex.position.z];
@@ -94,4 +99,6 @@ function SceneLine(props) {
       lineWidth: width
     })
   );
-}
+});
+
+exports.default = _default;

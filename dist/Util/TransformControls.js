@@ -11,18 +11,16 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _fiber = require("@react-three/fiber");
 
-var _TF = require("../TF");
-
-var _GhostItem = _interopRequireDefault(require("../GhostItem"));
-
 var _TransformControls = require("three/examples/jsm/controls/TransformControls");
 
 var _SceneContext = require("../SceneContext");
 
 var _lodash = _interopRequireDefault(require("lodash.pick"));
 
+var _Tree = _interopRequireDefault(require("../Tree"));
+
 var _excluded = ["children"],
-    _excluded2 = ["camera", "itemKey", "highlightColor"];
+    _excluded2 = ["camera", "objectInfo", "highlightColor", "translateSnap", "rotateSnap", "scaleSnap"];
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48,31 +46,47 @@ function _objectWithoutProperties(source, excluded) { if (source == null) return
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
+var transformOnlyPropNames = ['enabled', 'axis', 'mode', 'translationSnap', 'rotationSnap', 'scaleSnap', 'space', 'size', 'showX', 'showY', 'showZ'];
+var renderTreePropNames = ['displayTfs', 'allTfs', 'allItems', 'allLines', 'allHulls', 'allTexts', 'highlightColor'];
+
 var TransformControls = function TransformControls(_ref) {
   var children = _ref.children,
       props = _objectWithoutProperties(_ref, _excluded);
 
-  var transformOnlyPropNames = ['enabled', 'axis', 'mode', 'translationSnap', 'rotationSnap', 'scaleSnap', 'space', 'size', 'showX', 'showY', 'showZ'];
+  console.log('transformControls');
 
   var camera = props.camera,
-      itemKey = props.itemKey,
+      objectInfo = props.objectInfo,
       highlightColor = props.highlightColor,
-      rest = _objectWithoutProperties(props, _excluded2);
+      translateSnap = props.translateSnap,
+      rotateSnap = props.rotateSnap,
+      scaleSnap = props.scaleSnap,
+      otherProps = _objectWithoutProperties(props, _excluded2);
 
+  var transformProps = (0, _lodash.default)(otherProps, transformOnlyPropNames);
+  var renderTreeProps = (0, _lodash.default)(otherProps, renderTreePropNames);
+  var tfs = renderTreeProps.tfs;
   var transforms = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
     var transforms = [];
-    var tfKey = state.items[itemKey].frame;
+    console.log(objectInfo);
+
+    if (objectInfo.source === 'tfs') {
+      transforms.push(objectInfo.key);
+    }
+
+    var tfKey = state[objectInfo.source][objectInfo.key].frame;
 
     while (tfKey && tfKey !== 'world' && tfKey !== 'gizmo') {
+      var tfData = state.tfs[tfKey];
       transforms.push(tfKey);
-      tfKey = state.tfs[tfKey.frame];
+      tfKey = state.tfs[tfData.frame];
     }
 
     return transforms;
-  }, [itemKey]));
+  }, [objectInfo, tfs]));
+  console.log(transforms);
   var ref = (0, _react.useRef)();
   var target = (0, _react.useRef)();
-  var transformProps = (0, _lodash.default)(rest, transformOnlyPropNames);
   var gl = (0, _fiber.useThree)(function (_ref2) {
     var gl = _ref2.gl;
     return gl;
@@ -92,6 +106,10 @@ var TransformControls = function TransformControls(_ref) {
   }),
       _useState2 = _slicedToArray(_useState, 1),
       controls = _useState2[0];
+
+  controls.translationSnap = translateSnap;
+  controls.rotationSnap = rotateSnap;
+  controls.scaleSnap = scaleSnap;
 
   var _useState3 = (0, _react.useState)(false),
       _useState4 = _slicedToArray(_useState3, 2),
@@ -130,7 +148,7 @@ var TransformControls = function TransformControls(_ref) {
       } else if (!event.value && transforming) {
         setTransforming(false);
         props.onDragEnd && props.onDragEnd();
-        onMove(itemKey, {
+        onMove(objectInfo.key, objectInfo.source, {
           position: controls.worldPosition,
           quaternion: controls.worldQuaternion,
           scale: controls._worldScale
@@ -175,7 +193,7 @@ var TransformControls = function TransformControls(_ref) {
       controls.removeEventListener('dragging-changed', callback);
     };
   });
-  (0, _react.useLayoutEffect)(function () {
+  (0, _react.useEffect)(function () {
     return void (controls === null || controls === void 0 ? void 0 : controls.attach(target.current));
   }, [target, controls]);
   (0, _react.useEffect)(function () {
@@ -193,15 +211,18 @@ var TransformControls = function TransformControls(_ref) {
     ref: ref,
     dispose: undefined,
     object: controls
-  }, transformProps)), /*#__PURE__*/_react.default.createElement(_TF.GhostTF, {
-    transforms: transforms
-  }, /*#__PURE__*/_react.default.createElement(_GhostItem.default, {
-    ref: target,
-    highlightColor: highlightColor,
-    itemKey: itemKey,
-    position: position,
-    rotation: rotation,
-    scale: scale
+  }, transformProps)), /*#__PURE__*/_react.default.createElement(_Tree.default, _extends({}, renderTreeProps, {
+    activeTf: "world",
+    tfFilter: transforms,
+    ghosts: true,
+    targetRef: target,
+    targetId: objectInfo.key,
+    filterActive: true,
+    customProps: {
+      position: position,
+      rotation: rotation,
+      scale: scale
+    }
   }))) : null;
 };
 

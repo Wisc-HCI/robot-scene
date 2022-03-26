@@ -1,42 +1,63 @@
 import React, { useRef, useEffect, useLayoutEffect, useState, useCallback } from 'react';
 import { useThree, } from '@react-three/fiber';
-import { GhostTF } from '../TF';
-import GhostItem from '../GhostItem';
 import { TransformControls as TransformControlsImpl } from 'three/examples/jsm/controls/TransformControls';
 import { useSceneStore } from '../SceneContext';
 import pick from 'lodash.pick';
+// import { renderTree } from './Helpers';
+import Tree from '../Tree';
+
+const transformOnlyPropNames = [
+  'enabled',
+  'axis',
+  'mode',
+  'translationSnap',
+  'rotationSnap',
+  'scaleSnap',
+  'space',
+  'size',
+  'showX',
+  'showY',
+  'showZ'
+]
+
+const renderTreePropNames = [
+  'displayTfs', 
+  'allTfs', 
+  'allItems', 
+  'allLines', 
+  'allHulls', 
+  'allTexts', 
+  'highlightColor'
+]
 
 export const TransformControls = ({ children, ...props }) => {
-  const transformOnlyPropNames = [
-    'enabled',
-    'axis',
-    'mode',
-    'translationSnap',
-    'rotationSnap',
-    'scaleSnap',
-    'space',
-    'size',
-    'showX',
-    'showY',
-    'showZ'
-  ]
-
-  const { camera, itemKey, highlightColor, ...rest } = props;
+  console.log('transformControls')
+  const { camera, objectInfo, highlightColor, translateSnap, rotateSnap, scaleSnap, ...otherProps } = props;
+  const transformProps = pick(otherProps, transformOnlyPropNames);
+  const renderTreeProps = pick(otherProps, renderTreePropNames);
+  const tfs = renderTreeProps.tfs;
 
   const transforms = useSceneStore(useCallback(state=>{
     let transforms = [];
-    let tfKey = state.items[itemKey].frame;
+    console.log(objectInfo)
+    if (objectInfo.source === 'tfs') {
+      transforms.push(objectInfo.key)
+    }
+    let tfKey = state[objectInfo.source][objectInfo.key].frame;
     while (tfKey && tfKey !== 'world' && tfKey !== 'gizmo') {
+      let tfData = state.tfs[tfKey];
       transforms.push(tfKey);
-      tfKey = state.tfs[tfKey.frame]
+      tfKey = state.tfs[tfData.frame]
     }
     return transforms;
-  },[itemKey]))
+  },[objectInfo,tfs]))
+
+  console.log(transforms)
 
   const ref = useRef();
   const target = useRef();
 
-  const transformProps = pick(rest, transformOnlyPropNames)
+  
 
   const gl = useThree(({ gl }) => gl)
   const defaultCamera = useThree(({ camera }) => camera)
@@ -45,6 +66,9 @@ export const TransformControls = ({ children, ...props }) => {
   const explCamera = camera || defaultCamera;
 
   const [controls] = useState(() => new TransformControlsImpl(explCamera, gl.domElement))
+  controls.translationSnap = translateSnap;
+  controls.rotationSnap = rotateSnap;
+  controls.scaleSnap = scaleSnap;
   const [transforming, setTransforming] = useState(false)
 
   const [position, setPosition] = useState(null);
@@ -65,7 +89,8 @@ export const TransformControls = ({ children, ...props }) => {
         setTransforming(false)
         props.onDragEnd && props.onDragEnd();
         onMove(
-          itemKey,
+          objectInfo.key,
+          objectInfo.source,
           {
             position: controls.worldPosition,
             quaternion: controls.worldQuaternion,
@@ -98,7 +123,7 @@ export const TransformControls = ({ children, ...props }) => {
     }
   })
 
-  useLayoutEffect(() => void controls?.attach(target.current), [target, controls])
+  useEffect(() => void controls?.attach(target.current), [target, controls])
 
   useEffect(() => {
     if (controls) {
@@ -110,9 +135,16 @@ export const TransformControls = ({ children, ...props }) => {
   return controls ? (
     <>
       <primitive ref={ref} dispose={undefined} object={controls} {...transformProps} />
-      <GhostTF transforms={transforms}>
-        <GhostItem ref={target} highlightColor={highlightColor} itemKey={itemKey} position={position} rotation={rotation} scale={scale}/>
-      </GhostTF>
+      <Tree
+        {...renderTreeProps}
+        activeTf='world'
+        tfFilter={transforms}
+        ghosts
+        targetRef={target}
+        targetId={objectInfo.key}
+        filterActive
+        customProps={{position,rotation,scale}}
+      />
     </>
   ) : null
 }

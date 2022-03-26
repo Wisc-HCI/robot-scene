@@ -1,27 +1,29 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, forwardRef } from 'react';
 import { useFrame } from "@react-three/fiber";
 import { Html } from '@react-three/drei';
 import { MeshLookup, MeshLookupTable } from './MeshLookup';
 import { BackSide, FrontSide } from 'three';
-import { GhostMaterial } from './Util/MaterialMaker';
-import { updateShapeMaterial, createGenericShape } from './Util/Helpers';
+// import { GhostMaterial } from './Util/MaterialMaker';
+import { updateShapeMaterial, createGenericShape, useCombinedRefs } from './Util/Helpers';
 import { useSceneStore } from './SceneContext';
 import { Select } from '@react-three/postprocessing';
+import { GhostMaterial } from './Util/MaterialMaker';
 
 const GENERIC_SHAPES = ['cube', 'cylinder', 'sphere', 'capsule', 'arrow'];
 
-export default function Item({ itemKey, highlightColor }) {
+export default forwardRef(({ objectKey, highlightColor, position, rotation, scale, ghost },forwardedRef) => {
+
+  const innerRef = useRef(null);
+  const ref = useCombinedRefs(forwardedRef, innerRef);
 
   const onClick = useSceneStore(state => state.onClick);
   const onPointerOver = useSceneStore(state => state.onPointerOver);
   const onPointerOut = useSceneStore(state => state.onPointerOut);
   const clock = useSceneStore(state => state.clock);
 
-  const item = useSceneStore(useCallback(state => (state.items[itemKey]), [itemKey]))
+  const item = useSceneStore(useCallback(state => (state.items[objectKey]), [objectKey]))
 
   const content = GENERIC_SHAPES.includes(item.shape) ? createGenericShape(item) : item.shape in MeshLookupTable ? MeshLookup(item.shape) : [];
-
-  const ref = useRef();
 
   useFrame(useCallback(() => {
     // Outside of react rendering, adjust the positions of the item.
@@ -29,24 +31,24 @@ export default function Item({ itemKey, highlightColor }) {
     if (ref.current) {
       // console.log(ref.current)
       ref.current.position.set(
-        typeof item.position.x === 'function' ? item.position.x(time) : item.position.x,
-        typeof item.position.y === 'function' ? item.position.y(time) : item.position.y,
-        typeof item.position.z === 'function' ? item.position.z(time) : item.position.z,
+        position ? position.x : typeof item.position.x === 'function' ? item.position.x(time) : item.position.x,
+        position ? position.y : typeof item.position.y === 'function' ? item.position.y(time) : item.position.y,
+        position ? position.z : typeof item.position.z === 'function' ? item.position.z(time) : item.position.z,
       );
       ref.current.quaternion.set(
-        typeof item.rotation.x === 'function' ? item.rotation.x(time) : item.rotation.x,
-        typeof item.rotation.y === 'function' ? item.rotation.y(time) : item.rotation.y,
-        typeof item.rotation.z === 'function' ? item.rotation.z(time) : item.rotation.z,
-        typeof item.rotation.w === 'function' ? item.rotation.w(time) : item.rotation.w
+        rotation ? rotation.x : typeof item.rotation.x === 'function' ? item.rotation.x(time) : item.rotation.x,
+        rotation ? rotation.y : typeof item.rotation.y === 'function' ? item.rotation.y(time) : item.rotation.y,
+        rotation ? rotation.z : typeof item.rotation.z === 'function' ? item.rotation.z(time) : item.rotation.z,
+        rotation ? rotation.w : typeof item.rotation.w === 'function' ? item.rotation.w(time) : item.rotation.w
       );
       ref.current.scale.set(
-        typeof item.scale.x === 'function' ? item.scale.x(time) : item.scale.x,
-        typeof item.scale.y === 'function' ? item.scale.y(time) : item.scale.y,
-        typeof item.scale.z === 'function' ? item.scale.z(time) : item.scale.z,
+        scale ? scale.x : typeof item.scale.x === 'function' ? item.scale.x(time) : item.scale.x,
+        scale ? scale.y : typeof item.scale.y === 'function' ? item.scale.y(time) : item.scale.y,
+        scale ? scale.z : typeof item.scale.z === 'function' ? item.scale.z(time) : item.scale.z,
       );
       ref.current.visible = typeof item.hidden === 'function' ? !item.hidden(time) : !item.hidden;
     }
-  }, [item, ref]));
+  }, [item, position, rotation, scale, ref]));
 
   return (
     <Select enabled={item.highlighted}>
@@ -54,10 +56,18 @@ export default function Item({ itemKey, highlightColor }) {
         <group
           up={[0, 0, 1]}
           rotation={[Math.PI / 2, 0, 0]}
-          onPointerDown={(e) => { onClick(itemKey, !ref.current.visible, e) }}
-          onPointerOver={(e) => { onPointerOver(itemKey, !ref.current.visible, e) }}
-          onPointerOut={(e) => { onPointerOut(itemKey, !ref.current.visible, e) }}>
-          {content.map((groupOrPart, idx) => (<GroupOrPart key={idx} idx={idx} groupOrPart={groupOrPart} itemKey={itemKey} />))}
+          onPointerDown={(e) => { onClick(objectKey, !ref.current.visible, e) }}
+          onPointerOver={(e) => { onPointerOver(objectKey, !ref.current.visible, e) }}
+          onPointerOut={(e) => { onPointerOut(objectKey, !ref.current.visible, e) }}>
+          {content.map((groupOrPart, idx) => (
+            <GroupOrPart 
+              key={idx} 
+              idx={idx} 
+              groupOrPart={groupOrPart} 
+              objectKey={objectKey} 
+              ghost={ghost} 
+              highlightColor={highlightColor}
+            />))}
         </group>
         {item.showName && (
           <Html distanceFactor={3} position={[0, 0, 0.2]}>
@@ -70,12 +80,12 @@ export default function Item({ itemKey, highlightColor }) {
     </Select>
 
   )
-}
+})
 
-const Part = ({ part, itemKey }) => {
-
-  const wireframe = useSceneStore(useCallback(state => state.items[itemKey].wireframe, [itemKey]));
-  const color = useSceneStore(useCallback(state => state.items[itemKey].color, [itemKey]))
+const Part = ({ part, objectKey, ghost, highlightColor }) => {
+  
+  const wireframe = useSceneStore(useCallback(state => state.items[objectKey].wireframe, [objectKey]));
+  const color = useSceneStore(useCallback(state => state.items[objectKey].color, [objectKey]))
   const materialOverride = color !== undefined;
 
   const frontRef = useRef();
@@ -86,12 +96,25 @@ const Part = ({ part, itemKey }) => {
   useFrame(useCallback(() => {
     // Outside of react rendering, adjust the color/material.
     const time = clock.getElapsed() * 1000;
-    updateShapeMaterial(backRef, color, time);
-    updateShapeMaterial(frontRef, color, time);
+    if (!ghost) {
+      updateShapeMaterial(backRef, color, time);
+      updateShapeMaterial(frontRef, color, time);
+    }
+  }, [objectKey, ghost, frontRef, backRef]));
 
-  }, [itemKey, frontRef, backRef]));
-
-  if (materialOverride) {
+  if (ghost) {
+    return (
+        <mesh
+          ref={backRef}
+          key='B'
+          geometry={part.geometry}
+          material={GhostMaterial(highlightColor)}
+          scale={part.scale}
+          castShadow={false}
+          receiveShadow={false}
+        />
+    )
+  } else if (materialOverride) {
     return (
       <group up={[0, 0, 1]} >
         <mesh
@@ -152,16 +175,24 @@ const Part = ({ part, itemKey }) => {
 
 }
 
-const GroupOrPart = ({ idx, groupOrPart, itemKey, highlightColor }) => {
+const GroupOrPart = ({ idx, groupOrPart, ghost, objectKey, highlightColor }) => {
   if (groupOrPart.type === 'group') {
     return (
       <group key={idx} up={[0, 0, 1]} position={groupOrPart.position} rotation={groupOrPart.rotation} scale={groupOrPart.scale}>
-        {groupOrPart.children.map((groupOrPartChild, childIdx) => (<GroupOrPart key={childIdx} idx={childIdx} groupOrPart={groupOrPartChild} itemKey={itemKey} highlightColor={highlightColor} />))}
+        {groupOrPart.children.map((groupOrPartChild, childIdx) => (
+          <GroupOrPart 
+            key={childIdx} 
+            idx={childIdx} 
+            groupOrPart={groupOrPartChild} 
+            objectKey={objectKey} 
+            ghost={ghost} 
+            highlightColor={highlightColor}
+          />))}
       </group>
     )
   } else {
     return (
-      <Part key={idx} part={groupOrPart} itemKey={itemKey} highlightColor={highlightColor} />
+      <Part key={idx} part={groupOrPart} objectKey={objectKey} highlightColor={highlightColor} ghost={ghost}/>
     )
   }
 }

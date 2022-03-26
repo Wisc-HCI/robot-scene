@@ -5,7 +5,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = SceneText;
+exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -22,16 +22,17 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 // import Font from './Font.woff';
-function SceneText(_ref) {
-  var textKey = _ref.textKey;
-  var groupRef = (0, _react.useRef)();
+var _default = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, forwardedRef) {
+  var objectKey = _ref.objectKey;
+  var innerRef = (0, _react.useRef)(null);
+  var groupRef = (0, _Helpers.useCombinedRefs)(forwardedRef, innerRef);
   var textRef = (0, _react.useRef)();
   var clock = (0, _SceneContext.useSceneStore)(function (state) {
     return state.clock;
   });
   var textInfo = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
-    return state.texts[textKey];
-  }, [textKey]));
+    return state.texts[objectKey];
+  }, [objectKey]));
   (0, _fiber.useFrame)((0, _react.useCallback)(function () {
     // Outside of react rendering, adjust the positions of the item.
     var time = clock.getElapsed() * 1000;
@@ -55,4 +56,6 @@ function SceneText(_ref) {
     ref: textRef,
     depthOffset: 2
   }, textInfo.value)));
-}
+});
+
+exports.default = _default;

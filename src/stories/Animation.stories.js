@@ -37,8 +37,9 @@ Animation.args = {
     tfs: {
         movingFrame: {
             frame: 'world',
-            translation: { x: (time => Math.cos(time / 1000)), y: (time) => Math.sin(time / 1000), z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 }
+            position: { x: (time => Math.cos(time / 1000)), y: (time) => Math.sin(time / 1000), z: 0 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            scale: { x: time => 0.25*Math.cos(time / 1000)+1, y: 1, z: 1 },
         }
     },
     items: {

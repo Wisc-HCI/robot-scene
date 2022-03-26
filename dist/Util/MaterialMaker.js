@@ -7,6 +7,8 @@ exports.WireframeMaterial = exports.RimLightMaterial = exports.OutlineMaterial =
 
 var _three = require("three");
 
+var _lodash = require("lodash");
+
 var MaterialMaker = function MaterialMaker(r, g, b, a) {
   var color = new _three.Color();
   color.setRGB(r / 255, g / 255, b / 255);
@@ -46,8 +48,7 @@ var WireframeMaterial = function WireframeMaterial(r, g, b) {
 };
 
 exports.WireframeMaterial = WireframeMaterial;
-
-var GhostMaterial = function GhostMaterial(hex) {
+var GhostMaterial = (0, _lodash.memoize)(function (hex) {
   var color = new _three.Color(hex);
   var vertexShader = "\n\t\tvarying vec3\tvVertexWorldPosition;\n\t\tvarying vec3\tvVertexNormal;\n\n\t\t// varying vec4\tvFragColor;\n\n\t\tvoid main(){\n\t\t\tvVertexNormal\t= normalize(normalMatrix * normal);\n\n\t\t\tvVertexWorldPosition\t= (modelMatrix * vec4(position, 1.0)).xyz;\n\n\t\t\t// set gl_Position\n\t\t\tgl_Position\t= projectionMatrix * modelViewMatrix * vec4(position, 1.0);\n\t\t}";
   var fragmentShader = "\n\t\tuniform vec3\tglowColor;\n\t\tuniform float\tcoeficient;\n\t\tuniform float\tpower;\n\n\t\tvarying vec3\tvVertexNormal;\n\t\tvarying vec3\tvVertexWorldPosition;\n\n\t\t// varying vec4\tvFragColor;\n\n\t\tvoid main(){\n\t\t\tvec3 worldCameraToVertex= vVertexWorldPosition - cameraPosition;\n\t\t\tvec3 viewCameraToVertex\t= (viewMatrix * vec4(worldCameraToVertex, 0.0)).xyz;\n\t\t\tviewCameraToVertex\t= normalize(viewCameraToVertex);\n\t\t\tfloat intensity\t\t= pow(coeficient + dot(vVertexNormal, viewCameraToVertex), power);\n\t\t\tgl_FragColor\t\t= vec4(glowColor, intensity);\n\t\t}"; // create custom material from the shader code above
@@ -57,11 +58,11 @@ var GhostMaterial = function GhostMaterial(hex) {
     uniforms: {
       coeficient: {
         type: "f",
-        value: 1.5
+        value: 1.2
       },
       power: {
         type: "f",
-        value: 3
+        value: 4
       },
       glowColor: {
         type: "c",
@@ -70,14 +71,13 @@ var GhostMaterial = function GhostMaterial(hex) {
     },
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
-    //blending	: THREE.AdditiveBlending,
+    blending: _three.AdditiveBlending,
     transparent: true,
     depthWrite: false,
     depthTest: false
   });
   return material;
-};
-
+});
 exports.GhostMaterial = GhostMaterial;
 
 var RimLightMaterial = function RimLightMaterial(hex) {

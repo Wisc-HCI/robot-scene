@@ -3,7 +3,7 @@ import Scene from '../components/Scene';
 import { useDefaultSceneStore } from '../components';
 
 export default {
-    title: 'Movement',
+    title: 'ItemMovement',
     component: Scene,
 }
 
@@ -15,13 +15,16 @@ const Template = (args) => {
     return <div style={{ height: 'calc(100vh - 2rem)', width: 'calc(100vw - 2rem)' }}><Scene {...otherArgs} store={useDefaultSceneStore} /></div>
 };
 
-export const Movement = Template.bind({});
-Movement.args = {
+export const ItemMovement = Template.bind({});
+ItemMovement.storyName = "ItemMovement";
+ItemMovement.args = {
     tfs: {
         moving: {
             frame: 'world',
-            translation: { x: (time => Math.cos(time / 1000)), y: (time) => Math.sin(time / 1000), z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 }
+            // position: { x: (time => Math.cos(time / 1000)), y: (time) => Math.sin(time / 1000), z: 0 },
+            position: { x: 0, y: 0, z: 0 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            scale: {x:1,y:1,z:1}
         }
     },
     items: {

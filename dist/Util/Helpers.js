@@ -7,9 +7,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createGenericShape = void 0;
 exports.objectMap = objectMap;
-exports.updateShapeMaterial = exports.renderTree = void 0;
+exports.updateShapeMaterial = void 0;
+exports.useCombinedRefs = useCombinedRefs;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
+
+var _lodash = require("lodash");
 
 var _StandardMeshes = require("./StandardMeshes");
 
@@ -23,11 +26,11 @@ var _Hull = _interopRequireDefault(require("../Hull"));
 
 var _Text = _interopRequireDefault(require("../Text"));
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function objectMap(object, mapFn) {
   return Object.keys(object).reduce(function (result, key) {
@@ -75,50 +78,22 @@ var createGenericShape = function createGenericShape(item) {
 
 exports.createGenericShape = createGenericShape;
 
-var renderTree = function renderTree(activeTf, displayTfs, allTfs, allItems, allLines, allHulls, allTexts, highlightColor, ghosts) {
-  var TFComponent = activeTf === 'world' ? _TF.WorldTF : activeTf === 'gizmo' ? _TF.GizmoTF : _TF.default;
-  return /*#__PURE__*/_react.default.createElement(TFComponent, {
-    key: activeTf,
-    tfKey: activeTf,
-    displayTfs: displayTfs
-  }, allTfs.filter(function (v) {
-    return v.frame === activeTf || activeTf === 'world' && !v.frame;
-  }).map(function (tf) {
-    return renderTree(tf.tfKey, displayTfs, allTfs, allItems, allLines, allHulls, allTexts, highlightColor, ghosts);
-  }), allItems.filter(function (v) {
-    return v.frame === activeTf || activeTf === 'world' && !v.frame;
-  }).map(function (item) {
-    return /*#__PURE__*/_react.default.createElement(_Item.default, {
-      key: item.itemKey,
-      itemKey: item.itemKey,
-      node: item.node,
-      highlightColor: highlightColor
-    });
-  }), allLines.filter(function (v) {
-    return v.frame === activeTf || activeTf === 'world' && !v.frame;
-  }).map(function (line) {
-    return /*#__PURE__*/_react.default.createElement(_Line.default, {
-      key: line.lineKey,
-      lineKey: line.lineKey
-    });
-  }), allHulls.filter(function (v) {
-    return v.frame === activeTf || activeTf === 'world' && !v.frame;
-  }).map(function (hull) {
-    return /*#__PURE__*/_react.default.createElement(_Hull.default, {
-      key: hull.hullKey,
-      hullKey: hull.hullKey,
-      node: hull.node,
-      highlightColor: highlightColor
-    });
-  }), allTexts.filter(function (v) {
-    return v.frame === activeTf || activeTf === 'world' && !v.frame;
-  }).map(function (text) {
-    return /*#__PURE__*/_react.default.createElement(_Text.default, {
-      key: text.textKey,
-      textKey: text.textKey,
-      highlightColor: highlightColor
-    });
-  }));
-};
+function useCombinedRefs() {
+  for (var _len = arguments.length, refs = new Array(_len), _key = 0; _key < _len; _key++) {
+    refs[_key] = arguments[_key];
+  }
 
-exports.renderTree = renderTree;
+  var targetRef = (0, _react.useRef)();
+  (0, _react.useEffect)(function () {
+    refs.forEach(function (ref) {
+      if (!ref) return;
+
+      if (typeof ref === 'function') {
+        ref(targetRef.current);
+      } else {
+        ref.current = targetRef.current;
+      }
+    });
+  }, [refs]);
+  return targetRef;
+}

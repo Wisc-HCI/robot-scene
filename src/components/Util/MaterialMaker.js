@@ -1,6 +1,7 @@
 import { ShaderMaterial, MeshStandardMaterial, BackSide, UniformsLib, UniformsUtils,
-         Color, NormalBlending, SrcAlphaFactor, OneMinusSrcAlphaFactor,
-         ReverseSubtractEquation } from 'three';
+         Color, NormalBlending, SrcAlphaFactor, OneMinusSrcAlphaFactor, AdditiveBlending,
+         ReverseSubtractEquation,  } from 'three';
+import {memoize} from 'lodash';
 		 
 export const MaterialMaker = (r, g, b, a) => {
   var color = new Color();
@@ -38,7 +39,7 @@ export const WireframeMaterial = (r, g, b) => {
 	})
 }
 
-export const GhostMaterial = (hex) => {
+export const GhostMaterial = memoize((hex) => {
   var color = new Color(hex);
   var vertexShader	= `
 		varying vec3	vVertexWorldPosition;
@@ -78,11 +79,11 @@ export const GhostMaterial = (hex) => {
 		uniforms: {
 			coeficient	: {
 				type	: "f",
-				value	: 1.5
+				value	: 1.2
 			},
 			power		: {
 				type	: "f",
-				value	: 3
+				value	: 4
 			},
 			glowColor	: {
 				type	: "c",
@@ -91,13 +92,13 @@ export const GhostMaterial = (hex) => {
 		},
 		vertexShader	: vertexShader,
 		fragmentShader	: fragmentShader,
-		//blending	: THREE.AdditiveBlending,
+		blending	: AdditiveBlending,
 		transparent	: true,
 		depthWrite	: false,
 		depthTest   : false
 	});
 	return material
-}
+})
 
 export const RimLightMaterial = (hex) => {
 	var color = new Color(hex);

@@ -1,10 +1,11 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useRef, forwardRef} from 'react';
 import { Line } from '@react-three/drei';
 import { useSceneStore } from './SceneContext';
 // import { extend } from '@react-three/fiber';
 // import { MeshLine, MeshLineMaterial } from 'meshline'
 // import { CatmullRomCurve3, vector3 } from 'three';
 import { Vector3, Color } from 'three';
+import { useCombinedRefs } from './Util/Helpers';
 // import { Select } from '@react-three/postprocessing';
 // extend({ MeshLine, MeshLineMaterial })
 
@@ -23,13 +24,15 @@ const Segment = ({v1, v2, color}) => {
 
 }
 
-export default function SceneLine(props) {
-  const { lineKey } = props;
+export default forwardRef(({objectKey},forwardedRef)=>{
+  const innerRef = useRef(null);
+  const lineRef = useCombinedRefs(forwardedRef, innerRef);
+
   const {vertices, width, hidden} = useSceneStore(useCallback(state => ({
-    vertices: state.lines[lineKey].vertices,
-    width: state.lines[lineKey].width,
-    hidden: state.lines[lineKey].hidden
-  }),[lineKey]));
+    vertices: state.lines[objectKey].vertices,
+    width: state.lines[objectKey].width,
+    hidden: state.lines[objectKey].hidden
+  }),[objectKey]));
 
   if (vertices.length <= 1) {
     return null
@@ -52,6 +55,7 @@ export default function SceneLine(props) {
     //   ))}
     // </Select>
     <Line
+        ref={lineRef}
         visible={!hidden}
         points={vertices.map(vertex=>([vertex.position.x,vertex.position.y,vertex.position.z]))}
         color='white'
@@ -60,4 +64,4 @@ export default function SceneLine(props) {
     />
     
   )
-}
+})

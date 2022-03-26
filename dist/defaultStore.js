@@ -13,6 +13,8 @@ var _immer = _interopRequireDefault(require("immer"));
 
 var _Timer = require("./Util/Timer");
 
+var _lodash = _interopRequireDefault(require("lodash"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -38,16 +40,16 @@ var SceneSlice = function SceneSlice(set, get) {
     hulls: {},
     lines: {},
     texts: {},
-    onMove: function onMove(itemId, worldTransform, localTransform) {
+    onMove: function onMove(id, source, worldTransform, localTransform) {
       return set(function (state) {
         console.log(localTransform);
-        state.items[itemId].position = _objectSpread({}, localTransform.position);
-        state.items[itemId].rotation = localTransform.quaternion;
-        state.items[itemId].rotation.x = localTransform.quaternion.x;
-        state.items[itemId].rotation.y = localTransform.quaternion.y;
-        state.items[itemId].rotation.z = localTransform.quaternion.z;
-        state.items[itemId].rotation.w = localTransform.quaternion.w;
-        state.items[itemId].scale = _objectSpread({}, localTransform.scale);
+        state[source][id].position = _objectSpread({}, localTransform.position);
+        state[source][id].rotation = localTransform.quaternion;
+        state[source][id].rotation.x = localTransform.quaternion.x;
+        state[source][id].rotation.y = localTransform.quaternion.y;
+        state[source][id].rotation.z = localTransform.quaternion.z;
+        state[source][id].rotation.w = localTransform.quaternion.w;
+        state[source][id].scale = _objectSpread({}, localTransform.scale);
       });
     },
     onClick: function onClick(id, hidden, event) {
@@ -113,6 +115,13 @@ var SceneSlice = function SceneSlice(set, get) {
         };
       });
     },
+    clearTexts: function clearTexts() {
+      return set(function (_) {
+        return {
+          texts: {}
+        };
+      });
+    },
     // Bulk Setting (This causes an entire re-render of the scene)
     setItems: function setItems(items) {
       return set(function (_) {
@@ -142,6 +151,13 @@ var SceneSlice = function SceneSlice(set, get) {
         };
       });
     },
+    setTexts: function setTexts(texts) {
+      return set(function (_) {
+        return {
+          texts: texts
+        };
+      });
+    },
     // Removal by key
     removeItem: function removeItem(key) {
       return set(function (state) {
@@ -161,6 +177,11 @@ var SceneSlice = function SceneSlice(set, get) {
     removeHull: function removeHull(key) {
       return set(function (state) {
         delete state.hulls[key];
+      });
+    },
+    removeText: function removeText(key) {
+      return set(function (state) {
+        delete state.texts[key];
       });
     },
     // Adding items
@@ -184,183 +205,14 @@ var SceneSlice = function SceneSlice(set, get) {
         state.hulls[key] = hull;
       });
     },
-    // Item mutation
-    setItemName: function setItemName(key, name) {
+    setText: function setText(key, text) {
       return set(function (state) {
-        state.items[key].name = name;
+        state.texts[key] = text;
       });
     },
-    setItemShowName: function setItemShowName(key, showName) {
+    setProperty: function setProperty(path, value) {
       return set(function (state) {
-        state.items[key].showName = showName;
-      });
-    },
-    setItemPosition: function setItemPosition(key, position) {
-      return set(function (state) {
-        state.items[key].position = position;
-      });
-    },
-    setItemRotation: function setItemRotation(key, rotation) {
-      return set(function (state) {
-        state.items[key].rotation = rotation;
-      });
-    },
-    setItemScale: function setItemScale(key, scale) {
-      return set(function (state) {
-        state.items[key].scale = scale;
-      });
-    },
-    setItemColor: function setItemColor(key, color) {
-      return set(function (state) {
-        state.items[key].color = color;
-      });
-    },
-    setItemWireframe: function setItemWireframe(key, wireframe) {
-      return set(function (state) {
-        state.items[key].wireframe = wireframe;
-      });
-    },
-    setItemHighlighted: function setItemHighlighted(key, value) {
-      return set(function (state) {
-        state.items[key].highlighted = value;
-      });
-    },
-    setItemHidden: function setItemHidden(key, value) {
-      return set(function (state) {
-        state.items[key].hidden = value;
-      });
-    },
-    setItemOnClick: function setItemOnClick(key, fn) {
-      return set(function (state) {
-        state.items[key].onClick = fn;
-      });
-    },
-    setItemOnPointerOver: function setItemOnPointerOver(key, fn) {
-      return set(function (state) {
-        state.items[key].onPointerOver = fn;
-      });
-    },
-    setItemOnPointerOut: function setItemOnPointerOut(key, fn) {
-      return set(function (state) {
-        state.items[key].onPointerOut = fn;
-      });
-    },
-    setItemTransformMode: function setItemTransformMode(key, mode) {
-      return set(function (state) {
-        state.items[key].transformMode = mode;
-      });
-    },
-    setItemOnMove: function setItemOnMove(key, fn) {
-      return set(function (state) {
-        state.items[key].onMove = fn;
-      });
-    },
-    // Line mutation
-    setLineName: function setLineName(key, name) {
-      return set(function (state) {
-        state.lines[key].name = name;
-      });
-    },
-    setLineWidth: function setLineWidth(key, width) {
-      return set(function (state) {
-        state.lines[key].width = width;
-      });
-    },
-    setLineVertices: function setLineVertices(key, vertices) {
-      return set(function (state) {
-        state.items[key].vertices = vertices;
-      });
-    },
-    addLineVertex: function addLineVertex(key, vertex) {
-      return set(function (state) {
-        state.lines[key].vertices.push(vertex);
-      });
-    },
-    setLineVertex: function setLineVertex(key, index, vertex) {
-      return set(function (state) {
-        state.lines[key].vertices[index] = vertex;
-      });
-    },
-    setLineHidden: function setLineHidden(key, value) {
-      return set(function (state) {
-        state.lines[key].hidden = value;
-      });
-    },
-    removeLineVertex: function removeLineVertex(key, index) {
-      return set(function (state) {
-        state.lines[key].vertices.splice(index, 1);
-      });
-    },
-    // TF mutation
-    setTfTranslation: function setTfTranslation(key, translation) {
-      return set(function (state) {
-        state.tfs[key].translation = translation;
-      });
-    },
-    setTfRotation: function setTfRotation(key, rotation) {
-      return set(function (state) {
-        state.tfs[key].rotation = rotation;
-      });
-    },
-    // Hull mutation
-    setHullName: function setHullName(key, name) {
-      return set(function (state) {
-        state.hulls[key].name = name;
-      });
-    },
-    setHullVertices: function setHullVertices(key, vertices) {
-      return set(function (state) {
-        state.hulls[key].vertices = vertices;
-      });
-    },
-    addHullVertex: function addHullVertex(key, vertex) {
-      return set(function (state) {
-        state.hulls[key].vertices.push(vertex);
-      });
-    },
-    setHullVertex: function setHullVertex(key, index, vertex) {
-      return set(function (state) {
-        state.hulls[key].vertices[index] = vertex;
-      });
-    },
-    removeHullVertex: function removeHullVertex(key, index) {
-      return set(function (state) {
-        state.hulls[key].vertices.splice(index, 1);
-      });
-    },
-    setHullColor: function setHullColor(key, color) {
-      return set(function (state) {
-        state.hulls[key].scale = color;
-      });
-    },
-    setHullWireframe: function setHullWireframe(key, wireframe) {
-      return set(function (state) {
-        state.hulls[key].wireframe = wireframe;
-      });
-    },
-    setHullHighlighted: function setHullHighlighted(key, value) {
-      return set(function (state) {
-        state.hulls[key].highlighted = value;
-      });
-    },
-    setHullHidden: function setHullHidden(key, value) {
-      return set(function (state) {
-        state.hulls[key].hidden = value;
-      });
-    },
-    setHullOnClick: function setHullOnClick(key, fn) {
-      return set(function (state) {
-        state.hulls[key].onClick = fn;
-      });
-    },
-    setHullOnPointerOver: function setHullOnPointerOver(key, fn) {
-      return set(function (state) {
-        state.hulls[key].onPointerOver = fn;
-      });
-    },
-    setHullOnPointerOut: function setHullOnPointerOut(key, fn) {
-      return set(function (state) {
-        state.hulls[key].onPointerOut = fn;
+        _lodash.default.set(state, path, value);
       });
     }
   };

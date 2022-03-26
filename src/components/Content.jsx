@@ -8,7 +8,8 @@ import { hexToRgb } from './Util/ColorConversion';
 import { OrbitControls } from '@react-three/drei';
 import { TransformControls } from './Util/TransformControls';
 import { EffectComposer, Selection, Outline } from "@react-three/postprocessing";
-import { renderTree } from './Util/Helpers';
+// import { renderTree } from './Util/Helpers';
+import Tree from './Tree';
 
 export default function Content(props) {
   // For the objects in props.content, render the objects.
@@ -16,7 +17,8 @@ export default function Content(props) {
 
   const { displayTfs, displayGrid, isPolar,
     backgroundColor, planeColor,
-    highlightColor, plane
+    highlightColor, plane,
+    translateSnap, rotateSnap, scaleSnap
   } = props;
 
   const clock = useSceneStore(state => state.clock);
@@ -25,35 +27,37 @@ export default function Content(props) {
     clock.update();
   })
 
-  const tfs = useSceneStore(state => Object.entries(state.tfs).map(([tfKey, tf]) => {
+  const tfs = useSceneStore(state => Object.entries(state.tfs).map(([key, tf]) => {
     return { 
-      tfKey, 
+      key, 
       frame: tf.frame, 
-      transformMode: tf.transformMode 
+      transformMode: tf.transformMode,
+      source: 'tfs'
     }
   }))
 
-  const items = useSceneStore(state => Object.entries(state.items).map(([itemKey, item]) => {
+  const items = useSceneStore(state => Object.entries(state.items).map(([key, item]) => {
     return {
-      itemKey,
+      key,
       frame: item.frame,
-      transformMode: item.transformMode
+      transformMode: item.transformMode,
+      source: 'items'
     }
   }))
 
-  const lines = useSceneStore(state => Object.entries(state.lines).map(([lineKey, line]) => {
-    return { lineKey, frame: line.frame }
+  const lines = useSceneStore(state => Object.entries(state.lines).map(([key, line]) => {
+    return { key, frame: line.frame, source: 'lines' }
   }))
 
-  const hulls = useSceneStore(state => Object.entries(state.hulls).map(([hullKey, hull]) => {
+  const hulls = useSceneStore(state => Object.entries(state.hulls).map(([key, hull]) => {
     return {
-      hullKey, frame: hull.frame
+      key, frame: hull.frame, source: 'hulls'
     }
   }))
 
-  const texts = useSceneStore(state => Object.entries(state.texts).map(([textKey, text]) => {
+  const texts = useSceneStore(state => Object.entries(state.texts).map(([key, text]) => {
     return {
-      textKey, frame: text.frame
+      key, frame: text.frame, source: 'texts'
     }
   }))
 
@@ -104,7 +108,16 @@ export default function Content(props) {
           />
           {/* <SelectiveBloom kernelSize={4} luminanceThreshold={0} intensity={1} luminanceSmoothing={0} /> */}
         </EffectComposer>
-        {renderTree('world', displayTfs, tfs, items, lines, hulls, texts, highlightColor)}
+        <Tree
+          activeTf='world'
+          displayTfs={displayTfs}
+          allTfs={tfs}
+          allItems={items}
+          allLines={lines}
+          allHulls={hulls}
+          allTexts={texts}
+          highlightColor={highlightColor}
+        />
       </Selection>
       
 
@@ -119,12 +132,21 @@ export default function Content(props) {
       </group>
       
       {
-        movableStuff.map((movableItem, idx) => (
+        movableStuff.map((movableObject, idx) => (
           <TransformControls
-            key={`movableItemTransform-${idx}`}
-            itemKey={movableItem.itemKey}
-            mode={movableItem.transformMode}
-            structureProps={{displayTfs, tfs, items, lines, hulls, texts, highlightColor}}
+            key={`movableObjectTransform-${idx}`}
+            objectInfo={movableObject}
+            mode={movableObject.transformMode}
+            displayTfs={displayTfs}
+            allTfs={tfs}
+            allItems={items}
+            allLines={lines}
+            allHulls={hulls}
+            allTexts={texts}
+            translateSnap={translateSnap}
+            rotateSnap={rotateSnap}
+            scaleSnap={scaleSnap}
+            highlightColor={highlightColor}
             onDragEnd={() => { if (orbitControls.current) { orbitControls.current.enabled = true } }}
             onDragStart={() => { if (orbitControls.current) { orbitControls.current.enabled = false } }}
           />

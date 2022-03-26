@@ -1,21 +1,24 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, forwardRef } from 'react';
 import { Html } from '@react-three/drei';
 import { useFrame } from "@react-three/fiber";
 import { Vector3, BackSide, FrontSide } from 'three';
 import { ConvexGeometry } from 'three-stdlib';
 import shallow from 'zustand/shallow';
-import { updateShapeMaterial } from './Util/Helpers';
+import { updateShapeMaterial, useCombinedRefs } from './Util/Helpers';
 import { useSceneStore } from './SceneContext';
 import { Select } from '@react-three/postprocessing';
 
-export default function Hull({ hullKey, highlightColor }) {
+export default forwardRef(({ objectKey },forwardedRef)=>{
+
+  const innerRef = useRef(null);
+  const ref = useCombinedRefs(forwardedRef, innerRef);
 
   const onClick = useSceneStore(state => state.onClick);
   const onPointerOver = useSceneStore(state => state.onPointerOver);
   const onPointerOut = useSceneStore(state => state.onPointerOut);
 
-  const hull = useSceneStore(useCallback(state => state.hulls[hullKey], [hullKey]), shallow);
-  const vertices = useSceneStore(useCallback(state => state.hulls[hullKey].vertices, [hullKey]));
+  const hull = useSceneStore(useCallback(state => state.hulls[objectKey], [objectKey]), shallow);
+  const vertices = useSceneStore(useCallback(state => state.hulls[objectKey].vertices, [objectKey]));
 
   const clock = useSceneStore(state => state.clock);
 
@@ -25,8 +28,6 @@ export default function Hull({ hullKey, highlightColor }) {
   const initialVertices = typeof vertices === 'function' ? vertices(0) : vertices;
 
   const geometry = new ConvexGeometry(initialVertices.map(v => new Vector3(v.x, v.y, v.z)));
-
-  console.log(hull.highlighted)
 
   useFrame(useCallback(() => {
     // Outside of react rendering, adjust the positions of all tfs.
@@ -43,19 +44,19 @@ export default function Hull({ hullKey, highlightColor }) {
     frontRef.current.visible = visible;
     backRef.current.visible = visible;
 
-  }, [hullKey, frontRef, backRef, initialVertices, hull]));
+  }, [objectKey, frontRef, backRef, initialVertices, hull]));
 
   return (
     <Select enabled={hull.highlighted}>
-      <group up={[0, 0, 1]}>
+      <group ref={ref} up={[0, 0, 1]}>
         <group
           up={[0, 0, 1]}
-          onPointerDown={(e) => { onClick(hullKey, frontRef.current.visible, e) }}
-          onPointerOver={(e) => { onPointerOver(hullKey, frontRef.current.visible, e) }}
-          onPointerOut={(e) => { onPointerOut(hullKey, frontRef.current.visible, e) }}>
+          onPointerDown={(e) => { onClick(objectKey, frontRef.current.visible, e) }}
+          onPointerOver={(e) => { onPointerOver(objectKey, frontRef.current.visible, e) }}
+          onPointerOut={(e) => { onPointerOut(objectKey, frontRef.current.visible, e) }}>
           <mesh
             ref={backRef}
-            key={`${hullKey}B`}
+            key={`${objectKey}B`}
             geometry={geometry}
             castShadow={false}
             receiveShadow={false}
@@ -69,7 +70,7 @@ export default function Hull({ hullKey, highlightColor }) {
           </mesh>
           <mesh
             ref={frontRef}
-            key={`${hullKey}F`}
+            key={`${objectKey}F`}
             geometry={geometry}
             castShadow={false}
             receiveShadow={false}
@@ -93,4 +94,4 @@ export default function Hull({ hullKey, highlightColor }) {
     </Select>
 
   )
-}
+})

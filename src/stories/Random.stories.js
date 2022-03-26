@@ -19,18 +19,21 @@ RandomShapes.args = {
     tfs: {
         other1: {
             frame: 'world',
-            translation: { x: 1, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 }
+            position: { x: 1, y: 0, z: 0 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            scale: {x:1,y:1,z:1}
         },
         other2: {
             name: 'world',
-            translation: { x: -2, y: 0, z: 2 },
-            rotation: { w: 0.525322, x: 0.8509035, y: 0, z: 0 }
+            position: { x: -2, y: 0, z: 2 },
+            rotation: { w: 0.525322, x: 0.8509035, y: 0, z: 0 },
+            scale: {x:1,y:1,z:1}
         },
         other3: {
             name: 'world',
-            translation: { x: 2, y: 0, z: 1 },
-            rotation: { w: -0.604, x: -0.002, y: -0.756, z: 0.252 }
+            position: { x: 2, y: 0, z: 1 },
+            rotation: { w: -0.604, x: -0.002, y: -0.756, z: 0.252 },
+            scale: {x:1,y:1,z:1}
         }
     },
     items: {

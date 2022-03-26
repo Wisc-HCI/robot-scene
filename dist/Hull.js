@@ -5,7 +5,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = Hull;
+exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -31,9 +31,10 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function Hull(_ref) {
-  var hullKey = _ref.hullKey,
-      highlightColor = _ref.highlightColor;
+var _default = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, forwardedRef) {
+  var objectKey = _ref.objectKey;
+  var innerRef = (0, _react.useRef)(null);
+  var ref = (0, _Helpers.useCombinedRefs)(forwardedRef, innerRef);
   var onClick = (0, _SceneContext.useSceneStore)(function (state) {
     return state.onClick;
   });
@@ -47,11 +48,11 @@ function Hull(_ref) {
   });
 
   var hull = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
-    return state.hulls[hullKey];
-  }, [hullKey]), _shallow.default);
+    return state.hulls[objectKey];
+  }, [objectKey]), _shallow.default);
   var vertices = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
-    return state.hulls[hullKey].vertices;
-  }, [hullKey]));
+    return state.hulls[objectKey].vertices;
+  }, [objectKey]));
   var clock = (0, _SceneContext.useSceneStore)(function (state) {
     return state.clock;
   });
@@ -61,7 +62,6 @@ function Hull(_ref) {
   var geometry = new _threeStdlib.ConvexGeometry(initialVertices.map(function (v) {
     return new _three.Vector3(v.x, v.y, v.z);
   }));
-  console.log(hull.highlighted);
   (0, _fiber.useFrame)((0, _react.useCallback)(function () {
     // Outside of react rendering, adjust the positions of all tfs.
     var time = clock.getElapsed() * 1000;
@@ -80,25 +80,26 @@ function Hull(_ref) {
     var visible = typeof hull.hidden === 'function' ? !hull.hidden(time) : !hull.hidden;
     frontRef.current.visible = visible;
     backRef.current.visible = visible;
-  }, [hullKey, frontRef, backRef, initialVertices, hull]));
+  }, [objectKey, frontRef, backRef, initialVertices, hull]));
   return /*#__PURE__*/_react.default.createElement(_postprocessing.Select, {
     enabled: hull.highlighted
   }, /*#__PURE__*/_react.default.createElement("group", {
+    ref: ref,
     up: [0, 0, 1]
   }, /*#__PURE__*/_react.default.createElement("group", {
     up: [0, 0, 1],
     onPointerDown: function onPointerDown(e) {
-      onClick(hullKey, frontRef.current.visible, e);
+      onClick(objectKey, frontRef.current.visible, e);
     },
     onPointerOver: function onPointerOver(e) {
-      _onPointerOver(hullKey, frontRef.current.visible, e);
+      _onPointerOver(objectKey, frontRef.current.visible, e);
     },
     onPointerOut: function onPointerOut(e) {
-      _onPointerOut(hullKey, frontRef.current.visible, e);
+      _onPointerOut(objectKey, frontRef.current.visible, e);
     }
   }, /*#__PURE__*/_react.default.createElement("mesh", {
     ref: backRef,
-    key: "".concat(hullKey, "B"),
+    key: "".concat(objectKey, "B"),
     geometry: geometry,
     castShadow: false,
     receiveShadow: false
@@ -109,7 +110,7 @@ function Hull(_ref) {
     side: _three.BackSide
   })), /*#__PURE__*/_react.default.createElement("mesh", {
     ref: frontRef,
-    key: "".concat(hullKey, "F"),
+    key: "".concat(objectKey, "F"),
     geometry: geometry,
     castShadow: false,
     receiveShadow: false
@@ -129,4 +130,6 @@ function Hull(_ref) {
     },
     className: "disable-text-selection"
   }, hull.name))));
-}
+});
+
+exports.default = _default;
