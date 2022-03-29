@@ -19,713 +19,2305 @@ export const CoFrame = Template.bind({});
 CoFrame.storyName = "CoFrame";
 CoFrame.args = {
     tfs: {
-        'simulated_base_link': {
-            frame: 'world',
-            position: { x: 0, y: -0.15, z: 0 },
-            rotation: { w: 0, x: 0, y: 0, z: 1 },
-            scale: {x:1,y:1,z:1}
+        "thingType-98892a7c1c1911ecbe2600155d1a70a2": {
+            "frame": "world",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         },
-        'simulated_shoulder_link': {
-            frame: 'simulated_base_link',
-            position: { x: 0, y: 0, z: 0.15185 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: {x:1,y:1,z:1}
+        "thingType-98892b3a1c1911ecbe2600155d1a70a2": {
+            "frame": "world",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         },
-        'simulated_upper_arm_link': {
-            frame: 'simulated_shoulder_link',
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 0.7071067811140325, x: 0.7071067812590626, y: 0, z: 0 },
-            scale: {x:1,y:1,z:1}
+        "thingType-98892bd01c1911ecbe2600155d1a70a2": {
+            "frame": "world",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         },
-        'simulated_forearm_link': {
-            frame: 'simulated_upper_arm_link',
-            position: { x: -0.24355, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: {x:1,y:1,z:1}
+        "thingType-98892ce81c1911ecbe2600155d1a70a2": {
+            "frame": "world",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         },
-        'simulated_wrist_1_link': {
-            frame: 'simulated_forearm_link',
-            position: { x: -0.2132, y: 0, z: 0.13105 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: {x:1,y:1,z:1}
+        "thingType-98892d7e1c1911ecbe2600155d1a70a2": {
+            "frame": "world",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         },
-        'simulated_wrist_2_link': {
-            frame: 'simulated_wrist_1_link',
-            position: { x: 0, y: -0.08535, z: 0 },
-            rotation: { w: 0.7071067811140325, x: 0.7071067812590626, y: 0, z: 0 },
-            scale: {x:1,y:1,z:1}
+        "thingType-98892e001c1911ecbe2600155d1a70a2": {
+            "frame": "world",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         },
-        'simulated_wrist_3_link': {
-            frame: 'simulated_wrist_2_link',
-            position: { x: 0, y: 0.0921, z: 0 },
-            rotation: { w: 0.7071067811140325, x: -0.7071067812590626, y: 0, z: 0 },
-            scale: {x:1,y:1,z:1}
+        "robot-agent-988926121c1911eccbe2600155d1a70a2": {
+            "frame": "pedestal",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         },
-        'simulated_flange': {
-            frame: 'simulated_wrist_3_link',
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 0.5, x: -0.5, y: -0.5, z: -0.5 },
-            scale: {x:1,y:1,z:1}
+        "human-agent-ccbe2600155d1a70a2988926121c1911e": {
+            "frame": "world",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         },
-        'simulated_tool0': {
-            frame: 'simulated_flange',
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 0.5, x: 0.5, y: 0.5, z: 0.5 },
-            scale: {x:1,y:1,z:1}
+        "machine-ac5a063a-9ff9-4c0a-8fa6-81d3983f4a10": {
+            "frame": "table",
+            "position": {
+                "x": -0.28,
+                "y": -0.04,
+                "z": 0.67
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         },
-        'simulated_robotiq_85_base_link': {
-            frame: 'simulated_tool0',
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 0.5, x: 0.5, y: -0.5, z: 0.5 },
-            scale: {x:1,y:1,z:1}
+        "toolType-assembly-jig": {
+            "frame": "world",
+            "position": {
+                "x": 0.2,
+                "y": 0.28,
+                "z": 0.14
+            },
+            "rotation": {
+                "w": -0.5,
+                "x": 0.5,
+                "y": -0.5,
+                "z": -0.5
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         },
-        'simulated_robotiq_85_left_knuckle_link': {
-            frame: 'simulated_robotiq_85_base_link',
-            position: { x: 0.05490451627, y: 0.03060114443, z: 0 },
-            rotation: { w: 0, x: 1, y: 0, z: 0 },
-            scale: {x:1,y:1,z:1}
+        "machine-0c804bb3-f341-4b82-b9f0-e5aab536e4d7": {
+            "frame": "world",
+            "position": {
+                "x": -0.85,
+                "y": -0.25,
+                "z": -0.75
+            },
+            "rotation": {
+                "w": 0.707,
+                "x": 0,
+                "y": 0,
+                "z": 0.707
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "translate"
         },
-        'simulated_robotiq_85_right_knuckle_link': {
-            frame: 'simulated_robotiq_85_base_link',
-            position: { x: 0.05490451627, y: -0.03060114443, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: {x:1,y:1,z:1}
+        "machine-0914222f-03e0-4b4c-a8c4-03146867ba7b": {
+            "frame": "world",
+            "position": {
+                "x": -0.85,
+                "y": -0.25,
+                "z": -0.75
+            },
+            "rotation": {
+                "w": 0.707,
+                "x": 0,
+                "y": 0,
+                "z": 0.707
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         },
-        'simulated_robotiq_85_left_finger_link': {
-            frame: 'simulated_robotiq_85_left_knuckle_link',
-            position: { x: -0.00408552455, y: -0.03148604435, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: {x:1,y:1,z:1}
+        "machine-9133367a-f691-4d94-9764-50d9685db30a": {
+            "frame": "world",
+            "position": {
+                "x": 0.85,
+                "y": -0.25,
+                "z": -0.75
+            },
+            "rotation": {
+                "w": 0.707,
+                "x": 0,
+                "y": 0,
+                "z": -0.707
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         },
-        'simulated_robotiq_85_right_finger_link': {
-            frame: 'simulated_robotiq_85_right_knuckle_link',
-            position: { x: -0.00408552455, y: -0.03148604435, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: {x:1,y:1,z:1}
+        "machine-67d870e0-511d-4662-bf0d-8478f5e860f8": {
+            "frame": "world",
+            "position": {
+                "x": 0.85,
+                "y": -0.25,
+                "z": -0.75
+            },
+            "rotation": {
+                "w": 0.707,
+                "x": 0,
+                "y": 0,
+                "z": -0.707
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         },
-        'simulated_robotiq_85_left_inner_knuckle_link': {
-            frame: 'simulated_robotiq_85_base_link',
-            position: { x: 0.06142, y: 0.0127, z: 0 },
-            rotation: { w: 0, x: 1, y: 0, z: 0 },
-            scale: {x:1,y:1,z:1}
+        "toolType-transport-jig": {
+            "frame": "world",
+            "position": {
+                "x": 0.3,
+                "y": 0.28,
+                "z": 0.14
+            },
+            "rotation": {
+                "w": -0.5,
+                "x": 0.5,
+                "y": -0.5,
+                "z": -0.5
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         },
-        'simulated_robotiq_85_right_inner_knuckle_link': {
-            frame: 'simulated_robotiq_85_base_link',
-            position: { x: 0.06142, y: -0.0127, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: {x:1,y:1,z:1}
+        "table": {
+            "frame": "world",
+            "position": {
+                "x": 0,
+                "y": 0.36,
+                "z": -0.37
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         },
-        'simulated_robotiq_85_left_finger_tip_link': {
-            frame: 'simulated_robotiq_85_left_inner_knuckle_link',
-            position: { x: 0.04303959807, y: -0.03759940821, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: {x:1,y:1,z:1}
+        "pedestal": {
+            "frame": "world",
+            "position": {
+                "x": 0,
+                "y": -0.15,
+                "z": -0.38
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         },
-        'simulated_robotiq_85_right_finger_tip_link': {
-            frame: 'simulated_robotiq_85_right_inner_knuckle_link',
-            position: { x: 0.04303959807, y: -0.03759940821, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: {x:1,y:1,z:1}
+        "simulatedTool0": {
+            "frame": "robot-agent-988926121c1911eccbe2600155d1a70a2",
+            "position": {
+                "x": 0.11666648089885712,
+                "y": 0.2694645017385483,
+                "z": 0.6366749751567841
+            },
+            "rotation": {
+                "w": -0.37005797028541565,
+                "x": 0.9280606508255005,
+                "y": -0.01538957841694355,
+                "z": 0.039035625755786896
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        "robotBase": {
+            "frame": "robot-agent-988926121c1911eccbe2600155d1a70a2",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0.38
+            },
+            "rotation": {
+                "w": 0,
+                "x": 0,
+                "y": 0,
+                "z": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        "robotShoulderLink": {
+            "frame": "robot-agent-988926121c1911eccbe2600155d1a70a2",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0.53185
+            },
+            "rotation": {
+                "w": 0.6669439077377319,
+                "x": 0,
+                "y": 0,
+                "z": 0.745107889175415
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        "robotUpperArmLink": {
+            "frame": "robot-agent-988926121c1911eccbe2600155d1a70a2",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0.53185
+            },
+            "rotation": {
+                "w": -0.4478497803211212,
+                "x": 0.5932892560958862,
+                "y": -0.3847179114818573,
+                "z": 0.5472025871276855
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        "robotForearmLink": {
+            "frame": "robot-agent-988926121c1911eccbe2600155d1a70a2",
+            "position": {
+                "x": -0.02560272067785263,
+                "y": 0.23055101335048675,
+                "z": 0.45763859629631043
+            },
+            "rotation": {
+                "w": 0.6748411655426025,
+                "x": 0.1353885531425476,
+                "y": 0.694024384021759,
+                "z": 0.2111620008945465
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        "robotWrist1Link": {
+            "frame": "robot-agent-988926121c1911eccbe2600155d1a70a2",
+            "position": {
+                "x": 0.11584359407424927,
+                "y": 0.14418705981224775,
+                "z": 0.6451554048061371
+            },
+            "rotation": {
+                "w": -0.29463568329811096,
+                "x": 0.6713905930519104,
+                "y": -0.22188881039619446,
+                "z": 0.6427983641624451
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        "robotWrist2Link": {
+            "frame": "robot-agent-988926121c1911eccbe2600155d1a70a2",
+            "position": {
+                "x": 0.1089443638920784,
+                "y": 0.20631420761346816,
+                "z": 0.7032694268226624
+            },
+            "rotation": {
+                "w": 0.9164819121360779,
+                "x": -0.39580079913139343,
+                "y": -0.05381776764988899,
+                "z": -0.022500555962324142
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        "robotWrist3Link": {
+            "frame": "robot-agent-988926121c1911eccbe2600155d1a70a2",
+            "position": {
+                "x": 0.11666648089885712,
+                "y": 0.2694645017385483,
+                "z": 0.6366749751567841
+            },
+            "rotation": {
+                "w": -0.37005797028541565,
+                "x": 0.9280606508255005,
+                "y": -0.01538957841694355,
+                "z": 0.039035625755786896
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        "gripperBaseLink": {
+            "frame": "simulatedTool0",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "w": 0.5,
+                "x": 0.5,
+                "y": -0.5,
+                "z": 0.5
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        "gripperLeftKnuckle": {
+            "frame": "gripperBaseLink",
+            "position": {
+                "x": 0.05490451627,
+                "y": 0.03060114443,
+                "z": 0
+            },
+            "rotation": {
+                "w": 0,
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        "gripperRightKnuckle": {
+            "frame": "gripperBaseLink",
+            "position": {
+                "x": 0.05490451627,
+                "y": -0.03060114443,
+                "z": 0
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        "gripperLeftFinger": {
+            "frame": "gripperLeftKnuckle",
+            "position": {
+                "x": -0.00408552455,
+                "y": -0.03148604435,
+                "z": 0
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        "gripperRightFinger": {
+            "frame": "gripperRightKnuckle",
+            "position": {
+                "x": -0.00408552455,
+                "y": -0.03148604435,
+                "z": 0
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        "gripperLeftInnerKnuckle": {
+            "frame": "gripperBaseLink",
+            "position": {
+                "x": 0.06142,
+                "y": 0.0127,
+                "z": 0
+            },
+            "rotation": {
+                "w": 0,
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        "gripperRightInnerKnuckle": {
+            "frame": "gripperBaseLink",
+            "position": {
+                "x": 0.06142,
+                "y": -0.0127,
+                "z": 0
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        "gripperLeftFingerTip": {
+            "frame": "gripperLeftInnerKnuckle",
+            "position": {
+                "x": 0.04303959807,
+                "y": -0.03759940821,
+                "z": 0
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        "gripperRightFingerTip": {
+            "frame": "gripperRightInnerKnuckle",
+            "position": {
+                "x": 0.04303959807,
+                "y": -0.03759940821,
+                "z": 0
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         }
     },
     items: {
-       
-        table: {
-            shape: "package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/Table/Table.stl",
-            name: "Table",
-            frame: "world",
-            position: { x: 0, y: 0.36, z: -0.37 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            color: { r: 10, g: 10, b: 10, a: 1 },
-            highlighted: false,
-            showName: false
+        "zone-988926121c1911ecbe2600155d1a70a2": {
+            "shape": "cube",
+            "name": "Human Workspace Occupancy Zone",
+            "frame": "world",
+            "position": {
+                "x": 0,
+                "y": 1,
+                "z": 0.4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "color": {
+                "r": 233,
+                "g": 53,
+                "b": 152,
+                "a": 0.2
+            },
+            "scale": {
+                "x": 2,
+                "y": 1,
+                "z": 0.8
+            },
+            "transformMode": "inactive",
+            "highlighted": false,
+            "hidden": true
         },
-        tableGizmo: {
-            shape: "package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/Table/Table.stl",
-            name: "Table",
-            frame: "gizmo",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            color: { r: 10, g: 10, b: 10, a: 1 },
-            highlighted: false,
-            showName: false,
+        "zone-988926d01c1911ecbe2600155d1a70a2": {
+            "shape": "cube",
+            "name": "Human Corridor Occupancy Zone",
+            "frame": "world",
+            "position": {
+                "x": 0,
+                "y": -1,
+                "z": 0.4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "color": {
+                "r": 233,
+                "g": 53,
+                "b": 152,
+                "a": 0.2
+            },
+            "scale": {
+                "x": 2,
+                "y": 1,
+                "z": 0.8
+            },
+            "transformMode": "inactive",
+            "highlighted": false,
+            "hidden": true
         },
-        printerGizmo: {
-            shape: "package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/MK2-Printer/MK2-Printer.stl",
-            name: "3D Printer",
-            frame: "gizmo",
-            position: { x: 0, y: 0, z: .66 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            highlighted: false,
-            showName: false
+        "location-c540bea6-a0a8-40c2-8fcc-cb6ae772697c-tag": {
+            "uuid": "location-c540bea6-a0a8-40c2-8fcc-cb6ae772697c-tag",
+            "frame": "world",
+            "name": "Initial Location",
+            "shape": "flag",
+            "position": {
+                "x": 0.20400124405192815,
+                "y": 0.15340864650572777,
+                "z": 0.15008560705897595
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": -0.25,
+                "y": 0.25,
+                "z": 0.25
+            },
+            "highlighted": false,
+            "showName": false,
+            "color": {
+                "r": 233,
+                "g": 53,
+                "b": 152,
+                "a": 1
+            },
+            "hidden": true,
+            "transformMode": "inactive"
         },
-        bladeConveyor: {
-            shape: 'conveyor',
-            name: "Blade Production Conveyor Belt",
-            frame: "world",
-            position: { x: -0.85, y: -0.25, z: -0.75 },
-            rotation: { w: 0.707, x: 0, y: 0, z: 0.707 },
-            scale: { x: 1, y: 1, z: 1 },
-            highlighted: false,
-            showName: false
+        "location-c540bea6-a0a8-40c2-8fcc-cb6ae772697c-pointer": {
+            "uuid": "location-c540bea6-a0a8-40c2-8fcc-cb6ae772697c-pointer",
+            "frame": "world",
+            "shape": "package://app/meshes/LocationMarker.stl",
+            "position": {
+                "x": 0.20400124405192815,
+                "y": 0.15340864650572777,
+                "z": 0.15008560705897595
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0.6763577452496884,
+                "w": 0.7365732824646558
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "highlighted": false,
+            "showName": false,
+            "color": {
+                "r": 233,
+                "g": 53,
+                "b": 152,
+                "a": 1
+            },
+            "hidden": true,
+            "transformMode": "inactive"
         },
-        bladeConveyorCollision: {
-            shape: 'conveyor_collision',
-            name: "Blade Production Conveyor Belt Collision",
-            frame: "world",
-            position: { x: -0.85, y: -0.25, z: -0.75 },
-            rotation: { w: 0.707, x: 0, y: 0, z: 0.707 },
-            color: { r: 255, g: 0, b: 0, a: 0.3 },
-            scale: { x: 1, y: 1, z: 1 },
-            highlighted: false,
-            showName: false,
-            wireframe: true,
+        "location-b7daabbd-6e24-4b8f-9c8e-5ea22d727ad0-tag": {
+            "uuid": "location-b7daabbd-6e24-4b8f-9c8e-5ea22d727ad0-tag",
+            "frame": "world",
+            "name": "Deposit Location",
+            "shape": "flag",
+            "position": {
+                "x": 0.40801871379516913,
+                "y": -0.2369200947241372,
+                "z": 0.30206792720062714
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": -0.25,
+                "y": 0.25,
+                "z": 0.25
+            },
+            "highlighted": false,
+            "showName": false,
+            "color": {
+                "r": 100,
+                "g": 18,
+                "b": 128,
+                "a": 1
+            },
+            "hidden": true,
+            "transformMode": "inactive"
         },
-        conveyorReceiver: {
-            shape: 'conveyor_receiver',
-            name: "Blade Receiver",
-            frame: "world",
-            position: { x: -0.85, y: -0.25, z: -0.75 },
-            rotation: { w: 0.707, x: 0, y: 0, z: 0.707 },
-            scale: { x: 1, y: 1, z: 1 },
-            highlighted: false,
-            showName: false
+        "location-b7daabbd-6e24-4b8f-9c8e-5ea22d727ad0-pointer": {
+            "uuid": "location-b7daabbd-6e24-4b8f-9c8e-5ea22d727ad0-pointer",
+            "frame": "world",
+            "shape": "package://app/meshes/LocationMarker.stl",
+            "position": {
+                "x": 0.40801871379516913,
+                "y": -0.2369200947241372,
+                "z": 0.30206792720062714
+            },
+            "rotation": {
+                "x": 0.7133230578218721,
+                "y": -0.03940528263686746,
+                "z": -0.03668088697820589,
+                "w": -0.6987645894079457
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "highlighted": false,
+            "showName": false,
+            "color": {
+                "r": 100,
+                "g": 18,
+                "b": 128,
+                "a": 1
+            },
+            "hidden": true,
+            "transformMode": "inactive"
         },
-        conveyorReceiverCollision: {
-            shape: 'conveyor_receiver_collision',
-            name: "Blade Receiver Collision",
-            frame: "world",
-            position: { x: -0.85, y: -0.25, z: -0.75 },
-            rotation: { w: 0.707, x: 0, y: 0, z: 0.707 },
-            color: { r: 255, g: 0, b: 0, a: 0.3 },
-            scale: { x: 1, y: 1, z: 1 },
-            highlighted: false,
-            showName: false,
-            wireframe: true,
+        "location-47238d9d-5241-4bdb-8b29-877f78cb124d-tag": {
+            "uuid": "location-47238d9d-5241-4bdb-8b29-877f78cb124d-tag",
+            "frame": "world",
+            "name": "Blade Fetch Location",
+            "shape": "flag",
+            "position": {
+                "x": -0.4501325157748985,
+                "y": -0.25541537076762655,
+                "z": -0.02822078016538941
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": -0.25,
+                "y": 0.25,
+                "z": 0.25
+            },
+            "highlighted": false,
+            "showName": false,
+            "color": {
+                "r": 100,
+                "g": 18,
+                "b": 128,
+                "a": 1
+            },
+            "hidden": true,
+            "transformMode": "inactive"
         },
-        knifeConveyor: {
-            shape: 'conveyor',
-            name: "Finished Knife Conveyor Belt",
-            frame: "world",
-            position: { x: 0.85, y: -0.25, z: -0.75 },
-            rotation: { w: 0.707, x: 0, y: 0, z: -0.707 },
-            scale: { x: 1, y: 1, z: 1 },
-            highlighted: false,
-            showName: false
+        "location-47238d9d-5241-4bdb-8b29-877f78cb124d-pointer": {
+            "uuid": "location-47238d9d-5241-4bdb-8b29-877f78cb124d-pointer",
+            "frame": "world",
+            "shape": "package://app/meshes/LocationMarker.stl",
+            "position": {
+                "x": -0.4501325157748985,
+                "y": -0.25541537076762655,
+                "z": -0.02822078016538941
+            },
+            "rotation": {
+                "x": -0.006622068142399432,
+                "y": -0.6857443017700521,
+                "z": 0.7277784747239732,
+                "w": -0.007027982062342742
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "highlighted": false,
+            "showName": false,
+            "color": {
+                "r": 100,
+                "g": 18,
+                "b": 128,
+                "a": 1
+            },
+            "hidden": true,
+            "transformMode": "inactive"
         },
-        knifeConveyorCollision: {
-            shape: 'conveyor_collision',
-            name: "Blade Production Conveyor Belt Collision",
-            frame: "world",
-            position: { x: 0.85, y: -0.25, z: -0.75 },
-            rotation: { w: 0.707, x: 0, y: 0, z: -0.707 },
-            color: { r: 255, g: 0, b: 0, a: 0.3 },
-            scale: { x: 1, y: 1, z: 1 },
-            highlighted: false,
-            showName: false,
-            wireframe: true,
+        "waypoint-e7a63a7c-1df8-4ca6-9ffc-4f9b1e008aa4-tag": {
+            "uuid": "waypoint-e7a63a7c-1df8-4ca6-9ffc-4f9b1e008aa4-tag",
+            "frame": "world",
+            "name": "WP 1",
+            "shape": "tag",
+            "position": {
+                "x": -0.3319053491144722,
+                "y": -0.006321044395614983,
+                "z": 0.3364538095102072
+            },
+            "rotation": {
+                "w": 1,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": -0.25,
+                "y": 0.25,
+                "z": 0.25
+            },
+            "highlighted": false,
+            "showName": false,
+            "color": {
+                "r": 100,
+                "g": 18,
+                "b": 128,
+                "a": 1
+            },
+            "hidden": true,
+            "transformMode": "inactive"
         },
-        conveyorDispatcher: {
-            shape: 'conveyor_dispatcher',
-            name: "Knife Dispatcher",
-            frame: "world",
-            position: { x: 0.85, y: -0.25, z: -0.75 },
-            rotation: { w: 0.707, x: 0, y: 0, z: -0.707 },
-            scale: { x: 1, y: 1, z: 1 },
-            highlighted: false,
-            showName: true
+        "waypoint-e7a63a7c-1df8-4ca6-9ffc-4f9b1e008aa4-pointer": {
+            "uuid": "waypoint-e7a63a7c-1df8-4ca6-9ffc-4f9b1e008aa4-pointer",
+            "frame": "world",
+            "shape": "package://app/meshes/OpenWaypointMarker.stl",
+            "position": {
+                "x": -0.3319053491144722,
+                "y": -0.006321044395614983,
+                "z": 0.3364538095102072
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0.9907218933440319,
+                "w": 0.13590485660496693
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "highlighted": false,
+            "showName": false,
+            "color": {
+                "r": 100,
+                "g": 18,
+                "b": 128,
+                "a": 1
+            },
+            "hidden": true,
+            "transformMode": "inactive"
         },
-        conveyorDispatcherCollision: {
-            shape: 'conveyor_dispatcher_collision',
-            name: "Knife Dispatcher",
-            frame: "world",
-            position: { x: 0.85, y: -0.25, z: -0.75 },
-            rotation: { w: 0.707, x: 0, y: 0, z: -0.707 },
-            color: { r: 255, g: 0, b: 0, a: 0.3 },
-            scale: { x: 1, y: 1, z: 1 },
-            highlighted: false,
-            showName: false,
-            wireframe: true,
+        "machine-ac5a063a-9ff9-4c0a-8fa6-81d3983f4a10": {
+            "shape": "package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/MK2-Printer/MK2-Printer.stl",
+            "name": "3D Printer Machine",
+            "frame": "machine-ac5a063a-9ff9-4c0a-8fa6-81d3983f4a10",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         },
-        pedestal: {
-            shape: "package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/ur3e-Pedestal/Pedestal.stl",
-            name: "Pedestal",
-            frame: "world",
-            position: { x: 0, y: -0.15, z: -0.38 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            color: { r: 15, g: 15, b: 15, a: 1 },
-            highlighted: false,
-            showName: false
+        "machine-ac5a063a-9ff9-4c0a-8fa6-81d3983f4a10-collision": {
+            "shape": "package://evd_ros_tasks/tasks/3d_printer_machine_tending/collision_meshes/MK2-Printer.stl",
+            "name": "3D Printer Machine Collision",
+            "frame": "machine-ac5a063a-9ff9-4c0a-8fa6-81d3983f4a10",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false,
+            "color": {
+                "r": 250,
+                "g": 0,
+                "b": 0,
+                "a": 0.6
+            },
+            "wireframe": true,
+            "hidden": true
         },
-        printer: {
-            shape: "package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/MK2-Printer/MK2-Printer.stl",
-            name: "3D Printer",
-            frame: "world",
-            position: { x: -0.28, y: 0.32, z: 0.3 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            highlighted: true,
-            showName: false
+        "toolType-assembly-jig": {
+            "shape": "assembly_jig",
+            "name": "Assembly Jig Machine",
+            "frame": "toolType-assembly-jig",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.2
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         },
-        blade: {
-            shape: "blade",
-            name: "Blade",
-            frame: "world",
-            position: { x: -0.559, y: -0.239, z: -0.03 },
-            rotation: { w: 0.644, x: 0.310, y: -0.296, z: -0.638 },
-            scale: { x: 0.2, y: 0.2, z: 0.2 },
-            highlighted: false,
-            showName: false
+        "toolType-assembly-jig-collision": {
+            "shape": "assembly_jig_collision",
+            "name": "Assembly Jig Machine Collision",
+            "frame": "toolType-assembly-jig",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.2
+            },
+            "transformMode": "inactive",
+            "highlighted": false,
+            "color": {
+                "r": 250,
+                "g": 0,
+                "b": 0,
+                "a": 0.6
+            },
+            "wireframe": true,
+            "hidden": true
         },
-        leftHandle: {
-            shape: "handle_l",
-            name: "Left Handle",
-            frame: "world",
-            position: { x: -0.2, y: 0.28, z: 0.074 },
-            rotation: { w: 0.707, x: 0.707, y: 0, z: 0 },
-            scale: { x: 0.2, y: 0.2, z: 0.2 },
-            highlighted: false,
-            showName: false
+        "machine-0c804bb3-f341-4b82-b9f0-e5aab536e4d7": {
+            "shape": "conveyor",
+            "name": "Blade Conveyor",
+            "frame": "machine-0c804bb3-f341-4b82-b9f0-e5aab536e4d7",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         },
-        rightHandle: {
-            shape: "handle_r",
-            name: "Right Handle",
-            frame: "world",
-            position: { x: -0.3, y: 0.28, z: 0.078 },
-            rotation: { w: 0.707, x: 0.707, y: 0, z: 0 },
-            scale: { x: 0.2, y: 0.2, z: 0.2 },
-            highlighted: false,
-            showName: false
+        "machine-0c804bb3-f341-4b82-b9f0-e5aab536e4d7-collision": {
+            "shape": "conveyor_collision",
+            "name": "Blade Conveyor Collision",
+            "frame": "machine-0c804bb3-f341-4b82-b9f0-e5aab536e4d7",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false,
+            "color": {
+                "r": 250,
+                "g": 0,
+                "b": 0,
+                "a": 0.6
+            },
+            "wireframe": true,
+            "hidden": true
         },
-        transportJig: {
-            shape: "transport_jig",
-            name: "Transport Jig",
-            frame: "world",
-            position: { x: -0.559, y: -0.239, z: -0.03 },
-            rotation: { w: 0.644, x: 0.310, y: -0.296, z: -0.638 },
-            scale: { x: 0.2, y: 0.2, z: 0.2 },
-            highlighted: false,
-            showName: false
+        "machine-0914222f-03e0-4b4c-a8c4-03146867ba7b": {
+            "shape": "conveyor_receiver",
+            "name": "Blade Feeder",
+            "frame": "machine-0914222f-03e0-4b4c-a8c4-03146867ba7b",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         },
-        assemblyJig: {
-            shape: "assembly_jig",
-            name: "Assembly Jig",
-            frame: "world",
-            position: { x: 0.2, y: 0.28, z: 0.14 },
-            rotation: { w: -0.5, x: 0.5, y: -0.5, z: -0.5 },
-            scale: { x: 0.2, y: 0.2, z: 0.2 },
-            highlighted: false,
-            showName: false
+        "machine-0914222f-03e0-4b4c-a8c4-03146867ba7b-collision": {
+            "shape": "conveyor_receiver_collision",
+            "name": "Blade Feeder Collision",
+            "frame": "machine-0914222f-03e0-4b4c-a8c4-03146867ba7b",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false,
+            "color": {
+                "r": 250,
+                "g": 0,
+                "b": 0,
+                "a": 0.6
+            },
+            "wireframe": true,
+            "hidden": true
         },
-        assemblyJigCollision: {
-            shape: "assembly_jig_collision",
-            name: "Assembly Jig Collision",
-            frame: "world",
-            position: { x: 0.2, y: 0.28, z: 0.14 },
-            rotation: { w: -0.5, x: 0.5, y: -0.5, z: -0.5 },
-            scale: { x: 0.2, y: 0.2, z: 0.2 },
-            color: { r: 255, g: 0, b: 0, a: 0.3 },
-            highlighted: false,
-            showName: false,
-            wireframe: true,
+        "machine-9133367a-f691-4d94-9764-50d9685db30a": {
+            "shape": "conveyor",
+            "name": "Knife Conveyor",
+            "frame": "machine-9133367a-f691-4d94-9764-50d9685db30a",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         },
-        knifeWithTransportJig: {
-            shape: "knife_with_transport_jig",
-            name: "Knife with Transport Jig",
-            frame: "world",
-            position: { x: 0.584, y: -0.238, z: 0.293 },
-            rotation: { w: -0.372, x: 0.604, y: -0.602, z: 0.368 },
-            scale: { x: 0.2, y: 0.2, z: 0.2 },
-            highlighted: false,
-            showName: false
+        "machine-9133367a-f691-4d94-9764-50d9685db30a-collision": {
+            "shape": "conveyor_collision",
+            "name": "Knife Conveyor Collision",
+            "frame": "machine-9133367a-f691-4d94-9764-50d9685db30a",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false,
+            "color": {
+                "r": 250,
+                "g": 0,
+                "b": 0,
+                "a": 0.6
+            },
+            "wireframe": true,
+            "hidden": true
         },
-        base: {
-            shape: "package://ur_description/meshes/ur3/collision/base.stl",
-            name: 'Base',
-            frame: "simulated_base_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 0, x: 0, y: 0, z: 1 },
-            scale: { x: 1, y: 1, z: 1 },
-            color: {r:255,g:0,b:0,a:1},
-            showName: false,
-            wireframe : true,
-            highlighted: false
+        "machine-67d870e0-511d-4662-bf0d-8478f5e860f8": {
+            "shape": "conveyor_dispatcher",
+            "name": "Knife Feeder",
+            "frame": "machine-67d870e0-511d-4662-bf0d-8478f5e860f8",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         },
-        shoulderLink: {
-            shape: "package://ur_description/meshes/ur3/visual/shoulder.dae",
-            name: 'Shoulder Link',
-            frame: "simulated_shoulder_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 0, x: 0, y: 0, z: 1 },
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            highlighted: false,
+        "machine-67d870e0-511d-4662-bf0d-8478f5e860f8-collision": {
+            "shape": "conveyor_dispatcher_collision",
+            "name": "Knife Feeder Collision",
+            "frame": "machine-67d870e0-511d-4662-bf0d-8478f5e860f8",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false,
+            "color": {
+                "r": 250,
+                "g": 0,
+                "b": 0,
+                "a": 0.6
+            },
+            "wireframe": true,
+            "hidden": true
         },
-        shoulderLinkCollision:{
-            shape: "package://ur_description/meshes/ur3/collision/shoulder.stl",
-            name: 'Shoulder Link',
-            frame: "simulated_shoulder_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 0, x: 0, y: 0, z: 1 },
-            scale: { x: 1, y: 1, z: 1 },
-            color: {r:255,g:0,b:0,a:1},
-            showName: false,
-            wireframe: true,
-            highlighted: false,
+        "toolType-transport-jig": {
+            "shape": "transport_jig",
+            "name": "Transport Jig",
+            "frame": "toolType-transport-jig",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.2
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         },
-        upperArmLink: {
-            shape: "package://ur_description/meshes/ur3/visual/upperarm.dae",
-            name: "Upper Arm Link",
-            frame: "simulated_upper_arm_link",
-            position: { x: 0, y: 0, z: 0.12 },
-            rotation: { w: 0.5, x: 0.5, y: -0.5, z: -0.5 },
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            highlighted: false,
+        "toolType-transport-jig-collision": {
+            "shape": "package://evd_ros_tasks/description/markers/tranport_jig.stl",
+            "name": "Transport Jig Collision",
+            "frame": "toolType-transport-jig",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false,
+            "color": {
+                "r": 250,
+                "g": 0,
+                "b": 0,
+                "a": 0.6
+            },
+            "wireframe": true,
+            "hidden": true
         },
-       upperArmLinkCollision:{
-            shape: "package://ur_description/meshes/ur3/collision/upperarm.stl",
-            name: "Upper Arm Link",
-            frame: "simulated_upper_arm_link",
-            position: { x: 0, y: 0, z: 0.12 },
-            rotation: { w: 0.5, x: 0.5, y: -0.5, z: -0.5 },
-            scale: { x: 1, y: 1, z: 1 },
-            color: {r:255,g:0,b:0,a:1},
-            showName: false,
-            wireframe: true,
-            highlighted: false,
+        "inputOutput-ridn023-dz00-445jk-we90-e69tffb00845": {
+            "shape": "handle_l",
+            "frame": "machine-ac5a063a-9ff9-4c0a-8fa6-81d3983f4a10",
+            "position": {
+                "x": -0.2,
+                "y": 0.28,
+                "z": 0.074
+            },
+            "rotation": {
+                "x": 0.707,
+                "y": 0,
+                "z": 0,
+                "w": 0.707
+            },
+            "scale": {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.2
+            },
+            "transformMode": "inactive",
+            "color": {
+                "r": 0,
+                "g": 200,
+                "b": 0,
+                "a": 0.2
+            },
+            "highlighted": false,
+            "hidden": true
         },
-        forearmLink: {
-            shape: "package://ur_description/meshes/ur3/visual/forearm.dae",
-            name: "Forearm Link",
-            frame: "simulated_forearm_link",
-            position: { x: 0, y: 0, z: 0.027 },
-            rotation: { w: 0.5, x: 0.5, y: -0.5, z: -0.5 },
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            highlighted: false,
+        "inputOutput-mnpdm09-ty00-445md-yjg09-rnvor905mfi1203d": {
+            "shape": "handle_r",
+            "frame": "machine-ac5a063a-9ff9-4c0a-8fa6-81d3983f4a10",
+            "position": {
+                "x": -0.3,
+                "y": 0.28,
+                "z": 0.078
+            },
+            "rotation": {
+                "x": 0.707,
+                "y": 0,
+                "z": 0,
+                "w": 0.707
+            },
+            "scale": {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.2
+            },
+            "transformMode": "inactive",
+            "color": {
+                "r": 0,
+                "g": 200,
+                "b": 0,
+                "a": 0.2
+            },
+            "highlighted": false,
+            "hidden": true
         },
-        forearmLinkCollision: {
-            shape: "package://ur_description/meshes/ur3/collision/forearm.stl",
-            name: "Forearm Link",
-            frame: "simulated_forearm_link",
-            position: { x: 0, y: 0, z: 0.027 },
-            rotation: { w: 0.5, x: 0.5, y: -0.5, z: -0.5 },
-            scale: { x: 1, y: 1, z: 1 },
-            color: {r:255,g:0,b:0,a:1},
-            showName: false,
-            wireframe: true,
-            highlighted: false,
+        "inputOutput-2d49b51b-dz37-488e-we56-e55ef6a0a8fc": {
+            "shape": "blade",
+            "frame": "world",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.2
+            },
+            "transformMode": "inactive",
+            "color": {
+                "r": 0,
+                "g": 200,
+                "b": 0,
+                "a": 0.2
+            },
+            "highlighted": false,
+            "hidden": true
         },
-        wrist1Link: {
-            shape: "package://ur_description/meshes/ur3/visual/wrist1.dae",
-            name: "Wrist 1 Link",
-            frame: "simulated_wrist_1_link",
-            position: { x: 0, y: 0, z: -0.104 },
-            rotation: { w: 0.7071068, x: 0.7071068, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            highlighted: false,
+        "inputOutput-3d50b62b-dz37-488e-we56-e65eo6f0a80b": {
+            "shape": "transport_jig",
+            "frame": "toolType-transport-jig",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.2
+            },
+            "transformMode": "inactive",
+            "color": {
+                "r": 0,
+                "g": 200,
+                "b": 0,
+                "a": 0.2
+            },
+            "highlighted": false,
+            "hidden": true
         },
-        wrist1LinkCollision: {
-            shape: "package://ur_description/meshes/ur3/collision/wrist1.stl",
-            name: "Wrist 1 Link",
-            frame: "simulated_wrist_1_link",
-            position: { x: 0, y: 0, z: -0.104 },
-            rotation: { w: 0.7071068, x: 0.7071068, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            color: {r:255,g:0,b:0,a:1},
-            showName: false,
-            wireframe: true,
-            highlighted: false,
+        "inputOutput-sefse456-ty56-234g-gh67-fth4567hfth7": {
+            "shape": "blade_with_transport_jig",
+            "frame": "world",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.2
+            },
+            "transformMode": "inactive",
+            "color": {
+                "r": 0,
+                "g": 200,
+                "b": 0,
+                "a": 0.2
+            },
+            "highlighted": false,
+            "hidden": true
         },
-
-        wrist2Link: {
-            shape: "package://ur_description/meshes/ur3/visual/wrist2.dae",
-            name: "Wrist 2 Link",
-            frame: "simulated_wrist_2_link",
-            position: { x: 0, y: 0, z: -0.08535 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            highlighted: false,
+        "inputOutput-tjgnk5suei9-oo90-ruti0-gte0-u8cns9nc9s": {
+            "shape": "handle_l",
+            "frame": "toolType-assembly-jig",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.2
+            },
+            "transformMode": "inactive",
+            "color": {
+                "r": 0,
+                "g": 200,
+                "b": 0,
+                "a": 0.2
+            },
+            "highlighted": false,
+            "hidden": true
         },
-        wrist2LinkCollision: {
-            shape: "package://ur_description/meshes/ur3/visual/wrist2.dae",
-            name: "Wrist 2 Link",
-            frame: "simulated_wrist_2_link",
-            position: { x: 0, y: 0, z: -0.08535 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            color: {r:255,g:0,b:0,a:1},
-            showName: false,
-            wireframe: true,
-            highlighted: false,
+        "inputOutput-tu8fnsiw0c-ie90-rcns89-tuy8-isnc9sa34s": {
+            "shape": "handle_r",
+            "frame": "toolType-assembly-jig",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.2
+            },
+            "transformMode": "inactive",
+            "color": {
+                "r": 0,
+                "g": 200,
+                "b": 0,
+                "a": 0.2
+            },
+            "highlighted": false,
+            "hidden": true
         },
-        wrist3Link: {
-            shape: "package://ur_description/meshes/ur3/visual/wrist3.dae",
-            name: "Wrist 3 Link",
-            frame: "simulated_wrist_3_link",
-            position: { x: 0, y: 0, z: -0.0921 },
-            rotation: { w: 0.7071068, x: 0.7071068, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            highlighted: false,
+        "inputOutput-eicns9ef9-sic9-eicns99-sey8-seo4s9dir9": {
+            "shape": "blade",
+            "frame": "toolType-assembly-jig",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.2
+            },
+            "transformMode": "inactive",
+            "color": {
+                "r": 0,
+                "g": 200,
+                "b": 0,
+                "a": 0.2
+            },
+            "highlighted": false,
+            "hidden": true
         },
-        wrist3LinkCollision:{
-            shape: "package://ur_description/meshes/ur3/visual/wrist3.dae",
-            name: "Wrist 3 Link",
-            frame: "simulated_wrist_3_link",
-            position: { x: 0, y: 0, z: -0.0921 },
-            rotation: { w: 0.7071068, x: 0.7071068, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            color: {r:255,g:0,b:0,a:1},
-            showName: false,
-            wireframe: true,
-            highlighted: false,
+        "inputOutput-tidvi23-tbn9-cjzd99-if98-of9nsnrc0s": {
+            "shape": "knife",
+            "frame": "thingType-98892bd01c1911ecbe2600155d1a70a2",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.2
+            },
+            "transformMode": "inactive",
+            "color": {
+                "r": 0,
+                "g": 200,
+                "b": 0,
+                "a": 0.2
+            },
+            "highlighted": false,
+            "hidden": true
         },
-        gripperBaseLink: {
-            shape: "package://robotiq_85_description/meshes/visual/robotiq_85_base_link.dae",
-            name: "Gripper Base",
-            frame: "simulated_robotiq_85_base_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            highlighted: false
+        "inputOutput-45fsoe9-tjfg9-gurd89-thf9-09ghnsn234d": {
+            "shape": "handle_l",
+            "frame": "toolType-assembly-jig",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.2
+            },
+            "transformMode": "inactive",
+            "color": {
+                "r": 0,
+                "g": 200,
+                "b": 0,
+                "a": 0.2
+            },
+            "highlighted": false,
+            "hidden": true
         },
-        gripperLeftKnuckle: {
-            shape: "package://robotiq_85_description/meshes/visual/robotiq_85_knuckle_link.dae",
-            name: "Gripper Left Knuckle",
-            frame: "simulated_robotiq_85_left_knuckle_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            highlighted: false
+        "inputOutput-948fnsi23-odns9-fins89-irn1-fcnr94820s": {
+            "shape": "handle_r",
+            "frame": "toolType-assembly-jig",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.2
+            },
+            "transformMode": "inactive",
+            "color": {
+                "r": 0,
+                "g": 200,
+                "b": 0,
+                "a": 0.2
+            },
+            "highlighted": false,
+            "hidden": true
         },
-        gripperRightKnuckle: {
-            shape: "package://robotiq_85_description/meshes/visual/robotiq_85_knuckle_link.dae",
-            name: "Gripper Right Knuckle",
-            frame: "simulated_robotiq_85_right_knuckle_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            highlighted: false
+        "inputOutput-asfsn90-vnxmo9-nmbj89-ii4w-vnlsf0sfkx0": {
+            "shape": "blade_with_transport_jig",
+            "frame": "toolType-assembly-jig",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.2
+            },
+            "transformMode": "inactive",
+            "color": {
+                "r": 0,
+                "g": 200,
+                "b": 0,
+                "a": 0.2
+            },
+            "highlighted": false,
+            "hidden": true
         },
-        gripperLeftFinger: {
-            shape: "package://robotiq_85_description/meshes/visual/robotiq_85_finger_link.dae",
-            name: "Gripper Left Finger",
-            frame: "simulated_robotiq_85_left_finger_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            highlighted: false
+        "inputOutput-94nss89-8vnsk9-7hdn9-wy89-fhsne8923": {
+            "shape": "knife_with_transport_jig",
+            "frame": "thingType-98892ce81c1911ecbe2600155d1a70a2",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.2
+            },
+            "transformMode": "inactive",
+            "color": {
+                "r": 0,
+                "g": 200,
+                "b": 0,
+                "a": 0.2
+            },
+            "highlighted": false,
+            "hidden": true
         },
-        gripperRightFinger: {
-            shape: "package://robotiq_85_description/meshes/visual/robotiq_85_finger_link.dae",
-            name: "Gripper Right Finger",
-            frame: "simulated_robotiq_85_right_finger_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            highlighted: false
+        "table": {
+            "shape": "package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/Table/Table.stl",
+            "name": "Table",
+            "frame": "table",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "color": {
+                "r": 10,
+                "g": 10,
+                "b": 10,
+                "a": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         },
-        gripperLeftInnerKnuckle: {
-            shape: "package://robotiq_85_description/meshes/visual/robotiq_85_inner_knuckle_link.dae",
-            name: "Gripper Left Inner Knuckle",
-            frame: "simulated_robotiq_85_left_inner_knuckle_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            highlighted: false
+        "pedestal": {
+            "shape": "package://evd_ros_tasks/tasks/3d_printer_machine_tending/models/ur3e-Pedestal/Pedestal.stl",
+            "name": "Pedestal",
+            "frame": "pedestal",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "color": {
+                "r": 15,
+                "g": 15,
+                "b": 15,
+                "a": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         },
-        gripperRightInnerKnuckle: {
-            shape: "package://robotiq_85_description/meshes/visual/robotiq_85_inner_knuckle_link.dae",
-            name: "Gripper Right Inner Knuckle",
-            frame: "simulated_robotiq_85_right_inner_knuckle_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            highlighted: false
+        "robotBase": {
+            "shape": "package://ur_description/meshes/ur3/visual/base.dae",
+            "name": "Robot Base",
+            "frame": "robotBase",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 1,
+                "w": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         },
-        gripperLeftFingerTip: {
-            shape: "package://robotiq_85_description/meshes/visual/robotiq_85_finger_tip_link.dae",
-            name: "Gripper Left Finger Tip",
-            frame: "simulated_robotiq_85_left_finger_tip_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            highlighted: false
+        "robotShoulderLink": {
+            "shape": "package://ur_description/meshes/ur3/visual/shoulder.dae",
+            "name": "Shoulder Link",
+            "frame": "robotShoulderLink",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 1,
+                "w": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         },
-        gripperRightFingerTip: {
-            shape: "package://robotiq_85_description/meshes/visual/robotiq_85_finger_tip_link.dae",
-            name: "Gripper Right Finger Tip",
-            frame: "simulated_robotiq_85_right_finger_tip_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            highlighted: false
+        "robotUpperArmLink": {
+            "shape": "package://ur_description/meshes/ur3/visual/upperarm.dae",
+            "name": "Upper Arm Link",
+            "frame": "robotUpperArmLink",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0.12
+            },
+            "rotation": {
+                "x": 0.5,
+                "y": -0.5,
+                "z": -0.5,
+                "w": 0.5
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         },
-        gripperBaseLinkCollision: {
-            shape: "package://robotiq_85_description/meshes/collision/robotiq_85_base_link.stl",
-            name: "Gripper Base Collision",
-            frame: "simulated_robotiq_85_base_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: {r:255,g:0,b:0,a:1},
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            wireframe: true,
-            highlighted: false
+        "robotUpperArmLink-collision": {
+            "shape": "package://ur_description/meshes/ur3/collision/upperarm.stl",
+            "name": "Upper Arm Link Collision",
+            "frame": "robotUpperArmLink",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0.12
+            },
+            "rotation": {
+                "x": 0.5,
+                "y": -0.5,
+                "z": -0.5,
+                "w": 0.5
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "color": {
+                "r": 250,
+                "g": 0,
+                "b": 0,
+                "a": 0.6
+            },
+            "transformMode": "inactive",
+            "highlighted": false,
+            "wireframe": true,
+            "hidden": true
         },
-        gripperLeftKnuckleCollision: {
-            shape: "package://robotiq_85_description/meshes/collision/robotiq_85_knuckle_link.stl",
-            name: "Gripper Left Knuckle Collision",
-            frame: "simulated_robotiq_85_left_knuckle_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: {r:255,g:0,b:0,a:1},
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            highlighted: false
+        "robotForearmLink": {
+            "shape": "package://ur_description/meshes/ur3/visual/forearm.dae",
+            "name": "Forearm Link",
+            "frame": "robotForearmLink",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0.027
+            },
+            "rotation": {
+                "x": 0.5,
+                "y": -0.5,
+                "z": -0.5,
+                "w": 0.5
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         },
-        gripperRightKnuckleCollision: {
-            shape: "package://robotiq_85_description/meshes/collision/robotiq_85_knuckle_link.stl",
-            name: "Gripper Right Knuckle Collision",
-            frame: "simulated_robotiq_85_right_knuckle_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: {r:255,g:0,b:0,a:1},
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            wireframe: true,
-            highlighted: false
+        "robotForearmLink-collision": {
+            "shape": "package://ur_description/meshes/ur3/collision/forearm.stl",
+            "name": "Forearm Link Collision",
+            "frame": "robotForearmLink",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0.027
+            },
+            "rotation": {
+                "x": 0.5,
+                "y": -0.5,
+                "z": -0.5,
+                "w": 0.5
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "color": {
+                "r": 250,
+                "g": 0,
+                "b": 0,
+                "a": 0.6
+            },
+            "transformMode": "inactive",
+            "highlighted": false,
+            "wireframe": true,
+            "hidden": true
         },
-        gripperLeftFingerCollision: {
-            shape: "package://robotiq_85_description/meshes/collision/robotiq_85_finger_link.stl",
-            name: "Gripper Left Finger Collision",
-            frame: "simulated_robotiq_85_left_finger_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: {r:255,g:0,b:0,a:1},
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            wireframe: true,
-            highlighted: false
+        "robotWrist1Link": {
+            "shape": "package://ur_description/meshes/ur3/visual/wrist1.dae",
+            "name": "Wrist 1 Link",
+            "frame": "robotWrist1Link",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": -0.104
+            },
+            "rotation": {
+                "x": 0.7071068,
+                "y": 0,
+                "z": 0,
+                "w": 0.7071068
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         },
-        gripperRightFingerCollision: {
-            shape: "package://robotiq_85_description/meshes/collision/robotiq_85_finger_link.stl",
-            name: "Gripper Right Finger Collision",
-            frame: "simulated_robotiq_85_right_finger_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: {r:255,g:0,b:0,a:1},
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            wireframe: true,
-            highlighted: false
+        "robotWrist1Link-collision": {
+            "shape": "package://ur_description/meshes/ur3/collision/wrist1.stl",
+            "name": "Wrist 1 Link Collision",
+            "frame": "robotWrist1Link",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": -0.104
+            },
+            "rotation": {
+                "x": 0.7071068,
+                "y": 0,
+                "z": 0,
+                "w": 0.7071068
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "color": {
+                "r": 250,
+                "g": 0,
+                "b": 0,
+                "a": 0.6
+            },
+            "transformMode": "inactive",
+            "highlighted": false,
+            "wireframe": true,
+            "hidden": true
         },
-        gripperLeftInnerKnuckleCollision: {
-            shape: "package://robotiq_85_description/meshes/collision/robotiq_85_inner_knuckle_link.stl",
-            name: "Gripper Left Inner Knuckle Collision",
-            frame: "simulated_robotiq_85_left_inner_knuckle_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: {r:255,g:0,b:0,a:1},
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            wireframe: true,
-            highlighted: false
+        "robotWrist2Link": {
+            "shape": "package://ur_description/meshes/ur3/visual/wrist2.dae",
+            "name": "Wrist 2 Link",
+            "frame": "robotWrist2Link",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": -0.08535
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         },
-        gripperRightInnerKnuckleCollision: {
-            shape: "package://robotiq_85_description/meshes/collision/robotiq_85_inner_knuckle_link.stl",
-            name: "Gripper Right Inner Knuckle Collision",
-            frame: "simulated_robotiq_85_right_inner_knuckle_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: {r:255,g:0,b:0,a:1},
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            wireframe: true,
-            highlighted: false
+        "robotWrist2Link-collision": {
+            "shape": "package://ur_description/meshes/ur3/collision/wrist1.stl",
+            "name": "Wrist 2 Link Collision",
+            "frame": "robotWrist2Link",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": -0.104
+            },
+            "rotation": {
+                "x": 0.7071068,
+                "y": 0,
+                "z": 0,
+                "w": 0.7071068
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "color": {
+                "r": 250,
+                "g": 0,
+                "b": 0,
+                "a": 0.6
+            },
+            "transformMode": "inactive",
+            "highlighted": false,
+            "wireframe": true,
+            "hidden": true
         },
-        gripperLeftFingerTipCollision: {
-            shape: "package://robotiq_85_description/meshes/collision/robotiq_85_finger_tip_link.stl",
-            name: "Gripper Left Finger Tip Collision",
-            frame: "simulated_robotiq_85_left_finger_tip_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: {r:255,g:0,b:0,a:1},
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            wireframe: true,
-            highlighted: false
+        "robotWrist3Link": {
+            "shape": "package://ur_description/meshes/ur3/visual/wrist3.dae",
+            "name": "Wrist 3 Link",
+            "frame": "robotWrist3Link",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": -0.0921
+            },
+            "rotation": {
+                "x": 0.7071068,
+                "y": 0,
+                "z": 0,
+                "w": 0.7071068
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         },
-        gripperRightFingerTipCollision: {
-            shape: "package://robotiq_85_description/meshes/collision/robotiq_85_finger_tip_link.stl",
-            name: "Gripper Right Finger Tip Collision",
-            frame: "simulated_robotiq_85_right_finger_tip_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: {r:255,g:0,b:0,a:1},
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            wireframe: true,
-            highlighted: false
+        "robotWrist3Link-collision": {
+            "shape": "package://ur_description/meshes/ur3/collision/wrist3.stl",
+            "name": "Wrist 3 Link Collision",
+            "frame": "robotWrist3Link",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": -0.0921
+            },
+            "rotation": {
+                "x": 0.7071068,
+                "y": 0,
+                "z": 0,
+                "w": 0.7071068
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "color": {
+                "r": 250,
+                "g": 0,
+                "b": 0,
+                "a": 0.6
+            },
+            "transformMode": "inactive",
+            "highlighted": false,
+            "wireframe": true,
+            "hidden": true
         },
-        base: {
-            shape: "package://ur_description/meshes/ur3/visual/base.dae",
-            name: 'Base',
-            frame: "simulated_base_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 0, x: 0, y: 0, z: 1 },
-            scale: { x: 1, y: 1, z: 1 },
-            showName: false,
-            highlighted: true
+        "gripperBaseLink": {
+            "shape": "package://robotiq_85_description/meshes/visual/robotiq_85_base_link.dae",
+            "name": "Gripper Base",
+            "frame": "gripperBaseLink",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         },
-        ur3Base:{
-            shape:'package://ur_description/meshes/ur3/collision/base.stl',
-             name: 'Base',
-            frame: "simulated_base_link",
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { w: 0, x: 0, y: 0, z: 1 },
-            color: {r:255,g:0,b:0,a:1},
-            scale: { x: 1, y: 1, z: 1 },
-            wireframe : true,
-            highlighted:true,
-            hidden:true
+        "gripperLeftKnuckle": {
+            "shape": "package://robotiq_85_description/meshes/visual/robotiq_85_knuckle_link.dae",
+            "name": "Gripper Left Knuckle",
+            "frame": "gripperLeftKnuckle",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         },
-    },
-    lines: {
-        line1: {
-          name: "Line1",
-          frame: "world",
-          width: 1,
-          vertices: [
-            {position:{x:0,y:0,z:0},color:{r:0,g:0,b:0}},
-            {position:{x:1,y:0,z:0},color:{r:255,g:0,b:0}},
-            {position:{x:1,y:1,z:0},color:{r:255,g:255,b:0}},
-            {position:{x:0,y:1,z:0},color:{r:0,g:255,b:0}},
-            {position:{x:0,y:1,z:1},color:{r:0,g:255,b:255}},
-            {position:{x:0,y:0,z:1},color:{r:0,g:0,b:255}},
-            {position:{x:1,y:0,z:1},color:{r:255,g:0,b:255}},
-            {position:{x:1,y:1,z:1},color:{r:255,g:255,b:255}}
-        ],
-          hidden: true
+        "gripperRightKnuckle": {
+            "shape": "package://robotiq_85_description/meshes/visual/robotiq_85_knuckle_link.dae",
+            "name": "Gripper Right Knuckle",
+            "frame": "gripperRightKnuckle",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
+        },
+        "gripperLeftFinger": {
+            "shape": "package://robotiq_85_description/meshes/visual/robotiq_85_finger_link.dae",
+            "name": "Gripper Left Finger",
+            "frame": "gripperLeftFinger",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
+        },
+        "gripperRightFinger": {
+            "shape": "package://robotiq_85_description/meshes/visual/robotiq_85_finger_link.dae",
+            "name": "Gripper Right Finger",
+            "frame": "gripperRightFinger",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
+        },
+        "gripperLeftInnerKnuckle": {
+            "shape": "package://robotiq_85_description/meshes/visual/robotiq_85_inner_knuckle_link.dae",
+            "name": "Gripper Left Inner Knuckle",
+            "frame": "gripperLeftInnerKnuckle",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
+        },
+        "gripperRightInnerKnuckle": {
+            "shape": "package://robotiq_85_description/meshes/visual/robotiq_85_inner_knuckle_link.dae",
+            "name": "Gripper Right Inner Knuckle",
+            "frame": "gripperRightInnerKnuckle",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
+        },
+        "gripperLeftFingerTip": {
+            "shape": "package://robotiq_85_description/meshes/visual/robotiq_85_finger_tip_link.dae",
+            "name": "Gripper Left Finger Tip",
+            "frame": "gripperLeftFingerTip",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
+        },
+        "gripperRightFingerTip": {
+            "shape": "package://robotiq_85_description/meshes/visual/robotiq_85_finger_tip_link.dae",
+            "name": "Gripper Right Finger Tip",
+            "frame": "gripperRightFingerTip",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "transformMode": "inactive",
+            "highlighted": false
         }
     },
+    lines: {},
     hulls: {
         usage: {
             name: 'Robot Space Usage',

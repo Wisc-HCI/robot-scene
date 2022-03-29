@@ -47,7 +47,7 @@ export const TransformControls = ({ children, ...props }) => {
     while (tfKey && tfKey !== 'world' && tfKey !== 'gizmo') {
       let tfData = state.tfs[tfKey];
       transforms.push(tfKey);
-      tfKey = state.tfs[tfData.frame]
+      tfKey = tfData.frame;
     }
     return transforms;
   },[objectInfo,tfs]))
