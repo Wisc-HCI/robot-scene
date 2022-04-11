@@ -21,25 +21,22 @@ const transformOnlyPropNames = [
 ]
 
 const renderTreePropNames = [
-  'displayTfs', 
-  'allTfs', 
-  'allItems', 
-  'allLines', 
-  'allHulls', 
-  'allTexts', 
+  'displayTfs',
+  'allTfs',
+  'allItems',
+  'allLines',
+  'allHulls',
+  'allTexts',
   'highlightColor'
 ]
 
-export const TransformControls = ({ children, ...props }) => {
-  console.log('transformControls')
-  const { camera, objectInfo, highlightColor, translateSnap, rotateSnap, scaleSnap, ...otherProps } = props;
+export const TransformableObject = ({ camera, objectInfo, highlightColor, translateSnap, rotateSnap, scaleSnap, onDragStart, onDragEnd, ...otherProps }) => {
   const transformProps = pick(otherProps, transformOnlyPropNames);
   const renderTreeProps = pick(otherProps, renderTreePropNames);
-  const tfs = renderTreeProps.tfs;
+  // const tfs = renderTreeProps.tfs;
 
-  const transforms = useSceneStore(useCallback(state=>{
+  const transforms = useSceneStore(useCallback(state => {
     let transforms = [];
-    console.log(objectInfo)
     if (objectInfo.source === 'tfs') {
       transforms.push(objectInfo.key)
     }
@@ -50,14 +47,12 @@ export const TransformControls = ({ children, ...props }) => {
       tfKey = tfData.frame;
     }
     return transforms;
-  },[objectInfo,tfs]))
-
-  console.log(transforms)
+  }, [objectInfo]))
 
   const ref = useRef();
   const target = useRef();
 
-  
+
 
   const gl = useThree(({ gl }) => gl)
   const defaultCamera = useThree(({ camera }) => camera)
@@ -75,7 +70,7 @@ export const TransformControls = ({ children, ...props }) => {
   const [rotation, setRotation] = useState(null);
   const [scale, setScale] = useState(null);
 
-  const onMove = useSceneStore(state=>state.onMove);
+  const onMove = useSceneStore(state => state.onMove);
 
   useEffect(() => {
     const callback = (event) => {
@@ -84,10 +79,10 @@ export const TransformControls = ({ children, ...props }) => {
       const scl = target?.current?.scale;
       if (event.value && !transforming) {
         setTransforming(true)
-        props.onDragStart && props.onDragStart()
+        onDragStart && onDragStart()
       } else if (!event.value && transforming) {
         setTransforming(false)
-        props.onDragEnd && props.onDragEnd();
+        onDragEnd && onDragEnd();
         onMove(
           objectInfo.key,
           objectInfo.source,
@@ -97,9 +92,9 @@ export const TransformControls = ({ children, ...props }) => {
             scale: controls._worldScale
           },
           {
-            position: pos ? {x:pos.x,y:pos.y,z:pos.z} : null,
-            quaternion: rot ? {x:rot.x,y:rot.y,z:rot.z,w:rot.w} : null,
-            scale: scl ? {x:scl.x,y:scl.y,z:scl.z} : null
+            position: pos ? { x: pos.x, y: pos.y, z: pos.z } : null,
+            quaternion: rot ? { x: rot.x, y: rot.y, z: rot.z, w: rot.w } : null,
+            scale: scl ? { x: scl.x, y: scl.y, z: scl.z } : null
           }
         )
       }
@@ -112,8 +107,8 @@ export const TransformControls = ({ children, ...props }) => {
       if (scl) {
         setScale(scl);
       }
-      
-      
+
+
     }
     if (controls) {
       controls.addEventListener('dragging-changed', callback)
@@ -141,9 +136,10 @@ export const TransformControls = ({ children, ...props }) => {
         tfFilter={transforms}
         ghosts
         targetRef={target}
+        targetSource={objectInfo.source}
         targetId={objectInfo.key}
         filterActive
-        customProps={{position,rotation,scale}}
+        customProps={{ position, rotation, scale }}
       />
     </>
   ) : null

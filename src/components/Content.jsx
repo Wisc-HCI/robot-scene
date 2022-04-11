@@ -6,7 +6,7 @@ import { AmbientLight, DirectionalLight } from './Util/Light';
 import { MaterialMaker } from './Util/MaterialMaker';
 import { hexToRgb } from './Util/ColorConversion';
 import { OrbitControls } from '@react-three/drei';
-import { TransformControls } from './Util/TransformControls';
+import { TransformableObject } from './Util/TransformControls';
 import { EffectComposer, Selection, Outline } from "@react-three/postprocessing";
 // import { renderTree } from './Util/Helpers';
 import Tree from './Tree';
@@ -133,7 +133,7 @@ export default function Content(props) {
       
       {
         movableStuff.map((movableObject, idx) => (
-          <TransformControls
+          <TransformableObject
             key={`movableObjectTransform-${idx}`}
             objectInfo={movableObject}
             mode={movableObject.transformMode}

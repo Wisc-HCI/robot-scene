@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, memo } from 'react';
+import React, { memo } from 'react';
 import TF, { WorldTF, GizmoTF } from "./TF";
 import Item from "./Item";
 import Line from "./Line";
@@ -7,7 +7,7 @@ import Text from "./Text";
 
 const Tree = memo(({
     activeTf, displayTfs, allTfs, allItems, allLines, allHulls, allTexts,
-    highlightColor, ghosts, targetRef, targetId, filterActive, tfFilter, customProps }) => {
+    highlightColor, ghosts, targetRef, targetId, targetSource, filterActive, tfFilter, customProps }) => {
 
     const TFComponent = activeTf === 'world'
         ? WorldTF
@@ -35,6 +35,7 @@ const Tree = memo(({
                     highlightColor={highlightColor}
                     ghosts={ghosts}
                     targetRef={targetRef}
+                    targetSource={targetSource}
                     targetId={targetId}
                     filterActive={newFilterActive}
                     tfFilter={tfFilter}
@@ -42,7 +43,7 @@ const Tree = memo(({
                 />
             ))}
             {allItems.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(item => {
-                const itemProps = item.key === targetId ? customProps : {};
+                const itemProps = item.key === targetId && targetSource === 'items' ? customProps : {};
                 if (!filterActive || item.key === targetId || activeTf === targetId ) {
                     return (
                         <Item
@@ -57,7 +58,7 @@ const Tree = memo(({
 
             })}
             {allLines.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(line => {
-                const lineProps = line.key === targetId ? customProps : {};
+                const lineProps = line.key === targetId && targetSource === 'lines'  ? customProps : {};
                 if (!filterActive || line.key === targetId || activeTf === targetId ) {
                     return (
                         <Line
@@ -70,7 +71,7 @@ const Tree = memo(({
 
             })}
             {allHulls.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(hull => {
-                const hullProps = hull.key === targetId ? customProps : {};
+                const hullProps = hull.key === targetId && targetSource === 'hulls'  ? customProps : {};
                 if (!filterActive || hull.key === targetId || activeTf === targetId ) {
                     return (
                         <Hull
@@ -84,7 +85,7 @@ const Tree = memo(({
                 }
             })}
             {allTexts.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(text => {
-                const textProps = text.key === targetId ? customProps : {};
+                const textProps = text.key === targetId && targetSource === 'texts'  ? customProps : {};
                 if (!filterActive || text.key === targetId || activeTf === targetId ) {
                     return (
                         <Text

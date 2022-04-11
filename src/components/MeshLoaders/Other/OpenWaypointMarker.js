@@ -10,7 +10,16 @@ export default function Model(props) {
 
   const { nodes } = useGLTF(OpenWaypointMarker)
   return [
-{type:'raw', geometry:nodes.OpenWaypointMarker.geometry, material:nodes.OpenWaypointMarker.material}
+    {
+      type: 'group',
+      children: [
+        {
+          type: 'raw',
+          geometry:nodes.OpenWaypointMarker.geometry, 
+          material:nodes.OpenWaypointMarker.material
+        }
+      ]
+    }
 ]
 
 }
