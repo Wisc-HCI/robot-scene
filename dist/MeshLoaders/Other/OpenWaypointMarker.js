@@ -19,9 +19,12 @@ function Model(props) {
       nodes = _useGLTF.nodes;
 
   return [{
-    type: 'raw',
-    geometry: nodes.OpenWaypointMarker.geometry,
-    material: nodes.OpenWaypointMarker.material
+    type: 'group',
+    children: [{
+      type: 'raw',
+      geometry: nodes.OpenWaypointMarker.geometry,
+      material: nodes.OpenWaypointMarker.material
+    }]
   }];
 }
 

@@ -39,6 +39,7 @@ var Tree = /*#__PURE__*/(0, _react.memo)(function (_ref) {
       ghosts = _ref.ghosts,
       targetRef = _ref.targetRef,
       targetId = _ref.targetId,
+      targetSource = _ref.targetSource,
       filterActive = _ref.filterActive,
       tfFilter = _ref.tfFilter,
       customProps = _ref.customProps;
@@ -70,6 +71,7 @@ var Tree = /*#__PURE__*/(0, _react.memo)(function (_ref) {
       highlightColor: highlightColor,
       ghosts: ghosts,
       targetRef: targetRef,
+      targetSource: targetSource,
       targetId: targetId,
       filterActive: newFilterActive,
       tfFilter: tfFilter,
@@ -78,7 +80,7 @@ var Tree = /*#__PURE__*/(0, _react.memo)(function (_ref) {
   }), allItems.filter(function (v) {
     return v.frame === activeTf || activeTf === 'world' && !v.frame;
   }).map(function (item) {
-    var itemProps = item.key === targetId ? customProps : {};
+    var itemProps = item.key === targetId && targetSource === 'items' ? customProps : {};
 
     if (!filterActive || item.key === targetId || activeTf === targetId) {
       return /*#__PURE__*/_react.default.createElement(_Item.default, _extends({
@@ -92,7 +94,7 @@ var Tree = /*#__PURE__*/(0, _react.memo)(function (_ref) {
   }), allLines.filter(function (v) {
     return v.frame === activeTf || activeTf === 'world' && !v.frame;
   }).map(function (line) {
-    var lineProps = line.key === targetId ? customProps : {};
+    var lineProps = line.key === targetId && targetSource === 'lines' ? customProps : {};
 
     if (!filterActive || line.key === targetId || activeTf === targetId) {
       return /*#__PURE__*/_react.default.createElement(_Line.default, _extends({
@@ -104,7 +106,7 @@ var Tree = /*#__PURE__*/(0, _react.memo)(function (_ref) {
   }), allHulls.filter(function (v) {
     return v.frame === activeTf || activeTf === 'world' && !v.frame;
   }).map(function (hull) {
-    var hullProps = hull.key === targetId ? customProps : {};
+    var hullProps = hull.key === targetId && targetSource === 'hulls' ? customProps : {};
 
     if (!filterActive || hull.key === targetId || activeTf === targetId) {
       return /*#__PURE__*/_react.default.createElement(_Hull.default, _extends({
@@ -118,7 +120,7 @@ var Tree = /*#__PURE__*/(0, _react.memo)(function (_ref) {
   }), allTexts.filter(function (v) {
     return v.frame === activeTf || activeTf === 'world' && !v.frame;
   }).map(function (text) {
-    var textProps = text.key === targetId ? customProps : {};
+    var textProps = text.key === targetId && targetSource === 'texts' ? customProps : {};
 
     if (!filterActive || text.key === targetId || activeTf === targetId) {
       return /*#__PURE__*/_react.default.createElement(_Text.default, _extends({

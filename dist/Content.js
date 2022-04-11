@@ -211,7 +211,7 @@ function Content(props) {
   }) : /*#__PURE__*/_react.default.createElement("gridHelper", {
     args: [20, 20, "white", "gray"]
   }))), movableStuff.map(function (movableObject, idx) {
-    return /*#__PURE__*/_react.default.createElement(_TransformControls.TransformControls, {
+    return /*#__PURE__*/_react.default.createElement(_TransformControls.TransformableObject, {
       key: "movableObjectTransform-".concat(idx),
       objectInfo: movableObject,
       mode: movableObject.transformMode,

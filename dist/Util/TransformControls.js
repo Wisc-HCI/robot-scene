@@ -5,7 +5,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.TransformControls = void 0;
+exports.TransformableObject = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -19,8 +19,7 @@ var _lodash = _interopRequireDefault(require("lodash.pick"));
 
 var _Tree = _interopRequireDefault(require("../Tree"));
 
-var _excluded = ["children"],
-    _excluded2 = ["camera", "objectInfo", "highlightColor", "translateSnap", "rotateSnap", "scaleSnap"];
+var _excluded = ["camera", "objectInfo", "highlightColor", "translateSnap", "rotateSnap", "scaleSnap", "onDragStart", "onDragEnd"];
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49,26 +48,22 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 var transformOnlyPropNames = ['enabled', 'axis', 'mode', 'translationSnap', 'rotationSnap', 'scaleSnap', 'space', 'size', 'showX', 'showY', 'showZ'];
 var renderTreePropNames = ['displayTfs', 'allTfs', 'allItems', 'allLines', 'allHulls', 'allTexts', 'highlightColor'];
 
-var TransformControls = function TransformControls(_ref) {
-  var children = _ref.children,
-      props = _objectWithoutProperties(_ref, _excluded);
-
-  console.log('transformControls');
-
-  var camera = props.camera,
-      objectInfo = props.objectInfo,
-      highlightColor = props.highlightColor,
-      translateSnap = props.translateSnap,
-      rotateSnap = props.rotateSnap,
-      scaleSnap = props.scaleSnap,
-      otherProps = _objectWithoutProperties(props, _excluded2);
+var TransformableObject = function TransformableObject(_ref) {
+  var camera = _ref.camera,
+      objectInfo = _ref.objectInfo,
+      highlightColor = _ref.highlightColor,
+      translateSnap = _ref.translateSnap,
+      rotateSnap = _ref.rotateSnap,
+      scaleSnap = _ref.scaleSnap,
+      onDragStart = _ref.onDragStart,
+      onDragEnd = _ref.onDragEnd,
+      otherProps = _objectWithoutProperties(_ref, _excluded);
 
   var transformProps = (0, _lodash.default)(otherProps, transformOnlyPropNames);
-  var renderTreeProps = (0, _lodash.default)(otherProps, renderTreePropNames);
-  var tfs = renderTreeProps.tfs;
+  var renderTreeProps = (0, _lodash.default)(otherProps, renderTreePropNames); // const tfs = renderTreeProps.tfs;
+
   var transforms = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
     var transforms = [];
-    console.log(objectInfo);
 
     if (objectInfo.source === 'tfs') {
       transforms.push(objectInfo.key);
@@ -79,12 +74,11 @@ var TransformControls = function TransformControls(_ref) {
     while (tfKey && tfKey !== 'world' && tfKey !== 'gizmo') {
       var tfData = state.tfs[tfKey];
       transforms.push(tfKey);
-      tfKey = state.tfs[tfData.frame];
+      tfKey = tfData.frame;
     }
 
     return transforms;
-  }, [objectInfo, tfs]));
-  console.log(transforms);
+  }, [objectInfo]));
   var ref = (0, _react.useRef)();
   var target = (0, _react.useRef)();
   var gl = (0, _fiber.useThree)(function (_ref2) {
@@ -144,10 +138,10 @@ var TransformControls = function TransformControls(_ref) {
 
       if (event.value && !transforming) {
         setTransforming(true);
-        props.onDragStart && props.onDragStart();
+        onDragStart && onDragStart();
       } else if (!event.value && transforming) {
         setTransforming(false);
-        props.onDragEnd && props.onDragEnd();
+        onDragEnd && onDragEnd();
         onMove(objectInfo.key, objectInfo.source, {
           position: controls.worldPosition,
           quaternion: controls.worldQuaternion,
@@ -216,6 +210,7 @@ var TransformControls = function TransformControls(_ref) {
     tfFilter: transforms,
     ghosts: true,
     targetRef: target,
+    targetSource: objectInfo.source,
     targetId: objectInfo.key,
     filterActive: true,
     customProps: {
@@ -226,4 +221,4 @@ var TransformControls = function TransformControls(_ref) {
   }))) : null;
 };
 
-exports.TransformControls = TransformControls;
+exports.TransformableObject = TransformableObject;

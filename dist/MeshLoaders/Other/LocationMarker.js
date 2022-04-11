@@ -19,9 +19,12 @@ function Model(props) {
       nodes = _useGLTF.nodes;
 
   return [{
-    type: 'raw',
-    geometry: nodes.LocationMarker.geometry,
-    material: nodes.LocationMarker.material
+    type: 'group',
+    children: [{
+      type: 'raw',
+      geometry: nodes.LocationMarker.geometry,
+      material: nodes.LocationMarker.material
+    }]
   }];
 }
 
