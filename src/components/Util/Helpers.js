@@ -10,6 +10,20 @@ export function objectMap(object, mapFn) {
 }
 
 
+
+export function updateColorOverlay(ref, color, time) {
+    if (ref.current && color) {
+        const r = typeof color.r === 'function' ? color.r(time) / 255 : color.r / 255;
+        const g = typeof color.g === 'function' ? color.g(time) / 255 : color.g / 255;
+        const b = typeof color.b === 'function' ? color.b(time) / 255 : color.b / 255;
+        const alpha = typeof color.a === 'function' ? color.a(time) : color.a;
+        ref.current.color.r = r;
+        ref.current.color.g = g;
+        ref.current.color.b = b;
+        ref.current.alpha = alpha;
+    }
+}
+
 export const updateShapeMaterial = (ref, color, time) => {
     if (ref.current && color) {
         const r = typeof color.r === 'function' ? color.r(time) / 255 : color.r / 255;

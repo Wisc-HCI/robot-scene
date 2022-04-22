@@ -4,14 +4,16 @@ import { Html } from '@react-three/drei';
 import { MeshLookup, MeshLookupTable } from './MeshLookup';
 import { BackSide, FrontSide } from 'three';
 // import { GhostMaterial } from './Util/MaterialMaker';
-import { updateShapeMaterial, createGenericShape, useCombinedRefs } from './Util/Helpers';
+import { updateShapeMaterial, createGenericShape, useCombinedRefs, updateColorOverlay } from './Util/Helpers';
 import { useSceneStore } from './SceneContext';
 import { Select } from '@react-three/postprocessing';
 import { GhostMaterial } from './Util/MaterialMaker';
+import { LayerMaterial, Color, Texture } from 'lamina';
+
 
 const GENERIC_SHAPES = ['cube', 'cylinder', 'sphere', 'capsule', 'arrow'];
 
-export default forwardRef(({ objectKey, highlightColor, position, rotation, scale, ghost },forwardedRef) => {
+export default forwardRef(({ objectKey, highlightColor, position, rotation, scale, ghost }, forwardedRef) => {
 
   const innerRef = useRef(null);
   const ref = useCombinedRefs(forwardedRef, innerRef);
@@ -29,7 +31,7 @@ export default forwardRef(({ objectKey, highlightColor, position, rotation, scal
     // Outside of react rendering, adjust the positions of the item.
     const time = clock.getElapsed() * 1000;
     if (ref.current) {
-      // console.log(ref.current)
+      
       ref.current.position.set(
         position ? position.x : typeof item.position.x === 'function' ? item.position.x(time) : item.position.x,
         position ? position.y : typeof item.position.y === 'function' ? item.position.y(time) : item.position.y,
@@ -60,12 +62,12 @@ export default forwardRef(({ objectKey, highlightColor, position, rotation, scal
           onPointerOver={(e) => { onPointerOver(objectKey, !ref.current.visible, e) }}
           onPointerOut={(e) => { onPointerOut(objectKey, !ref.current.visible, e) }}>
           {content.map((groupOrPart, idx) => (
-            <GroupOrPart 
-              key={idx} 
-              idx={idx} 
-              groupOrPart={groupOrPart} 
-              objectKey={objectKey} 
-              ghost={ghost} 
+            <GroupOrPart
+              key={idx}
+              idx={idx}
+              groupOrPart={groupOrPart}
+              objectKey={objectKey}
+              ghost={ghost}
               highlightColor={highlightColor}
             />))}
         </group>
@@ -83,38 +85,70 @@ export default forwardRef(({ objectKey, highlightColor, position, rotation, scal
 })
 
 const Part = ({ part, objectKey, ghost, highlightColor }) => {
-  
+
   const wireframe = useSceneStore(useCallback(state => state.items[objectKey].wireframe, [objectKey]));
-  const color = useSceneStore(useCallback(state => state.items[objectKey].color, [objectKey]))
-  const materialOverride = color !== undefined;
+  const colorOverlay = useSceneStore(useCallback(state => state.items[objectKey].colorOverlay, [objectKey]));
+  const color = useSceneStore(useCallback(state => state.items[objectKey].color, [objectKey]));
+  const materialOverride = (color !== undefined);
+
+
 
   const frontRef = useRef();
   const backRef = useRef();
+  const colorRef = useRef();
 
   const clock = useSceneStore(state => state.clock);
 
+
+
   useFrame(useCallback(() => {
-    // Outside of react rendering, adjust the color/material.
     const time = clock.getElapsed() * 1000;
-    if (!ghost) {
+    if (colorOverlay) {
+      updateColorOverlay(colorRef, color, time);
+
+    } else if (!ghost && !colorOverlay) {
       updateShapeMaterial(backRef, color, time);
       updateShapeMaterial(frontRef, color, time);
     }
+
   }, [objectKey, ghost, frontRef, backRef]));
 
   if (ghost) {
     return (
-        <mesh
-          ref={backRef}
-          key='B'
-          geometry={part.geometry}
-          material={GhostMaterial(highlightColor)}
-          scale={part.scale}
-          castShadow={false}
-          receiveShadow={false}
-        />
+      <mesh
+        ref={backRef}
+        key='B'
+        geometry={part.geometry}
+        material={GhostMaterial(highlightColor)}
+        scale={part.scale}
+        castShadow={false}
+        receiveShadow={false}
+      >
+
+      </mesh>
     )
-  } else if (materialOverride) {
+  } else if (colorOverlay) {
+
+    return (
+      <>
+        <mesh
+          key='I'
+          ref={frontRef}
+          geometry={part.geometry}
+          scale={part.scale}
+          castShadow={true}
+          receiveShadow={true}
+          wireframe={wireframe}
+        >
+          <LayerMaterial lighting="physical" {...part.material}>
+            {part.material.map !== null && <Texture map={part.material.map} alpha={1} />}
+            <Color ref={colorRef} color={color} alpha={color.a} />
+          </LayerMaterial>
+
+        </mesh>
+      </>
+    )
+  } else if (materialOverride) {//third option ? orginal material , color overlay ? 
     return (
       <group up={[0, 0, 1]} >
         <mesh
@@ -166,7 +200,8 @@ const Part = ({ part, objectKey, ghost, highlightColor }) => {
           castShadow={true}
           receiveShadow={true}
           wireframe={wireframe}
-        />
+        >
+        </mesh>
       </>
 
     )
@@ -180,19 +215,19 @@ const GroupOrPart = ({ idx, groupOrPart, ghost, objectKey, highlightColor }) => 
     return (
       <group key={idx} up={[0, 0, 1]} position={groupOrPart.position} rotation={groupOrPart.rotation} scale={groupOrPart.scale}>
         {groupOrPart.children.map((groupOrPartChild, childIdx) => (
-          <GroupOrPart 
-            key={childIdx} 
-            idx={childIdx} 
-            groupOrPart={groupOrPartChild} 
-            objectKey={objectKey} 
-            ghost={ghost} 
+          <GroupOrPart
+            key={childIdx}
+            idx={childIdx}
+            groupOrPart={groupOrPartChild}
+            objectKey={objectKey}
+            ghost={ghost}
             highlightColor={highlightColor}
           />))}
       </group>
     )
   } else {
     return (
-      <Part key={idx} part={groupOrPart} objectKey={objectKey} highlightColor={highlightColor} ghost={ghost}/>
+      <Part key={idx} part={groupOrPart} objectKey={objectKey} highlightColor={highlightColor} ghost={ghost} />
     )
   }
 }
