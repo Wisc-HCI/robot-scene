@@ -118,6 +118,8 @@ RandomShapes.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             showName: true,
+            colorOverlay : true,
+            color: { r:  (time) => (Math.sin(time / 1000) / 2 + 0.5) * 255, g: 255, b: 0, a: (time) => (Math.sin(time / 1000) / 2 + 0.5) },
             highlighted: true
         },
         8: {
@@ -127,6 +129,8 @@ RandomShapes.args = {
             position: { x: 1, y: 0.5, z: 1 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
+            colorOverlay : true,
+            color: { r:  (time) => (Math.sin(time / 1000) / 2 + 0.5) * 255, g: 255, b: 0, a: (time) => (Math.sin(time / 1000) / 2 + 0.5) },
             highlighted: false
         },
         9: {
@@ -136,6 +140,8 @@ RandomShapes.args = {
             position: { x: -1, y: 1, z: .3 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
+            colorOverlay : true,
+            color: { r: (time) => (Math.sin(time / 1000) / 2 + 0.5) * 255, g: 0, b: 0, a:  0.8},
             highlighted: false
         },
         10: {
@@ -198,5 +204,4 @@ RandomShapes.args = {
     vr: false,
     onPointerMissed: () => console.log('Missed Click')
 }
-
 
