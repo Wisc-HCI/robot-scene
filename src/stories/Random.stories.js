@@ -130,7 +130,13 @@ RandomShapes.args = {
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             scale: { x: 1, y: 1, z: 1 },
             colorOverlay : true,
-            color: { r:  (time) => (Math.sin(time / 1000) / 2 + 0.5) * 255, g: 255, b: 0, a: (time) => (Math.sin(time / 1000) / 2 + 0.5) },
+            color: { r:  
+                // (time) => (Math.sin(time / 1000) / 2 + 0.5) * 
+                255, g: 255, b: 0, a: 
+                //(time) => (Math.sin(time / 1000) / 2 +
+                 0.5
+                 //) 
+                },
             highlighted: false
         },
         9: {

@@ -113,6 +113,8 @@ const Part = ({ part, objectKey, ghost, highlightColor }) => {
 
   }, [objectKey, ghost, frontRef, backRef]));
 
+  
+
   if (ghost) {
     return (
       <mesh
