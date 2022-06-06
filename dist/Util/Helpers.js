@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createGenericShape = void 0;
 exports.objectMap = objectMap;
+exports.updateColorOverlay = updateColorOverlay;
 exports.updateShapeMaterial = void 0;
 exports.useCombinedRefs = useCombinedRefs;
 
@@ -23,6 +24,19 @@ function objectMap(object, mapFn) {
     result[key] = mapFn(object[key]);
     return result;
   }, {});
+}
+
+function updateColorOverlay(ref, color, time) {
+  if (ref.current && color) {
+    var r = typeof color.r === 'function' ? color.r(time) / 255 : color.r / 255;
+    var g = typeof color.g === 'function' ? color.g(time) / 255 : color.g / 255;
+    var b = typeof color.b === 'function' ? color.b(time) / 255 : color.b / 255;
+    var alpha = typeof color.a === 'function' ? color.a(time) : color.a;
+    ref.current.color.r = r;
+    ref.current.color.g = g;
+    ref.current.color.b = b;
+    ref.current.alpha = alpha;
+  }
 }
 
 var updateShapeMaterial = function updateShapeMaterial(ref, color, time) {

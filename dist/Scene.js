@@ -37,7 +37,7 @@ function _objectWithoutProperties(source, excluded) { if (source == null) return
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
-THREE.Object3D.DefaultUp = new THREE.Vector3(0, 0, 1);
+THREE.Object3D.DefaultUp.set(0, 0, 1);
 
 function Loading() {
   var _useProgress = (0, _drei.useProgress)(),

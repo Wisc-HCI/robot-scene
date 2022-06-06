@@ -25,11 +25,14 @@ var _postprocessing = require("@react-three/postprocessing");
 
 var _MaterialMaker = require("./Util/MaterialMaker");
 
+var _lamina = require("lamina");
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-// import { GhostMaterial } from './Util/MaterialMaker';
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 var GENERIC_SHAPES = ['cube', 'cylinder', 'sphere', 'capsule', 'arrow'];
 
 var _default = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, forwardedRef) {
@@ -65,7 +68,6 @@ var _default = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, forwardedRef)
     var time = clock.getElapsed() * 1000;
 
     if (ref.current) {
-      // console.log(ref.current)
       ref.current.position.set(position ? position.x : typeof item.position.x === 'function' ? item.position.x(time) : item.position.x, position ? position.y : typeof item.position.y === 'function' ? item.position.y(time) : item.position.y, position ? position.z : typeof item.position.z === 'function' ? item.position.z(time) : item.position.z);
       ref.current.quaternion.set(rotation ? rotation.x : typeof item.rotation.x === 'function' ? item.rotation.x(time) : item.rotation.x, rotation ? rotation.y : typeof item.rotation.y === 'function' ? item.rotation.y(time) : item.rotation.y, rotation ? rotation.z : typeof item.rotation.z === 'function' ? item.rotation.z(time) : item.rotation.z, rotation ? rotation.w : typeof item.rotation.w === 'function' ? item.rotation.w(time) : item.rotation.w);
       ref.current.scale.set(scale ? scale.x : typeof item.scale.x === 'function' ? item.scale.x(time) : item.scale.x, scale ? scale.y : typeof item.scale.y === 'function' ? item.scale.y(time) : item.scale.y, scale ? scale.z : typeof item.scale.z === 'function' ? item.scale.z(time) : item.scale.z);
@@ -122,20 +124,25 @@ var Part = function Part(_ref2) {
   var wireframe = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
     return state.items[objectKey].wireframe;
   }, [objectKey]));
+  var colorOverlay = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
+    return state.items[objectKey].colorOverlay;
+  }, [objectKey]));
   var color = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
     return state.items[objectKey].color;
   }, [objectKey]));
   var materialOverride = color !== undefined;
   var frontRef = (0, _react.useRef)();
   var backRef = (0, _react.useRef)();
+  var colorRef = (0, _react.useRef)();
   var clock = (0, _SceneContext.useSceneStore)(function (state) {
     return state.clock;
   });
   (0, _fiber.useFrame)((0, _react.useCallback)(function () {
-    // Outside of react rendering, adjust the color/material.
     var time = clock.getElapsed() * 1000;
 
-    if (!ghost) {
+    if (colorOverlay) {
+      (0, _Helpers.updateColorOverlay)(colorRef, color, time);
+    } else if (!ghost && !colorOverlay) {
       (0, _Helpers.updateShapeMaterial)(backRef, color, time);
       (0, _Helpers.updateShapeMaterial)(frontRef, color, time);
     }
@@ -151,7 +158,27 @@ var Part = function Part(_ref2) {
       castShadow: false,
       receiveShadow: false
     });
+  } else if (colorOverlay) {
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("mesh", {
+      key: "I",
+      ref: frontRef,
+      geometry: part.geometry,
+      scale: part.scale,
+      castShadow: true,
+      receiveShadow: true,
+      wireframe: wireframe
+    }, /*#__PURE__*/_react.default.createElement(_lamina.LayerMaterial, _extends({
+      lighting: "physical"
+    }, part.material), part.material.map !== null && /*#__PURE__*/_react.default.createElement(_lamina.Texture, {
+      map: part.material.map,
+      alpha: 1
+    }), /*#__PURE__*/_react.default.createElement(_lamina.Color, {
+      ref: colorRef,
+      color: color,
+      alpha: color.a
+    }))));
   } else if (materialOverride) {
+    //third option ? orginal material , color overlay ? 
     return /*#__PURE__*/_react.default.createElement("group", {
       up: [0, 0, 1]
     }, /*#__PURE__*/_react.default.createElement("mesh", {

@@ -8,7 +8,7 @@ import { ARCanvas, VRCanvas } from '@react-three/xr'
 // import useSceneStore from './SceneStore'
 import { SceneProvider } from "./SceneContext";
 
-THREE.Object3D.DefaultUp = new THREE.Vector3(0, 0, 1);
+THREE.Object3D.DefaultUp.set(0,0,1);
 
 function Loading() {
   const { progress } = useProgress();
