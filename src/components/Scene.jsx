@@ -8,6 +8,8 @@ import { ARCanvas, VRCanvas } from '@react-three/xr'
 // import useSceneStore from './SceneStore'
 import { SceneProvider } from "./SceneContext";
 
+
+console.log(THREE)
 THREE.Object3D.DefaultUp.set(0,0,1);
 
 function Loading() {
