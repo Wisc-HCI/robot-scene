@@ -33,17 +33,15 @@
     "three": "^0.139.0",
     "three-stdlib": "^2.9.1",
     "web-vitals": "^1.1.2",
-    "zustand": "^4.0.0-beta.0"
+    "zustand": "^4.0.0-rc.1"
   },
   "scripts": {
-    "start": "start-storybook -p 6006 -s public",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "npm run storybook",
+    "build": "npm run build-storybook",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public && rm -rf docs && mv storybook-static docs",
     "clean": "rimraf dist",
-    "compile": "npm run clean && cross-env NODE_ENV=production babel src/components --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,stories.js,__snapshots__",
+    "compile": "npm run clean && cross-env BABEL_ENV=production babel src/components --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,stories.js,__snapshots__",
     "generate-all": "npm run compile && npm run build-storybook"
   },
   "eslintConfig": {
@@ -52,14 +50,6 @@
       "react-app/jest"
     ],
     "overrides": [
-      {
-        "files": [
-          "**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off"
-        }
-      },
       {
         "files": [
           "**/*.stories.*"
@@ -83,8 +73,8 @@
     ]
   },
   "peerDependencies": {
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.16",
