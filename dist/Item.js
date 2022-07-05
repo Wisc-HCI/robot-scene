@@ -25,14 +25,12 @@ var _postprocessing = require("@react-three/postprocessing");
 
 var _MaterialMaker = require("./Util/MaterialMaker");
 
-var _lamina = require("lamina");
-
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
+// import { GhostMaterial } from './Util/MaterialMaker';
+// import { LayerMaterial, Color, Texture } from 'lamina';
 var GENERIC_SHAPES = ['cube', 'cylinder', 'sphere', 'capsule', 'arrow'];
 
 var _default = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, forwardedRef) {
@@ -124,25 +122,20 @@ var Part = function Part(_ref2) {
   var wireframe = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
     return state.items[objectKey].wireframe;
   }, [objectKey]));
-  var colorOverlay = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
-    return state.items[objectKey].colorOverlay;
-  }, [objectKey]));
   var color = (0, _SceneContext.useSceneStore)((0, _react.useCallback)(function (state) {
     return state.items[objectKey].color;
   }, [objectKey]));
   var materialOverride = color !== undefined;
   var frontRef = (0, _react.useRef)();
-  var backRef = (0, _react.useRef)();
-  var colorRef = (0, _react.useRef)();
+  var backRef = (0, _react.useRef)(); // const colorRef = useRef();
+
   var clock = (0, _SceneContext.useSceneStore)(function (state) {
     return state.clock;
   });
   (0, _fiber.useFrame)((0, _react.useCallback)(function () {
     var time = clock.getElapsed() * 1000;
 
-    if (colorOverlay) {
-      (0, _Helpers.updateColorOverlay)(colorRef, color, time);
-    } else if (!ghost && !colorOverlay) {
+    if (!ghost) {
       (0, _Helpers.updateShapeMaterial)(backRef, color, time);
       (0, _Helpers.updateShapeMaterial)(frontRef, color, time);
     }
@@ -158,25 +151,6 @@ var Part = function Part(_ref2) {
       castShadow: false,
       receiveShadow: false
     });
-  } else if (colorOverlay) {
-    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("mesh", {
-      key: "I",
-      ref: frontRef,
-      geometry: part.geometry,
-      scale: part.scale,
-      castShadow: true,
-      receiveShadow: true,
-      wireframe: wireframe
-    }, /*#__PURE__*/_react.default.createElement(_lamina.LayerMaterial, _extends({
-      lighting: "physical"
-    }, part.material), part.material.map !== null && /*#__PURE__*/_react.default.createElement(_lamina.Texture, {
-      map: part.material.map,
-      alpha: 1
-    }), /*#__PURE__*/_react.default.createElement(_lamina.Color, {
-      ref: colorRef,
-      color: color,
-      alpha: color.a
-    }))));
   } else if (materialOverride) {
     //third option ? orginal material , color overlay ? 
     return /*#__PURE__*/_react.default.createElement("group", {

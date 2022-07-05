@@ -4,11 +4,11 @@ import { Html } from '@react-three/drei';
 import { MeshLookup, MeshLookupTable } from './MeshLookup';
 import { BackSide, FrontSide } from 'three';
 // import { GhostMaterial } from './Util/MaterialMaker';
-import { updateShapeMaterial, createGenericShape, useCombinedRefs, updateColorOverlay } from './Util/Helpers';
+import { updateShapeMaterial, createGenericShape, useCombinedRefs } from './Util/Helpers';
 import { useSceneStore } from './SceneContext';
 import { Select } from '@react-three/postprocessing';
 import { GhostMaterial } from './Util/MaterialMaker';
-import { LayerMaterial, Color, Texture } from 'lamina';
+// import { LayerMaterial, Color, Texture } from 'lamina';
 
 
 const GENERIC_SHAPES = ['cube', 'cylinder', 'sphere', 'capsule', 'arrow'];
@@ -87,7 +87,6 @@ export default forwardRef(({ objectKey, highlightColor, position, rotation, scal
 const Part = ({ part, objectKey, ghost, highlightColor }) => {
 
   const wireframe = useSceneStore(useCallback(state => state.items[objectKey].wireframe, [objectKey]));
-  const colorOverlay = useSceneStore(useCallback(state => state.items[objectKey].colorOverlay, [objectKey]));
   const color = useSceneStore(useCallback(state => state.items[objectKey].color, [objectKey]));
   const materialOverride = (color !== undefined);
 
@@ -95,7 +94,7 @@ const Part = ({ part, objectKey, ghost, highlightColor }) => {
 
   const frontRef = useRef();
   const backRef = useRef();
-  const colorRef = useRef();
+  // const colorRef = useRef();
 
   const clock = useSceneStore(state => state.clock);
 
@@ -103,10 +102,7 @@ const Part = ({ part, objectKey, ghost, highlightColor }) => {
 
   useFrame(useCallback(() => {
     const time = clock.getElapsed() * 1000;
-    if (colorOverlay) {
-      updateColorOverlay(colorRef, color, time);
-
-    } else if (!ghost && !colorOverlay) {
+    if (!ghost) {
       updateShapeMaterial(backRef, color, time);
       updateShapeMaterial(frontRef, color, time);
     }
@@ -128,27 +124,6 @@ const Part = ({ part, objectKey, ghost, highlightColor }) => {
       >
 
       </mesh>
-    )
-  } else if (colorOverlay) {
-
-    return (
-      <>
-        <mesh
-          key='I'
-          ref={frontRef}
-          geometry={part.geometry}
-          scale={part.scale}
-          castShadow={true}
-          receiveShadow={true}
-          wireframe={wireframe}
-        >
-          <LayerMaterial lighting="physical" {...part.material}>
-            {part.material.map !== null && <Texture map={part.material.map} alpha={1} />}
-            <Color ref={colorRef} color={color} alpha={color.a} />
-          </LayerMaterial>
-
-        </mesh>
-      </>
     )
   } else if (materialOverride) {//third option ? orginal material , color overlay ? 
     return (
