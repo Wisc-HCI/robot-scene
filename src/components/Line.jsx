@@ -4,7 +4,7 @@ import { useSceneStore } from './SceneContext';
 // import { extend } from '@react-three/fiber';
 // import { MeshLine, MeshLineMaterial } from 'meshline'
 // import { CatmullRomCurve3, vector3 } from 'three';
-import { Vector3, Color } from 'three';
+// import { Color } from 'three';
 import { useCombinedRefs } from './Util/Helpers';
 // import { Select } from '@react-three/postprocessing';
 // extend({ MeshLine, MeshLineMaterial })
@@ -12,17 +12,17 @@ import { useCombinedRefs } from './Util/Helpers';
 // const minVector = new Vector3(0,0,0);
 // const maxVector = new Vector3(255,255,255);
 
-const Segment = ({v1, v2, color}) => {
-  console.log({v1,v2,color})
-  const colorVal = new Color(color.x/255,color.y/255,color.z/255)
-  return (
-    <mesh>
-      <meshLine attach='geometry' points={[v1,v2]}/>
-      <meshLineMaterial attach="material" transparent color={colorVal.getHex()} lineWidth={0.03} opacity={0.5}/>
-    </mesh>
-  )
+// const Segment = ({v1, v2, color}) => {
+//   console.log({v1,v2,color})
+//   const colorVal = new Color(color.x/255,color.y/255,color.z/255)
+//   return (
+//     <mesh>
+//       <meshLine attach='geometry' points={[v1,v2]}/>
+//       <meshLineMaterial attach="material" transparent color={colorVal.getHex()} lineWidth={0.03} opacity={0.5}/>
+//     </mesh>
+//   )
 
-}
+// }
 
 export default forwardRef(({objectKey},forwardedRef)=>{
   const innerRef = useRef(null);

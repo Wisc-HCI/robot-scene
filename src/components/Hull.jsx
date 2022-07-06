@@ -44,7 +44,7 @@ export default forwardRef(({ objectKey },forwardedRef)=>{
     frontRef.current.visible = visible;
     backRef.current.visible = visible;
 
-  }, [objectKey, frontRef, backRef, initialVertices, hull]));
+  }, [frontRef, backRef, initialVertices, hull, clock, vertices]));
 
   return (
     <Select enabled={hull.highlighted}>

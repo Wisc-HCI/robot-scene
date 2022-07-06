@@ -54,7 +54,7 @@ const Tree = memo(({
                             ref={item.key === targetId ? targetRef : null}
                             {...itemProps}
                         />)
-                }
+                } else return null
 
             })}
             {allLines.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(line => {
@@ -67,7 +67,7 @@ const Tree = memo(({
                             ref={line.lineKey === targetId ? targetRef : null}
                             {...lineProps}
                         />)
-                }
+                } else return null
 
             })}
             {allHulls.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(hull => {
@@ -82,7 +82,7 @@ const Tree = memo(({
                             ref={hull.key === targetId ? targetRef : null}
                             {...hullProps}
                         />)
-                }
+                } else return null
             })}
             {allTexts.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(text => {
                 const textProps = text.key === targetId && targetSource === 'texts'  ? customProps : {};
@@ -95,7 +95,7 @@ const Tree = memo(({
                             ref={text.key === targetId ? targetRef : null}
                             {...textProps}
                         />)
-                }
+                } else return null
             })}
         </TFComponent>
     )

@@ -41,7 +41,7 @@ export default forwardRef(({ objectKey, displayTfs, position, rotation, scale, g
         scale ? scale.z : !tf.scale ? 0 : typeof tf.scale.z === 'function' ? tf.scale.z(time) : tf.scale.z,
       );
     }
-  },[tf, position, rotation, scale, ref]));
+  },[tf, position, rotation, scale, ref, clock]));
 
   const arrow = ARROW_GEOM();
 

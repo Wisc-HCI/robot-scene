@@ -1,6 +1,7 @@
 import React, { useLayoutEffect } from 'react';
 import Scene from '../components/Scene';
 import { useDefaultSceneStore } from '../components';
+import { MeshLookupTable } from './meshes/MeshLookup';
 
 export default {
     title: 'CoFrame',
@@ -12,7 +13,7 @@ const Template = (args) => {
     useLayoutEffect(() => {
         useDefaultSceneStore.setState({ tfs, items, hulls, lines, texts })
     }, [tfs, items, hulls, lines, texts])
-    return <div style={{ height: 'calc(100vh - 2rem)', width: 'calc(100vw - 2rem)' }}><Scene {...otherArgs} store={useDefaultSceneStore} /></div>
+    return <div style={{ height: 'calc(100vh - 2rem)', width: 'calc(100vw - 2rem)' }}><Scene {...otherArgs} store={useDefaultSceneStore} meshLookup={MeshLookupTable}/></div>
 };
 
 export const CoFrame = Template.bind({});

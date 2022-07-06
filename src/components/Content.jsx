@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Circle, GizmoHelper } from "@react-three/drei";
+import { Circle } from "@react-three/drei";
 import { useSceneStore } from './SceneContext';
 import { AmbientLight, DirectionalLight } from './Util/Light';
 import { MaterialMaker } from './Util/MaterialMaker';

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useLayoutEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { useThree, } from '@react-three/fiber';
 import { TransformControls as TransformControlsImpl } from 'three/examples/jsm/controls/TransformControls';
 import { useSceneStore } from '../SceneContext';

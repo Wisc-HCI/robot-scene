@@ -31,7 +31,7 @@ export default forwardRef(({ objectKey }, forwardedRef)=> {
     if (textRef.current) {
       updateShapeMaterial(textRef, textInfo.color, time);
     }
-  }, [textInfo, groupRef]));
+  }, [textInfo, groupRef, clock]));
 
   return (
     <group ref={groupRef}>

@@ -1,5 +1,6 @@
 import React, { useLayoutEffect } from 'react';
 import { Scene, useDefaultSceneStore } from '../components';
+import { MeshLookupTable } from './meshes/MeshLookup';
 
 export default {
     title: 'Random Shapes',
@@ -11,7 +12,7 @@ const Template = (args) => {
     useLayoutEffect(() => {
         useDefaultSceneStore.setState({ tfs, items, hulls, lines, texts })
     }, [tfs, items, hulls, lines, texts])
-    return <div style={{ height: 'calc(100vh - 2rem)', width: 'calc(100vw - 2rem)' }}><Scene {...otherArgs} store={useDefaultSceneStore} /></div>
+    return <div style={{ height: 'calc(100vh - 2rem)', width: 'calc(100vw - 2rem)' }}><Scene {...otherArgs} store={useDefaultSceneStore} meshLookup={MeshLookupTable}/></div>
 };
 
 export const RandomShapes = Template.bind({});
@@ -111,8 +112,8 @@ RandomShapes.args = {
             highlighted: false
         },
         7: {
-            shape: "package://nao_meshes/meshes/V40/HeadPitch.dae",
-            name: "Nao Head",
+            shape: 'blade_with_transport_jig',
+            name: "Blade with Transport Jig",
             frame: "world",
             position: { x: 0, y: 2, z: 1 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
@@ -123,7 +124,7 @@ RandomShapes.args = {
             highlighted: true
         },
         8: {
-            shape: "package://nao_meshes/meshes/V40/LAnkleRoll.dae",
+            shape: 'warning',
             name: "Nao Ankle",
             frame: "world",
             position: { x: 1, y: 0.5, z: 1 },

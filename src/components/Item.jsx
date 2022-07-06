@@ -1,17 +1,18 @@
 import React, { useRef, useCallback, forwardRef } from 'react';
 import { useFrame } from "@react-three/fiber";
 import { Html } from '@react-three/drei';
-import { MeshLookup, MeshLookupTable } from './MeshLookup';
+// import { MeshLookup, MeshLookupTable } from './MeshLookup';
 import { BackSide, FrontSide } from 'three';
 // import { GhostMaterial } from './Util/MaterialMaker';
-import { updateShapeMaterial, createGenericShape, useCombinedRefs } from './Util/Helpers';
+import { updateShapeMaterial, useCombinedRefs } from './Util/Helpers';
 import { useSceneStore } from './SceneContext';
 import { Select } from '@react-three/postprocessing';
 import { GhostMaterial } from './Util/MaterialMaker';
 // import { LayerMaterial, Color, Texture } from 'lamina';
+import { useMesh } from './MeshContext';
 
 
-const GENERIC_SHAPES = ['cube', 'cylinder', 'sphere', 'capsule', 'arrow'];
+// const GENERIC_SHAPES = ['cube', 'cylinder', 'sphere', 'capsule', 'arrow'];
 
 export default forwardRef(({ objectKey, highlightColor, position, rotation, scale, ghost }, forwardedRef) => {
 
@@ -25,7 +26,7 @@ export default forwardRef(({ objectKey, highlightColor, position, rotation, scal
 
   const item = useSceneStore(useCallback(state => (state.items[objectKey]), [objectKey]))
 
-  const content = GENERIC_SHAPES.includes(item.shape) ? createGenericShape(item) : item.shape in MeshLookupTable ? MeshLookup(item.shape) : [];
+  const content = useMesh(item);//GENERIC_SHAPES.includes(item.shape) ? createGenericShape(item) : item.shape in MeshLookupTable ? MeshLookup(item.shape) : [];
 
   useFrame(useCallback(() => {
     // Outside of react rendering, adjust the positions of the item.
@@ -50,7 +51,7 @@ export default forwardRef(({ objectKey, highlightColor, position, rotation, scal
       );
       ref.current.visible = typeof item.hidden === 'function' ? !item.hidden(time) : !item.hidden;
     }
-  }, [item, position, rotation, scale, ref]));
+  }, [item, position, rotation, scale, ref, clock]));
 
   return (
     <Select enabled={item.highlighted}>
@@ -98,8 +99,6 @@ const Part = ({ part, objectKey, ghost, highlightColor }) => {
 
   const clock = useSceneStore(state => state.clock);
 
-
-
   useFrame(useCallback(() => {
     const time = clock.getElapsed() * 1000;
     if (!ghost) {
@@ -107,7 +106,7 @@ const Part = ({ part, objectKey, ghost, highlightColor }) => {
       updateShapeMaterial(frontRef, color, time);
     }
 
-  }, [objectKey, ghost, frontRef, backRef]));
+  }, [ghost, frontRef, backRef, clock, color]));
 
   
 
