@@ -6,7 +6,7 @@ import {
   Vector3
 } from "three";
 
-// import { RoundedBoxGeometry } from 'three-stdlib';
+import { RoundedBoxGeometry } from 'three-stdlib';
 
 import { mergeBufferGeometries } from "three-stdlib/utils/BufferGeometryUtils";
 
@@ -32,9 +32,8 @@ export const BOX_GEOM = (params) => {
   x = x === undefined ? boxGeomDefaultDim : x;
   y = y === undefined ? boxGeomDefaultDim : y;
   z = z === undefined ? boxGeomDefaultDim : z;
-  // RoundedBoxGeometry()
-  // return new RoundedBoxGeometry(x, y, z, 2, 0.05)
-  return new BoxBufferGeometry(x,y,z)
+  
+  return new RoundedBoxGeometry(x, y, z, 2, 0.05)
 }
 /*
  * Sphere Mesh
