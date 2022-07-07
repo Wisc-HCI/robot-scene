@@ -1,11 +1,12 @@
 import {
   CylinderBufferGeometry,
   SphereBufferGeometry,
+  BoxBufferGeometry,
   Matrix4,
   Vector3
 } from "three";
 
-import { RoundedBoxGeometry } from 'three-stdlib';
+// import { RoundedBoxGeometry } from 'three-stdlib';
 
 import { mergeBufferGeometries } from "three-stdlib/utils/BufferGeometryUtils";
 
@@ -31,9 +32,9 @@ export const BOX_GEOM = (params) => {
   x = x === undefined ? boxGeomDefaultDim : x;
   y = y === undefined ? boxGeomDefaultDim : y;
   z = z === undefined ? boxGeomDefaultDim : z;
-
-  return new RoundedBoxGeometry(x, y, z, 2, 0.05)
-
+  // RoundedBoxGeometry()
+  // return new RoundedBoxGeometry(x, y, z, 2, 0.05)
+  return new BoxBufferGeometry(x,y,z)
 }
 /*
  * Sphere Mesh
@@ -150,26 +151,26 @@ export const CAPSULE_GEOM = (params) => {
  * Mesh Lookup Table
  */
 
-export const STANDARD_MESHES = ["cube", "sphere", "cylinder", "arrow"];
+// export const STANDARD_MESHES = ["cube", "sphere", "cylinder", "arrow"];
 
-export const StandardMeshesLookup = (meshName, params) => {
-  let geometry = undefined;
+// export const StandardMeshesLookup = (meshName, params) => {
+//   let geometry = undefined;
 
-  if (meshName === "cube") {
-    geometry = BOX_GEOM(params);
-  } else if (meshName === "sphere") {
-    geometry = SPHERE_GEOM(params);
-  } else if (meshName === "cylinder") {
-    geometry = CYLINDER_GEOM(params);
-  } else if (meshName === "arrow") {
-    geometry = ARROW_GEOM(params);
-  }
+//   if (meshName === "cube") {
+//     geometry = BOX_GEOM(params);
+//   } else if (meshName === "sphere") {
+//     geometry = SPHERE_GEOM(params);
+//   } else if (meshName === "cylinder") {
+//     geometry = CYLINDER_GEOM(params);
+//   } else if (meshName === "arrow") {
+//     geometry = ARROW_GEOM(params);
+//   }
 
-  return geometry;
-};
+//   return geometry;
+// };
 
 
-export const Cube = () => ([{type:'raw',geometry:BOX_GEOM({}),scale:[1,1,1]}])
-export const Sphere = () => ([{type:'raw',geometry:SPHERE_GEOM({}),scale:[1,1,1]}])
-export const Cylinder = () => ([{type:'raw',geometry:CYLINDER_GEOM({}),scale:[1,1,1]}])
-export const Arrow = () => ([{type:'raw',geometry:ARROW_GEOM({}),scale:[1,1,1]}])
+// export const Cube = () => ([{type:'raw',geometry:BOX_GEOM({}),scale:[1,1,1]}])
+// export const Sphere = () => ([{type:'raw',geometry:SPHERE_GEOM({}),scale:[1,1,1]}])
+// export const Cylinder = () => ([{type:'raw',geometry:CYLINDER_GEOM({}),scale:[1,1,1]}])
+// export const Arrow = () => ([{type:'raw',geometry:ARROW_GEOM({}),scale:[1,1,1]}])

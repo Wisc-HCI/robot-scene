@@ -1,7 +1,6 @@
 import React, { useCallback, useRef, forwardRef } from 'react';
 import { Billboard, Text } from '@react-three/drei';
 import { useSceneStore } from './SceneContext';
-// import Font from './Font.woff';
 import { useFrame } from "@react-three/fiber";
 import { updateShapeMaterial, useCombinedRefs } from './Util/Helpers';
 

@@ -1,6 +1,12 @@
 
 import { useRef, useEffect } from 'react';
-import { BOX_GEOM, CYLINDER_GEOM, SPHERE_GEOM, ARROW_GEOM, CAPSULE_GEOM } from "./StandardMeshes";
+import { 
+    BOX_GEOM, 
+    CYLINDER_GEOM, 
+    SPHERE_GEOM, 
+    ARROW_GEOM, 
+    CAPSULE_GEOM 
+} from "./StandardMeshes";
 
 export function objectMap(object, mapFn) {
     return Object.keys(object).reduce(function (result, key) {
