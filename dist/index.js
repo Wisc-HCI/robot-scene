@@ -114917,6 +114917,10 @@ function Content(props) {
       translateSnap = props.translateSnap,
       rotateSnap = props.rotateSnap,
       scaleSnap = props.scaleSnap;
+  var camera = useThree(function (state) {
+    return state.camera;
+  });
+  console.log(camera);
   var clock = useSceneStore(function (state) {
     return state.clock;
   });
@@ -115001,7 +115005,8 @@ function Content(props) {
   var planeRGBA = [planeRGB.r, planeRGB.g, planeRGB.b, 0.5];
   return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, /*#__PURE__*/React__default["default"].createElement(OrbitControls, {
     ref: orbitControls,
-    makeDefault: true
+    makeDefault: true,
+    camera: camera
   }), /*#__PURE__*/React__default["default"].createElement("pointLight", {
     ref: pointLightRef,
     intensity: 0.5,

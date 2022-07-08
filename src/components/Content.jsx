@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { Circle } from "@react-three/drei";
 import { useSceneStore } from './SceneContext';
 import { AmbientLight, DirectionalLight } from './Util/Light';
@@ -20,6 +20,9 @@ export default function Content(props) {
     highlightColor, plane,
     translateSnap, rotateSnap, scaleSnap
   } = props;
+
+  const camera = useThree(state=>state.camera);
+  console.log(camera)
 
   const clock = useSceneStore(state => state.clock);
 
@@ -73,7 +76,7 @@ export default function Content(props) {
 
   return (
     <React.Fragment>
-      <OrbitControls ref={orbitControls} makeDefault />
+      <OrbitControls ref={orbitControls} makeDefault camera={camera}/>
       <pointLight ref={pointLightRef} intensity={0.5} position={[-1, -3, 3]} color='#FFFAEE' />
       <AmbientLight ref={ambientLightRef} intensity={0.7} color='white' />
       <DirectionalLight
