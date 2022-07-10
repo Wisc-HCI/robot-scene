@@ -7,7 +7,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname,'src/index.js'),
-      name: 'RobotScene',
+      name: 'robot-scene',
       fileName: (format) => `robot-scene.${format}.js`
     },
     rollupOptions: {
