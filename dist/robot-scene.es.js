@@ -16589,7 +16589,7 @@ class Fog {
     };
   }
 }
-class Scene$1 extends Object3D {
+class Scene$2 extends Object3D {
   constructor() {
     super();
     this.isScene = true;
@@ -24354,7 +24354,7 @@ class ObjectLoader extends Loader {
     let geometry2, material;
     switch (data.type) {
       case "Scene":
-        object = new Scene$1();
+        object = new Scene$2();
         if (data.background !== void 0) {
           if (Number.isInteger(data.background)) {
             object.background = new Color(data.background);
@@ -28225,7 +28225,7 @@ var THREE = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty(
   RingBufferGeometry: RingGeometry,
   RingGeometry,
   SRGBColorSpace,
-  Scene: Scene$1,
+  Scene: Scene$2,
   ShaderChunk,
   ShaderLib,
   ShaderMaterial,
@@ -34843,7 +34843,7 @@ const createStore$1 = (invalidate2, advance2) => {
       legacy: false,
       linear: false,
       flat: false,
-      scene: prepare(new Scene$1()),
+      scene: prepare(new Scene$2()),
       controls: null,
       clock: new Clock(),
       pointer,
@@ -59743,7 +59743,7 @@ function getFullscreenTriangle() {
   return geometry;
 }
 var Pass = class {
-  constructor(name = "Pass", scene = new Scene$1(), camera = dummyCamera) {
+  constructor(name = "Pass", scene = new Scene$2(), camera = dummyCamera) {
     this.name = name;
     this.renderer = null;
     this.scene = scene;
@@ -59786,7 +59786,7 @@ var Pass = class {
       screen = new Mesh(getFullscreenTriangle(), value);
       screen.frustumCulled = false;
       if (this.scene === null) {
-        this.scene = new Scene$1();
+        this.scene = new Scene$2();
       }
       this.scene.add(screen);
       this.screen = screen;
@@ -59814,7 +59814,7 @@ var Pass = class {
     for (const key of Object.keys(this)) {
       const property = this[key];
       if (property !== null && typeof property.dispose === "function") {
-        if (property instanceof Scene$1 || property === this.renderer) {
+        if (property instanceof Scene$2 || property === this.renderer) {
           continue;
         }
         this[key].dispose();
@@ -61780,7 +61780,7 @@ var Effect = class extends EventDispatcher {
     for (const key of Object.keys(this)) {
       const property = this[key];
       if (property !== null && typeof property.dispose === "function") {
-        if (property instanceof Scene$1 || property === this.renderer) {
+        if (property instanceof Scene$2 || property === this.renderer) {
           continue;
         }
         this[key].dispose();
@@ -63604,7 +63604,6 @@ function Content(props) {
     scaleSnap
   } = props;
   const camera = useThree((state) => state.camera);
-  console.log(camera);
   const clock = useSceneStore((state) => state.clock);
   useFrame(() => {
     clock.update();
@@ -63747,6 +63746,7 @@ function Content(props) {
     }, `movableObjectTransform-${idx}`))]
   });
 }
+var Content$1 = memo(Content);
 Object3D.DefaultUp.set(0, 0, 1);
 function Scene({
   backgroundColor,
@@ -63776,7 +63776,7 @@ function Scene({
       children: /* @__PURE__ */ jsx(MeshProvider, {
         meshes: meshLookup,
         children: /* @__PURE__ */ jsx(Suspense, {
-          children: /* @__PURE__ */ jsx(Content, {
+          children: /* @__PURE__ */ jsx(Content$1, {
             ...otherProps,
             backgroundColor
           })
@@ -63785,4 +63785,5 @@ function Scene({
     })
   });
 }
-export { ImmerSceneSlice, Scene, SceneSlice, useDefaultSceneStore as useSceneStore };
+var Scene$1 = memo(Scene);
+export { ImmerSceneSlice, Scene$1 as Scene, SceneSlice, useDefaultSceneStore as useSceneStore };

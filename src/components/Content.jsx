@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, memo } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Circle } from "@react-three/drei";
 import { useSceneStore } from './SceneContext';
@@ -11,7 +11,7 @@ import { EffectComposer, Selection, Outline } from "@react-three/postprocessing"
 // import { renderTree } from './Util/Helpers';
 import Tree from './Tree';
 
-export default function Content(props) {
+function Content(props) {
   // For the objects in props.content, render the objects.
   // Those should be in the suspense element.
 
@@ -22,7 +22,7 @@ export default function Content(props) {
   } = props;
 
   const camera = useThree(state=>state.camera);
-  console.log(camera)
+  // console.log(camera)
 
   const clock = useSceneStore(state => state.clock);
 
@@ -180,3 +180,5 @@ export default function Content(props) {
     </React.Fragment>
   );
 }
+
+export default memo(Content)

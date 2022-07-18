@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, memo } from "react";
 import { Canvas } from "@react-three/fiber";
 // // import { useProgress, Html } from "@react-three/drei";
 import { ResizeObserver } from "@juggle/resize-observer";
@@ -14,7 +14,7 @@ THREE.Object3D.DefaultUp.set(0, 0, 1);
 //   return <Html><div style={{width:'100%',height:'100%',fontFamily:'Helvetica'}}>{strip(progress.toPrecision(1))}%</div></Html>
 // }
 
-export default function Scene({
+function Scene({
   backgroundColor,
   store,
   fov,
@@ -50,3 +50,5 @@ export default function Scene({
     </Canvas>
   );
 }
+
+export default memo(Scene)
