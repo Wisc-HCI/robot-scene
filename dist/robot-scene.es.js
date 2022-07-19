@@ -7129,7 +7129,7 @@ class PerspectiveCamera extends Camera {
     return data;
   }
 }
-const fov = 90, aspect = 1;
+const fov$1 = 90, aspect = 1;
 class CubeCamera extends Object3D {
   constructor(near, far, renderTarget) {
     super();
@@ -7139,32 +7139,32 @@ class CubeCamera extends Object3D {
       return;
     }
     this.renderTarget = renderTarget;
-    const cameraPX = new PerspectiveCamera(fov, aspect, near, far);
+    const cameraPX = new PerspectiveCamera(fov$1, aspect, near, far);
     cameraPX.layers = this.layers;
     cameraPX.up.set(0, -1, 0);
     cameraPX.lookAt(new Vector3(1, 0, 0));
     this.add(cameraPX);
-    const cameraNX = new PerspectiveCamera(fov, aspect, near, far);
+    const cameraNX = new PerspectiveCamera(fov$1, aspect, near, far);
     cameraNX.layers = this.layers;
     cameraNX.up.set(0, -1, 0);
     cameraNX.lookAt(new Vector3(-1, 0, 0));
     this.add(cameraNX);
-    const cameraPY = new PerspectiveCamera(fov, aspect, near, far);
+    const cameraPY = new PerspectiveCamera(fov$1, aspect, near, far);
     cameraPY.layers = this.layers;
     cameraPY.up.set(0, 0, 1);
     cameraPY.lookAt(new Vector3(0, 1, 0));
     this.add(cameraPY);
-    const cameraNY = new PerspectiveCamera(fov, aspect, near, far);
+    const cameraNY = new PerspectiveCamera(fov$1, aspect, near, far);
     cameraNY.layers = this.layers;
     cameraNY.up.set(0, 0, -1);
     cameraNY.lookAt(new Vector3(0, -1, 0));
     this.add(cameraNY);
-    const cameraPZ = new PerspectiveCamera(fov, aspect, near, far);
+    const cameraPZ = new PerspectiveCamera(fov$1, aspect, near, far);
     cameraPZ.layers = this.layers;
     cameraPZ.up.set(0, -1, 0);
     cameraPZ.lookAt(new Vector3(0, 0, 1));
     this.add(cameraPZ);
-    const cameraNZ = new PerspectiveCamera(fov, aspect, near, far);
+    const cameraNZ = new PerspectiveCamera(fov$1, aspect, near, far);
     cameraNZ.layers = this.layers;
     cameraNZ.up.set(0, -1, 0);
     cameraNZ.lookAt(new Vector3(0, 0, -1));
@@ -16589,7 +16589,7 @@ class Fog {
     };
   }
 }
-class Scene$2 extends Object3D {
+class Scene$1 extends Object3D {
   constructor() {
     super();
     this.isScene = true;
@@ -24354,7 +24354,7 @@ class ObjectLoader extends Loader {
     let geometry2, material;
     switch (data.type) {
       case "Scene":
-        object = new Scene$2();
+        object = new Scene$1();
         if (data.background !== void 0) {
           if (Number.isInteger(data.background)) {
             object.background = new Color(data.background);
@@ -28225,7 +28225,7 @@ var THREE = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty(
   RingBufferGeometry: RingGeometry,
   RingGeometry,
   SRGBColorSpace,
-  Scene: Scene$2,
+  Scene: Scene$1,
   ShaderChunk,
   ShaderLib,
   ShaderMaterial,
@@ -34843,7 +34843,7 @@ const createStore$1 = (invalidate2, advance2) => {
       legacy: false,
       linear: false,
       flat: false,
-      scene: prepare(new Scene$2()),
+      scene: prepare(new Scene$1()),
       controls: null,
       clock: new Clock(),
       pointer,
@@ -59743,7 +59743,7 @@ function getFullscreenTriangle() {
   return geometry;
 }
 var Pass = class {
-  constructor(name = "Pass", scene = new Scene$2(), camera = dummyCamera) {
+  constructor(name = "Pass", scene = new Scene$1(), camera = dummyCamera) {
     this.name = name;
     this.renderer = null;
     this.scene = scene;
@@ -59786,7 +59786,7 @@ var Pass = class {
       screen = new Mesh(getFullscreenTriangle(), value);
       screen.frustumCulled = false;
       if (this.scene === null) {
-        this.scene = new Scene$2();
+        this.scene = new Scene$1();
       }
       this.scene.add(screen);
       this.screen = screen;
@@ -59814,7 +59814,7 @@ var Pass = class {
     for (const key of Object.keys(this)) {
       const property = this[key];
       if (property !== null && typeof property.dispose === "function") {
-        if (property instanceof Scene$2 || property === this.renderer) {
+        if (property instanceof Scene$1 || property === this.renderer) {
           continue;
         }
         this[key].dispose();
@@ -61780,7 +61780,7 @@ var Effect = class extends EventDispatcher {
     for (const key of Object.keys(this)) {
       const property = this[key];
       if (property !== null && typeof property.dispose === "function") {
-        if (property instanceof Scene$2 || property === this.renderer) {
+        if (property instanceof Scene$1 || property === this.renderer) {
           continue;
         }
         this[key].dispose();
@@ -63591,6 +63591,7 @@ const TransformableObject = ({
   }) : null;
 };
 function Content(props) {
+  console.log("content rerender");
   const {
     displayTfs,
     displayGrid,
@@ -63748,6 +63749,27 @@ function Content(props) {
 }
 var Content$1 = memo(Content);
 Object3D.DefaultUp.set(0, 0, 1);
+const RobotCanvas = ({
+  onPointerMissed = () => {
+  },
+  backgroundColor = "#d0d0d0",
+  children
+}) => /* @__PURE__ */ jsx(Canvas, {
+  camera: {
+    up: [0, 0, 1],
+    fov,
+    position: [0, -3, 3]
+  },
+  shadows: true,
+  style: {
+    background: backgroundColor
+  },
+  resize: {
+    polyfill: ResizeObserver
+  },
+  onPointerMissed,
+  children
+});
 function Scene({
   backgroundColor,
   store,
@@ -63756,6 +63778,7 @@ function Scene({
   meshLookup = {},
   ...otherProps
 }) {
+  console.log("scene rerender");
   return /* @__PURE__ */ jsx(Canvas, {
     camera: {
       up: [0, 0, 1],
@@ -63785,5 +63808,4 @@ function Scene({
     })
   });
 }
-var Scene$1 = memo(Scene);
-export { ImmerSceneSlice, Scene$1 as Scene, SceneSlice, useDefaultSceneStore as useSceneStore };
+export { ImmerSceneSlice, MeshProvider, RobotCanvas, Scene, SceneProvider, SceneSlice, useDefaultSceneStore as useSceneStore };

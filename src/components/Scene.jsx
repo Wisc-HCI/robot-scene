@@ -5,7 +5,7 @@ import { ResizeObserver } from "@juggle/resize-observer";
 import Content from "./Content";
 import * as THREE from "three";
 import { SceneProvider } from "./SceneContext";
-import { MeshProvider } from './MeshContext';
+import { MeshProvider } from "./MeshContext";
 
 THREE.Object3D.DefaultUp.set(0, 0, 1);
 
@@ -13,6 +13,22 @@ THREE.Object3D.DefaultUp.set(0, 0, 1);
 //   const { progress } = useProgress();
 //   return <Html><div style={{width:'100%',height:'100%',fontFamily:'Helvetica'}}>{strip(progress.toPrecision(1))}%</div></Html>
 // }
+
+export const RobotCanvas = ({
+  onPointerMissed = () => {},
+  backgroundColor = "#d0d0d0",
+  children,
+}) => (
+  <Canvas
+    camera={{ up: [0, 0, 1], fov, position: [0, -3, 3] }}
+    shadows
+    style={{ background: backgroundColor}}
+    resize={{ polyfill: ResizeObserver }}
+    onPointerMissed={onPointerMissed}
+  >
+    {children}
+  </Canvas>
+);
 
 function Scene({
   backgroundColor,
@@ -26,6 +42,7 @@ function Scene({
   // Those should be in the suspense element.
 
   // console.log({ar,vr})
+  console.log("scene rerender");
 
   // const CanvasComponent = ar ? ARCanvas : vr ? VRCanvas : Canvas;
 
@@ -40,10 +57,7 @@ function Scene({
       <SceneProvider store={store}>
         <MeshProvider meshes={meshLookup}>
           <Suspense>
-            <Content
-              {...otherProps}
-              backgroundColor={backgroundColor}
-            />
+            <Content {...otherProps} backgroundColor={backgroundColor} />
           </Suspense>
         </MeshProvider>
       </SceneProvider>
@@ -51,4 +65,4 @@ function Scene({
   );
 }
 
-export default memo(Scene)
+export default Scene;

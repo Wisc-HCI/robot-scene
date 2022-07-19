@@ -14,6 +14,7 @@ import Tree from './Tree';
 function Content(props) {
   // For the objects in props.content, render the objects.
   // Those should be in the suspense element.
+  console.log('content rerender')
 
   const { displayTfs, displayGrid, isPolar,
     backgroundColor, planeColor,

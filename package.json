@@ -1,7 +1,7 @@
 {
   "name": "robot-scene",
   "private": true,
-  "version": "0.9.3",
+  "version": "0.9.4",
   "main": "./dist/robot-scene.umd.js",
   "module": "./dist/robot-scene.es.js",
   "exports": {
