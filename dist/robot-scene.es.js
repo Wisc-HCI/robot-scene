@@ -7129,7 +7129,7 @@ class PerspectiveCamera extends Camera {
     return data;
   }
 }
-const fov$1 = 90, aspect = 1;
+const fov = 90, aspect = 1;
 class CubeCamera extends Object3D {
   constructor(near, far, renderTarget) {
     super();
@@ -7139,32 +7139,32 @@ class CubeCamera extends Object3D {
       return;
     }
     this.renderTarget = renderTarget;
-    const cameraPX = new PerspectiveCamera(fov$1, aspect, near, far);
+    const cameraPX = new PerspectiveCamera(fov, aspect, near, far);
     cameraPX.layers = this.layers;
     cameraPX.up.set(0, -1, 0);
     cameraPX.lookAt(new Vector3(1, 0, 0));
     this.add(cameraPX);
-    const cameraNX = new PerspectiveCamera(fov$1, aspect, near, far);
+    const cameraNX = new PerspectiveCamera(fov, aspect, near, far);
     cameraNX.layers = this.layers;
     cameraNX.up.set(0, -1, 0);
     cameraNX.lookAt(new Vector3(-1, 0, 0));
     this.add(cameraNX);
-    const cameraPY = new PerspectiveCamera(fov$1, aspect, near, far);
+    const cameraPY = new PerspectiveCamera(fov, aspect, near, far);
     cameraPY.layers = this.layers;
     cameraPY.up.set(0, 0, 1);
     cameraPY.lookAt(new Vector3(0, 1, 0));
     this.add(cameraPY);
-    const cameraNY = new PerspectiveCamera(fov$1, aspect, near, far);
+    const cameraNY = new PerspectiveCamera(fov, aspect, near, far);
     cameraNY.layers = this.layers;
     cameraNY.up.set(0, 0, -1);
     cameraNY.lookAt(new Vector3(0, -1, 0));
     this.add(cameraNY);
-    const cameraPZ = new PerspectiveCamera(fov$1, aspect, near, far);
+    const cameraPZ = new PerspectiveCamera(fov, aspect, near, far);
     cameraPZ.layers = this.layers;
     cameraPZ.up.set(0, -1, 0);
     cameraPZ.lookAt(new Vector3(0, 0, 1));
     this.add(cameraPZ);
-    const cameraNZ = new PerspectiveCamera(fov$1, aspect, near, far);
+    const cameraNZ = new PerspectiveCamera(fov, aspect, near, far);
     cameraNZ.layers = this.layers;
     cameraNZ.up.set(0, -1, 0);
     cameraNZ.lookAt(new Vector3(0, 0, -1));
@@ -63752,11 +63752,12 @@ const RobotCanvas = ({
   onPointerMissed = () => {
   },
   backgroundColor = "#d0d0d0",
+  fov: fov2 = 60,
   children
 }) => /* @__PURE__ */ jsx(Canvas, {
   camera: {
     up: [0, 0, 1],
-    fov,
+    fov: fov2,
     position: [0, -3, 3]
   },
   shadows: true,

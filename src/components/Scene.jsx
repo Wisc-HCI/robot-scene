@@ -17,6 +17,7 @@ THREE.Object3D.DefaultUp.set(0, 0, 1);
 export const RobotCanvas = ({
   onPointerMissed = () => {},
   backgroundColor = "#d0d0d0",
+  fov = 60,
   children,
 }) => (
   <Canvas
