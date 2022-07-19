@@ -1,4 +1,4 @@
-import React, { useRef, memo } from 'react';
+import React, { useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Circle } from "@react-three/drei";
 import { useSceneStore } from './SceneContext';
@@ -182,4 +182,4 @@ function Content(props) {
   );
 }
 
-export default memo(Content)
+export default Content

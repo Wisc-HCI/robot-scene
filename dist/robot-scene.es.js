@@ -63747,7 +63747,6 @@ function Content(props) {
     }, `movableObjectTransform-${idx}`))]
   });
 }
-var Content$1 = memo(Content);
 Object3D.DefaultUp.set(0, 0, 1);
 const RobotCanvas = ({
   onPointerMissed = () => {
@@ -63799,7 +63798,7 @@ function Scene({
       children: /* @__PURE__ */ jsx(MeshProvider, {
         meshes: meshLookup,
         children: /* @__PURE__ */ jsx(Suspense, {
-          children: /* @__PURE__ */ jsx(Content$1, {
+          children: /* @__PURE__ */ jsx(Content, {
             ...otherProps,
             backgroundColor
           })
@@ -63808,4 +63807,4 @@ function Scene({
     })
   });
 }
-export { ImmerSceneSlice, MeshProvider, RobotCanvas, Scene, SceneProvider, SceneSlice, useDefaultSceneStore as useSceneStore };
+export { Content, ImmerSceneSlice, MeshProvider, RobotCanvas, Scene, SceneProvider, SceneSlice, useDefaultSceneStore as useSceneStore };
