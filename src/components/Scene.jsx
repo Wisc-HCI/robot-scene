@@ -23,7 +23,7 @@ export const RobotCanvas = ({
   <Canvas
     camera={{ up: [0, 0, 1], fov, position: [0, -3, 3] }}
     shadows
-    style={{ background: backgroundColor}}
+    style={{ background: backgroundColor }}
     resize={{ polyfill: ResizeObserver }}
     onPointerMissed={onPointerMissed}
   >
@@ -32,18 +32,21 @@ export const RobotCanvas = ({
 );
 
 function Scene({
-  backgroundColor,
+  backgroundColor = "#d0d0d0",
   store,
-  fov,
-  onPointerMissed,
+  fov = 60,
+  onPointerMissed = () => {},
   meshLookup = {},
+  debug = false,
   ...otherProps
 }) {
   // For the objects in props.content, render the objects.
   // Those should be in the suspense element.
 
   // console.log({ar,vr})
-  console.log("scene rerender");
+  if (debug) {
+    console.log("Scene rerender");
+  }
 
   // const CanvasComponent = ar ? ARCanvas : vr ? VRCanvas : Canvas;
 
@@ -55,10 +58,14 @@ function Scene({
       resize={{ polyfill: ResizeObserver }}
       onPointerMissed={onPointerMissed ? onPointerMissed : () => {}}
     >
-      <SceneProvider store={store}>
+      <SceneProvider store={store} debug={debug}>
         <MeshProvider meshes={meshLookup}>
           <Suspense>
-            <Content {...otherProps} backgroundColor={backgroundColor} />
+            <Content
+              {...otherProps}
+              backgroundColor={backgroundColor}
+              debug={debug}
+            />
           </Suspense>
         </MeshProvider>
       </SceneProvider>

@@ -1,5 +1,5 @@
 import Scene, { RobotCanvas } from "./Scene";
-import { SceneProvider } from "./SceneContext";
+import { SceneProvider, useSceneStore } from "./SceneContext";
 import { MeshProvider } from "./MeshContext";
 import Content from "./Content";
 import {
@@ -17,4 +17,5 @@ export {
   SceneProvider,
   MeshProvider,
   Content,
+  useSceneStore
 };

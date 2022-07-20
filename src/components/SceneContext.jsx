@@ -10,7 +10,10 @@ export const useSceneStore = (selector, equalityFn) => {
     return useStore(store, selector, equalityFn)
 }
 
-export const SceneProvider = ({store, children}) => {
+export const SceneProvider = ({store, children, debug=false}) => {
+    if (debug) {
+        console.log('SceneProvider regenerated')
+    }
     return (
         <SceneContext.Provider value={store ? store : useDefaultSceneStore}>
             {children}

@@ -57633,8 +57633,12 @@ const useSceneStore = (selector, equalityFn) => {
 };
 const SceneProvider = ({
   store,
-  children
+  children,
+  debug = false
 }) => {
+  if (debug) {
+    console.log("SceneProvider regenerated");
+  }
   return /* @__PURE__ */ jsx(SceneContext.Provider, {
     value: store ? store : useDefaultSceneStore,
     children
@@ -63590,68 +63594,78 @@ const TransformableObject = ({
     })]
   }) : null;
 };
-function Content(props) {
-  console.log("content rerender");
-  const {
-    displayTfs,
-    displayGrid,
-    isPolar,
-    backgroundColor,
-    planeColor,
-    highlightColor,
-    plane,
-    translateSnap,
-    rotateSnap,
-    scaleSnap
-  } = props;
+const comparisonFn = (oldVals, newVals) => {
+  if (oldVals.length !== newVals.length) {
+    return false;
+  }
+  return !oldVals.some((oldVal, i2) => {
+    return !lodash$1.exports.isEqual(newVals[i2], oldVal);
+  });
+};
+function Content({
+  displayTfs = false,
+  displayGrid = true,
+  isPolar = false,
+  backgroundColor = "#d0d0d0",
+  planeColor = "#a8a8a8",
+  highlightColor = "#00ffff",
+  plane = 0,
+  translateSnap = 0,
+  rotateSnap = 0,
+  scaleSnap = 0,
+  debug = false
+}) {
+  if (debug) {
+    console.log("content rerender");
+  }
   const camera = useThree((state) => state.camera);
-  const clock = useSceneStore((state) => state.clock);
+  const clock = useSceneStore((state) => state.clock, shallow);
   useFrame(() => {
     clock.update();
   });
-  const tfs = useSceneStore((state) => Object.entries(state.tfs).map(([key, tf2]) => {
+  const tfs = useSceneStore((state) => lodash$1.exports.sortBy(Object.entries(state.tfs).map(([key, tf2]) => {
     return {
       key,
       frame: tf2.frame,
       transformMode: tf2.transformMode,
       source: "tfs"
     };
-  }));
-  const items = useSceneStore((state) => Object.entries(state.items).map(([key, item]) => {
+  }), (o2) => o2.key), comparisonFn);
+  const items = useSceneStore((state) => lodash$1.exports.sortBy(Object.entries(state.items).map(([key, item]) => {
     return {
       key,
       frame: item.frame,
       transformMode: item.transformMode,
       source: "items"
     };
-  }));
-  const lines = useSceneStore((state) => Object.entries(state.lines).map(([key, line]) => {
+  }), (o2) => o2.key), comparisonFn);
+  const lines = useSceneStore((state) => lodash$1.exports.sortBy(Object.entries(state.lines).map(([key, line]) => {
     return {
       key,
       frame: line.frame,
       source: "lines"
     };
-  }));
-  const hulls = useSceneStore((state) => Object.entries(state.hulls).map(([key, hull]) => {
+  }), (o2) => o2.key), comparisonFn);
+  const hulls = useSceneStore((state) => lodash$1.exports.sortBy(Object.entries(state.hulls).map(([key, hull]) => {
     return {
       key,
       frame: hull.frame,
       source: "hulls"
     };
-  }));
-  const texts = useSceneStore((state) => Object.entries(state.texts).map(([key, text]) => {
+  }), (o2) => o2.key), comparisonFn);
+  const texts = useSceneStore((state) => lodash$1.exports.sortBy(Object.entries(state.texts).map(([key, text]) => {
     return {
       key,
       frame: text.frame,
       source: "texts"
     };
-  }));
+  }), (o2) => o2.key), comparisonFn);
   const movableStuff = [...items, ...tfs].filter((item) => ["translate", "rotate", "scale"].indexOf(item.transformMode) > -1);
   const ambientLightRef = useRef();
   const pointLightRef = useRef();
   const directionalLightRef = useRef();
   const orbitControls = useRef();
-  const planeRGB = hexToRgb(planeColor ? planeColor : "a8a8a8");
+  const planeRGB = hexToRgb(planeColor);
   const planeRGBA = [planeRGB.r, planeRGB.g, planeRGB.b, 0.5];
   return /* @__PURE__ */ jsxs(React__default.Fragment, {
     children: [/* @__PURE__ */ jsx(OrbitControls, {
@@ -63681,14 +63695,14 @@ function Content(props) {
       color: "#FFFAEE"
     }), /* @__PURE__ */ jsx("color", {
       attach: "background",
-      args: [backgroundColor ? backgroundColor : "#d0d0d0"]
+      args: [backgroundColor]
     }), /* @__PURE__ */ jsx("fogExp2", {
       attach: "fog",
-      args: [backgroundColor ? backgroundColor : "#d0d0d0", 0.01]
+      args: [backgroundColor, 0.01]
     }), /* @__PURE__ */ jsx(Circle, {
       receiveShadow: true,
       scale: 1e3,
-      position: [0, 0, plane ? plane - 0.01 : -0.01],
+      position: [0, 0, plane - 0.01],
       material: MaterialMaker(...planeRGBA)
     }), /* @__PURE__ */ jsxs(Selection, {
       children: [/* @__PURE__ */ jsx(EffectComposer, {
@@ -63713,7 +63727,7 @@ function Content(props) {
         highlightColor
       })]
     }), /* @__PURE__ */ jsx("group", {
-      position: [0, 0, plane ? plane : 0],
+      position: [0, 0, plane],
       rotation: [Math.PI / 2, 0, 0],
       up: [0, 0, 1],
       children: displayGrid && (isPolar ? /* @__PURE__ */ jsx("polarGridHelper", {
@@ -63771,14 +63785,18 @@ const RobotCanvas = ({
   children
 });
 function Scene({
-  backgroundColor,
+  backgroundColor = "#d0d0d0",
   store,
-  fov: fov2,
-  onPointerMissed,
+  fov: fov2 = 60,
+  onPointerMissed = () => {
+  },
   meshLookup = {},
+  debug = false,
   ...otherProps
 }) {
-  console.log("scene rerender");
+  if (debug) {
+    console.log("Scene rerender");
+  }
   return /* @__PURE__ */ jsx(Canvas, {
     camera: {
       up: [0, 0, 1],
@@ -63796,16 +63814,18 @@ function Scene({
     },
     children: /* @__PURE__ */ jsx(SceneProvider, {
       store,
+      debug,
       children: /* @__PURE__ */ jsx(MeshProvider, {
         meshes: meshLookup,
         children: /* @__PURE__ */ jsx(Suspense, {
           children: /* @__PURE__ */ jsx(Content, {
             ...otherProps,
-            backgroundColor
+            backgroundColor,
+            debug
           })
         })
       })
     })
   });
 }
-export { Content, ImmerSceneSlice, MeshProvider, RobotCanvas, Scene, SceneProvider, SceneSlice, useDefaultSceneStore as useSceneStore };
+export { Content, ImmerSceneSlice, MeshProvider, RobotCanvas, Scene, SceneProvider, SceneSlice, useSceneStore as innerUseSceneStore, useDefaultSceneStore as useSceneStore };

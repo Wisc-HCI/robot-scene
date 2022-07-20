@@ -7,6 +7,7 @@ import {
   SceneProvider,
   MeshProvider,
   Content,
+  useSceneStore as innerUseSceneStore
 } from "./components";
 export {
   Scene,
@@ -17,4 +18,5 @@ export {
   SceneProvider,
   MeshProvider,
   Content,
+  innerUseSceneStore
 };
