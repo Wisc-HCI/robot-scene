@@ -11,12 +11,54 @@ export function objectMap(object, mapFn) {
 
 
 
+export function getGetter(value) {
+  //console.log("value" , value)
+  if (value === null || value === undefined) {
+    return ()=>null;
+  } else if (typeof value === "function") {
+    return value;
+  } else if (typeof value === "object") {
+    if (value.time.length <= 0) {
+      return ()=>0;
+    } else {
+      const memoizedGetter = memoize((time) => {
+        let lastIdx = 0;
+        for (let i = 0; i < value.time.length; i++) {
+          if (value.time[i] <= time) {
+            lastIdx = i;
+          } else {
+            break;
+          }
+        }
+        return value.value[lastIdx];
+      });
+
+      const getter = (time) => {
+        const val =
+          time > value.time[value.time.length - 1]
+            ? time % value.time[value.time.length - 1]
+            : time;
+
+        return memoizedGetter(val);
+      };
+      return getter;
+    }
+  } else if (typeof value === 'number'){
+    return ()=>value;
+  }
+}
+
+
+
+
+
 export function updateColorOverlay(ref, color, time) {
+    
     if (ref.current && color) {
-        const r = typeof color.r === 'function' ? color.r(time) / 255 : color.r / 255;
-        const g = typeof color.g === 'function' ? color.g(time) / 255 : color.g / 255;
-        const b = typeof color.b === 'function' ? color.b(time) / 255 : color.b / 255;
-        const alpha = typeof color.a === 'function' ? color.a(time) : color.a;
+        const r = color.r(time)/255;
+        const g = color.g(time)/255;
+        const b = color.b(time)/255;
+        const alpha = color.a(time);
         ref.current.color.r = r;
         ref.current.color.g = g;
         ref.current.color.b = b;
@@ -25,11 +67,12 @@ export function updateColorOverlay(ref, color, time) {
 }
 
 export const updateShapeMaterial = (ref, color, time) => {
+  
     if (ref.current && color) {
-        const r = typeof color.r === 'function' ? color.r(time) / 255 : color.r / 255;
-        const g = typeof color.g === 'function' ? color.g(time) / 255 : color.g / 255;
-        const b = typeof color.b === 'function' ? color.b(time) / 255 : color.b / 255;
-        const opacity = typeof color.a === 'function' ? color.a(time) : color.a;
+        const r = color.r(time) / 255;
+        const g = color.g(time) / 255;
+        const b = color.b(time) / 255;
+        const opacity = color.a(time);
         ref.current.material.color.setRGB(r, g, b);
         ref.current.material.opacity = opacity;
         ref.current.material.transparent = opacity === 1 ? false : true

@@ -3,7 +3,7 @@ import { Billboard, Text } from '@react-three/drei';
 import { useSceneStore } from './SceneContext';
 // import Font from './Font.woff';
 import { useFrame } from "@react-three/fiber";
-import { updateShapeMaterial, useCombinedRefs } from './Util/Helpers';
+import { updateShapeMaterial, useCombinedRefs,getGetter } from './Util/Helpers';
 
 export default forwardRef(({ objectKey }, forwardedRef)=> {
 
@@ -15,21 +15,29 @@ export default forwardRef(({ objectKey }, forwardedRef)=> {
 
   const textInfo = useSceneStore(useCallback(state => state.texts[objectKey], [objectKey]));
 
+  const positionXGetter =  getGetter(textInfo.position.x);
+  const positionYGetter =  getGetter(textInfo.position.y);
+  const positionZGetter =  getGetter(textInfo.position.z);
+
+  const hiddenGetter = getGetter(textInfo.hidden);
+
+  const colorGetter = {r:getGetter(textInfo.color.r), g:getGetter(textInfo.color.g), b: getGetter(textInfo.color.b), a:getGetter(textInfo.color.a)}
+
   useFrame(useCallback(() => {
     // Outside of react rendering, adjust the positions of the item.
     const time = clock.getElapsed() * 1000;
     if (groupRef.current) {
       // console.log(groupRef.current)
       groupRef.current.position.set(
-        typeof textInfo.position.x === 'function' ? textInfo.position.x(time) : textInfo.position.x,
-        typeof textInfo.position.y === 'function' ? textInfo.position.y(time) : textInfo.position.y,
-        typeof textInfo.position.z === 'function' ? textInfo.position.z(time) : textInfo.position.z,
+        positionXGetter(time),
+        positionYGetter(time),
+        positionZGetter(time),
       );
       // groupRef.current.quaternion.set();
-      groupRef.current.visible = typeof textInfo.hidden === 'function' ? !textInfo.hidden(time) : !textInfo.hidden;
+      groupRef.current.visible = hiddenGetter !== null && hiddenGetter !== undefined ? !hiddenGetter(time) : null;
     }
     if (textRef.current) {
-      updateShapeMaterial(textRef, textInfo.color, time);
+      updateShapeMaterial(textRef, colorGetter, time);
     }
   }, [textInfo, groupRef]));
 

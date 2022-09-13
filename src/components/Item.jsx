@@ -4,7 +4,7 @@ import { Html } from '@react-three/drei';
 import { MeshLookup, MeshLookupTable } from './MeshLookup';
 import { BackSide, FrontSide } from 'three';
 // import { GhostMaterial } from './Util/MaterialMaker';
-import { updateShapeMaterial, createGenericShape, useCombinedRefs, updateColorOverlay } from './Util/Helpers';
+import { updateShapeMaterial, createGenericShape, useCombinedRefs, updateColorOverlay ,getGetter} from './Util/Helpers';
 import { useSceneStore } from './SceneContext';
 import { Select } from '@react-three/postprocessing';
 import { GhostMaterial } from './Util/MaterialMaker';
@@ -27,28 +27,57 @@ export default forwardRef(({ objectKey, highlightColor, position, rotation, scal
 
   const content = GENERIC_SHAPES.includes(item.shape) ? createGenericShape(item) : item.shape in MeshLookupTable ? MeshLookup(item.shape) : [];
 
+  const positionXGetter =  getGetter(item.position.x);
+  const positionYGetter =  getGetter(item.position.y);
+  const positionZGetter =  getGetter(item.position.z);
+
+  const rotationXGetter =  getGetter(item.rotation.x);
+  const rotationYGetter =  getGetter(item.rotation.y);
+  const rotationZGetter =  getGetter(item.rotation.z);
+  const rotationWGetter =  getGetter(item.rotation.w);
+
+  const scaleXGetter =  getGetter(item.scale.x);
+  const scaleYGetter =  getGetter(item.scale.y);
+  const scaleZGetter =  getGetter(item.scale.z);
+
+  const hiddenGetter = getGetter(item.hidden);
+
+ 
+  
+
+
+
+
+ //console.log("positionXGetter" , positionXGetter);
+
+
   useFrame(useCallback(() => {
     // Outside of react rendering, adjust the positions of the item.
     const time = clock.getElapsed() * 1000;
+    //console.log(time);
     if (ref.current) {
       
       ref.current.position.set(
-        position ? position.x : typeof item.position.x === 'function' ? item.position.x(time) : item.position.x,
-        position ? position.y : typeof item.position.y === 'function' ? item.position.y(time) : item.position.y,
-        position ? position.z : typeof item.position.z === 'function' ? item.position.z(time) : item.position.z,
+    
+        position ? position.x : positionXGetter(time),
+        position ? position.y : positionYGetter(time),
+        position ? position.z : positionZGetter(time),
       );
       ref.current.quaternion.set(
-        rotation ? rotation.x : typeof item.rotation.x === 'function' ? item.rotation.x(time) : item.rotation.x,
-        rotation ? rotation.y : typeof item.rotation.y === 'function' ? item.rotation.y(time) : item.rotation.y,
-        rotation ? rotation.z : typeof item.rotation.z === 'function' ? item.rotation.z(time) : item.rotation.z,
-        rotation ? rotation.w : typeof item.rotation.w === 'function' ? item.rotation.w(time) : item.rotation.w
+       
+      
+        rotation ? rotation.x : rotationXGetter(time),
+        rotation ? rotation.x : rotationYGetter(time),
+        rotation ? rotation.z : rotationZGetter(time),
+        rotation ? rotation.w : rotationWGetter(time),
       );
       ref.current.scale.set(
-        scale ? scale.x : typeof item.scale.x === 'function' ? item.scale.x(time) : item.scale.x,
-        scale ? scale.y : typeof item.scale.y === 'function' ? item.scale.y(time) : item.scale.y,
-        scale ? scale.z : typeof item.scale.z === 'function' ? item.scale.z(time) : item.scale.z,
+        scale ? scale.x : scaleXGetter(time),
+        scale ? scale.y :scaleYGetter(time),
+        scale ? scale.z :scaleZGetter(time),
       );
-      ref.current.visible = typeof item.hidden === 'function' ? !item.hidden(time) : !item.hidden;
+       
+        ref.current.visible = hiddenGetter !== null && hiddenGetter !== undefined ? !hiddenGetter(time) : null    
     }
   }, [item, position, rotation, scale, ref]));
 
@@ -99,17 +128,28 @@ const Part = ({ part, objectKey, ghost, highlightColor }) => {
 
   const clock = useSceneStore(state => state.clock);
 
-
+  
+  let update = true;
+  let colorGetter = null;
+  if (color === undefined || color === null){
+    update = false;
+  }else{
+    colorGetter = {r:getGetter(color.r), g:getGetter(color.g), b: getGetter(color.b), a:getGetter(color.a)}
+  }
+ 
 
   useFrame(useCallback(() => {
     const time = clock.getElapsed() * 1000;
-    if (colorOverlay) {
-      updateColorOverlay(colorRef, color, time);
-
-    } else if (!ghost && !colorOverlay) {
-      updateShapeMaterial(backRef, color, time);
-      updateShapeMaterial(frontRef, color, time);
+    if (update === true){
+      if (colorOverlay) {
+        updateColorOverlay(colorRef, colorGetter, time);
+  
+      } else if (!ghost && !colorOverlay) {
+        updateShapeMaterial(backRef, colorGetter, time);
+        updateShapeMaterial(frontRef, colorGetter, time);
+      }
     }
+    
 
   }, [objectKey, ghost, frontRef, backRef]));
 

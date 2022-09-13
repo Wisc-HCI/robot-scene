@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { Vector3, BackSide, FrontSide } from 'three';
 import { ConvexGeometry } from 'three-stdlib';
 import shallow from 'zustand/shallow';
-import { updateShapeMaterial, useCombinedRefs } from './Util/Helpers';
+import { updateShapeMaterial, useCombinedRefs ,getGetter} from './Util/Helpers';
 import { useSceneStore } from './SceneContext';
 import { Select } from '@react-three/postprocessing';
 
@@ -29,18 +29,22 @@ export default forwardRef(({ objectKey },forwardedRef)=>{
 
   const geometry = new ConvexGeometry(initialVertices.map(v => new Vector3(v.x, v.y, v.z)));
 
+  const hiddenGetter = getGetter(hull.hidden);
+
+  const colorGetter = {r:getGetter(hull.color.r), g:getGetter(hull.color.g), b: getGetter(hull.color.b), a:getGetter(hull.color.a)}
+
   useFrame(useCallback(() => {
     // Outside of react rendering, adjust the positions of all tfs.
     const time = clock.getElapsed() * 1000;
-    updateShapeMaterial(backRef, hull.color, time);
-    updateShapeMaterial(frontRef, hull.color, time);
+    updateShapeMaterial(backRef, colorGetter, time);
+    updateShapeMaterial(frontRef, colorGetter, time);
     const currentVertices = typeof vertices === 'function' ? vertices(time) : vertices;
     if (currentVertices !== initialVertices) {
       const newGeom = new ConvexGeometry(currentVertices.map(v => new Vector3(v.x, v.y, v.z)));
       frontRef.current.geometry = newGeom;
       backRef.current.geometry = newGeom;
     }
-    const visible = typeof hull.hidden === 'function' ? !hull.hidden(time) : !hull.hidden;
+    const visible = hiddenGetter !== null && hiddenGetter !== undefined ? !hiddenGetter(time) : null ;
     frontRef.current.visible = visible;
     backRef.current.visible = visible;
 

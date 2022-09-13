@@ -5,7 +5,7 @@ import { ARROW_GEOM } from "./Util/StandardMeshes";
 import { MaterialMaker, GhostMaterial } from './Util/MaterialMaker';
 // import { Quaternion } from 'three';
 import { useSceneStore } from './SceneContext';
-import { useCombinedRefs } from "./Util/Helpers";
+import { useCombinedRefs,getGetter } from "./Util/Helpers";
 // import shallow from "zustand/shallow";
 // const STANDARD_ROTATION = new Quaternion(0,0,1,0)
 export default forwardRef(({ objectKey, displayTfs, position, rotation, scale, ghost, highlightColor, children }, forwardedRef) => {
@@ -19,26 +19,47 @@ export default forwardRef(({ objectKey, displayTfs, position, rotation, scale, g
 
   const clock = useSceneStore(state=>state.clock)
 
+  const positionXGetter =  getGetter(tf.position.x);
+  const positionYGetter =  getGetter(tf.position.y);
+  const positionZGetter =  getGetter(tf.position.z);
+
+  const rotationXGetter =  getGetter(tf.rotation.x);
+  const rotationYGetter =  getGetter(tf.rotation.y);
+  const rotationZGetter =  getGetter(tf.rotation.z);
+  const rotationWGetter =  getGetter(tf.rotation.w);
+
+  const scaleXGetter =  getGetter(tf.scale.x);
+  const scaleYGetter =  getGetter(tf.scale.y);
+  const scaleZGetter =  getGetter(tf.scale.z);
+
+  
+
+  // console.log("positionXGetter" , positionXGetter);
+  // console.log("positionYGetter" , positionYGetter);
+  // console.log("positionZGetter" , positionZGetter);
+
   useFrame(useCallback(() => {
     // Outside of react rendering, adjust the positions of all tfs.
     const time = clock.getElapsed() * 1000;
+    //console.log("positionXGetter(time)" , positionXGetter(time));
+    //console.log("positionX" , position);
     if (ref.current) {
       // console.log(ref.current)
       ref.current.position.set(
-        position ? position.x : typeof tf.position.x === 'function' ? tf.position.x(time) : tf.position.x,
-        position ? position.y : typeof tf.position.y === 'function' ? tf.position.y(time) : tf.position.y,
-        position ? position.z : typeof tf.position.z === 'function' ? tf.position.z(time) : tf.position.z,
+        position ? position.x : positionXGetter(time),
+        position ? position.y : positionYGetter(time),
+        position ? position.z : positionZGetter(time), 
       );
       ref.current.quaternion.set(
-        rotation ? rotation.x : typeof tf.rotation.x === 'function' ? tf.rotation.x(time) : tf.rotation.x,
-        rotation ? rotation.y : typeof tf.rotation.y === 'function' ? tf.rotation.y(time) : tf.rotation.y,
-        rotation ? rotation.z : typeof tf.rotation.z === 'function' ? tf.rotation.z(time) : tf.rotation.z,
-        rotation ? rotation.w : typeof tf.rotation.w === 'function' ? tf.rotation.w(time) : tf.rotation.w
+        rotation ? rotation.x : rotationXGetter(time),
+        rotation ? rotation.y : rotationYGetter(time),
+        rotation ? rotation.z : rotationZGetter(time),
+        rotation ? rotation.w : rotationWGetter(time),
       );
       ref.current.scale.set(
-        scale ? scale.x : !tf.scale ? 0 : typeof tf.scale.x === 'function' ? tf.scale.x(time) : tf.scale.x,
-        scale ? scale.y : !tf.scale ? 0 : typeof tf.scale.y === 'function' ? tf.scale.y(time) : tf.scale.y,
-        scale ? scale.z : !tf.scale ? 0 : typeof tf.scale.z === 'function' ? tf.scale.z(time) : tf.scale.z,
+        scale ? scale.x : !tf.scale ? 0 : scaleXGetter(time),
+        scale ? scale.y : !tf.scale ? 0 : scaleYGetter(time),
+        scale ? scale.z : !tf.scale ? 0 : scaleZGetter(time),
       );
     }
   },[tf, position, rotation, scale, ref]));
@@ -98,4 +119,3 @@ export function GizmoTF({ displayTfs, children }) {
     </group>
   );
 };
-
