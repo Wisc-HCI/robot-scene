@@ -1,10 +1,11 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState, useCallback, memo } from 'react';
 import { useThree, } from '@react-three/fiber';
 import { TransformControls as TransformControlsImpl } from 'three/examples/jsm/controls/TransformControls';
 import { useSceneStore } from '../SceneContext';
 import pick from 'lodash.pick';
 // import { renderTree } from './Helpers';
 import Tree from '../Tree';
+import shallow from 'zustand/shallow';
 
 const transformOnlyPropNames = [
   'enabled',
@@ -30,7 +31,7 @@ const renderTreePropNames = [
   'highlightColor'
 ]
 
-export const TransformableObject = ({ camera, objectInfo, highlightColor, translateSnap, rotateSnap, scaleSnap, onDragStart, onDragEnd, ...otherProps }) => {
+export const TransformableObject = memo(({ camera, objectInfo, highlightColor, translateSnap, rotateSnap, scaleSnap, onDragStart, onDragEnd, ...otherProps }) => {
   const transformProps = pick(otherProps, transformOnlyPropNames);
   const renderTreeProps = pick(otherProps, renderTreePropNames);
   // const tfs = renderTreeProps.tfs;
@@ -70,7 +71,7 @@ export const TransformableObject = ({ camera, objectInfo, highlightColor, transl
   const [rotation, setRotation] = useState(null);
   const [scale, setScale] = useState(null);
 
-  const onMove = useSceneStore(state => state.onMove);
+  const onMove = useSceneStore(state => state.onMove,shallow);
 
   useEffect(() => {
     const callback = (event) => {
@@ -129,7 +130,7 @@ export const TransformableObject = ({ camera, objectInfo, highlightColor, transl
 
   return controls ? (
     <>
-      <primitive ref={ref} dispose={undefined} object={controls} {...transformProps} />
+      <primitive ref={ref} object={controls} {...transformProps} />
       <Tree
         {...renderTreeProps}
         activeTf='world'
@@ -143,4 +144,4 @@ export const TransformableObject = ({ camera, objectInfo, highlightColor, transl
       />
     </>
   ) : null
-}
+})

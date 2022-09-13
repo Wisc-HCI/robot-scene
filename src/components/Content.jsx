@@ -129,8 +129,10 @@ function Content({
   );
 
   const movableStuff = [...items, ...tfs].filter(
-    (item) => ["translate", "rotate", "scale"].indexOf(item.transformMode) > -1
+    (item) => ["translate", "rotate", "scale"].includes(item.transformMode)
   );
+
+  // console.log('movablestuff',movableStuff);
 
   const ambientLightRef = useRef();
   const pointLightRef = useRef();
@@ -211,9 +213,9 @@ function Content({
           ))}
       </group>
 
-      {movableStuff.map((movableObject, idx) => (
+      {movableStuff.map((movableObject) => (
         <TransformableObject
-          key={`movableObjectTransform-${idx}`}
+          key={`movableObjectTransform-${movableObject.key}`}
           objectInfo={movableObject}
           mode={movableObject.transformMode}
           displayTfs={displayTfs}
