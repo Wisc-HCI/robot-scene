@@ -1,6 +1,9 @@
 import React, { useLayoutEffect } from 'react';
 import Scene from '../components/Scene';
 import { useDefaultSceneStore } from '../components';
+import { Quaternion, Euler, Vector3 } from 'three';
+import { get } from 'lodash';
+import { range } from 'lodash';
 
 export default {
     title: 'MoreControls',
@@ -8,13 +11,21 @@ export default {
 }
 
 const Template = (args) => {
-    const { tfs, items, hulls, lines, texts, ...otherArgs } = args;
+    const { tfs, lines, texts, angle, length, rangeInputVal, scalarInputVal, range, ...otherArgs } = args;
 
     const [play, pause, reset] = useDefaultSceneStore(state=>[state.play,state.pause,state.reset]);
 
     useLayoutEffect(() => {
+        const hulls = {
+            angleFeedback: getHullMesh(length,angle)
+        }
+    
+        const items = {
+            ...getScalarInputItems(range,scalarInputVal),
+            ...getRangeInputItems(range,rangeInputVal)
+        }
         useDefaultSceneStore.setState({ tfs, items, hulls, lines, texts })
-    }, [tfs, items, hulls, lines, texts])
+    }, [tfs, lines, texts, angle, length, range, scalarInputVal, rangeInputVal])
 
     return (
         <div style={{ height: 'calc(100vh - 3rem)', width: 'calc(100vw - 2rem)' }}>
@@ -32,96 +43,155 @@ const Template = (args) => {
         </div>)
 };
 
+const getHullMesh = (length,angle)=>{
+    const origin = new Quaternion();
+    const eulerA = new Euler(0,Math.PI/2,0);
+    const qA = origin.clone().rotateTowards(new Quaternion().setFromEuler(eulerA),angle);
+    const qB = origin.clone().rotateTowards(new Quaternion().setFromEuler(eulerA),angle/2);
+    const centralVec = new Vector3(0,0,length);
+    const vecA = centralVec.clone().applyQuaternion(qA);
+    const vecB = centralVec.clone().applyQuaternion(qB);
+
+    const points = [
+        {x:0,y:0,z:0},
+        {x:centralVec.x,y:centralVec.y,z:centralVec.z},
+        {x:vecA.x,y:vecA.y,z:vecA.z},
+        ...range(0,2*Math.PI,Math.PI/6).map(a=>{
+            return {x: vecA.x * Math.sin(a), y: vecA.x * Math.cos(a), z: vecA.z}
+        }),
+        ...range(0,2*Math.PI,Math.PI/6).map(a=>{
+            return {x: vecB.x * Math.sin(a), y: vecB.x * Math.cos(a), z: vecB.z}
+        })
+    ]
+    return {
+        frame: 'world',
+        name: 'Robot Space Usage',
+        vertices: points,
+        color: { r: 10, g: 200, b: 235, a: 0.7 },
+        wireframe: false
+    }
+}
+
+const getScalarInputItems = (range,value) => {
+    const z = (value-range[0])/(range[1]-range[0]) * .25 - (0.25/2);
+    return {
+        scalarInputHousing: {
+            shape: "capsule",
+            name: "Input Housing",
+            frame: "movingFrame1",
+            position: { x: 0, y: 0.05, z: 0 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: { r: 100, g: 100, b: 100, a: 0.3},
+            scale: { x:1, y: 1, z: 1 },
+            shapeParams: {height: 0.25, radius:0.05},
+            highlighted: false
+        },
+        scalarInputIndicator: {
+            shape: "sphere",
+            name: "Input Indicator",
+            frame: "movingFrame1",
+            position: { x: 0, y: 0.05, z },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: { r: 0, g: 255, b: 0, a: 1 },
+            scale: { x:0.09, y: 0.09, z: 0.09 },
+            transformMode: 'translate-z',
+            highlighted: false
+        }
+    }
+}
+
+const getRangeInputItems = (range,valueRange) => {
+    const zSphereTop = (valueRange[1]-range[0])/(range[1]-range[0]) * .25 - (0.25/2);
+    const zSphereBottom = (valueRange[0]-range[0])/(range[1]-range[0]) * .25 - (0.25/2);
+    const rangeHeight = (valueRange[1]-valueRange[0])/(range[1]-range[0])*0.24;
+
+    return {
+        rangeInputHousing: {
+            shape: "capsule",
+            name: "Input Housing",
+            frame: "movingFrame2",
+            position: { x: 0, y: 0.05, z: 0 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: { r: 100, g: 100, b: 100, a: 0.3},
+            scale: { x:1, y: 1, z: 1 },
+            shapeParams: {height: 0.25, radius:0.05},
+            highlighted: false
+        },
+        rangeInputRange: {
+            shape: "capsule",
+            name: "Input Housing",
+            frame: "movingFrame2",
+            position: { x: 0, y: 0.05, z: (zSphereTop+zSphereBottom)/2 },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: { r: 0, g: 255, b: 0, a: 1 },
+            scale: { x:1, y: 1, z: 1 },
+            shapeParams: {height: rangeHeight, radius:0.045},
+            highlighted: false
+        },
+        bottomRangeInputIndicator: {
+            shape: "sphere",
+            name: "Input Indicator Bottom",
+            frame: "movingFrame2",
+            position: { x: 0, y: 0.05, z: zSphereBottom },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: { r: 0, g: 255, b: 0, a: 1 },
+            scale: { x:0.09, y: 0.09, z: 0.09 },
+            transformMode: 'translate-z',
+            highlighted: false
+        },
+        topRangeInputIndicator: {
+            shape: "sphere",
+            name: "Input Indicator Top",
+            frame: "movingFrame2",
+            position: { x: 0, y: 0.05, z: zSphereTop },
+            rotation: { w: 1, x: 0, y: 0, z: 0 },
+            color: { r: 0, g: 255, b: 0, a: 1 },
+            scale: { x:0.09, y: 0.09, z: 0.09 },
+            transformMode: 'translate-z',
+            highlighted: false
+        },
+    }
+}
+
 export const MoreControls = Template.bind({});
 MoreControls.args = {
     tfs: {
-        movingFrame: {
+        movingFrame1: {
             frame: 'world',
-            position: { x: (time => Math.cos(time / 1000)), y: (time) => Math.sin(time / 1000), z: 0 },
+            position: { x: (time => Math.cos(time / 5000)), y: (time) => Math.sin(time / 5000), z: 0.5 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
-            scale: { x: time => 0.25*Math.cos(time / 1000)+1, y: 1, z: 1 },
-        }
-    },
-    items: {
-        colorshiftlift: {
-            shape: "cube",
-            name: "ColorShift/Lift",
-            frame: "movingFrame",
-            position: { x: 0, y: 0, z: (time) => Math.sin(time / 1000) + 1 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: (time) => (Math.sin(time / 1000) / 2 + 0.5) * 255, g: 10, b: 10, a: 1 },
-            scale: { x: 0.5, y: 0.5, z: 0.5 },
-            highlighted: true
+            scale: { x: 1, y: 1, z: 1 },
         },
-        opacity: {
-            shape: "cube",
-            name: "Opacity",
-            frame: "movingFrame",
-            position: { x: 1, y: 1, z: 1 },
+        movingFrame2: {
+            frame: 'world',
+            position: { x: (time => Math.sin(time / 5000)), y: (time) => Math.cos(time / 5000), z: 0.5 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 10, g: 10, b: 10, a: (time) => (Math.sin(time / 1000) / 2 + 0.5) },
-            scale: { x: 0.5, y: 0.5, z: 0.5 },
-            highlighted: false
-        },
-        scale: {
-            shape: "cube",
-            name: "Scale",
-            frame: "movingFrame",
-            position: { x: 1, y: 0, z: 1 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 10, g: 255, b: 10, a: 1 },
-            scale: { x: 0.5, y: (time) => Math.sin(time / 1000) / 2 + 1, z: 0.5 },
-            highlighted: false
-        },
-        hidden: {
-            shape: "cube",
-            name: "Hidden",
-            frame: "movingFrame",
-            position: { x: 0, y: 1, z: 1 },
-            rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 10, g: 10, b: 255, a: 1 },
-            scale: { x: 0.5, y: 0.5, z: 0.5 },
-            hidden: (time) => Math.sin(time / 1000) > 0
+            scale: { x: 1, y: 1, z: 1 },
         }
     },
     lines: {},
-    hulls: {},
     texts: {
-        colorshiftlift: {
-            value: "ColorShift/Lift",
-            frame: "movingFrame",
-            position: { x: 0, y: 0, z: (time) => Math.sin(time / 1000) + 1.5 },
-            color: { r: (time) => (Math.sin(time / 1000) / 2 + 0.5) * 255, g: 10, b: 10, a: 1 },
-        },
-        opacity: {
-            value: "Opacity",
-            frame: "movingFrame",
-            position: { x: 1, y: 1, z: 1.5 },
-            color: { r: 10, g: 10, b: 10, a: (time) => (Math.sin(time / 1000) / 2 + 0.5) },
-        },
-        scale: {
-            value: "Scale",
-            frame: "movingFrame",
-            position: { x: 1, y: 0, z: 1.5 },
-            color: { r: 10, g: 255, b: 10, a: 1 },
-        },
-        hidden: {
-            value: "Hidden",
-            frame: "movingFrame",
-            position: { x: 0, y: 1, z: 1.5 },
-            color: { r: 10, g: 10, b: 255, a: 1 },
-            hidden: (time) => Math.sin(time / 1000) > 0
+        inputText: {
+            value: "Input Text",
+            frame: "movingFrame1",
+            position: { x: 0, y: 0, z: 0.5 },
+            color: { r: 0, g: 255, b: 0, a: 1 },
         }
     },
-    displayTfs: true,
+    displayTfs: false,
     displayGrid: true,
     isPolar: false,
     backgroundColor: '#d0d0d0',
     planeColor: '#a8a8a8',
     highlightColor: '#ffffff',
-    plane: -0.75,
-    fov: 60,
+    plane: 0,
+    fov: 90,
     ar: false,
     vr: false,
+    angle: Math.PI/6,
+    length: 0.5,
+    scalarInputVal: 0.5,
+    rangeInputVal: [.2,1],
+    range: [0,2],
     onPointerMissed: () => console.log('Missed Click')
 }

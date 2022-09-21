@@ -129,7 +129,7 @@ function Content({
   );
 
   const movableStuff = [...items, ...tfs].filter(
-    (item) => ["translate", "rotate", "scale"].includes(item.transformMode)
+    (item) => ["translate", "rotate", "scale","translate-x","translate-y","translate-z","rotate-x","rotate-y","rotate-z","scale-x","scale-y","scale-z"].includes(item.transformMode)
   );
 
   // console.log('movablestuff',movableStuff);

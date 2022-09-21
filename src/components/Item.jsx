@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, forwardRef } from 'react';
+import React, { useRef, useCallback, forwardRef, memo } from 'react';
 import { useFrame } from "@react-three/fiber";
 import { Html } from '@react-three/drei';
 // import { MeshLookup, MeshLookupTable } from './MeshLookup';
@@ -14,8 +14,8 @@ import { useMesh } from './MeshContext';
 
 // const GENERIC_SHAPES = ['cube', 'cylinder', 'sphere', 'capsule', 'arrow'];
 
-export default forwardRef(({ objectKey, highlightColor, position, rotation, scale, ghost }, forwardedRef) => {
-
+export default memo(forwardRef(({ objectKey, highlightColor, position, rotation, scale, ghost }, forwardedRef) => {
+  
   const innerRef = useRef(null);
   const ref = useCombinedRefs(forwardedRef, innerRef);
 
@@ -83,9 +83,9 @@ export default forwardRef(({ objectKey, highlightColor, position, rotation, scal
     </Select>
 
   )
-})
+}))
 
-const Part = ({ part, objectKey, ghost, highlightColor }) => {
+const Part = memo(({ part, objectKey, ghost, highlightColor }) => {
 
   const wireframe = useSceneStore(useCallback(state => state.items[objectKey].wireframe, [objectKey]));
   const color = useSceneStore(useCallback(state => state.items[objectKey].color, [objectKey]));
@@ -184,9 +184,9 @@ const Part = ({ part, objectKey, ghost, highlightColor }) => {
   }
 
 
-}
+})
 
-const GroupOrPart = ({ idx, groupOrPart, ghost, objectKey, highlightColor }) => {
+const GroupOrPart = memo(({ idx, groupOrPart, ghost, objectKey, highlightColor }) => {
   if (groupOrPart.type === 'group') {
     return (
       <group key={idx} up={[0, 0, 1]} position={groupOrPart.position} rotation={groupOrPart.rotation} scale={groupOrPart.scale}>
@@ -206,4 +206,4 @@ const GroupOrPart = ({ idx, groupOrPart, ghost, objectKey, highlightColor }) => 
       <Part key={idx} part={groupOrPart} objectKey={objectKey} highlightColor={highlightColor} ghost={ghost} />
     )
   }
-}
+})

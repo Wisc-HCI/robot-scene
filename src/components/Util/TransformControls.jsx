@@ -10,15 +10,11 @@ import shallow from 'zustand/shallow';
 const transformOnlyPropNames = [
   'enabled',
   'axis',
-  'mode',
   'translationSnap',
   'rotationSnap',
   'scaleSnap',
   'space',
-  'size',
-  'showX',
-  'showY',
-  'showZ'
+  'size'
 ]
 
 const renderTreePropNames = [
@@ -31,7 +27,7 @@ const renderTreePropNames = [
   'highlightColor'
 ]
 
-export const TransformableObject = memo(({ camera, objectInfo, highlightColor, translateSnap, rotateSnap, scaleSnap, onDragStart, onDragEnd, ...otherProps }) => {
+export const TransformableObject = memo(({ camera, objectInfo, highlightColor, translateSnap, rotateSnap, scaleSnap, onDragStart, onDragEnd, mode, ...otherProps }) => {
   const transformProps = pick(otherProps, transformOnlyPropNames);
   const renderTreeProps = pick(otherProps, renderTreePropNames);
   // const tfs = renderTreeProps.tfs;
@@ -48,12 +44,13 @@ export const TransformableObject = memo(({ camera, objectInfo, highlightColor, t
       tfKey = tfData.frame;
     }
     return transforms;
-  }, [objectInfo]))
+  }, [objectInfo]),shallow)
 
   const ref = useRef();
   const target = useRef();
 
-
+  const startTransform = useSceneStore((state)=>pick(state[objectInfo.source][objectInfo.key],['position','rotation','scale']),shallow)
+  // console.log(startTransform)
 
   const gl = useThree(({ gl }) => gl)
   const defaultCamera = useThree(({ camera }) => camera)
@@ -65,11 +62,33 @@ export const TransformableObject = memo(({ camera, objectInfo, highlightColor, t
   controls.translationSnap = translateSnap;
   controls.rotationSnap = rotateSnap;
   controls.scaleSnap = scaleSnap;
+  if (mode?.includes('translate')) {
+    controls.mode = 'translate'
+  } else if (mode?.includes('rotate')) {
+    controls.mode = 'rotate'
+  } else if (mode?.includes('scale')) {
+    controls.mode = 'scale'
+  }
+  if (mode?.includes('-x')) {
+    controls.showY = false;
+    controls.showZ = false;
+  } else if (mode?.includes('-y')) {
+    controls.showX = false;
+    controls.showZ = false;
+  } else if (mode?.includes('-z')) {
+    controls.showX = false;
+    controls.showY = false;
+  }
   const [transforming, setTransforming] = useState(false)
 
-  const [position, setPosition] = useState(null);
-  const [rotation, setRotation] = useState(null);
-  const [scale, setScale] = useState(null);
+  const [transform,setTransform] = useState(startTransform);
+  const [update,setUpdate] = useState(false);
+
+  // const [position, setPosition] = useState(startTransform.position);
+  // const [rotation, setRotation] = useState(startTransform.rotation);
+  // const [scale, setScale] = useState(startTransform.scale);
+
+  useEffect(()=>{console.log('refreshing transform');setTransform(startTransform)},[startTransform,update]);
 
   const onMove = useSceneStore(state => state.onMove,shallow);
 
@@ -79,9 +98,12 @@ export const TransformableObject = memo(({ camera, objectInfo, highlightColor, t
       const rot = target?.current?.quaternion;
       const scl = target?.current?.scale;
       if (event.value && !transforming) {
-        setTransforming(true)
+        console.log('starting transform')
+        setTransforming(true);
+        setTransform({position:pos,rotation:rot,scale:scl});
         onDragStart && onDragStart()
       } else if (!event.value && transforming) {
+        console.log('stopping transform')
         setTransforming(false)
         onDragEnd && onDragEnd();
         onMove(
@@ -98,16 +120,12 @@ export const TransformableObject = memo(({ camera, objectInfo, highlightColor, t
             scale: scl ? { x: scl.x, y: scl.y, z: scl.z } : null
           }
         )
+        setUpdate(!update)
       }
-      if (pos) {
-        setPosition(pos);
-      }
-      if (rot) {
-        setRotation(rot);
-      }
-      if (scl) {
-        setScale(scl);
-      }
+      // else if (transforming) {
+      //   console.log('transforming')
+      //   // setTransform({position:pos,rotation:rot,scale:scl});
+      // }
 
 
     }
@@ -117,7 +135,7 @@ export const TransformableObject = memo(({ camera, objectInfo, highlightColor, t
     return () => {
       controls.removeEventListener('dragging-changed', callback)
     }
-  })
+  },[startTransform,transforming,objectInfo])
 
   useEffect(() => void controls?.attach(target.current), [target, controls])
 
@@ -140,7 +158,7 @@ export const TransformableObject = memo(({ camera, objectInfo, highlightColor, t
         targetSource={objectInfo.source}
         targetId={objectInfo.key}
         filterActive
-        customProps={{ position, rotation, scale }}
+        customProps={{ ...transform }}
       />
     </>
   ) : null
