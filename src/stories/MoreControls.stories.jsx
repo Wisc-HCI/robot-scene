@@ -1,35 +1,108 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import Scene from '../components/Scene';
-import { useDefaultSceneStore } from '../components';
+import { SceneSlice } from '../components';
 import { Quaternion, Euler, Vector3 } from 'three';
-import { get } from 'lodash';
-import { range } from 'lodash';
+import { range, clamp, toNumber, min } from 'lodash';
+import { subscribeWithSelector } from 'zustand/middleware'
+import { immer } from "zustand/middleware/immer";
+import create from "zustand";
+import shallow from 'zustand/shallow';
 
 export default {
     title: 'MoreControls',
     component: Scene,
 }
 
+const slice = (set,get,api) => ({
+    ...SceneSlice(set,get),
+    scalarValue: 1,
+    rangeValue: [0.5,1.5],
+    range: [0,2],
+    setScalarValue: (newScalarValue) => set({scalarValue:newScalarValue}),
+    setRangeValue: (newRangeValue) => set({rangeValue:newRangeValue}),
+    setRange: (newRange) => set({range:newRange}),
+    onMove: (id, source, worldTransform, localTransform) => set(state => {
+        if (['scalarInputIndicator','bottomRangeInputIndicator','topRangeInputIndicator'].includes(id)) {
+            // Special logic for handling the scalar and range inputs;
+            // First, update the z-position of the relevant indicator;
+            const value = clamp((10 * localTransform.position.z + 0.5) * (state.range[1]-state.range[0]) + state.range[0],state.range[0],state.range[1]);
+            if (id === 'scalarInputIndicator') {
+                state.scalarValue = value;
+                // Update Visuals
+                state.items[id].position.z = ((value - state.range[0]) / (state.range[1] - state.range[0])) * 0.1 - 0.05;
+                // Update the text above
+                state.texts.inputText.value = Math.round(value*100)/100;
+            } else {
+                console.log('handling range')
+                // Be robust to whether the dragged value is greater than or less than the various endpoints;
+                if (id == 'bottomRangeInputIndicator' && state.range[1] >= value) {
+                    // The bottom input was moved and remains lower than the upper value. Simply set the lower value to the new one.
+                    state.rangeValue[0] = value;
+                } else if (id == 'bottomRangeInputIndicator' && state.range[1] < value) {
+                    // The bottom input was moved and is now greater than the upper value. Set the new top to the new value, and set the previous top to be the new lower value.
+                    state.rangeValue[0] = state.rangeValue[1];
+                    state.rangeValue[1] = value
+                } else if (id == 'topRangeInputIndicator' && state.range[0] <= value) {
+                    // The top input was moved and remains greater than the lower value. Simply set the upper value to the new one.
+                    state.rangeValue[1] = value;
+                } else if (id == 'topRangeInputIndicator' && state.range[0] > value) {
+                    // The top input was moved and is now less than the lower value. Set the new bottom to the new value, and set the previous bottom to be the new upper value.
+                    state.rangeValue[1] = state.rangeValue[0];
+                    state.rangeValue[0] = value;
+                }
+                // Update visuals
+                state.items.topRangeInputIndicator.position.z = ((state.rangeValue[1] - state.range[0]) / (state.range[1] - state.range[0])) * 0.1 - 0.05;
+                state.items.bottomRangeInputIndicator.position.z = ((state.rangeValue[0] - state.range[0]) / (state.range[1] - state.range[0])) * 0.1 - 0.05;
+                state.items.rangeInputRange.position = {x:0,y:0.05,z:(state.items.topRangeInputIndicator.position.z+state.items.bottomRangeInputIndicator.position.z)/2};
+                state.items.rangeInputRange.shapeParams.height = (state.rangeValue[1]-state.rangeValue[0])/(state.range[1]-state.range[0])*0.09;
+                // Update the text above
+                state.texts.inputRangeText.value = `${Math.round(state.rangeValue[0]*100)/100}, ${Math.round(state.rangeValue[1]*100)/100}`;
+            } 
+        } else {
+            // Handle everything else
+            state[source][id].position = {...localTransform.position};
+            state[source][id].rotation = localTransform.quaternion;
+            state[source][id].rotation.x = localTransform.quaternion.x;
+            state[source][id].rotation.y = localTransform.quaternion.y;
+            state[source][id].rotation.z = localTransform.quaternion.z;
+            state[source][id].rotation.w = localTransform.quaternion.w;
+            state[source][id].scale = {...localTransform.scale};
+        }
+    }),
+})
+
+const useStore = create(immer(subscribeWithSelector(slice)));
+console.log('starting',useStore.getState())
+
 const Template = (args) => {
     const { tfs, lines, texts, angle, length, rangeInputVal, scalarInputVal, range, ...otherArgs } = args;
 
-    const [play, pause, reset] = useDefaultSceneStore(state=>[state.play,state.pause,state.reset]);
+    const [play, pause, reset] = useStore(state=>[state.play,state.pause,state.reset]);
+
+    // Define changeable versions of the two range inputs
+    const [scalarValue,setScalarValue] = useStore(state=>[state.scalarValue,state.setScalarValue],shallow);
+    const [rangeValue,setRangeValue] = useStore(state=>[state.rangeValue,state.setRangeValue],shallow);
+    const setRange = useStore(state=>state.setRange,shallow);
 
     useLayoutEffect(() => {
+
+        setScalarValue(scalarInputVal);
+        setRangeValue(rangeInputVal);
+        setRange(range);
         const hulls = {
             angleFeedback: getHullMesh(length,angle)
         }
     
         const items = {
-            ...getScalarInputItems(range,scalarInputVal),
-            ...getRangeInputItems(range,rangeInputVal)
+            ...getScalarInputItems(range,scalarValue),
+            ...getRangeInputItems(range,rangeValue)
         }
-        useDefaultSceneStore.setState({ tfs, items, hulls, lines, texts })
+        useStore.setState({ tfs, items, hulls, lines, texts })
     }, [tfs, lines, texts, angle, length, range, scalarInputVal, rangeInputVal])
 
     return (
         <div style={{ height: 'calc(100vh - 3rem)', width: 'calc(100vw - 2rem)' }}>
-            <Scene {...otherArgs} store={useDefaultSceneStore} />
+            <Scene {...otherArgs} store={useStore} />
             <div style={{textAlign:'center'}}>
                 <button onClick={()=>play()}>Play</button>
                 <button onClick={()=>play(0.5)}>Play (0.5x)</button>
@@ -72,70 +145,74 @@ const getHullMesh = (length,angle)=>{
     }
 }
 
-const getScalarInputItems = (range,value) => {
-    const z = (value-range[0])/(range[1]-range[0]) * .25 - (0.25/2);
+const getScalarInputItems = (rangeBounds,value,offset) => {
+    const z = ((value - rangeBounds[0]) / (rangeBounds[1] - rangeBounds[0])) * 0.1 - 0.05;
     return {
         scalarInputHousing: {
             shape: "capsule",
             name: "Input Housing",
             frame: "movingFrame1",
-            position: { x: 0, y: 0.05, z: 0 },
+            position: { x: 0, y: offset || 0.05, z: 0 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             color: { r: 100, g: 100, b: 100, a: 0.3},
             scale: { x:1, y: 1, z: 1 },
-            shapeParams: {height: 0.25, radius:0.05},
+            shapeParams: { height: 0.1, radius: 0.02 },
             highlighted: false
         },
         scalarInputIndicator: {
             shape: "sphere",
             name: "Input Indicator",
             frame: "movingFrame1",
-            position: { x: 0, y: 0.05, z },
+            position: { x: 0, y: offset || 0.05, z },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 0, g: 255, b: 0, a: 1 },
-            scale: { x:0.09, y: 0.09, z: 0.09 },
+            color: { r: 0, g: 0, b: 255, a: 1 },
+            scale: { x: 0.03, y: 0.03, z: 0.03 },
             transformMode: 'translate-z',
             highlighted: false
         }
     }
 }
 
-const getRangeInputItems = (range,valueRange) => {
-    const zSphereTop = (valueRange[1]-range[0])/(range[1]-range[0]) * .25 - (0.25/2);
-    const zSphereBottom = (valueRange[0]-range[0])/(range[1]-range[0]) * .25 - (0.25/2);
-    const rangeHeight = (valueRange[1]-valueRange[0])/(range[1]-range[0])*0.24;
+const getRangeInputItems = (rangeBounds,valueRange,offset) => {
+    const zSphereTop = (valueRange[1]-rangeBounds[0])/(rangeBounds[1]-rangeBounds[0]) * .1 - 0.05;
+    const zSphereBottom = (valueRange[0]-rangeBounds[0])/(rangeBounds[1]-rangeBounds[0]) * .1 - 0.05;
+    const rangeHeight = (valueRange[1]-valueRange[0])/(rangeBounds[1]-rangeBounds[0])*0.09;
 
     return {
         rangeInputHousing: {
             shape: "capsule",
             name: "Input Housing",
             frame: "movingFrame2",
-            position: { x: 0, y: 0.05, z: 0 },
+            position: { x: 0, y: offset || 0.05, z: 0 },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
             color: { r: 100, g: 100, b: 100, a: 0.3},
             scale: { x:1, y: 1, z: 1 },
-            shapeParams: {height: 0.25, radius:0.05},
+            shapeParams: { height: 0.1, radius: 0.02 },
             highlighted: false
         },
         rangeInputRange: {
             shape: "capsule",
             name: "Input Housing",
             frame: "movingFrame2",
-            position: { x: 0, y: 0.05, z: (zSphereTop+zSphereBottom)/2 },
+            position: {
+                x: 0,
+                y: offset || 0.05,
+                z: (zSphereTop + zSphereBottom) / 2,
+              },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 0, g: 255, b: 0, a: 1 },
+            color: { r: 0, g: 0, b: 255, a: 1 },
             scale: { x:1, y: 1, z: 1 },
-            shapeParams: {height: rangeHeight, radius:0.045},
+            shapeParams: { height: rangeHeight, radius: 0.015 },
             highlighted: false
         },
         bottomRangeInputIndicator: {
             shape: "sphere",
             name: "Input Indicator Bottom",
             frame: "movingFrame2",
-            position: { x: 0, y: 0.05, z: zSphereBottom },
+            position: { x: 0, y: offset || 0.05, z: zSphereBottom },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 0, g: 255, b: 0, a: 1 },
-            scale: { x:0.09, y: 0.09, z: 0.09 },
+            color: { r: 0, g: 0, b: 255, a: 1 },
+            scale: { x: 0.03, y: 0.03, z: 0.03 },
             transformMode: 'translate-z',
             highlighted: false
         },
@@ -143,10 +220,10 @@ const getRangeInputItems = (range,valueRange) => {
             shape: "sphere",
             name: "Input Indicator Top",
             frame: "movingFrame2",
-            position: { x: 0, y: 0.05, z: zSphereTop },
+            position: { x: 0, y: offset || 0.05, z: zSphereTop },
             rotation: { w: 1, x: 0, y: 0, z: 0 },
-            color: { r: 0, g: 255, b: 0, a: 1 },
-            scale: { x:0.09, y: 0.09, z: 0.09 },
+            color: { r: 0, g: 0, b: 255, a: 1 },
+            scale: { x: 0.03, y: 0.03, z: 0.03 },
             transformMode: 'translate-z',
             highlighted: false
         },
@@ -172,10 +249,16 @@ MoreControls.args = {
     lines: {},
     texts: {
         inputText: {
-            value: "Input Text",
+            value: "0.5",
             frame: "movingFrame1",
-            position: { x: 0, y: 0, z: 0.5 },
-            color: { r: 0, g: 255, b: 0, a: 1 },
+            position: { x: 0, y: 0, z: 0.25 },
+            color: { r: 0, g: 0, b: 255, a: 1 },
+        },
+        inputRangeText: {
+            value: "0.5, 1.5",
+            frame: "movingFrame2",
+            position: { x: 0, y: 0, z: 0.25 },
+            color: { r: 0, g: 0, b: 255, a: 1 },
         }
     },
     displayTfs: false,
@@ -191,7 +274,7 @@ MoreControls.args = {
     angle: Math.PI/6,
     length: 0.5,
     scalarInputVal: 0.5,
-    rangeInputVal: [.2,1],
+    rangeInputVal: [.5,1.5],
     range: [0,2],
     onPointerMissed: () => console.log('Missed Click')
 }

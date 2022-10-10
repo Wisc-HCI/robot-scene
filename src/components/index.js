@@ -7,6 +7,7 @@ import {
   ImmerSceneSlice,
   useDefaultSceneStore,
 } from "./defaultStore";
+import { Timer } from "./Util/Timer";
 
 export {
   Scene,
@@ -17,5 +18,6 @@ export {
   SceneProvider,
   MeshProvider,
   Content,
-  useSceneStore
+  useSceneStore,
+  Timer
 };

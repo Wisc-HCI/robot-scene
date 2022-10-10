@@ -1,19 +1,8 @@
 import create from "zustand";
 import { subscribeWithSelector } from 'zustand/middleware'
-import produce from "immer";
+import { immer } from "zustand/middleware/immer";
 import { Timer } from "./Util/Timer";
 import lodash from 'lodash';
-
-const immer = (config) => (set, get, api) =>
-    config(
-        (partial, replace) => {
-            const nextState =
-                typeof partial === "function" ? produce(partial) : partial;
-            return set(nextState, replace);
-        },
-        get,
-        api
-    );
 
 export const SceneSlice = (set, get) => ({
     clock: new Timer(),
@@ -22,6 +11,7 @@ export const SceneSlice = (set, get) => ({
     hulls: {},
     lines: {},
     texts: {},
+    widgets: {},
     onMove: (id, source, worldTransform, localTransform) => set(state => {
         console.log(localTransform)
         state[source][id].position = {...localTransform.position};
