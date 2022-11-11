@@ -7,7 +7,8 @@ import {
   SceneProvider,
   MeshProvider,
   Content,
-  useSceneStore as innerUseSceneStore
+  useSceneStore as innerUseSceneStore,
+  Timer
 } from "./components";
 export {
   Scene,
@@ -18,5 +19,6 @@ export {
   SceneProvider,
   MeshProvider,
   Content,
-  innerUseSceneStore
+  innerUseSceneStore,
+  Timer
 };

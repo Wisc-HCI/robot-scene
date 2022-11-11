@@ -128,6 +128,21 @@ function Content({
     comparisonFn
   );
 
+  const widgets = useSceneStore(
+    (state) =>
+      sortBy(
+        Object.entries(state.widgets).map(([key, text]) => {
+          return {
+            key,
+            frame: text.frame,
+            source: "widgets",
+          };
+        }),
+        (o) => o.key
+      ),
+    comparisonFn
+  );
+
   const movableStuff = [...items, ...tfs].filter(
     (item) => ["translate", "rotate", "scale","translate-x","translate-y","translate-z","rotate-x","rotate-y","rotate-z","scale-x","scale-y","scale-z"].includes(item.transformMode)
   );
@@ -196,6 +211,7 @@ function Content({
           allLines={lines}
           allHulls={hulls}
           allTexts={texts}
+          allWidgets={widgets}
           highlightColor={highlightColor}
         />
       </Selection>
@@ -224,6 +240,7 @@ function Content({
           allLines={lines}
           allHulls={hulls}
           allTexts={texts}
+          allWidgets={widgets}
           translateSnap={translateSnap}
           rotateSnap={rotateSnap}
           scaleSnap={scaleSnap}
