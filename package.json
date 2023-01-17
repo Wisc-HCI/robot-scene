@@ -1,7 +1,7 @@
 {
   "name": "robot-scene",
   "private": true,
-  "version": "0.9.8",
+  "version": "0.9.9",
   "main": "./dist/robot-scene.umd.js",
   "module": "./dist/robot-scene.es.js",
   "exports": {
@@ -14,12 +14,12 @@
     "dist"
   ],
   "scripts": {
-    "start": "start-storybook -p 6006",
+    "start": "storybook dev -p 6006",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook -s public --output-dir docs",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build -s public --output-dir docs",
     "generate-all": "npm run build-storybook && vite build"
   },
   "dependencies": {
@@ -37,18 +37,19 @@
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
-    "@storybook/addon-actions": "^6.5.10",
-    "@storybook/addon-essentials": "^6.5.10",
-    "@storybook/addon-interactions": "^6.5.10",
-    "@storybook/addon-links": "^6.5.10",
-    "@storybook/builder-vite": "^0.1.41",
-    "@storybook/react": "^6.5.10",
-    "@storybook/testing-library": "^0.0.13",
-    "@storybook/theming": "^6.5.10",
+    "@storybook/addon-actions": "^7.0.0-beta.29",
+    "@storybook/addon-essentials": "^7.0.0-beta.29",
+    "@storybook/addon-interactions": "^7.0.0-beta.29",
+    "@storybook/addon-links": "^7.0.0-beta.29",
+    "@storybook/react": "^7.0.0-beta.29",
+    "@storybook/react-vite": "^7.0.0-beta.29",
+    "@storybook/testing-library": "^0.0.14-next.1",
+    "@storybook/theming": "^7.0.0-beta.29",
     "@types/react": "^18.0.19",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.1.0",
     "babel-loader": "^8.2.5",
+    "storybook": "^7.0.0-beta.29",
     "three": "^0.143.0",
     "three-stdlib": "^2.15.0",
     "typescript": "^4.8.3",

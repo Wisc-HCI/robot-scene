@@ -22,10 +22,10 @@ export const SceneSlice = (set, get) => ({
         state[source][id].rotation.w = localTransform.quaternion.w;
         state[source][id].scale = {...localTransform.scale};
     }),
-    onClick: (id,hidden,event) => {
+    onClick: (id,hidden,object,event) => {
 
         if (!hidden) {
-            console.log(`id: ${id} clicked!`);
+            console.log(`id: ${id} clicked!`,object);
         }
         if (get().items[id] && !hidden) {
             event.stopPropagation()

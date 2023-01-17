@@ -2,7 +2,7 @@ import React, { useRef, useCallback, forwardRef, memo } from 'react';
 import { useFrame } from "@react-three/fiber";
 import { Html } from '@react-three/drei';
 // import { MeshLookup, MeshLookupTable } from './MeshLookup';
-import { BackSide, FrontSide } from 'three';
+import { BackSide, FrontSide, Vector3, Quaternion } from 'three';
 // import { GhostMaterial } from './Util/MaterialMaker';
 import { updateShapeMaterial, useCombinedRefs } from './Util/Helpers';
 import { useSceneStore } from './SceneContext';
@@ -59,7 +59,21 @@ export default memo(forwardRef(({ objectKey, highlightColor, position, rotation,
         <group
           up={[0, 0, 1]}
           rotation={[Math.PI / 2, 0, 0]}
-          onPointerDown={(e) => { onClick(objectKey, !ref.current.visible, e) }}
+          onPointerDown={(e) => { onClick(
+            objectKey, 
+            !ref.current.visible, 
+            {
+              local:{
+                position:ref.current.position,
+                rotation:ref.current.quaternion
+              },
+              world:{
+                position:ref.current.getWorldPosition(new Vector3()),
+                rotation:ref.current.getWorldQuaternion(new Quaternion())
+              }
+            }, 
+            e) 
+          }}
           onPointerOver={(e) => { onPointerOver(objectKey, !ref.current.visible, e) }}
           onPointerOut={(e) => { onPointerOut(objectKey, !ref.current.visible, e) }}>
           {content.map((groupOrPart, idx) => (

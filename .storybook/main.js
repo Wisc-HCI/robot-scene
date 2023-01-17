@@ -1,22 +1,17 @@
 module.exports = {
-  "stories": [
-    "../src/**/*.stories.mdx",
-    "../src/**/*.stories.@(js|jsx|ts|tsx)"
-  ],
-  "addons": [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions"
-  ],
-  "framework": "@storybook/react",
-  "core": {
-    "builder": "@storybook/builder-vite"
+  "stories": ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
+  "addons": ["@storybook/addon-links", "@storybook/addon-essentials", "@storybook/addon-interactions"],
+  "framework": {
+    name: "@storybook/react-vite",
+    options: {}
   },
   "features": {
     "storyStoreV7": true
   },
-  async viteFinal(config, {configType}) {
-    config.assetsInclude = ["**/*.gltf", "**/*.glb"]
-    return config
+  async viteFinal(config, {
+    configType
+  }) {
+    config.assetsInclude = ["**/*.gltf", "**/*.glb"];
+    return config;
   }
-}
+};
