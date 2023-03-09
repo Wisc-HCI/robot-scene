@@ -5,7 +5,7 @@ import { useSceneStore } from '../SceneContext';
 import pick from 'lodash.pick';
 // import { renderTree } from './Helpers';
 import Tree from '../Tree';
-import shallow from 'zustand/shallow';
+import {shallow} from 'zustand/shallow';
 
 const transformOnlyPropNames = [
   'enabled',
@@ -24,6 +24,7 @@ const renderTreePropNames = [
   'allLines',
   'allHulls',
   'allTexts',
+  'allPoints',
   'highlightColor'
 ]
 

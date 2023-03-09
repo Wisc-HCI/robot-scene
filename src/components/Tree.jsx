@@ -4,9 +4,10 @@ import Item from "./Item";
 import Line from "./Line";
 import Hull from "./Hull";
 import Text from "./Text";
+import PointCloud from "./PointCloud";
 
 const Tree = memo(({
-    activeTf, displayTfs, allTfs, allItems, allLines, allHulls, allTexts,
+    activeTf, displayTfs, allTfs, allItems, allLines, allHulls, allTexts, allPoints,
     highlightColor, ghosts, targetRef, targetId, targetSource, filterActive, tfFilter, customProps }) => {
 
     const TFComponent = activeTf === 'world'
@@ -32,6 +33,7 @@ const Tree = memo(({
                     allLines={allLines}
                     allHulls={allHulls}
                     allTexts={allTexts}
+                    allPoints={allPoints}
                     highlightColor={highlightColor}
                     ghosts={ghosts}
                     targetRef={targetRef}
@@ -94,6 +96,19 @@ const Tree = memo(({
                             highlightColor={highlightColor}
                             ref={text.key === targetId ? targetRef : null}
                             {...textProps}
+                        />)
+                } else return null
+            })}
+            {allPoints.filter(v => v.frame === activeTf || (activeTf === 'world' && !v.frame)).map(points => {
+                const pointsProps = points.key === targetId && targetSource === 'points'  ? customProps : {};
+                if (!filterActive || points.key === targetId || activeTf === targetId ) {
+                    return (
+                        <PointCloud
+                            key={points.key}
+                            objectKey={points.key}
+                            highlightColor={highlightColor}
+                            ref={points.key === targetId ? targetRef : null}
+                            {...pointsProps}
                         />)
                 } else return null
             })}

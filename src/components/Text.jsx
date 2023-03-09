@@ -38,6 +38,7 @@ export default forwardRef(({ objectKey }, forwardedRef)=> {
         <Text
           ref={textRef}
           depthOffset={2}
+          scale={[0.2,0.2,0.2]}
         >
           {textInfo.value}
         </Text>

@@ -8,10 +8,10 @@ export default {
 }
 
 const Template = (args) => {
-    const { tfs, items, hulls, lines, texts, ...otherArgs } = args;
+    const { tfs, items, hulls, lines, texts, points, ...otherArgs } = args;
     useLayoutEffect(() => {
-        useDefaultSceneStore.setState({ tfs, items, hulls, lines, texts })
-    }, [tfs, items, hulls, lines, texts])
+        useDefaultSceneStore.setState({ tfs, items, hulls, lines, texts, points })
+    }, [tfs, items, hulls, lines, texts, points])
     return <div style={{ height: 'calc(100vh - 2rem)', width: 'calc(100vw - 2rem)' }}><Scene {...otherArgs} store={useDefaultSceneStore} meshLookup={MeshLookupTable}/></div>
 };
 
@@ -199,6 +199,7 @@ RandomShapes.args = {
     },
     hulls: {},
     texts: {},
+    points: {},
     displayTfs: true,
     displayGrid: true,
     isPolar: false,

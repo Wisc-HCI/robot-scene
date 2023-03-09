@@ -13,7 +13,7 @@ import {
   Selection,
   Outline,
 } from "@react-three/postprocessing";
-import shallow from "zustand/shallow";
+import {shallow} from "zustand/shallow";
 // import { renderTree } from './Util/Helpers';
 import Tree from "./Tree";
 
@@ -128,6 +128,21 @@ function Content({
     comparisonFn
   );
 
+  const points = useSceneStore(
+    (state) =>
+      sortBy(
+        Object.entries(state.points).map(([key, point]) => {
+          return {
+            key,
+            frame: point.frame,
+            source: "points",
+          };
+        }),
+        (o) => o.key
+      ),
+    comparisonFn
+  );
+
   const widgets = useSceneStore(
     (state) =>
       sortBy(
@@ -211,6 +226,7 @@ function Content({
           allLines={lines}
           allHulls={hulls}
           allTexts={texts}
+          allPoints={points}
           allWidgets={widgets}
           highlightColor={highlightColor}
         />
@@ -240,6 +256,7 @@ function Content({
           allLines={lines}
           allHulls={hulls}
           allTexts={texts}
+          allPoints={points}
           allWidgets={widgets}
           translateSnap={translateSnap}
           rotateSnap={rotateSnap}

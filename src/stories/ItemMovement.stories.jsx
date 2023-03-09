@@ -3,20 +3,20 @@ import Scene from '../components/Scene';
 import { useDefaultSceneStore } from '../components';
 
 export default {
-    title: 'ItemMovement',
+    title: 'Item Movement',
     component: Scene,
 }
 
 const Template = (args) => {
-    const { tfs, items, hulls, lines, texts, ...otherArgs } = args;
+    const { tfs, items, hulls, lines, texts, points, ...otherArgs } = args;
     useLayoutEffect(() => {
-        useDefaultSceneStore.setState({ tfs, items, hulls, lines, texts })
-    }, [tfs, items, hulls, lines, texts])
+        useDefaultSceneStore.setState({ tfs, items, hulls, lines, texts, points })
+    }, [tfs, items, hulls, lines, texts, points])
     return <div style={{ height: 'calc(100vh - 2rem)', width: 'calc(100vw - 2rem)' }}><Scene {...otherArgs} store={useDefaultSceneStore} /></div>
 };
 
 export const ItemMovement = Template.bind({});
-ItemMovement.storyName = "ItemMovement";
+ItemMovement.storyName = "Item Movement";
 ItemMovement.args = {
     tfs: {
         moving: {
@@ -75,6 +75,7 @@ ItemMovement.args = {
     lines: {},
     hulls: {},
     texts: {},
+    points: {},
     displayTfs: false,
     displayGrid: true,
     isPolar: false,

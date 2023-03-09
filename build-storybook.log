@@ -1,0 +1,195 @@
+@storybook/cli v7.0.0-beta.64
+
+info => Cleaning outputDir: /var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv
+info => Loading presets
+info => Building manager..
+info => Manager built (110 ms)
+info => Copying static files: /Users/schoen/Projects/robot-scene/node_modules/@storybook/manager/static at /var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/sb-common-assets
+WARN No story files found for the specified pattern: src/**/*.stories.mdx
+vite v3.1.0 building for production...
+
+./sb-common-assets/fonts.css doesn't exist at build time, it will remain unchanged to be resolved at runtime
+transforming...
+Use of eval is strongly discouraged, as it poses security risks and may cause issues with minification
+Use of eval is strongly discouraged, as it poses security risks and may cause issues with minification
+Use of eval is strongly discouraged, as it poses security risks and may cause issues with minification
+✓ 2042 modules transformed.
+rendering chunks...
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/finger.955625d6.glb                           49.33 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/link1.f9b792ab.glb                            951.50 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/hand.c2b00d53.glb                             541.77 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/link2.56ee0bff.glb                            968.78 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/link3.d1b43eeb.glb                            1085.45 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/link0.761db3c3.glb                            1559.02 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_arg2f_85_base_link.69a93331.glb       131.46 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_arg2f_85_inner_finger.8616f2e4.glb    25.90 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_arg2f_85_inner_knuckle.3dec9309.glb   21.59 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_arg2f_85_outer_finger.748826e6.glb    24.74 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/link4.17a98ce1.glb                            1117.04 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_arg2f_85_outer_knuckle.2bbff1d3.glb   29.87 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_arg2f_base_link.c14b45fd.glb          131.46 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/link7.7281c497.glb                            924.43 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_arg2f_85_inner_knuckle.863cd412.glb   104.39 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_arg2f_85_inner_finger.89feac3a.glb    151.94 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/link5.886f6cb7.glb                            1396.25 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_arg2f_85_outer_finger.05106a30.glb    108.79 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_arg2f_85_outer_knuckle.350b884f.glb   85.14 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_gripper_coupling.7f042dbe.glb         199.03 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_85_knuckle_link.4d1dff91.glb          100.00 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/link6.165fd3f4.glb                            1655.24 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_85_finger_link.bb9a2e65.glb           149.71 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_85_finger_tip_link.68af4f5e.glb       188.01 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_85_knuckle_link.6c6b9820.glb          98.36 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_85_inner_knuckle_link.58b7359a.glb    162.47 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_85_finger_tip_link.fa8019e2.glb       186.73 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_85_finger_link.ed07c896.glb           147.12 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/pedestal_link_collision.027467b4.glb          14.15 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/H0.6605e314.glb                               93.93 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_85_inner_knuckle_link.60258d9b.glb    160.83 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/H1.49bedb4e.glb                               71.52 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_arg2f_85_base_link.177f8847.glb       2402.20 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/E1.40e2dfac.glb                               234.66 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/W1.9d2b652d.glb                               269.80 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/E0.66d40753.glb                               263.24 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/S1.70613c8a.glb                               123.66 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/base_link_collision.c8976a5a.glb              677.79 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/W0.e8dfd744.glb                               578.55 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/S0.9403b6b0.glb                               716.59 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_85_base_link.f89b0277.glb             2841.88 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/base.5b682100.glb                             254.62 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/base_link.8d3a8c7f.glb                        1611.37 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/wrist3.2cd8adac.glb                           87.42 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/W2.217e9bd8.glb                               865.61 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/forearm.449fae00.glb                          78.88 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/base.40df119d.glb                             33.87 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/robotiq_85_base_link.61e765d4.glb             3057.50 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/shoulder.9f8eac6c.glb                         138.85 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/upperarm.6fb3eb6c.glb                         154.68 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/forearm.26b3892e.glb                          1294.25 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/wrist1.e898c5c1.glb                           97.46 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/wrist3.703be1cc.glb                           13.00 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/base.38f7253c.glb                             83.12 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/wrist1.97cc8fa1.glb                           1398.73 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/wrist2.894752f8.glb                           111.57 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/wrist2.ae2adc0b.glb                           1467.74 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/wrist1.71c5e581.glb                           328.00 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/shoulder.31e646db.glb                         2145.65 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/upperarm.96f7f284.glb                         703.73 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/shoulder.23473880.glb                         327.46 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/wrist2.958ea3f7.glb                           327.14 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/forearm.35b01707.glb                          468.30 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/base.9764eb31.glb                             25.96 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/wrist3.458024c8.glb                           66.65 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/upperarm.a5794ba4.glb                         3572.25 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/wrist3.b63077b3.glb                           88.23 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/Arrow.eff8be04.glb                            319.98 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/wrist1.a9aec446.glb                           1015.91 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/PEDESTAL.fd825d64.glb                         6029.35 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/Collision-MK2-Printer.cc14da6f.glb            40.45 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/Collision-Pedestal.c7425a08.glb               69.18 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/shoulder.64291a66.glb                         1115.97 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/Collision-Table.78eebad0.glb                  4.95 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/InfoPhycon.3d5e3d9e.glb                       27.11 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/OpenWaypointMarker.e8017a1c.glb               109.91 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/LocationMarker.a3c223b3.glb                   4.18 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/forearm.ed3fd71f.glb                          1998.84 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/upperarm.7239fe4e.glb                         1576.63 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/Pedestal.9999c4fe.glb                         69.16 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/Table.7c53beba.glb                            4.93 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/WarningPhycon.a7fa7d13.glb                    8.73 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/wrist2.4b1bf704.glb                           3013.46 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/Blade.ce7a9a43.glb                            268.54 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/Conveyor.91a48a71.glb                         267.39 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/TransportJig.125b46bf.glb                     76.53 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/HandleL.f73c840c.glb                          791.38 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/HandleR.123fc633.glb                          791.33 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/Tag.61401f01.glb                              1179.28 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/ConveyorDispatcher.5852b804.glb               192.66 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/AssemblyJig.a3fe9d80.glb                      668.57 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/Flag.dda72e58.glb                             1920.90 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/ConveyorReceiver.879f5a0e.glb                 6.09 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/MK2Printer.e2121440.glb                       13254.45 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/3DBenchy.d4b15a33.glb                         18245.32 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/iframe.html                                          12.50 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/iframe.be693455.js                            5.65 KiB / gzip: 1.65 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/iframe.be693455.js.map                        8.40 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/index.67736049.js                             0.75 KiB / gzip: 0.46 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/index.67736049.js.map                         3.11 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/index.7f7b9823.js                             7.01 KiB / gzip: 2.85 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/index.7f7b9823.js.map                         15.18 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/index.e850844b.js                             0.16 KiB / gzip: 0.12 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/index.e850844b.js.map                         0.78 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/_baseToString.e40787b1.js                     10.22 KiB / gzip: 4.18 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/_baseToString.e40787b1.js.map                 73.09 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/_commonjsHelpers.712cc82f.js                  0.58 KiB / gzip: 0.33 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/_commonjsHelpers.712cc82f.js.map              0.11 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/preview.15f5f611.js                           0.67 KiB / gzip: 0.47 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/preview.15f5f611.js.map                       3.63 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/preview.ff26237d.js                           0.75 KiB / gzip: 0.46 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/preview.ff26237d.js.map                       1.21 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/preview.2a2b91a3.js                           2.29 KiB / gzip: 1.20 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/preview.2a2b91a3.js.map                       9.76 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/preview.ed4d2ac0.js                           3.19 KiB / gzip: 1.35 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/preview.ed4d2ac0.js.map                       9.86 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/preview.b5c0a545.js                           7.74 KiB / gzip: 2.92 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/preview.b5c0a545.js.map                       27.42 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/preview.ff591c0a.js                           7.46 KiB / gzip: 1.53 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/preview.ff591c0a.js.map                       13.34 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/preview.a1398560.js                           0.82 KiB / gzip: 0.54 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/preview.a1398560.js.map                       2.71 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/preview.ffc0bfd9.js                           0.28 KiB / gzip: 0.23 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/preview.ffc0bfd9.js.map                       0.58 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/preview.049b79bd.js                           20.55 KiB / gzip: 6.79 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/preview.049b79bd.js.map                       66.15 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/Animation.stories.d4ae5f95.js                 4.18 KiB / gzip: 1.36 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/Animation.stories.d4ae5f95.js.map             11.84 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/extends.f4cf4404.js                           0.24 KiB / gzip: 0.19 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/extends.f4cf4404.js.map                       0.93 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/CoFrame.stories.aa6eb972.js                   24.61 KiB / gzip: 4.38 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/CoFrame.stories.aa6eb972.js.map               75.20 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/ItemMovement.stories.4962e4cd.js              2.39 KiB / gzip: 1.00 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/ItemMovement.stories.4962e4cd.js.map          7.41 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/MeshDebug.stories.c0a0fd56.js                 2.07 KiB / gzip: 1.06 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/MeshDebug.stories.c0a0fd56.js.map             5.99 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/MoreControls.stories.6008756c.js              8.03 KiB / gzip: 2.50 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/MoreControls.stories.6008756c.js.map          25.61 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/PointCloud.stories.fac8ed99.js                6.41 KiB / gzip: 2.76 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/PointCloud.stories.fac8ed99.js.map            32.48 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/Random.stories.e1d57601.js                    4.62 KiB / gzip: 1.54 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/Random.stories.e1d57601.js.map                17.02 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/TFMovement.stories.e18a5b67.js                4.58 KiB / gzip: 1.40 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/TFMovement.stories.e18a5b67.js.map            11.57 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/index.6ebfbc91.js                             0.56 KiB / gzip: 0.35 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/index.6ebfbc91.js.map                         3.87 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/syntaxhighlighter-QTQ2UBB4.c5e1e895.js        0.50 KiB / gzip: 0.30 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/syntaxhighlighter-QTQ2UBB4.c5e1e895.js.map    0.12 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/WithTooltip-5WWCYCAA.cd368765.js              0.49 KiB / gzip: 0.28 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/WithTooltip-5WWCYCAA.cd368765.js.map          0.11 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/GlobalScrollAreaStyles-XIHNDKUY.a48c9c3f.js   9.95 KiB / gzip: 2.18 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/GlobalScrollAreaStyles-XIHNDKUY.a48c9c3f.js.map 15.31 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/Color-3YIJY6X7.a71101e3.js                    30.50 KiB / gzip: 11.44 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/Color-3YIJY6X7.a71101e3.js.map                110.94 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/index.486b79d8.js                             66.65 KiB / gzip: 19.19 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/index.486b79d8.js.map                         242.57 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/index.a9969931.js                             71.11 KiB / gzip: 26.08 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/index.a9969931.js.map                         183.39 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/OverlayScrollbars-VAV6LJAB.93aacc2c.js        57.71 KiB / gzip: 24.73 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/OverlayScrollbars-VAV6LJAB.93aacc2c.js.map    267.74 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/MeshLookup.890b62a3.js                        181.41 KiB / gzip: 36.26 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/MeshLookup.890b62a3.js.map                    603.61 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/client.c582ae78.js                            132.48 KiB / gzip: 42.57 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/client.c582ae78.js.map                        319.41 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/config.f1623a34.js                            215.63 KiB / gzip: 64.29 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/config.f1623a34.js.map                        786.23 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/DocsRenderer-7FRJXR4N.6d47e1c6.js             433.89 KiB / gzip: 137.10 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/DocsRenderer-7FRJXR4N.6d47e1c6.js.map         1214.41 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/formatter-MGIGMU7Y.5b3f75ed.js                598.19 KiB / gzip: 181.01 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/formatter-MGIGMU7Y.5b3f75ed.js.map            1275.00 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/Scene.ddf6548c.js                             1113.46 KiB / gzip: 319.06 KiB
+../../../../var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv/assets/Scene.ddf6548c.js.map                         4686.10 KiB
+
+(!) Some chunks are larger than 500 KiB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/guide/en/#outputmanualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+info => Output directory: /var/folders/yr/m7wc06cs58lbsz9yljkd589w0000gn/T/chromatic--35293-GkTsZEkCXWpv

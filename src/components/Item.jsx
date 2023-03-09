@@ -10,6 +10,7 @@ import { Select } from '@react-three/postprocessing';
 import { GhostMaterial } from './Util/MaterialMaker';
 // import { LayerMaterial, Color, Texture } from 'lamina';
 import { useMesh } from './MeshContext';
+import { shallow } from 'zustand/shallow';
 
 
 // const GENERIC_SHAPES = ['cube', 'cylinder', 'sphere', 'capsule', 'arrow'];
@@ -19,12 +20,12 @@ export default memo(forwardRef(({ objectKey, highlightColor, position, rotation,
   const innerRef = useRef(null);
   const ref = useCombinedRefs(forwardedRef, innerRef);
 
-  const onClick = useSceneStore(state => state.onClick);
-  const onPointerOver = useSceneStore(state => state.onPointerOver);
-  const onPointerOut = useSceneStore(state => state.onPointerOut);
+  const onClick = useSceneStore(state => state.onClick, shallow);
+  const onPointerOver = useSceneStore(state => state.onPointerOver, shallow);
+  const onPointerOut = useSceneStore(state => state.onPointerOut, shallow);
   const clock = useSceneStore(state => state.clock);
 
-  const item = useSceneStore(useCallback(state => (state.items[objectKey]), [objectKey]))
+  const item = useSceneStore(useCallback(state => (state.items[objectKey]), [objectKey]), shallow)
 
   const content = useMesh(item);//GENERIC_SHAPES.includes(item.shape) ? createGenericShape(item) : item.shape in MeshLookupTable ? MeshLookup(item.shape) : [];
 

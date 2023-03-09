@@ -6,7 +6,7 @@ import { MaterialMaker, GhostMaterial } from './Util/MaterialMaker';
 // import { Quaternion } from 'three';
 import { useSceneStore } from './SceneContext';
 import { useCombinedRefs } from "./Util/Helpers";
-// import shallow from "zustand/shallow";
+import { shallow } from "zustand/shallow";
 // const STANDARD_ROTATION = new Quaternion(0,0,1,0)
 export default forwardRef(({ objectKey, displayTfs, position, rotation, scale, ghost, highlightColor, children }, forwardedRef) => {
 
@@ -15,7 +15,7 @@ export default forwardRef(({ objectKey, displayTfs, position, rotation, scale, g
 
   const tf = useSceneStore(useCallback(state=>
       state.tfs[objectKey]
-    ,[objectKey]))
+    ,[objectKey]), shallow)
 
   const clock = useSceneStore(state=>state.clock)
 

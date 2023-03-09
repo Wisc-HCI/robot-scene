@@ -9,7 +9,7 @@ import create from "zustand";
 import shallow from 'zustand/shallow';
 
 export default {
-    title: 'MoreControls',
+    title: 'More Controls',
     component: Scene,
 }
 
@@ -72,10 +72,10 @@ const slice = (set,get,api) => ({
 })
 
 const useStore = create(immer(subscribeWithSelector(slice)));
-console.log('starting',useStore.getState())
+// console.log('starting',useStore.getState())
 
 const Template = (args) => {
-    const { tfs, lines, texts, angle, length, rangeInputVal, scalarInputVal, range, ...otherArgs } = args;
+    const { tfs, lines, texts, points, angle, length, rangeInputVal, scalarInputVal, range, ...otherArgs } = args;
 
     const [play, pause, reset] = useStore(state=>[state.play,state.pause,state.reset]);
 
@@ -97,8 +97,8 @@ const Template = (args) => {
             ...getScalarInputItems(range,scalarValue),
             ...getRangeInputItems(range,rangeValue)
         }
-        useStore.setState({ tfs, items, hulls, lines, texts })
-    }, [tfs, lines, texts, angle, length, range, scalarInputVal, rangeInputVal])
+        useStore.setState({ tfs, items, hulls, lines, texts, points })
+    }, [tfs, lines, texts, points, angle, length, range, scalarInputVal, rangeInputVal])
 
     return (
         <div style={{ height: 'calc(100vh - 3rem)', width: 'calc(100vw - 2rem)' }}>
@@ -261,6 +261,7 @@ MoreControls.args = {
             color: { r: 0, g: 0, b: 255, a: 1 },
         }
     },
+    points:{},
     displayTfs: false,
     displayGrid: true,
     isPolar: false,

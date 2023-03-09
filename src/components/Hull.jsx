@@ -3,22 +3,22 @@ import { Html } from '@react-three/drei';
 import { useFrame } from "@react-three/fiber";
 import { Vector3, BackSide, FrontSide } from 'three';
 import { ConvexGeometry } from 'three-stdlib';
-import shallow from 'zustand/shallow';
 import { updateShapeMaterial, useCombinedRefs } from './Util/Helpers';
 import { useSceneStore } from './SceneContext';
 import { Select } from '@react-three/postprocessing';
+import { shallow } from 'zustand/shallow';
 
 export default forwardRef(({ objectKey },forwardedRef)=>{
 
   const innerRef = useRef(null);
   const ref = useCombinedRefs(forwardedRef, innerRef);
 
-  const onClick = useSceneStore(state => state.onClick);
-  const onPointerOver = useSceneStore(state => state.onPointerOver);
-  const onPointerOut = useSceneStore(state => state.onPointerOut);
+  const onClick = useSceneStore(state => state.onClick, shallow);
+  const onPointerOver = useSceneStore(state => state.onPointerOver, shallow);
+  const onPointerOut = useSceneStore(state => state.onPointerOut, shallow);
 
   const hull = useSceneStore(useCallback(state => state.hulls[objectKey], [objectKey]), shallow);
-  const vertices = useSceneStore(useCallback(state => state.hulls[objectKey].vertices, [objectKey]));
+  const vertices = useSceneStore(useCallback(state => state.hulls[objectKey].vertices, [objectKey]), shallow);
 
   const clock = useSceneStore(state => state.clock);
 

@@ -3,12 +3,12 @@ import Scene from '../components/Scene';
 import { useDefaultSceneStore } from '../components';
 
 export default {
-    title: 'TFMovement',
+    title: 'Moving Transforms',
     component: Scene,
 }
 
 const Template = (args) => {
-    const { tfs, items, hulls, lines, texts, ...otherArgs } = args;
+    const { tfs, items, hulls, lines, texts, points, ...otherArgs } = args;
 
     const setProperty = useDefaultSceneStore(state => state.setProperty);
     const [translateSnap, setTranslateSnap] = useState(0);
@@ -16,8 +16,8 @@ const Template = (args) => {
     const [scaleSnap, setScaleSnap] = useState(0);
 
     useLayoutEffect(() => {
-        useDefaultSceneStore.setState({ tfs, items, hulls, lines, texts })
-    }, [tfs, items, hulls, lines, texts])
+        useDefaultSceneStore.setState({ tfs, items, hulls, lines, texts, points })
+    }, [tfs, items, hulls, lines, texts, points])
     return (
         <div style={{ height: 'calc(100vh - 3rem)', width: 'calc(100vw - 2rem)' }}>
             <Scene {...otherArgs} store={useDefaultSceneStore} displayTfs translateSnap={translateSnap} rotateSnap={rotateSnap} scaleSnap={scaleSnap} />
@@ -33,9 +33,9 @@ const Template = (args) => {
     )
 };
 
-export const TFMovement = Template.bind({});
-TFMovement.storyName = "TFMovement";
-TFMovement.args = {
+export const MovingTransforms = Template.bind({});
+MovingTransforms.storyName = "Moving Transforms";
+MovingTransforms.args = {
     tfs: {
         moving: {
             frame: 'world',
@@ -90,6 +90,7 @@ TFMovement.args = {
     lines: {},
     hulls: {},
     texts: {},
+    points: {},
     displayTfs: false,
     displayGrid: true,
     isPolar: false,
