@@ -19,7 +19,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build --output-dir docs",
+    "build-storybook": "storybook build --output-dir docs && touch docs/.nojekyll",
     "generate-all": "npm run build-storybook && vite build"
   },
   "dependencies": {
