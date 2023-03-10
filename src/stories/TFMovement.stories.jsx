@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import Scene from "../components/Scene";
 import { useDefaultSceneStore } from "../components";
 import { MeshLookupTable } from "./meshes/MeshLookup";
-import { ErrorBoundary } from 'react-error-boundary';
-import ErrorFallback from './ErrorFallback';
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "./ErrorFallback";
 
 export default {
   title: "Moving Transforms",
@@ -23,68 +23,69 @@ const Template = (args) => {
   }, [tfs, items, hulls, lines, texts, points]);
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-    <div style={{ height: "calc(100vh - 3rem)", width: "calc(100vw - 2rem)" }}>
-        
-      <Scene
-        {...otherArgs}
-        store={useDefaultSceneStore}
-        meshLookup={MeshLookupTable}
-        displayTfs
-        translateSnap={translateSnap}
-        rotateSnap={rotateSnap}
-        scaleSnap={scaleSnap}
-      />
-      <div style={{ textAlign: "center" }}>
-        <button
-          onClick={() => {
-            setTranslateSnap(0);
-            setProperty(["tfs", "moving", "transformMode"], "translate");
-          }}
-        >
-          Translate Free
-        </button>
-        <button
-          onClick={() => {
-            setTranslateSnap(0.25);
-            setProperty(["tfs", "moving", "transformMode"], "translate");
-          }}
-        >
-          Translate Snapping
-        </button>
-        <button
-          onClick={() => {
-            setRotateSnap(0);
-            setProperty(["tfs", "moving", "transformMode"], "rotate");
-          }}
-        >
-          Rotate Free
-        </button>
-        <button
-          onClick={() => {
-            setRotateSnap(Math.PI / 6);
-            setProperty(["tfs", "moving", "transformMode"], "rotate");
-          }}
-        >
-          Rotate Snapping
-        </button>
-        <button
-          onClick={() => {
-            setScaleSnap(0);
-            setProperty(["tfs", "moving", "transformMode"], "scale");
-          }}
-        >
-          Scale Free
-        </button>
-        <button
-          onClick={() => {
-            setScaleSnap(0.1);
-            setProperty(["tfs", "moving", "transformMode"], "scale");
-          }}
-        >
-          Scale Snapping
-        </button>
+      <div
+        style={{ height: "calc(100vh - 3rem)", width: "calc(100vw - 2rem)" }}
+      >
+        <Scene
+          {...otherArgs}
+          store={useDefaultSceneStore}
+          meshLookup={MeshLookupTable}
+          displayTfs
+          translateSnap={translateSnap}
+          rotateSnap={rotateSnap}
+          scaleSnap={scaleSnap}
+        />
+        <div style={{ textAlign: "center" }}>
+          <button
+            onClick={() => {
+              setTranslateSnap(0);
+              setProperty(["tfs", "moving", "transformMode"], "translate");
+            }}
+          >
+            Translate Free
+          </button>
+          <button
+            onClick={() => {
+              setTranslateSnap(0.25);
+              setProperty(["tfs", "moving", "transformMode"], "translate");
+            }}
+          >
+            Translate Snapping
+          </button>
+          <button
+            onClick={() => {
+              setRotateSnap(0);
+              setProperty(["tfs", "moving", "transformMode"], "rotate");
+            }}
+          >
+            Rotate Free
+          </button>
+          <button
+            onClick={() => {
+              setRotateSnap(Math.PI / 6);
+              setProperty(["tfs", "moving", "transformMode"], "rotate");
+            }}
+          >
+            Rotate Snapping
+          </button>
+          <button
+            onClick={() => {
+              setScaleSnap(0);
+              setProperty(["tfs", "moving", "transformMode"], "scale");
+            }}
+          >
+            Scale Free
+          </button>
+          <button
+            onClick={() => {
+              setScaleSnap(0.1);
+              setProperty(["tfs", "moving", "transformMode"], "scale");
+            }}
+          >
+            Scale Snapping
+          </button>
+        </div>
       </div>
-    </div>
     </ErrorBoundary>
   );
 };
