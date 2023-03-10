@@ -1,8 +1,11 @@
-import React, { useLayoutEffect, useEffect } from "react";
+import React, { useEffect } from "react";
 import Scene from "../components/Scene";
 import { useDefaultSceneStore } from "../components";
 import { range } from "lodash";
 import { SimplexNoise } from "three-stdlib";
+import { MeshLookupTable } from "./meshes/MeshLookup";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "./ErrorFallback";
 
 export default {
   title: "PointClouds",
@@ -14,15 +17,22 @@ let simplexNoise = new SimplexNoise();
 const Template = (args) => {
   const { tfs, items, hulls, lines, texts, points, ...otherArgs } = args;
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     useDefaultSceneStore.setState({ tfs, items, hulls, lines, texts, points });
   }, [tfs, items, hulls, lines, texts, points]);
 
-
   return (
-    <div style={{ height: "calc(100vh - 2rem)", width: "calc(100vw - 2rem)" }}>
-      <Scene {...otherArgs} store={useDefaultSceneStore} />
-    </div>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <div
+        style={{ height: "calc(100vh - 2rem)", width: "calc(100vw - 2rem)" }}
+      >
+        <Scene
+          {...otherArgs}
+          store={useDefaultSceneStore}
+          meshLookup={MeshLookupTable}
+        />
+      </div>
+    </ErrorBoundary>
   );
 };
 
@@ -56,12 +66,9 @@ PointClouds.args = {
 
         return {
           position: {
-            x: (t) =>
-              seed1-2.5 + simplexNoise.noise(seed1*10, t / 1000),
-            y: (t) =>
-                seed2-2.5 + simplexNoise.noise(seed2*10, t / 1000),
-            z: (t) =>
-                seed3-2.5 + simplexNoise.noise(seed3*10, t / 1000),
+            x: (t) => seed1 - 2.5 + simplexNoise.noise(seed1 * 10, t / 1000),
+            y: (t) => seed2 - 2.5 + simplexNoise.noise(seed2 * 10, t / 1000),
+            z: (t) => seed3 - 2.5 + simplexNoise.noise(seed3 * 10, t / 1000),
           },
           color: {
             r: Math.round(Math.random() * 255),

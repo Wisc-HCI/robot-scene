@@ -1,7 +1,9 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import Scene from "../components/Scene";
 import { useDefaultSceneStore } from "../components";
 import { MeshLookupTable } from "./meshes/MeshLookup";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "./ErrorFallback";
 
 export default {
   title: "Mesh Debug",
@@ -10,17 +12,21 @@ export default {
 
 const Template = (args) => {
   const { tfs, items, hulls, lines, texts, points, ...otherArgs } = args;
-  useLayoutEffect(() => {
+  useEffect(() => {
     useDefaultSceneStore.setState({ tfs, items, hulls, lines, texts, points });
   }, [tfs, items, hulls, lines, texts, points]);
   return (
-    <div style={{ height: "calc(100vh - 2rem)", width: "calc(100vw - 2rem)" }}>
-      <Scene
-        {...otherArgs}
-        store={useDefaultSceneStore}
-        meshLookup={MeshLookupTable}
-      />
-    </div>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <div
+        style={{ height: "calc(100vh - 2rem)", width: "calc(100vw - 2rem)" }}
+      >
+        <Scene
+          {...otherArgs}
+          store={useDefaultSceneStore}
+          meshLookup={MeshLookupTable}
+        />
+      </div>
+    </ErrorBoundary>
   );
 };
 

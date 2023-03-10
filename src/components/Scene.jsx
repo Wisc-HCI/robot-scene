@@ -1,7 +1,7 @@
 import React, { Suspense, memo } from "react";
 import { Canvas } from "@react-three/fiber";
 // // import { useProgress, Html } from "@react-three/drei";
-import { ResizeObserver } from "@juggle/resize-observer";
+// import { ResizeObserver } from "@juggle/resize-observer";
 import Content from "./Content";
 import * as THREE from "three";
 import { SceneProvider } from "./SceneContext";
@@ -24,7 +24,7 @@ export const RobotCanvas = ({
     camera={{ up: [0, 0, 1], fov, position: [0, -3, 3] }}
     shadows
     style={{ background: backgroundColor }}
-    resize={{ polyfill: ResizeObserver }}
+    // resize={{ polyfill: ResizeObserver }}
     onPointerMissed={onPointerMissed}
   >
     {children}
@@ -55,7 +55,7 @@ function Scene({
       camera={{ up: [0, 0, 1], fov, position: [0, -3, 3] }}
       shadows
       style={{ background: backgroundColor ? backgroundColor : "#d0d0d0" }}
-      resize={{ polyfill: ResizeObserver }}
+      // resize={{ polyfill: ResizeObserver }}
       onPointerMissed={onPointerMissed ? onPointerMissed : () => {}}
     >
       <SceneProvider store={store} debug={debug}>
